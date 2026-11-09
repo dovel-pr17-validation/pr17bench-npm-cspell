@@ -1,0 +1,178 @@
+import { describe, expect, test } from 'vitest';
+
+import { __testing__, createMapper, createRepMapper } from './repMap.ts';
+
+const { createMapperRegExp, charsetToRepMap, createTrie, calcAllEdits, applyEdits } = __testing__;
+
+describe('ReMap Tests', () => {
+    test('empty replace map', () => {
+        const mapper = createMapper([]);
+        expect(mapper).toBe(undefined);
+    });
+
+    test('punctuation replacement', () => {
+        const mapper = createMapper([['`', "'"]]);
+        expect(mapper?.fn('hello')).toBe('hello');
+        expect(mapper?.test?.test('hello')).toBe(false);
+        expect(mapper?.fn('don`t')).toBe("don't");
+        expect(mapper?.test?.test('don`t')).toBe(true);
+    });
+
+    test('multiple replacements', () => {
+        const mapper = createMapper([
+            ['a', 'A'],
+            ['b', 'B'],
+        ]);
+        expect(mapper?.fn('apple')).toBe('Apple');
+        expect(mapper?.fn('banana')).toBe('BAnAnA');
+    });
+
+    test('empty replacements', () => {
+        const mapper = createMapper([
+            ['a', 'A'],
+            ['b', 'B'],
+            ['', ''],
+        ]);
+        expect(mapper?.fn('apple')).toBe('Apple');
+        expect(mapper?.fn('banana')).toBe('BAnAnA');
+    });
+
+    test('regex replacements', () => {
+        const mapper = createMapper([
+            ['!|@|#|\\$', '_'],
+            ['a', 'A'],
+        ]);
+        expect(mapper?.fn('$apple!!')).toBe('_Apple__');
+    });
+
+    test('repeated replacements', () => {
+        const mapper = createMapper([
+            ['a', 'A'],
+            ['a', 'X'],
+        ]);
+        expect(mapper?.fn('apples')).toBe('Apples');
+    });
+
+    test('nested regex replacements', () => {
+        const mapper = createMapper([
+            ['(!)', '_'],
+            ['((\\$))', '#'],
+            ['a', 'A'],
+        ]);
+        expect(mapper?.fn('$apple!!')).toBe('#Apple__');
+    });
+
+    test('bad regex replacements', () => {
+        const mapper = createMapper([
+            ['(', '_'],
+            ['a', 'A'],
+        ]);
+        expect(mapper?.fn('(apple)')).toBe('_Apple)');
+    });
+
+    test('empty regex replacements', () => {
+        const mapper = createMapper([
+            ['', '_'],
+            ['a', 'A'],
+        ]);
+        expect(mapper?.fn('(apple)')).toBe('(Apple)');
+    });
+
+    // cspell:ignore strasse straße
+
+    test.each`
+        map                             | word         | expected
+        ${[]}                           | ${'word'}    | ${undefined}
+        ${[['ae', 'ä'], ['ss', 'ß']]}   | ${'strasse'} | ${'straße'}
+        ${[['ae', 'ä'], ['s{2}', 'ß']]} | ${'strasse'} | ${'straße'}
+        ${[['ae', 'ä'], ['ss', 'ß']]}   | ${'STRASSE'} | ${'STRASSE'}
+    `('map with word $map / $word', ({ map, word, expected }) => {
+        const mapper = createMapper(map);
+        expect(mapper?.fn(word)).toBe(expected);
+    });
+
+    test.each`
+        map                             | expected
+        ${[]}                           | ${/$^/}
+        ${[['ae', 'ä'], ['s{2}', 'ß']]} | ${/(ae)|(s{2})/g}
+        ${[['ae', 'ä'], ['ss', 'ß']]}   | ${/(ae)|(ss)/g}
+    `('createMapperRegExp $map', ({ map, expected }) => {
+        const reg = createMapperRegExp(map);
+        expect(reg).toEqual(expected);
+    });
+
+    test.each`
+        charset              | expected
+        ${undefined}         | ${undefined}
+        ${''}                | ${undefined}
+        ${'a-z'}             | ${[['[a-z]', '']]}
+        ${'0x300-0x308'}     | ${[['[0x300-0x308]', '']]}
+        ${'0x300-0x308|a-z'} | ${[['[0x300-0x308]', ''], ['[a-z]', '']]}
+    `('charsetToRepMap $charset', ({ charset, expected }) => {
+        const reg = charsetToRepMap(charset);
+        expect(reg).toEqual(expected);
+    });
+});
+
+describe('RepMapper', () => {
+    test.each`
+        repMap                        | ignoreChars  | expected
+        ${undefined}                  | ${undefined} | ${{}}
+        ${[['a', 'b']]}               | ${undefined} | ${{ children: { a: { rep: ['b'] } } }}
+        ${[['a', 'b'], ['a', 'b']]}   | ${undefined} | ${{ children: { a: { rep: ['b'] } } }}
+        ${[['a', 'b'], ['a', 'c']]}   | ${undefined} | ${{ children: { a: { rep: ['b', 'c'] } } }}
+        ${[['a', 'b'], ['a', 'c']]}   | ${'a'}       | ${{ children: { a: { rep: ['b', 'c', ''] } } }}
+        ${[['a', 'b'], ['a', 'c']]}   | ${'i'}       | ${{ children: { a: { rep: ['b', 'c'] }, i: { rep: [''] } } }}
+        ${[['a', 'b'], ['a', 'c']]}   | ${'i'}       | ${{ children: { a: { rep: ['b', 'c'] }, i: { rep: [''] } } }}
+        ${[['a|i', 'b'], ['a', 'c']]} | ${'i'}       | ${{ children: { a: { rep: ['b', 'c'] }, i: { rep: ['b', ''] } } }}
+    `('createTrie', ({ repMap, ignoreChars, expected }) => {
+        expect(createTrie(repMap, ignoreChars)).toEqual(expected);
+    });
+
+    test.each`
+        repMap                         | ignoreChars  | word       | expected
+        ${undefined}                   | ${undefined} | ${'hello'} | ${[]}
+        ${[['e', 'é']]}                | ${undefined} | ${'hello'} | ${[{ b: 1, e: 2, r: 'é' }]}
+        ${[['e', 'é'], ['o', 'ó']]}    | ${undefined} | ${'hello'} | ${[{ b: 1, e: 2, r: 'é' }, { b: 4, e: 5, r: 'ó' }]}
+        ${[['ll', 'y'], ['ll', 'el']]} | ${undefined} | ${'hello'} | ${[{ b: 2, e: 4, r: 'y' }, { b: 2, e: 4, r: 'el' }]}
+        ${[['f', 'ph'], ['ph', 'f']]}  | ${undefined} | ${'phone'} | ${[{ b: 0, e: 2, r: 'f' }]}
+    `('calcAllEdits', ({ repMap, ignoreChars, word, expected }) => {
+        const root = createTrie(repMap, ignoreChars);
+        expect(calcAllEdits(root, word)).toEqual(expected);
+    });
+
+    // cspell:ignore héllo helló hélló heyo heelo fone phoné phöne
+    test.each`
+        repMap                         | ignoreChars        | word          | expected
+        ${undefined}                   | ${undefined}       | ${'hello'}    | ${['hello']}
+        ${[['e', 'é']]}                | ${undefined}       | ${'hello'}    | ${['hello', 'héllo']}
+        ${[['e', 'é'], ['o', 'ó']]}    | ${undefined}       | ${'hello'}    | ${['hello', 'helló', 'héllo', 'hélló']}
+        ${[['ll', 'y'], ['ll', 'el']]} | ${undefined}       | ${'hello'}    | ${['hello', 'heyo', 'heelo']}
+        ${[['f', 'ph'], ['ph', 'f']]}  | ${undefined}       | ${'phone'}    | ${['phone', 'fone']}
+        ${[]}                          | ${'\u0300-\u0308'} | ${N('phoné')} | ${[N('phoné'), 'phone']}
+        ${[]}                          | ${'\u0300-\u0308'} | ${N('phöne')} | ${[N('phöne'), 'phone']}
+    `('applyEdits', ({ repMap, ignoreChars, word, expected }) => {
+        const root = createTrie(repMap, ignoreChars);
+        const edits = calcAllEdits(root, word);
+        expect(applyEdits(word, edits)).toEqual(expected);
+    });
+
+    test.each`
+        repMap                      | word              | expectedReplaced
+        ${[['a', 'æ'], ['a', 'å']]} | ${'a'.repeat(16)} | ${'å'.repeat(16)}
+        ${[['a', 'æ'], ['a', 'å']]} | ${'a'.repeat(18)} | ${'å'.repeat(18)}
+        ${[['aa', 'å']]}            | ${'a'.repeat(38)} | ${'å'.repeat(19)}
+        ${[['ss', 'ß']]}            | ${'s'.repeat(38)} | ${'ß'.repeat(19)}
+    `('applyEdits bounds forms for many matching letters $repMap', ({ repMap, word, expectedReplaced }) => {
+        const mapper = createRepMapper(repMap);
+        const forms = mapper?.fn(word) ?? [];
+        expect(forms.length).toBeGreaterThan(1);
+        expect(forms.length).toBeLessThanOrEqual(256);
+        expect(forms[0]).toBe(word);
+        expect(forms).toContain(expectedReplaced);
+    });
+});
+
+function N(s: string, mode: 'NFD' | 'NFC' = 'NFD') {
+    return s.normalize(mode);
+}

@@ -1,0 +1,22 @@
+{
+    "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+    "version": "0.2",
+    "id": "cspell-package-config",
+    "name": "cspell Package Config",
+    "language": "en",
+    "words": ["gensequence"],
+    "maxNumberOfProblems": 100,
+    "ignorePaths": [
+        "node_modules/**",
+        "coverage/**",
+        "dist/**",
+        "package.json",
+        "**/package.json",
+        "**/.cspell.json",
+        ".vscode/**"
+    ],
+    "allowCompoundWords": false,
+    "dictionaryDefinitions": [],
+    "ignoreWords": ["CSpellSettingsWSTO"],
+    "import": ["../../cspell.json"]
+}

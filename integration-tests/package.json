@@ -1,0 +1,62 @@
+{
+  "name": "cspell-integration-tests",
+  "private": true,
+  "version": "9.0.2",
+  "description": "Integration tests for cspell. It will execute cspell against various repositories and compare the results.",
+  "bin": {
+    "cspell-integration-tests": "tester.js",
+    "normalize-output": "scripts/normalize-output.mjs"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "scripts": {
+    "build": "tsc -p .",
+    "watch": "tsc -p . --watch",
+    "clean": "pnpm run clean-dist && pnpm run clean-repos",
+    "clean-dist": "shx rm -rf dist coverage \"*.tsbuildInfo\"",
+    "clean-repos": "shx rm -rf repositories/temp temp",
+    "clean-build": "pnpm run clean && pnpm run build",
+    "add-repo": "node tester.js add -t $(gh auth token)",
+    "tester": "node tester.js check -t $(gh auth token)",
+    "integration-tests": "node tester.js check -f",
+    "test-vitest": "vitest run",
+    "update-snapshots-only": "node tester.js check --update-snapshots",
+    "update-repositories": "node tester.js check --update-repositories"
+  },
+  "author": "Jason Dent",
+  "license": "MIT",
+  "dependencies": {
+    "@cspell/cspell-types": "workspace:*",
+    "@octokit/rest": "^22.0.1",
+    "ansi-escapes": "^7.3.0",
+    "chalk": "^6.0.1",
+    "commander": "^15.0.0",
+    "csv-parse": "^7.0.3",
+    "csv-stringify": "^6.9.0",
+    "jest-diff": "^30.5.2",
+    "shelljs": "^0.10.0",
+    "simple-git": "^4.0.2",
+    "vscode-uri": "^3.2.0",
+    "yaml": "^2.9.1"
+  },
+  "devDependencies": {
+    "@cspell/cspell-bundled-dicts": "workspace:*",
+    "@cspell/dict-de-de": "^4.1.3",
+    "@cspell/dict-en_us": "^4.4.43",
+    "@cspell/dict-rust": "^4.1.2",
+    "@cspell/dict-shell": "^1.2.0",
+    "@cspell/dict-win32": "^2.0.10",
+    "@types/shelljs": "^0.10.0",
+    "cspell": "workspace:*"
+  },
+  "main": "tester.js",
+  "keywords": [],
+  "files": [
+    "dist",
+    "scripts",
+    "tester.js",
+    "custom-reporter.js"
+  ]
+}

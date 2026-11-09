@@ -1,0 +1,40 @@
+name: Website - Build and Test
+
+on:
+  pull_request:
+    paths:
+      - 'website/**'
+  push:
+    branches:
+      - main
+    paths:
+      - 'website/**'
+  # Run on demand
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build Website
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup
+        uses: ./.github/actions/setup
+        with:
+          node-version: 'lts/*'
+
+      - name: Build website
+        run: |
+          pnpm build
+          pnpm --filter website run build:site
+
+      # Ensure the repository is clean after build & test
+      - run: git --no-pager diff --compact-summary --exit-code

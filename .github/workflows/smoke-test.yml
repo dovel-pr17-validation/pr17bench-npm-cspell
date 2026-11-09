@@ -1,0 +1,120 @@
+name: '  🔥 Smoke Test'
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/actions/build/**'
+      - '.github/actions/smoke-test/**'
+      - '.github/workflows/smoke-test.yml'
+      - '*-lock.yaml'
+      - 'package.json'
+      - 'packages/**/*.cjs'
+      - 'packages/**/*.cts'
+      - 'packages/**/*.js'
+      - 'packages/**/*.mjs'
+      - 'packages/**/*.mts'
+      - 'packages/**/*.ts'
+      - 'packages/**/package.json'
+      - 'packages/**/tsconfig.json'
+      - 'tsconfig*.json'
+      - '!website/**'
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'website/**'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Build once and create the CSpell cache. The other jobs reuse both, on other OSes and Node versions.
+  build-and-smoke-test:
+    runs-on: ubuntu-latest
+    outputs:
+      build-key: ${{ steps.build.outputs.key }}
+      build-path: ${{ steps.build.outputs.path }}
+      cspell-cache-key: ${{ steps.cspell-cache-key.outputs.key }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install
+        uses: ./.github/actions/setup
+        with:
+          node-version: 22.x
+
+      - name: Build
+        id: build
+        uses: ./.github/actions/build
+        with:
+          show-summary: true
+
+      - name: Smoke Tests
+        uses: ./.github/actions/smoke-test
+
+      - name: CSpell cache key
+        id: cspell-cache-key
+        env:
+          KEY: cspell-cache-smoke-test-${{ github.run_id }}-${{ github.run_attempt }}
+        run: echo "key=$KEY" >> "$GITHUB_OUTPUT"
+
+      - name: Save CSpell cache
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          key: ${{ steps.cspell-cache-key.outputs.key }}
+          path: .cspellcache
+          enableCrossOsArchive: true
+
+  smoke-test-cached:
+    runs-on: ${{ matrix.os }}
+    needs:
+      - build-and-smoke-test
+
+    env:
+      # Match the Linux `node_modules/.pnpm` names (Windows defaults to 60), so the CSpell cache dependencies resolve.
+      pnpm_config_virtual_store_dir_max_length: 120
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            node-version: 24.x
+          - os: ubuntu-latest
+            node-version: 26.x
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install
+        uses: ./.github/actions/setup
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Restore build
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          key: ${{ needs.build-and-smoke-test.outputs.build-key }}
+          path: ${{ needs.build-and-smoke-test.outputs.build-path }}
+          enableCrossOsArchive: true
+          fail-on-cache-miss: true
+
+      - name: Restore CSpell cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          key: ${{ needs.build-and-smoke-test.outputs.cspell-cache-key }}
+          path: .cspellcache
+          enableCrossOsArchive: true
+          fail-on-cache-miss: true
+
+      - name: Smoke Tests
+        uses: ./.github/actions/smoke-test
+        with:
+          expect_cached: true

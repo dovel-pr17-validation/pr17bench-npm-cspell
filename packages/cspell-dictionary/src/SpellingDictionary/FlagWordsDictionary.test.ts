@@ -1,0 +1,307 @@
+import { opMap, pipe } from '@cspell/cspell-pipe/sync';
+import { buildITrieFromWords, createTrieRootFromList, parseDictionaryLines, serializeTrie } from 'cspell-trie-lib';
+import { describe, expect, test } from 'vitest';
+
+import {
+    createFlagWordsDictionary,
+    createFlagWordsDictionaryFromTrieFile,
+    FlagWordsDictionary,
+    FlagWordsDictionaryTrie,
+} from './FlagWordsDictionary.js';
+import { createTyposDictionary } from './TyposDictionary.js';
+
+// const oc = <T>(obj: T) => expect.objectContaining(obj);
+
+describe('ForbiddenWordsDictionary', () => {
+    const dictWords = ['  english', '!English', 'grumpy', 'Avocado', 'avocadoS', '!avocado', 'Apple', 'orange'];
+    const dict = createFlagWordsDictionary(dictWords, 'flag_words', 'test');
+
+    test('flag dictionary entries', () => {
+        expect(dict.isForbidden('english'), 'english should be forbidden').toBe(true);
+        expect(dict.isForbidden('English'), 'English should not be forbidden').toBe(false);
+        expect(dict.isForbidden('grumpy'), 'grumpy should be forbidden').toBe(true);
+        expect(dict.isForbidden('Apple'), 'Apple should be forbidden').toBe(true);
+        expect(dict.isForbidden('APPLE'), 'APPLE should not be forbidden').toBe(false);
+        expect(dict.isForbidden('apple'), 'apple should not be forbidden').toBe(false);
+        expect(dict.isForbidden('orange'), 'orange should be forbidden').toBe(true);
+        expect(dict.isForbidden('Orange'), 'Orange should be forbidden').toBe(true);
+        expect(dict.isForbidden('ORANGE'), 'ORANGE should be forbidden').toBe(true);
+        expect(dict.isForbidden('OraNge'), 'OraNge should be forbidden').toBe(true);
+        expect(dict.has('English')).toBe(false);
+    });
+
+    test.each`
+        word         | expected
+        ${'avocado'} | ${false}
+        ${'Avocado'} | ${false}
+        ${'grumpy'}  | ${false}
+        ${'Grumpy'}  | ${false}
+        ${''}        | ${false}
+        ${'English'} | ${false}
+        ${'english'} | ${false}
+    `('has of "$word"', async ({ word, expected }) => {
+        expect(dict.has(word)).toEqual(expected);
+    });
+
+    test.each`
+        word         | options                  | expected
+        ${'avocado'} | ${undefined}             | ${{ forbidden: false, found: 'avocado', noSuggest: true }}
+        ${'Avocado'} | ${undefined}             | ${{ found: 'avocado', forbidden: false, noSuggest: true }}
+        ${'Avocado'} | ${{ ignoreCase: true }}  | ${{ found: 'avocado', forbidden: false, noSuggest: true }}
+        ${'Avocado'} | ${{ ignoreCase: false }} | ${{ found: 'Avocado', forbidden: true, noSuggest: false }}
+        ${''}        | ${undefined}             | ${undefined}
+        ${'English'} | ${{ ignoreCase: true }}  | ${{ forbidden: false, found: 'English', noSuggest: true }}
+        ${'English'} | ${{ ignoreCase: false }} | ${{ forbidden: false, found: 'English', noSuggest: true }}
+        ${'english'} | ${{ ignoreCase: true }}  | ${{ found: 'english', forbidden: true, noSuggest: false }}
+        ${'english'} | ${{ ignoreCase: false }} | ${{ found: 'english', forbidden: true, noSuggest: false }}
+    `('find "$word" $options', async ({ word, options, expected }) => {
+        expect(dict.find(word, options)).toEqual(expected);
+    });
+
+    test.each`
+        word         | ignoreCase | expected
+        ${''}        | ${false}   | ${false}
+        ${''}        | ${true}    | ${false}
+        ${'Avocado'} | ${false}   | ${false}
+        ${'avocado'} | ${false}   | ${true}
+        ${'Avocado'} | ${true}    | ${true}
+        ${'avocado'} | ${true}    | ${true}
+        ${'english'} | ${false}   | ${false}
+        ${'English'} | ${false}   | ${true}
+        ${'english'} | ${true}    | ${false}
+        ${'English'} | ${true}    | ${true}
+    `('isNoSuggestWord of "$word" ignoreCase: $ignoreCase', async ({ word, ignoreCase, expected }) => {
+        const result = dict.isNoSuggestWord(word, { ignoreCase });
+        expect(result).toEqual(expected);
+    });
+
+    test.each`
+        word          | expected
+        ${'avocado'}  | ${false}
+        ${'Avocado'}  | ${true}
+        ${''}         | ${false}
+        ${'English'}  | ${false}
+        ${'english'}  | ${true}
+        ${'avocadoS'} | ${true}
+        ${'AvocadoS'} | ${false}
+        ${'grumpy'}   | ${true}
+        ${'Grumpy'}   | ${true}
+    `('isForbidden of "$word"', async ({ word, expected }) => {
+        const result = dict.isForbidden(word);
+        expect(result).toEqual(expected);
+    });
+
+    test.each`
+        word          | expected
+        ${'avocado'}  | ${[]}
+        ${'Avocado'}  | ${[]}
+        ${''}         | ${[]}
+        ${'English'}  | ${[]}
+        ${'english'}  | ${[]}
+        ${'avocadoS'} | ${[]}
+        ${'AvocadoS'} | ${[]}
+        ${'grumpy'}   | ${[]}
+        ${'Grumpy'}   | ${[]}
+    `('suggest of "$word"', async ({ word, expected }) => {
+        expect(dict.suggest(word)).toEqual(expected);
+    });
+});
+
+describe('ForbiddenWordsDictionaryTrie', () => {
+    const flagWords = [
+        '  english',
+        '!English',
+        'grumpy',
+        'Avocado',
+        'Capitol',
+        'avocadoS',
+        '!avocado',
+        'not+',
+        '+found',
+        '+working',
+        '!notfound',
+    ];
+    const dict = createFlagWordsDictionary(flagWords, 'flag_words', 'test');
+    const fDict = createFlagWordsDictionaryLegacy(flagWords, 'flag_words', 'test');
+
+    test.each`
+        word         | expected
+        ${'avocado'} | ${false}
+        ${'Avocado'} | ${false}
+        ${'grumpy'}  | ${false}
+        ${'Grumpy'}  | ${false}
+        ${''}        | ${false}
+        ${'English'} | ${false}
+        ${'english'} | ${false}
+    `('has of "$word"', async ({ word, expected }) => {
+        expect(dict.has(word)).toEqual(expected);
+    });
+
+    // cspell:ignore notworking
+
+    test.each`
+        word            | options                  | expected
+        ${'avocado'}    | ${undefined}             | ${{ forbidden: false, found: 'avocado', noSuggest: true }}
+        ${'Avocado'}    | ${undefined}             | ${{ found: 'avocado', forbidden: false, noSuggest: true }}
+        ${'Avocado'}    | ${{ ignoreCase: true }}  | ${{ found: 'avocado', forbidden: false, noSuggest: true }}
+        ${'Avocado'}    | ${{ ignoreCase: false }} | ${{ found: 'Avocado', forbidden: true, noSuggest: false }}
+        ${'avocado'}    | ${{ ignoreCase: false }} | ${{ forbidden: false, found: 'avocado', noSuggest: true }}
+        ${'avocado'}    | ${{ ignoreCase: true }}  | ${{ forbidden: false, found: 'avocado', noSuggest: true }}
+        ${''}           | ${undefined}             | ${undefined}
+        ${'English'}    | ${{ ignoreCase: true }}  | ${{ forbidden: false, found: 'English', noSuggest: true }}
+        ${'English'}    | ${{ ignoreCase: false }} | ${{ forbidden: false, found: 'English', noSuggest: true }}
+        ${'english'}    | ${{ ignoreCase: true }}  | ${{ found: 'english', forbidden: true, noSuggest: false }}
+        ${'english'}    | ${{ ignoreCase: false }} | ${{ found: 'english', forbidden: true, noSuggest: false }}
+        ${'Grumpy'}     | ${{ ignoreCase: true }}  | ${{ found: 'grumpy', forbidden: true, noSuggest: false }}
+        ${'notfound'}   | ${{ ignoreCase: false }} | ${{ forbidden: false, found: 'notfound', noSuggest: true }}
+        ${'notfound'}   | ${{ ignoreCase: true }}  | ${{ forbidden: false, found: 'notfound', noSuggest: true }}
+        ${'notfound'}   | ${{}}                    | ${{ forbidden: false, found: 'notfound', noSuggest: true }}
+        ${'notworking'} | ${undefined}             | ${undefined}
+    `('find "$word" $options', async ({ word, options, expected }) => {
+        expect(dict.find(word, options)).toEqual(expected);
+    });
+
+    test.each`
+        word         | ignoreCase | expected
+        ${''}        | ${false}   | ${false}
+        ${''}        | ${true}    | ${false}
+        ${'Avocado'} | ${false}   | ${false}
+        ${'avocado'} | ${false}   | ${true}
+        ${'Avocado'} | ${true}    | ${true}
+        ${'avocado'} | ${true}    | ${true}
+        ${'english'} | ${false}   | ${false}
+        ${'English'} | ${false}   | ${true}
+        ${'english'} | ${true}    | ${false}
+        ${'English'} | ${true}    | ${true}
+    `('isNoSuggestWord of "$word" IgnoreCase: $ignoreCase', async ({ word, ignoreCase, expected }) => {
+        const result = dict.isNoSuggestWord(word, { ignoreCase });
+        expect(result).toEqual(expected);
+    });
+
+    test.each`
+        word          | expected
+        ${''}         | ${false}
+        ${'avocado'}  | ${false}
+        ${'Avocado'}  | ${true}
+        ${'AvocadoS'} | ${false}
+        ${'avocadoS'} | ${true}
+        ${'capitol'}  | ${false}
+        ${'Capitol'}  | ${true}
+        ${'English'}  | ${false}
+        ${'english'}  | ${true}
+        ${'grumpy'}   | ${true}
+        ${'Grumpy'}   | ${true}
+        ${'GRUMPY'}   | ${true}
+    `('isForbidden of "$word"', async ({ word, expected }) => {
+        const result = dict.isForbidden(word);
+        expect(result).toEqual(expected);
+    });
+
+    test.each`
+        word          | expected
+        ${'avocado'}  | ${[]}
+        ${'Avocado'}  | ${[]}
+        ${''}         | ${[]}
+        ${'English'}  | ${[]}
+        ${'english'}  | ${[]}
+        ${'avocadoS'} | ${[]}
+        ${'AvocadoS'} | ${[]}
+        ${'grumpy'}   | ${[]}
+        ${'Grumpy'}   | ${[]}
+    `('suggest of "$word"', async ({ word, expected }) => {
+        expect(dict.suggest(word)).toEqual(expected);
+    });
+
+    test.each`
+        word          | expected
+        ${'avocado'}  | ${[]}
+        ${'Avocado'}  | ${[]}
+        ${''}         | ${[]}
+        ${'English'}  | ${[]}
+        ${'english'}  | ${[]}
+        ${'avocadoS'} | ${[]}
+        ${'AvocadoS'} | ${[]}
+        ${'grumpy'}   | ${[]}
+        ${'Grumpy'}   | ${[]}
+    `('suggest of "$word"', async ({ word, expected }) => {
+        expect(dict.getPreferredSuggestions?.(word)).toEqual(expected);
+    });
+
+    test('dictionary generation', () => {
+        expect([...(dict.terms?.() || [])].sort()).toEqual([...(fDict.terms?.() || [])].sort());
+    });
+
+    test('terms', () => {
+        const terms = [...(dict.terms?.() || [])];
+        expect(terms.sort()).toEqual([
+            '!+found',
+            '!+working',
+            // '!Avocado',
+            // '!Capitol',
+            // '!avocadoS',
+            // '!english',
+            // '!grumpy',
+            '!not+',
+            // 'English',
+            // 'avocado',
+            // 'notfound',
+        ]);
+    });
+});
+
+describe('createFlagWordsDictionaryFromTrieFile', () => {
+    test('flags all words found in the trie file', async () => {
+        const words = ['whilst', 'grumpy', 'apple'];
+        const trie = createTrieRootFromList(words);
+        const data = [...serializeTrie(trie, { version: 4, base: 10 })].join('\n');
+        const dict = createFlagWordsDictionaryFromTrieFile(data, 'flag_words_trie', 'test');
+
+        expect(dict.has('whilst')).toBe(false);
+        expect(dict.isForbidden('whilst')).toBe(true);
+        expect(dict.isForbidden('WHILST')).toBe(true);
+        expect(dict.isForbidden('grumpy')).toBe(true);
+        expect(dict.isForbidden('apple')).toBe(true);
+        expect(dict.isForbidden('orange')).toBe(false);
+    });
+});
+
+function createFlagWordsDictionaryLegacy(wordList: Iterable<string>, name: string, source: string) {
+    const testSpecialCharacters = /[~*+]/;
+
+    const { t: specialWords, f: typoWords } = bisect(
+        parseDictionaryLines(wordList, { stripCaseAndAccents: false }),
+        (line) => testSpecialCharacters.test(line),
+    );
+
+    const trieDict = specialWords.size ? buildTrieDict(specialWords, name, source) : undefined;
+    const typosDict = createTyposDictionary(typoWords, name, source);
+
+    if (!trieDict) return typosDict;
+    return new FlagWordsDictionary(name, source, typosDict, trieDict);
+}
+
+const regExpCleanIgnore = /^(!!)+/;
+
+function buildTrieDict(words: Set<string>, name: string, source: string): FlagWordsDictionaryTrie {
+    const trie = buildITrieFromWords(
+        pipe(
+            words,
+            opMap((w) => '!' + w),
+            opMap((w) => w.replace(regExpCleanIgnore, '')),
+        ),
+    );
+    return new FlagWordsDictionaryTrie(trie, name, source);
+}
+
+function bisect<T>(values: Set<T> | Iterable<T>, predicate: (v: T) => boolean): { t: Set<T>; f: Set<T> } {
+    const t = new Set<T>();
+    const f = new Set<T>();
+    for (const v of values) {
+        if (predicate(v)) {
+            t.add(v);
+        } else {
+            f.add(v);
+        }
+    }
+    return { t, f };
+}

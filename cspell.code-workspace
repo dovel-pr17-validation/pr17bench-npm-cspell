@@ -1,0 +1,57 @@
+{
+    "folders": [
+        {
+            "name": "cspell-monorepo",
+            "path": "."
+        },
+        { "path": "packages/cspell-bundled-dicts" },
+        { "path": "packages/cspell-config-lib" },
+        { "path": "packages/cspell-dictionary-bundler-plugin" },
+        { "path": "packages/cspell-dictionary" },
+        { "path": "packages/cspell-eslint-plugin" },
+        { "path": "packages/cspell-filetypes" },
+        { "path": "packages/cspell-gitignore" },
+        { "path": "packages/cspell-glob" },
+        { "path": "packages/cspell-grammar" },
+        { "path": "packages/cspell-io" },
+        { "path": "packages/cspell-json-reporter" },
+        { "path": "packages/cspell-junit-reporter" },
+        { "path": "packages/cspell-lib" },
+        { "path": "packages/cspell-normalize-json" },
+        { "path": "packages/cspell-performance-monitor" },
+        { "path": "packages/cspell-pipe" },
+        { "path": "packages/cspell-resolver" },
+        { "path": "packages/cspell-service-bus" },
+        { "path": "packages/cspell-strong-weak-map" },
+        { "path": "packages/cspell-tools" },
+        { "path": "packages/cspell-trie-lib" },
+        { "path": "packages/cspell-trie" },
+        { "path": "packages/cspell-types" },
+        { "path": "packages/cspell-url" },
+        { "path": "packages/cspell-worker" },
+        { "path": "packages/cspell" },
+        { "path": "packages/rpc" },
+        { "path": "packages/dynamic-import" },
+        { "path": "packages/flatpack-json" },
+        { "path": "packages/hunspell-reader" },
+        { "path": "integration-tests" },
+        { "path": "test-packages" },
+        { "path": "rfc" },
+        { "path": "website" }
+    ],
+    "settings": {
+        "typescript.tsdk": "cspell-monorepo/node_modules/typescript/lib",
+        "cSpell.customDictionaries": {
+            "workspace": true
+        },
+        "cSpell.enabledFileTypes": { "shellscript": true },
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "[javascript]": {
+            "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "editor.formatOnSave": true
+    },
+    "extensions": {
+        "recommendations": ["streetsidesoftware.code-spell-checker", "dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
+    }
+}

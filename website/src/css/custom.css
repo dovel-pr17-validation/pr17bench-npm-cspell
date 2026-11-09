@@ -1,0 +1,46 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+:root {
+    --cspell-color-primary-50: #fef2f0;
+    --cspell-color-primary-100: #fce8e4;
+    --cspell-color-primary-200: #f9d5cf;
+    --cspell-color-primary-300: #f4afa2;
+    --cspell-color-primary-400: #e67a64;
+    --cspell-color-primary-500: #a52b17;
+    --cspell-color-primary-600: #8a2313;
+    --cspell-color-primary-700: #7a1f11;
+    --cspell-color-primary-800: #5a170c;
+    --cspell-color-primary-900: #3d0f08;
+    --cspell-color-primary-950: #2a0a05;
+}
+
+@media screen and (max-width: 768px) {
+    .navbar {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .navbar__inner {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .footer {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .footer__bottom {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .main-wrapper {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}

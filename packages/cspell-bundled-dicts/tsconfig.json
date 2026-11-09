@@ -1,0 +1,10 @@
+{
+    "extends": "../../tsconfig.esm.json",
+    "compilerOptions": {
+        "declaration": false,
+        "isolatedDeclarations": false,
+        "declarationMap": false,
+        "sourceMap": false
+    },
+    "files": ["cspell-default.config.ts"]
+}

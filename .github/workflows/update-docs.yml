@@ -1,0 +1,46 @@
+name: Build Docs
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'packages/cspell-types/**/*.ts'
+      - 'website/_static/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-docs:
+    if: github.repository_owner == 'streetsidesoftware'
+    runs-on: ubuntu-latest
+    env:
+      NEW_BRANCH: 'update-docs'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup
+        uses: ./.github/actions/setup
+        with:
+          node-version: '24.x'
+
+      - name: Build Docs
+        run: |
+          pnpm i
+          pnpm build:prod
+          pnpm run build-cspell-types-docs
+
+      - name: PR
+        uses: ./.github/actions/pr
+        with:
+          commit-message: 'ci: Workflow Bot -- Build Docs'
+          branch: ${{ env.NEW_BRANCH }}
+          app_id: ${{ secrets.AUTOMATION_APP_ID }}
+          app_private_key: ${{ secrets.AUTOMATION_PRIVATE_KEY }}

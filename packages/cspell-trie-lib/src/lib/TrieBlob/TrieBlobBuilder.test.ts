@@ -1,0 +1,508 @@
+import { describe, expect, test } from 'vitest';
+
+import { registerDebugMode } from '../../test/debugger.ts';
+import { readFixtureFile } from '../../test/samples.ts';
+import type { BuilderCursor } from '../Builder/index.ts';
+import { insertWordsAtCursor } from '../Builder/index.ts';
+import { buildITrieFromWords } from '../buildITrie.ts';
+import { consolidate } from '../consolidate.ts';
+import { defaultTrieInfo } from '../constants.ts';
+import type { ITrie } from '../ITrie.ts';
+import { createITrieFromTrieData, iTrieToStructuredStringLines } from '../ITrie.ts';
+import { extractTrieCharacteristics } from '../ITrieNode/TrieInfo.ts';
+import { parseDictionaryLines } from '../SimpleDictionaryParser.ts';
+import { trieRootToITrieRoot } from '../TrieNode/trie.ts';
+import { createTrieRoot, insert } from '../TrieNode/trie-util.ts';
+import type { TrieNode, TrieRoot } from '../TrieNode/TrieNode.ts';
+import { createTrieBlobFromTrieRoot } from './createTrieBlob.ts';
+import { insertWordsIntoTrieBlobBuilderUsingCursor, TrieBlobBuilder } from './TrieBlobBuilder.ts';
+
+describe('TrieBlobBuilder', () => {
+    const pCompaniesContent = readFixtureFile('dictionaries/companies/companies.txt');
+
+    test('insert', () => {
+        const words = ['one', 'two', 'three', 'four', 'houses', 'house', '!forbidden'];
+        const builder = new TrieBlobBuilder();
+        builder.insert(words);
+        const ft = builder.build();
+        expect([...ft.words()].sort()).toEqual([...words].sort());
+        expect(extractTrieCharacteristics(ft)).toEqual({
+            hasCompoundWords: false,
+            hasForbiddenWords: true,
+            hasNonStrictWords: false,
+            hasPreferredSuggestions: false,
+        });
+    });
+
+    test('insertWords Companies', async () => {
+        const content = await pCompaniesContent;
+        const words = new Set(parseDictionaryLines(content));
+        const builder = new TrieBlobBuilder();
+        builder.insertWords(words);
+        const ft = builder.build();
+        expect([...ft.words()].sort()).toEqual([...words].sort());
+        expect(extractTrieCharacteristics(ft)).toEqual({
+            hasCompoundWords: false,
+            hasForbiddenWords: false,
+            hasNonStrictWords: true,
+            hasPreferredSuggestions: false,
+        });
+    });
+
+    test('insertWordsCursor Companies', async () => {
+        const content = await pCompaniesContent;
+        const words = new Set(parseDictionaryLines(content, { sortBatchSize: 0 }));
+        const builder = new TrieBlobBuilder();
+        insertWordsIntoTrieBlobBuilderUsingCursor(builder, words);
+        const ft = builder.build();
+        expect([...ft.words()].sort()).toEqual([...words].sort());
+        expect(extractTrieCharacteristics(ft)).toEqual({
+            hasCompoundWords: false,
+            hasForbiddenWords: false,
+            hasNonStrictWords: true,
+            hasPreferredSuggestions: false,
+        });
+    });
+
+    // // This is currently a failing test. Needs investigation.
+    // test('insertWordsCursor Companies partial sort', async () => {
+    //     const content = await pCompaniesContent;
+    //     const words = new Set(parseDictionaryLines(content, { sortBatchSize: 32 }));
+    //     const builder = new TrieBlobBuilder();
+    //     builder.insertWordsCursor(words);
+    //     const ft = builder.build();
+    //     expect([...ft.words()].sort()).toEqual([...words].sort());
+    //     expect(extractTrieCharacteristics(ft)).toEqual({
+    //         hasCompoundWords: false,
+    //         hasForbiddenWords: false,
+    //         hasNonStrictWords: true,
+    //         hasPreferredSuggestions: false,
+    //     });
+    // });
+
+    test('insert characteristics ! :', () => {
+        const words = ['one', 'two', 'three', 'four', 'houses', 'house', ':color:special', '~caseInsensitive'];
+        const builder = new TrieBlobBuilder();
+        builder.insert(words);
+        const ft = builder.build();
+        expect([...ft.words()].sort()).toEqual([...words].sort());
+        expect(extractTrieCharacteristics(ft)).toEqual({
+            hasCompoundWords: false,
+            hasForbiddenWords: false,
+            hasNonStrictWords: true,
+            hasPreferredSuggestions: true,
+        });
+    });
+
+    test('insert characteristics +', () => {
+        const words = ['one', 'two', 'three', 'four', 'houses', 'house', '+one'];
+        const builder = new TrieBlobBuilder();
+        builder.insert(words);
+        const ft = builder.build();
+        expect([...ft.words()].sort()).toEqual([...words].sort());
+        expect(extractTrieCharacteristics(ft)).toEqual({
+            hasCompoundWords: true,
+            hasForbiddenWords: false,
+            hasNonStrictWords: false,
+            hasPreferredSuggestions: false,
+        });
+    });
+
+    test('insert word list', () => {
+        const words = [...new Set(sampleWords())].sort();
+        const builder = new TrieBlobBuilder();
+        builder.insert(words);
+        expect(builder.has('😀😃😄😁😆🥹😅😂')).toBe(true);
+        expect(builder.has('🤣🥲☺️😊😇🙂🙃😉')).toBe(true);
+        const ft = builder.build();
+        expect([...ft.words()]).toEqual([...words].sort());
+    });
+
+    test('setOptions', () => {
+        const builder = new TrieBlobBuilder();
+        expect(builder.options).toEqual(defaultTrieInfo);
+        builder.setOptions({});
+        expect(builder.options).toEqual(defaultTrieInfo);
+        builder.setOptions({ compoundCharacter: '&' });
+        expect(builder.options).toEqual({ ...defaultTrieInfo, compoundCharacter: '&' });
+    });
+
+    test('cursor', () => {
+        const builder = new TrieBlobBuilder();
+        const cursor = builder.getCursor();
+        [...'hello'].forEach((letter) => cursor.insertChar(letter));
+        cursor.markEOW();
+        cursor.backStep(5);
+        const t = builder.build();
+        expect([...t.words()]).toEqual(['hello']);
+    });
+
+    test.each`
+        word
+        ${'hello'}
+        ${'😀😎'}
+    `('cursor insertChar split $word', ({ word }: { word: string }) => {
+        const builder = new TrieBlobBuilder();
+        const cursor = builder.getCursor();
+        const chars = [...word];
+        chars.forEach((letter) => cursor.insertChar(letter));
+        cursor.markEOW();
+        cursor.backStep(chars.length);
+        const t = builder.build();
+        expect([...t.words()]).toEqual([word]);
+    });
+
+    test('cursor with word list', () => {
+        const builder = new TrieBlobBuilder();
+        const cursor = builder.getCursor();
+        const words = sampleWords();
+        const sortedUnique = [...new Set(words)].sort();
+        insertWordsAtCursor(cursor, words);
+        const t = builder.build();
+        expect([...t.words()].sort()).toEqual(sortedUnique);
+    });
+
+    test('cursor with word list - non-optimized', () => {
+        const builder = new TrieBlobBuilder();
+        const cursor = builder.getCursor();
+        const words = sampleWords();
+        const sortedUnique = [...new Set(words)].sort();
+        for (const word of words) {
+            const chars = [...word];
+            chars.forEach((letter) => cursor.insertChar(letter));
+            cursor.markEOW();
+            cursor.backStep(chars.length);
+        }
+        const t = builder.build();
+        expect([...t.words()]).toEqual(sortedUnique);
+    });
+
+    test('insertFromOptimizedTrie small', () => {
+        const words = sampleWords2();
+        const sortedUnique = [...new Set(words)].sort();
+
+        const b = TrieBlobBuilder.fromWordList(words);
+        // console.warn('trie 1 %o', toJsonObj(b));
+        expect([...b.words()].sort()).toEqual(sortedUnique);
+
+        const builder = new TrieBlobBuilder();
+        const cursor = builder.getCursor();
+        insertFromOptimizedTrie(cursor, words);
+        // console.warn('trie 2 %o', toJsonObj(builder));
+        const t = builder.build();
+        expect([...t.words()].sort()).toEqual(sortedUnique);
+    });
+
+    test('insertFromOptimizedTrie', () => {
+        const builder = new TrieBlobBuilder();
+        const cursor = builder.getCursor();
+        const words = sampleWords();
+        const sortedUnique = [...new Set(words)].sort();
+        insertFromOptimizedTrie(cursor, words);
+        const t = builder.build();
+        expect([...t.words()].sort()).toEqual(sortedUnique);
+    });
+
+    test('fromTrieRoot non-optimized trie', () => {
+        const words = sampleWords();
+        const trie = buildTrie(words, false);
+        const iTrieRoot = trieRootToITrieRoot(trie);
+        const t = TrieBlobBuilder.fromTrieRoot(trie);
+        const sortedUnique = [...new Set(words)].sort();
+        expect([...t.words()].sort()).toEqual(sortedUnique);
+
+        const t2 = TrieBlobBuilder.fromITrieRoot(iTrieRoot);
+        expect([...t2.words()].sort()).toEqual(sortedUnique);
+
+        const t3 = TrieBlobBuilder.fromITrieRoot(t.getRoot());
+        expect([...t3.words()].sort()).toEqual(sortedUnique);
+    });
+
+    test('fromTrieRoot(optimize) non-optimized trie', () => {
+        const words = sampleWords();
+        const trie = buildTrie(words, false);
+        const iTrieRoot = trieRootToITrieRoot(trie);
+        const t = createTrieBlobFromTrieRoot(trie, { useStringTable: true, optimize: true });
+        const sortedUnique = [...new Set(words)].sort();
+        expect([...t.words()]).toEqual(sortedUnique);
+
+        const t2 = TrieBlobBuilder.fromITrieRoot(iTrieRoot);
+        expect([...t2.words()].sort()).toEqual(sortedUnique);
+
+        const t3 = TrieBlobBuilder.fromITrieRoot(t.getRoot());
+        expect([...t3.words()].sort()).toEqual(sortedUnique);
+    });
+
+    test('fromTrieRoot optimized trie', () => {
+        const words = sampleWords();
+        const trie = buildTrie(words);
+        const iTrieRoot = trieRootToITrieRoot(trie);
+        const t = createTrieBlobFromTrieRoot(trie, { useStringTable: true, optimize: true });
+        const sortedUnique = [...new Set(words)].sort();
+        expect([...t.words()].sort()).toEqual(sortedUnique);
+
+        const t2 = TrieBlobBuilder.fromITrieRoot(iTrieRoot, { useStringTable: true, optimize: true });
+        expect([...t2.words()].sort()).toEqual(sortedUnique);
+
+        const t3 = TrieBlobBuilder.fromITrieRoot(t.getRoot(), { useStringTable: true, optimize: true });
+        expect([...t3.words()].sort()).toEqual(sortedUnique);
+    });
+
+    test('should be able to correctly preserve referenced nodes.', () => {
+        const extraWords = 'reds greens blues yellows oranges purples'.split(' ');
+        const builder = new TrieBlobBuilder();
+        const cursor = builder.getCursor();
+        const words = sampleWords();
+        const sortedUnique = [...new Set(words), ...extraWords].sort();
+        insertFromOptimizedTrie(cursor, words);
+        // Add more words to make sure it works.
+        insertWordsAtCursor(cursor, extraWords);
+        const t = builder.build();
+        expect([...t.words()].sort()).toEqual(sortedUnique);
+    });
+});
+
+describe('optimization', () => {
+    // Register the debug mode to make sure suggestions do not timeout during debugging.
+    const isDebugMode = registerDebugMode();
+    const timeout = isDebugMode ? 1_000_000 : undefined;
+
+    test.each`
+        comment                            | words
+        ${'single word'}                   | ${['optimization']}
+        ${'multiple words'}                | ${['optimization', 'optimize']}
+        ${'multiple words shared endings'} | ${['optimization', 'vacation', 'sensation']}
+        ${'emojis'}                        | ${['😀😃😄😁', '😆🥹😅😂', '🤣🥲☺️😊', '😇🙂🙃😉']}
+        ${'sampleWords()'}                 | ${sampleWords()}
+    `('optimize $comment $words', ({ words }) => {
+        const sortedUnique = [...new Set(words)].sort();
+        const ft0 = TrieBlobBuilder.fromWordList(words, undefined, { useStringTable: false, optimize: false });
+        expect([...ft0.words()]).toEqual(sortedUnique);
+        const ft1 = TrieBlobBuilder.fromWordList(words, undefined, { useStringTable: false, optimize: true });
+        expect([...ft1.words()]).toEqual(sortedUnique);
+        const ft2 = TrieBlobBuilder.fromWordList(words, undefined, { useStringTable: true, optimize: true });
+        expect([...ft2.words()]).toEqual(sortedUnique);
+
+        const t0 = createITrieFromTrieData(ft0);
+        const t1 = createITrieFromTrieData(ft1);
+        const t2 = createITrieFromTrieData(ft2);
+
+        expect(iTrieToStructuredStringLines(t0).join('\n')).toMatchSnapshot('No optimization');
+        expect(iTrieToStructuredStringLines(t1).join('\n')).toMatchSnapshot('With optimization');
+        expect(iTrieToStructuredStringLines(t2).join('\n')).toMatchSnapshot('With optimization and string table');
+    });
+
+    test(
+        'impact on suggest (accents)',
+        () => {
+            // setDebuggerAttached(true); // turn on debug output in suggestAStar
+
+            // cspell:ignore Geschäft Aujourd'hui
+            const words = [
+                ...parseDictionaryLines(['Geschäft'.normalize('NFD'), 'café', 'book', "Aujourd'hui"], {
+                    stripCaseAndAccents: true,
+                }),
+            ];
+            const tb = buildITrieFromWords(words);
+            expect([...tb.words()]).toEqual([
+                "Aujourd'hui",
+                'Geschäft',
+                'book',
+                'café',
+                "~aujourd'hui",
+                '~cafe',
+                '~geschaft',
+                '~geschäft',
+            ]);
+
+            // console.log('%s', iTrieToStructuredStringLines(tb).join('\n'));
+
+            expect(tb.has(words[0])).toBe(true);
+            expect(iTrieHas(tb, words[0], true)).toBe(true);
+            expect(iTrieHas(tb, words[0], false)).toBe(true);
+            expect(iTrieHas(tb, words[0].toLowerCase(), false)).toBe(true);
+            words.forEach((w) => expect(tb.hasWord(w, true)).toBe(true));
+            words.map((w) => w.toLowerCase()).forEach((w) => expect(iTrieHas(tb, w, false)).toBe(true));
+            expect(tb.hasWord(words[0].toLowerCase(), false)).toBe(true);
+            expect(tb.hasWord(words[0].toLowerCase(), true)).toBe(false);
+            // expect(d.suggest('geschaft', { ignoreCase: false }).map((r) => r)).toEqual(['Geschäft']);
+            expect(tb.suggestWithCost('geschaft', { ignoreCase: true })).toEqual([
+                {
+                    cost: 0,
+                    isPreferred: undefined,
+                    word: 'geschaft',
+                },
+                {
+                    cost: 1,
+                    isPreferred: undefined,
+                    word: 'geschäft',
+                },
+                {
+                    cost: 2,
+                    isPreferred: undefined,
+                    word: 'Geschäft',
+                },
+            ]);
+            expect(tb.suggest('geschaft', { ignoreCase: true })).toEqual(['geschaft', 'geschäft', 'Geschäft']);
+        },
+        timeout,
+    );
+});
+
+function sampleWords() {
+    return (
+        `
+        Here are a few words to use as a dictionary. They just need to be split.
+        walk walked walking walker
+        talk talked talking talker
+        play played playing player
+        red green blue yellow orange
+        on the first day of
+        on a dark and
+
+        // cspell:disable
+
+        "ትግርኛ",
+         "አማርኛ",
+         "ພາສາລາວ",
+         "ꦧꦱꦗꦮ",
+         "ᐃᓄᒃᑎᑐᑦ",
+         "ᐊᓂᔑᓈᐯᒧᐎᓐ",
+         "ᓀᐦᐃᔭᐍᐏᐣ"
+         😀😃😄😁😆🥹😅😂
+         🤣🥲☺️😊😇🙂🙃😉
+         😌😍🥰😘😗😙😚😋
+         😛😝😜🤪🤨🧐🤓😎
+         🥸🤩🥳😏😒😞😔😟
+         😕🙁☹️😣😖😫😩🥺
+         😢😭😤😠😡🤬🤯😳
+         🥵🥶😶‍🌫️😱😨😰😥😓
+         🤗🤔🫣🤭🫢🫡🤫🫠
+         🤥😶🫥😐🫤😑🫨😬
+         🙄😯😦😧😮😲🥱😴
+         🤤😪😮‍💨😵😵‍💫🤐🥴🤢
+         🤮🤧😷🤒🤕🤑🤠😈
+
+         // cspell:enable
+
+         ` +
+        genWords(8, 'A', 'z').join(' ') +
+        genWords(8, '\u1F00', '\u1FFF').join(' ') +
+        ' '
+    )
+        .normalize('NFC')
+        .split(/[\s\p{P}]/gu)
+        .filter((a) => !!a);
+}
+
+function sampleWords2() {
+    // cspell:disable
+    const samples = [
+        'Here are a few words to use as a dictionary. They just need to be split. ',
+        'walk walked walking walker ',
+        'talk talked talking talker ',
+        'play played playing player ',
+        'red green blue yellow orange ',
+        'on the first day of ',
+        'on a dark and ',
+        'ted red bed reed bees',
+        'fëé',
+        'café',
+        'cat béat',
+        'féé',
+        'téé',
+        'ትኛ',
+        'አኛ',
+        'ትግርኛ',
+        'አማርኛ',
+        'ພາສາລາວ',
+        'ꦧꦱꦗꦮ',
+        'ᐃᓄᒃᑎᑐᑦ',
+        'ᐊᓂᔑᓈᐯᒧᐎᓐ',
+        'ᓀᐦᐃᔭᐍᐏᐣ',
+        '😀😃😄😁😆🥹😅😂🤣🥲☺️😊😇🙂🙃😉',
+        '😌😍🥰😘😗😙😚😋😛😝😜🤪🤨🧐🤓😎',
+        '🥸🤩🥳😏😒😞😔😟😕🙁☹️😣😖😫😩🥺',
+        '😢😭😤😠😡🤬🤯😳🥵🥶😶‍🌫️😱😨😰😥😓',
+        '🤗🤔🫣🤭🫢🫡🤫🫠🤥😶🫥😐🫤😑🫨😬',
+        '🙄😯😦😧😮😲🥱😴🤤😪😮‍💨😵😵‍💫🤐🥴🤢',
+        '🤮🤧😷🤒🤕🤑🤠😈 ',
+    ] // cspell:enable
+        .flatMap((a) => a.split(' '))
+        .map((a) => a.normalize('NFC'))
+        .filter((a) => !!a);
+    return [...new Set(samples)].sort();
+}
+
+function insertFromOptimizedTrie(cursor: BuilderCursor, words: string[]) {
+    const trie = buildTrie(words, true);
+    const nodeToRef = new Map<TrieNode, number>();
+    let count = 0;
+
+    function walk(node: TrieNode) {
+        const found = nodeToRef.get(node);
+        if (found) {
+            cursor.reference(found);
+            cursor.backStep(1);
+            return;
+        }
+        if (node.c) {
+            const ref = ++count;
+            nodeToRef.set(node, ref);
+            for (const [k, n] of Object.entries(node.c)) {
+                cursor.insertChar(k);
+                walk(n);
+            }
+        }
+        if (node.f) {
+            cursor.markEOW();
+        }
+        if (node !== trie) cursor.backStep(1);
+    }
+
+    walk(trie);
+}
+
+function buildTrie(words: string[], optimize = true): TrieRoot {
+    const root = createTrieRoot({});
+    insertWords(root, words);
+    return optimize ? consolidate(root) : root;
+}
+
+function insertWords(root: TrieRoot, words: string[]) {
+    for (const word of words) {
+        if (word.length) {
+            insert(word, root);
+        }
+    }
+}
+
+function genWords(len: number, startLetter: string, endLetter: string): string[] {
+    const words: string[] = [];
+    const start = startLetter.codePointAt(0) || 0;
+    const end = endLetter.codePointAt(0) || 0;
+    let word = '';
+    for (let p = start; p <= end; ++p) {
+        word += String.fromCodePoint(p);
+        if (p % len === 0) {
+            words.push(word);
+            word = '';
+        }
+    }
+    return words;
+}
+
+// function toJsonObj(s: { toJSON: () => any }) {
+//     return JSON.parse(JSON.stringify(s));
+// }
+
+function iTrieHas(trie: ITrie, word: string, caseSensitive: boolean): boolean {
+    let r = trie.hasWord(word, caseSensitive);
+    r ||= trie.hasWord(word.toLowerCase(), caseSensitive);
+
+    if (!caseSensitive) {
+        r ||= trie.hasWord('~' + word, caseSensitive);
+    }
+
+    return r;
+}

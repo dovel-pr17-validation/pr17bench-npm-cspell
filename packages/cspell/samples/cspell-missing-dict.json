@@ -1,0 +1,11 @@
+{
+    "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+    "id": "include-regex-example",
+    "dictionaryDefinitions": [
+        {
+            "name": "missing-dictionary",
+            "path": "./missing.txt"
+        }
+    ],
+    "import": ["../../../cspell.json"]
+}

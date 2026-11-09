@@ -1,0 +1,112 @@
+{
+  "name": "@cspell/eslint-plugin",
+  "version": "10.4.1",
+  "description": "CSpell ESLint plugin",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "homepage": "https://github.com/streetsidesoftware/cspell/tree/main/packages/cspell-eslint-plugin#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/streetsidesoftware/cspell.git",
+    "directory": "packages/cspell-eslint-plugin"
+  },
+  "bugs": {
+    "url": "https://github.com/streetsidesoftware/cspell/issues?q=is%3Aissue%20state%3Aopen%20label%3Acspell-eslint-plugin"
+  },
+  "keywords": [
+    "cspell",
+    "eslint",
+    "plugin",
+    "spell",
+    "spell checker",
+    "spelling"
+  ],
+  "license": "MIT",
+  "author": "Jason Dent <jason@streetsidesoftware.nl>",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/plugin/index.d.cts",
+      "require": "./dist/plugin/index.cjs",
+      "import": "./dist/plugin/index.cjs",
+      "default": "./dist/plugin/index.cjs"
+    },
+    "./configs": {
+      "types": "./dist/plugin/configs.d.cts",
+      "require": "./dist/plugin/configs.cjs",
+      "import": "./dist/plugin/configs.cjs",
+      "default": "./dist/plugin/configs.cjs"
+    },
+    "./recommended": {
+      "types": "./dist/plugin/recommended.d.cts",
+      "require": "./dist/plugin/recommended.cjs",
+      "import": "./dist/plugin/recommended.cjs",
+      "default": "./dist/plugin/recommended.cjs"
+    }
+  },
+  "main": "dist/plugin/index.cjs",
+  "types": "dist/plugin/index.d.cts",
+  "files": [
+    "dist",
+    "!**/__mocks__",
+    "!**/*.spec.*",
+    "!**/*.test.*",
+    "!**/test*/**",
+    "!**/*.tsbuildInfo",
+    "!**/*.map"
+  ],
+  "scripts": {
+    "bt": "pnpm build && pnpm test",
+    "build": "pnpm build:schema && pnpm build:src",
+    "build:schema": "pnpm build-options-schema",
+    "build:src": "tsc -b ./tsconfig.json -f",
+    "clean": "shx rm -rf dist temp coverage \"*.tsbuildInfo\"",
+    "clean-build": "pnpm run clean && pnpm run build",
+    "coverage": "echo coverage",
+    "test": "pnpm run test-eslint && pnpm run test-samples",
+    "test-eslint": "npx mocha --timeout 10000 \"dist/**/*.test.mjs\"",
+    "test-samples": "pnpm -r --filter @internal/eslint-plugin-fixtures-simple test",
+    "test-watch": "pnpm run test -- --watch",
+    "test-yaml": "npx mocha --timeout 10000 \"dist/**/yaml.test.mjs\"",
+    "watch": "tsc -b ./tsconfig.json --watch -f"
+  },
+  "dependencies": {
+    "@cspell/cspell-types": "workspace:*",
+    "@cspell/url": "workspace:*",
+    "cspell-lib": "workspace:*",
+    "synckit": "^0.12.3"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.7",
+    "@eslint/js": "^10.0.1",
+    "@internal/cspell-eslint-plugin-scripts": "workspace:*",
+    "@types/estree": "^1.0.10",
+    "@types/mocha": "^10.0.10",
+    "@typescript-eslint/parser": "^8.72.1",
+    "@typescript-eslint/types": "^8.72.1",
+    "eslint": "^10.14.0",
+    "eslint-plugin-jsonc": "^3.4.2",
+    "eslint-plugin-mdx": "^3.9.1",
+    "eslint-plugin-n": "^18.5.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-simple-import-sort": "^14.0.0",
+    "eslint-plugin-yml": "^3.10.0",
+    "globals": "^17.14.0",
+    "jsonc-eslint-parser": "^3.3.0",
+    "mocha": "^12.0.3",
+    "ts-json-schema-generator": "2.9.0",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.72.1",
+    "yaml-eslint-parser": "^2.1.0"
+  },
+  "peerDependencies": {
+    "eslint": "^8 || ^9 || ^10"
+  },
+  "engines": {
+    "node": ">=22.18.0"
+  }
+}

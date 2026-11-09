@@ -1,0 +1,2198 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## v10.2.0-alpha.0 (2026-08-28)
+
+### Features
+
+- feat: Add `--force-check` cli option (<a href="https://github.com/streetsidesoftware/cspell/pull/9080">#9080</a>)
+
+### Fixes
+
+- fix: Updated package.json exports (<a href="https://github.com/streetsidesoftware/cspell/pull/8965">#8965</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9067">#9067</a>)
+
+## v10.2.0-alpha.1 (2026-08-28)
+
+- No changes
+
+## v10.2.0-alpha.2 (2026-08-28)
+
+### Fixes
+
+- fix(ci): push release tag with GitHub App token so publish.yml triggers (<a href="https://github.com/streetsidesoftware/cspell/pull/9097">#9097</a>)
+
+## v10.2.0-alpha.3 (2026-08-29)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9102">#9102</a>)
+
+## v10.2.0-alpha.4 (2026-08-30)
+
+- No changes
+
+## v10.2.0-alpha.5 (2026-08-30)
+
+- No changes
+
+## v10.2.0-alpha.6 (2026-08-30)
+
+### Fixes
+
+- fix: Reduce the size of cspell types when bundled (<a href="https://github.com/streetsidesoftware/cspell/pull/9119">#9119</a>)
+
+## v10.2.0-alpha.7 (2026-08-30)
+
+- No changes
+
+## v10.3.0-alpha.0 (2026-09-04)
+
+### Features
+
+- feat: Add an option to set the kind of dictionary file (<a href="https://github.com/streetsidesoftware/cspell/pull/9178">#9178</a>)
+
+### Fixes
+
+- fix: Only hide code-like partial words (<a href="https://github.com/streetsidesoftware/cspell/pull/9163">#9163</a>)
+
+### Documentation
+
+- feat: Add an option to set the kind of dictionary file (<a href="https://github.com/streetsidesoftware/cspell/pull/9178">#9178</a>)
+
+## v10.3.1-alpha.0 (2026-09-12)
+
+### Fixes
+
+- fix: CSpell-Tools support replacements (<a href="https://github.com/streetsidesoftware/cspell/pull/9205">#9205</a>)
+- fix: Revert #9198 (<a href="https://github.com/streetsidesoftware/cspell/pull/9202">#9202</a>)
+
+- fix: Add definitions for custom word breaks (<a href="https://github.com/streetsidesoftware/cspell/pull/9199">#9199</a>)
+- fix: Split words on soft hyphens (<a href="https://github.com/streetsidesoftware/cspell/pull/9196">#9196</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9208">#9208</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9198">#9198</a>)
+
+## v10.3.1-alpha.1 (2026-09-12)
+
+### Fixes
+
+- fix(cspell-tools): Support multiple replacements in a single entry (<a href="https://github.com/streetsidesoftware/cspell/pull/9212">#9212</a>)
+
+## v10.3.2-alpha.0 (2026-09-13)
+
+### Fixes
+
+- fix: Add tags to ParsedText (<a href="https://github.com/streetsidesoftware/cspell/pull/9237">#9237</a>)
+
+## v10.3.4-alpha.0 (2026-09-17)
+
+### Fixes
+
+- fix: Fix Sponsor cards on npmjs (<a href="https://github.com/streetsidesoftware/cspell/pull/9260">#9260</a>)
+
+## v10.4.0-alpha.0 (2026-09-30)
+
+### Features
+
+- feat: Add `--glob-symlinks` to follow symbolic links when matching globs (<a href="https://github.com/streetsidesoftware/cspell/pull/9342">#9342</a>)
+
+---
+
+</details>
+
+- feat: Respect `COLUMNS` for help and table width (<a href="https://github.com/streetsidesoftware/cspell/pull/9358">#9358</a>)
+- feat: Add `--follow-symlinks` and skip files referenced by symbolic links (<a href="https://github.com/streetsidesoftware/cspell/pull/9340">#9340</a>)
+
+---
+
+</details>
+
+- feat: `--must-find-files` fails when every file was skipped (<a href="https://github.com/streetsidesoftware/cspell/pull/9327">#9327</a>)
+
+---
+
+</details>
+
+### Fixes
+
+- fix: `@cspell/strong-weak-map` types compile with the `esnext` lib (<a href="https://github.com/streetsidesoftware/cspell/pull/9371">#9371</a>)
+- fix: Published types no longer need `@types/node` (<a href="https://github.com/streetsidesoftware/cspell/pull/9359">#9359</a>)
+
+---
+
+</details>
+
+- fix: Show the lint options in cspell --help (<a href="https://github.com/streetsidesoftware/cspell/pull/9362">#9362</a>)
+- fix: Honor `--language-id` and `--locale` when deciding whether to check a file (<a href="https://github.com/streetsidesoftware/cspell/pull/9316">#9316</a>)
+
+---
+
+</details>
+
+- fix(cspell-lib): Check remote documents by URI without passing their text (<a href="https://github.com/streetsidesoftware/cspell/pull/9343">#9343</a>)
+- fix: Don't apply a repository's .gitignore to worktrees and submodules inside it (<a href="https://github.com/streetsidesoftware/cspell/pull/9341">#9341</a>)
+
+---
+
+</details>
+
+## v10.4.0-alpha.1 (2026-09-30)
+
+### Fixes
+
+- fix: Deprecate `cspell-lib/rpc`; import from `@cspell/rpc` (<a href="https://github.com/streetsidesoftware/cspell/pull/9376">#9376</a>)
+
+---
+
+</details>
+
+## v10.4.1 (2026-11-06)
+
+### Fixes
+
+- fix: `cspell init` updates the config in the current directory (<a href="https://github.com/streetsidesoftware/cspell/pull/9552">#9552</a>)
+- fix: `cspell init` only changes what you ask for and handles new JSON paths (<a href="https://github.com/streetsidesoftware/cspell/pull/9551">#9551</a>)
+
+- fix: `cspell init` no longer adds the schema to existing config files (<a href="https://github.com/streetsidesoftware/cspell/pull/9550">#9550</a>)
+- fix: cspell-tools no longer depends on the glob package (<a href="https://github.com/streetsidesoftware/cspell/pull/9540">#9540</a>)
+
+- fix: Stop storing the file paths of issues in the cache (<a href="https://github.com/streetsidesoftware/cspell/pull/9522">#9522</a>)
+
+---
+
+</details>
+
+- fix: Report cached issues at the file's current location (<a href="https://github.com/streetsidesoftware/cspell/pull/9519">#9519</a>)
+
+---
+
+</details>
+
+- fix: cspell-tools: apply top-level target options and remove options that have no effect (<a href="https://github.com/streetsidesoftware/cspell/pull/9470">#9470</a>)
+- fix: A locale that isn't valid no longer stops a file from being checked (<a href="https://github.com/streetsidesoftware/cspell/pull/9501">#9501</a>)
+
+---
+
+</details>
+
+- fix: Ignore the comment closing marker in a locale directive (<a href="https://github.com/streetsidesoftware/cspell/pull/9496">#9496</a>)
+- fix: Show "stdin" as the file name when checking stdin (<a href="https://github.com/streetsidesoftware/cspell/pull/9487">#9487</a>)
+
+- fix: Recognize Fortran source files (<a href="https://github.com/streetsidesoftware/cspell/pull/9490">#9490</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9548">#9548</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9494">#9494</a>)
+
+## v10.4.0 (2026-10-14)
+
+### Features
+
+- feat: Add `--glob-symlinks` to follow symbolic links when matching globs (<a href="https://github.com/streetsidesoftware/cspell/pull/9342">#9342</a>)
+
+---
+
+</details>
+
+- feat: Respect `COLUMNS` for help and table width (<a href="https://github.com/streetsidesoftware/cspell/pull/9358">#9358</a>)
+- feat: Add `--follow-symlinks` and skip files referenced by symbolic links (<a href="https://github.com/streetsidesoftware/cspell/pull/9340">#9340</a>)
+
+---
+
+</details>
+
+- feat: `--must-find-files` fails when every file was skipped (<a href="https://github.com/streetsidesoftware/cspell/pull/9327">#9327</a>)
+
+---
+
+</details>
+
+### Fixes
+
+- fix: Apply `.gitignore` and `ignorePaths` rules in order (<a href="https://github.com/streetsidesoftware/cspell/pull/9408">#9408</a>)
+- fix: cspell-tools: build case-insensitive forms with the dictionary's locale (<a href="https://github.com/streetsidesoftware/cspell/pull/9458">#9458</a>)
+
+---
+
+</details>
+
+- fix: Search dictionaries using the dictionary's locale case rules, to support Turkish `İ` and `I` (<a href="https://github.com/streetsidesoftware/cspell/pull/9449">#9449</a>)
+
+---
+
+</details>
+
+- fix: Recognize MATLAB files (<a href="https://github.com/streetsidesoftware/cspell/pull/9402">#9402</a>)
+- fix: Show hidden lint options and issue template help in `cspell --help` (<a href="https://github.com/streetsidesoftware/cspell/pull/9387">#9387</a>)
+
+- fix: Deprecate `cspell-lib/rpc`; import from `@cspell/rpc` (<a href="https://github.com/streetsidesoftware/cspell/pull/9376">#9376</a>)
+
+---
+
+</details>
+
+- fix: `@cspell/strong-weak-map` types compile with the `esnext` lib (<a href="https://github.com/streetsidesoftware/cspell/pull/9371">#9371</a>)
+- fix: Published types no longer need `@types/node` (<a href="https://github.com/streetsidesoftware/cspell/pull/9359">#9359</a>)
+
+---
+
+</details>
+
+- fix: Show the lint options in cspell --help (<a href="https://github.com/streetsidesoftware/cspell/pull/9362">#9362</a>)
+- fix: Honor `--language-id` and `--locale` when deciding whether to check a file (<a href="https://github.com/streetsidesoftware/cspell/pull/9316">#9316</a>)
+
+---
+
+</details>
+
+- fix(cspell-lib): Check remote documents by URI without passing their text (<a href="https://github.com/streetsidesoftware/cspell/pull/9343">#9343</a>)
+- fix: Don't apply a repository's .gitignore to worktrees and submodules inside it (<a href="https://github.com/streetsidesoftware/cspell/pull/9341">#9341</a>)
+
+---
+
+</details>
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9446">#9446</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9405">#9405</a>)
+
+## v10.3.6 (2026-09-29)
+
+### Fixes
+
+- fix: Report unknown CSpell directives again (<a href="https://github.com/streetsidesoftware/cspell/pull/9319">#9319</a>)
+
+---
+
+</details>
+
+- fix(cspell-io): Keep redirected requests under the private root (<a href="https://github.com/streetsidesoftware/cspell/pull/9329">#9329</a>)
+
+---
+
+</details>
+
+- fix: Don't reuse cached results made with different command-line options (<a href="https://github.com/streetsidesoftware/cspell/pull/9318">#9318</a>)
+
+---
+
+</details>
+
+- fix(cspell-lib): Don't scan the text of documents that won't be checked (<a href="https://github.com/streetsidesoftware/cspell/pull/9311">#9311</a>)
+
+---
+
+</details>
+
+- fix: `--show-perf-summary` shows where all of the run's time goes (<a href="https://github.com/streetsidesoftware/cspell/pull/9307">#9307</a>)
+
+## v10.3.5 (2026-09-27)
+
+### Fixes
+
+- fix(cspell-lib): `shouldCheckDocument` honors the `forceCheck` option (<a href="https://github.com/streetsidesoftware/cspell/pull/9303">#9303</a>)
+- fix: `--force-check` checks the listed files even when `ignorePaths` or `files` would skip them (<a href="https://github.com/streetsidesoftware/cspell/pull/9300">#9300</a>)
+
+- fix: `files` globs starting with `**` no longer skip `--file` and `--file-list` files in a project under a dot folder (<a href="https://github.com/streetsidesoftware/cspell/pull/9299">#9299</a>)
+- fix: Thai text and substitutions are checked and reported correctly (<a href="https://github.com/streetsidesoftware/cspell/pull/9289">#9289</a>)
+
+## v10.3.4 (2026-09-24)
+
+### Fixes
+
+- fix: Report errors (<a href="https://github.com/streetsidesoftware/cspell/pull/9267">#9267</a>)
+- fix: ParsedTag can only be boolean values for now. (<a href="https://github.com/streetsidesoftware/cspell/pull/9268">#9268</a>)
+
+- fix: Fix Sponsor cards on npmjs (<a href="https://github.com/streetsidesoftware/cspell/pull/9260">#9260</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9266">#9266</a>)
+
+## v10.3.3 (2026-09-16)
+
+### Fixes
+
+- fix: Add `--json` option to check text for use with AI (<a href="https://github.com/streetsidesoftware/cspell/pull/9254">#9254</a>)
+- fix: Mark ParsedTags as read only. (<a href="https://github.com/streetsidesoftware/cspell/pull/9253">#9253</a>)
+
+- fix: Make sure Parser and DocumentParser can be used together. (<a href="https://github.com/streetsidesoftware/cspell/pull/9252">#9252</a>)
+
+## v10.3.2 (2026-09-15)
+
+### Fixes
+
+- fix: Add Experimental Validation setting. (<a href="https://github.com/streetsidesoftware/cspell/pull/9250">#9250</a>)
+- fix: Plugin (<a href="https://github.com/streetsidesoftware/cspell/pull/9244">#9244</a>)
+
+- fix: remove unused dependency `fast-json-stable-stringify` (<a href="https://github.com/streetsidesoftware/cspell/pull/9243">#9243</a>)
+- fix: Adjust check text to show only the text that was actually checked. (<a href="https://github.com/streetsidesoftware/cspell/pull/9241">#9241</a>)
+
+- fix: Add tags to ParsedText (<a href="https://github.com/streetsidesoftware/cspell/pull/9237">#9237</a>)
+
+## v10.3.1 (2026-09-13)
+
+### Fixes
+
+- fix: Update documentation and schema for recent improvements (<a href="https://github.com/streetsidesoftware/cspell/pull/9222">#9222</a>)
+- fix: Add support for soft word breaks (<a href="https://github.com/streetsidesoftware/cspell/pull/9215">#9215</a>)
+
+- fix(cspell-tools): Support multiple replacements in a single entry (<a href="https://github.com/streetsidesoftware/cspell/pull/9212">#9212</a>)
+- fix: CSpell-Tools support replacements (<a href="https://github.com/streetsidesoftware/cspell/pull/9205">#9205</a>)
+
+- fix: Revert #9198 (<a href="https://github.com/streetsidesoftware/cspell/pull/9202">#9202</a>)
+- fix: Add definitions for custom word breaks (<a href="https://github.com/streetsidesoftware/cspell/pull/9199">#9199</a>)
+
+- fix: Split words on soft hyphens (<a href="https://github.com/streetsidesoftware/cspell/pull/9196">#9196</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9218">#9218</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9208">#9208</a>)
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9198">#9198</a>)
+
+## v10.3.0 (2026-09-08)
+
+### Features
+
+- feat: Add an option to set the kind of dictionary file (<a href="https://github.com/streetsidesoftware/cspell/pull/9178">#9178</a>)
+
+### Fixes
+
+- fix: Add dictionary kind: suggest-words (<a href="https://github.com/streetsidesoftware/cspell/pull/9189">#9189</a>)
+- fix: Only hide code-like partial words (<a href="https://github.com/streetsidesoftware/cspell/pull/9163">#9163</a>)
+
+### Documentation
+
+- fix: Add dictionary kind: suggest-words (<a href="https://github.com/streetsidesoftware/cspell/pull/9189">#9189</a>)
+- feat: Add an option to set the kind of dictionary file (<a href="https://github.com/streetsidesoftware/cspell/pull/9178">#9178</a>)
+
+## v10.2.2 (2026-09-04)
+
+### Fixes
+
+- fix: Workaround for #9164 (<a href="https://github.com/streetsidesoftware/cspell/pull/9168">#9168</a>)
+
+## v10.2.1 (2026-09-03)
+
+### Fixes
+
+- fix: support soft hyphens in the word splitter (<a href="https://github.com/streetsidesoftware/cspell/pull/9144">#9144</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9143">#9143</a>)
+
+## v10.2.0 (2026-08-31)
+
+### Features
+
+- feat: Support languages without word breaks (Part 2) (<a href="https://github.com/streetsidesoftware/cspell/pull/9133">#9133</a>)
+- feat: Support languages without word breaks (Part 1) (<a href="https://github.com/streetsidesoftware/cspell/pull/9131">#9131</a>)
+
+- feat: Add `--force-check` cli option (<a href="https://github.com/streetsidesoftware/cspell/pull/9080">#9080</a>)
+
+### Fixes
+
+- fix: Reduce the size of cspell types when bundled (<a href="https://github.com/streetsidesoftware/cspell/pull/9119">#9119</a>)
+- fix(ci): push release tag with GitHub App token so publish.yml triggers (<a href="https://github.com/streetsidesoftware/cspell/pull/9097">#9097</a>)
+
+- fix: Updated package.json exports (<a href="https://github.com/streetsidesoftware/cspell/pull/8965">#8965</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9102">#9102</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9067">#9067</a>)
+
+## v10.1.1 (2026-08-25)
+
+### Fixes
+
+- fix: Do not load .pnp.js files when untrusted (<a href="https://github.com/streetsidesoftware/cspell/pull/9064">#9064</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9055">#9055</a>)
+
+## v10.1.0 (2026-08-22)
+
+### Features
+
+- feat(cspell-junit-reporter): add JUnit XML reporter package (<a href="https://github.com/streetsidesoftware/cspell/pull/8945">#8945</a>)
+
+### Fixes
+
+- fix: allow substitutions across ignored ranges (<a href="https://github.com/streetsidesoftware/cspell/pull/9017">#9017</a>)
+- fix: Find the nearest `.git` when a worktree is inside a clone (<a href="https://github.com/streetsidesoftware/cspell/pull/8976">#8976</a>)
+
+- fix: Add .typ extension for Typst (<a href="https://github.com/streetsidesoftware/cspell/pull/8961">#8961</a>)
+- fix: Handle Windows UNC Long Path Names (<a href="https://github.com/streetsidesoftware/cspell/pull/8914">#8914</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9024">#9024</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8995">#8995</a>)
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8990">#8990</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8956">#8956</a>)
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8881">#8881</a>)
+
+## v10.0.1 (2026-05-31)
+
+### Fixes
+
+- fix(cli): ignore closed readline after stdin (<a href="https://github.com/streetsidesoftware/cspell/pull/8862">#8862</a>)
+- fix(docs): replace `.json` with `package.json` in configuration docs (<a href="https://github.com/streetsidesoftware/cspell/pull/8861">#8861</a>)
+
+- fix: substitution display and ranges for output checking (<a href="https://github.com/streetsidesoftware/cspell/pull/8838">#8838</a>)
+- fix: use env vars for GitHub context expressions in run steps to prevent injection (<a href="https://github.com/streetsidesoftware/cspell/pull/8852">#8852</a>)
+
+## v10.0.0 (2026-04-06)
+
+### Features
+
+- fix: upgrade import-fresh from v3 to v4 (<a href="https://github.com/streetsidesoftware/cspell/pull/8786">#8786</a>)
+- feat!: Drop support for Node 20 (<a href="https://github.com/streetsidesoftware/cspell/pull/8779">#8779</a>)
+
+### **BREAKING**
+
+- feat!: Drop support for Node 20 (<a href="https://github.com/streetsidesoftware/cspell/pull/8779">#8779</a>)
+
+### Documentation
+
+- feat!: Drop support for Node 20 (<a href="https://github.com/streetsidesoftware/cspell/pull/8779">#8779</a>)
+
+## v9.8.0 (2026-03-30)
+
+### Features
+
+- feat: make flatpack diff friendly (<a href="https://github.com/streetsidesoftware/cspell/pull/8680">#8680</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8739">#8739</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8688">#8688</a>)
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8670">#8670</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8647">#8647</a>)
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8637">#8637</a>)
+
+## v9.7.0 (2026-02-23)
+
+### Features
+
+- feat: Substitution Part 4 - enable substitutions during document check (<a href="https://github.com/streetsidesoftware/cspell/pull/8630">#8630</a>)
+- feat: Substitution Part 3 (<a href="https://github.com/streetsidesoftware/cspell/pull/8616">#8616</a>)
+
+- feat: Substitution Part 2 (<a href="https://github.com/streetsidesoftware/cspell/pull/8599">#8599</a>)
+- feat: Support text substitutions prior to spell checking - part 1 (<a href="https://github.com/streetsidesoftware/cspell/pull/8592">#8592</a>)
+
+### Fixes
+
+- fix: Publish 9.7 (<a href="https://github.com/streetsidesoftware/cspell/pull/8634">#8634</a>)
+- fix: Support ESLint 10 (<a href="https://github.com/streetsidesoftware/cspell/pull/8620">#8620</a>)
+
+- fix: Prepare to support substitutions (<a href="https://github.com/streetsidesoftware/cspell/pull/8584">#8584</a>)
+- fix: cspell-rpc - reduce the size of an RPC result. (<a href="https://github.com/streetsidesoftware/cspell/pull/8574">#8574</a>)
+
+- fix: Add convertToBtrie method to trie-lib (<a href="https://github.com/streetsidesoftware/cspell/pull/8562">#8562</a>)
+- refactor: Use standard dispose (<a href="https://github.com/streetsidesoftware/cspell/pull/8559">#8559</a>)
+
+- refactor: Experiment with bundling default dictionaries (<a href="https://github.com/streetsidesoftware/cspell/pull/8556">#8556</a>)
+- fix: Enable reading dictionaries from cspell-vfs (<a href="https://github.com/streetsidesoftware/cspell/pull/8553">#8553</a>)
+
+- fix: Work on a bundler for CSpell Dictionaries (<a href="https://github.com/streetsidesoftware/cspell/pull/8532">#8532</a>)
+- fix: Add support for MemVfs to cspell-io (<a href="https://github.com/streetsidesoftware/cspell/pull/8543">#8543</a>)
+
+- fix: Add mergeConfig (<a href="https://github.com/streetsidesoftware/cspell/pull/8539">#8539</a>)
+- fix: stemming rules part 1 (<a href="https://github.com/streetsidesoftware/cspell/pull/8527">#8527</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8570">#8570</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8542">#8542</a>)
+
+## v9.6.4 (2026-02-04)
+
+### Fixes
+
+- fix: add --no-dictionary option to lint command (<a href="https://github.com/streetsidesoftware/cspell/pull/8514">#8514</a>)
+- fix: Correctly report blocked dictionaries (<a href="https://github.com/streetsidesoftware/cspell/pull/8506">#8506</a>)
+
+## v9.6.3 (2026-02-02)
+
+### Fixes
+
+- fix: Add `engines` setting (<a href="https://github.com/streetsidesoftware/cspell/pull/8491">#8491</a>)
+- refactor: consolidate reporting to file. (<a href="https://github.com/streetsidesoftware/cspell/pull/8481">#8481</a>)
+
+- fix: Move cspell-lib/rpc into its own package (<a href="https://github.com/streetsidesoftware/cspell/pull/8468">#8468</a>)
+- fix: Add types for cspell-vfs (<a href="https://github.com/streetsidesoftware/cspell/pull/8451">#8451</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8492">#8492</a>)
+
+## v9.6.2 (2026-01-26)
+
+### Fixes
+
+- fix: Conditionally compress and build bTrie (<a href="https://github.com/streetsidesoftware/cspell/pull/8437">#8437</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8440">#8440</a>)
+
+## v9.6.1 (2026-01-25)
+
+### Fixes
+
+- fix: Move performance monitoring into its own package (<a href="https://github.com/streetsidesoftware/cspell/pull/8431">#8431</a>)
+- fix: Add NotifyEmitter (<a href="https://github.com/streetsidesoftware/cspell/pull/8423">#8423</a>)
+
+- refactor: Adjust RPC interface to use a config (<a href="https://github.com/streetsidesoftware/cspell/pull/8420">#8420</a>)
+- refactor: Refactor CLI to make it easier to spell check files in parallel (<a href="https://github.com/streetsidesoftware/cspell/pull/8387">#8387</a>)
+
+- refactor: Refactor settings a bit (<a href="https://github.com/streetsidesoftware/cspell/pull/8385">#8385</a>)
+- refactor: Refactor internal settings (<a href="https://github.com/streetsidesoftware/cspell/pull/8382">#8382</a>)
+
+- fix: report errors in spelling result. (<a href="https://github.com/streetsidesoftware/cspell/pull/8381">#8381</a>)
+- fix: Add CSpell Worker Pool (<a href="https://github.com/streetsidesoftware/cspell/pull/8379">#8379</a>)
+
+- refactor: Clean Up CSpell Worker (<a href="https://github.com/streetsidesoftware/cspell/pull/8372">#8372</a>)
+- fix: Add CSpellRPCServer and CSpellRPCClient classes (<a href="https://github.com/streetsidesoftware/cspell/pull/8366">#8366</a>)
+
+- fix: Work on adding support for Workers (<a href="https://github.com/streetsidesoftware/cspell/pull/8363">#8363</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8433">#8433</a>)
+
+## v9.6.0 (2026-01-12)
+
+### Features
+
+- feat: ESLint-plugin -- Distinguish between Forbidden, Misspelled, and Unknown words. (<a href="https://github.com/streetsidesoftware/cspell/pull/8337">#8337</a>)
+- feat: ESLint-plugin -- Add `report` option to be able to control the reporting level (matching the CLI): "all", "simple", "typos", "flagged". (<a href="https://github.com/streetsidesoftware/cspell/pull/8273">#8273</a>)
+
+- feat: support storing suggestions in trie (<a href="https://github.com/streetsidesoftware/cspell/pull/8228">#8228</a>)
+- feat: Add Support reading / writing bTrie files (<a href="https://github.com/streetsidesoftware/cspell/pull/8204">#8204</a>)
+
+### Fixes
+
+- refactor: extract processFile from lint.ts (<a href="https://github.com/streetsidesoftware/cspell/pull/8344">#8344</a>)
+- fix: Improve word lookup performance when not found (<a href="https://github.com/streetsidesoftware/cspell/pull/8330">#8330</a>)
+
+- fix: Improve loading time of dictionaries (<a href="https://github.com/streetsidesoftware/cspell/pull/8318">#8318</a>)
+- fix: Reduce loading time of dictionaries. (<a href="https://github.com/streetsidesoftware/cspell/pull/8316">#8316</a>)
+
+- fix: Support loading btrie dictionaries in cspell-lib (<a href="https://github.com/streetsidesoftware/cspell/pull/8311">#8311</a>)
+- fix: Improve loading performance a bit. (<a href="https://github.com/streetsidesoftware/cspell/pull/8309">#8309</a>)
+
+- fix: Prepare tools to generate btrie files. (<a href="https://github.com/streetsidesoftware/cspell/pull/8298">#8298</a>)
+- fix: Optimize btrie files when building (<a href="https://github.com/streetsidesoftware/cspell/pull/8285">#8285</a>)
+
+- fix: Add `btrie` path to dictionary definition (<a href="https://github.com/streetsidesoftware/cspell/pull/8284">#8284</a>)
+- fix: Work towards support prefixes when walking ITrie (<a href="https://github.com/streetsidesoftware/cspell/pull/8276">#8276</a>)
+
+- fix: Fix CStyleHexValue to handle BigInt values. (<a href="https://github.com/streetsidesoftware/cspell/pull/8282">#8282</a>)
+- refactor: Remove FastTrieBlob (<a href="https://github.com/streetsidesoftware/cspell/pull/8267">#8267</a>)
+
+- fix: Make endian required when encoding a StringTable (<a href="https://github.com/streetsidesoftware/cspell/pull/8265">#8265</a>)
+- refactor: Removed FastTrieBlob part 1 (<a href="https://github.com/streetsidesoftware/cspell/pull/8266">#8266</a>)
+
+- fix: Support string prefixes when walking nodes (<a href="https://github.com/streetsidesoftware/cspell/pull/8259">#8259</a>)
+- refactor: Document TrieBlob format (<a href="https://github.com/streetsidesoftware/cspell/pull/8256">#8256</a>)
+
+- fix: adjust error message (<a href="https://github.com/streetsidesoftware/cspell/pull/8249">#8249</a>)
+- fix: Add StringTable and refactor BinaryFormat (<a href="https://github.com/streetsidesoftware/cspell/pull/8243">#8243</a>)
+
+- refactor: Rename private methods in TrieBuilder (<a href="https://github.com/streetsidesoftware/cspell/pull/8240">#8240</a>)
+- refactor: A bit of refactoring of utf8 naming (<a href="https://github.com/streetsidesoftware/cspell/pull/8239">#8239</a>)
+
+- refactor: Add GTrie class for later (<a href="https://github.com/streetsidesoftware/cspell/pull/8238">#8238</a>)
+- refactor: import using .ts when the package is bundled. (<a href="https://github.com/streetsidesoftware/cspell/pull/8224">#8224</a>)
+
+- fix: Add cspell-tools config option to gen btrie (<a href="https://github.com/streetsidesoftware/cspell/pull/8221">#8221</a>)
+- feat: auto load btrie files if available (<a href="https://github.com/streetsidesoftware/cspell/pull/8218">#8218</a>)
+
+- fix: Minor perf boost to TrieBlob.#findNode (<a href="https://github.com/streetsidesoftware/cspell/pull/8213">#8213</a>)
+- fix: deprecated legacy trie.has (<a href="https://github.com/streetsidesoftware/cspell/pull/8196">#8196</a>)
+
+- fix: Improve speed of dictionary lookup (<a href="https://github.com/streetsidesoftware/cspell/pull/8193">#8193</a>)
+- fix: Run perf tests on trie-lib (<a href="https://github.com/streetsidesoftware/cspell/pull/8188">#8188</a>)
+
+- fix: Force consistent type imports (<a href="https://github.com/streetsidesoftware/cspell/pull/8187">#8187</a>)
+- fix: Support adding separators when tracing compound words (<a href="https://github.com/streetsidesoftware/cspell/pull/8176">#8176</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8326">#8326</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8277">#8277</a>)
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8192">#8192</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8186">#8186</a>)
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8182">#8182</a>)
+
+### Documentation
+
+- refactor: landing page update (<a href="https://github.com/streetsidesoftware/cspell/pull/8211">#8211</a>)
+
+## v9.5.0 (2025-12-16)
+
+### Features
+
+- feat: Report errors with nested config files (<a href="https://github.com/streetsidesoftware/cspell/pull/8155">#8155</a>)
+- fix: Enable cts config support (<a href="https://github.com/streetsidesoftware/cspell/pull/8152">#8152</a>)
+
+### Fixes
+
+- fix: Add cspell-tools option keepUncompressed (<a href="https://github.com/streetsidesoftware/cspell/pull/8163">#8163</a>)
+- fix: Improve CSpell Tools (<a href="https://github.com/streetsidesoftware/cspell/pull/8160">#8160</a>)
+
+- fix: Make sure `cspell` exports `defineConfig ` for CommonJS (<a href="https://github.com/streetsidesoftware/cspell/pull/8156">#8156</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8149">#8149</a>)
+
+## v9.4.0 (2025-12-01)
+
+### Features
+
+- feat: Add option to skip large files (<a href="https://github.com/streetsidesoftware/cspell/pull/8040">#8040</a>)
+
+### Fixes
+
+- fix: turn off gpg when publishing for now (<a href="https://github.com/streetsidesoftware/cspell/pull/8104">#8104</a>)
+- fix: Turnoff signing for now (<a href="https://github.com/streetsidesoftware/cspell/pull/8102">#8102</a>)
+
+- fix: Sign tags and commits when publishing (<a href="https://github.com/streetsidesoftware/cspell/pull/8096">#8096</a>)
+- fix: Clean up verbose output (<a href="https://github.com/streetsidesoftware/cspell/pull/8053">#8053</a>)
+
+- fix: allow string based maxFileSize (<a href="https://github.com/streetsidesoftware/cspell/pull/8047">#8047</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8091">#8091</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8080">#8080</a>)
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8058">#8058</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8036">#8036</a>)
+
+## v9.3.2 (2025-11-15)
+
+### Fixes
+
+- fix: Add Zig programming language dictionary (<a href="https://github.com/streetsidesoftware/cspell/pull/7998">#7998</a>)
+- fix: Search for TypeScript config files. (<a href="https://github.com/streetsidesoftware/cspell/pull/7997">#7997</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8004">#8004</a>)
+
+## v9.3.1 (2025-11-12)
+
+### Fixes
+
+- fix: Support Deno (<a href="https://github.com/streetsidesoftware/cspell/pull/7966">#7966</a>)
+
+## v9.3.0 (2025-11-05)
+
+### Features
+
+- feat: Support loading `.ts` and `.mts` config files. (<a href="https://github.com/streetsidesoftware/cspell/pull/7961">#7961</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7950">#7950</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7940">#7940</a>)
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7933">#7933</a>)
+
+## v9.2.2 (2025-10-22)
+
+### Fixes
+
+- fix: Wait for the cache to save (<a href="https://github.com/streetsidesoftware/cspell/pull/7926">#7926</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7915">#7915</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7835">#7835</a>)
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7822">#7822</a>)
+
+## v9.2.1 (2025-08-31)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7795">#7795</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7791">#7791</a>)
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7768">#7768</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7764">#7764</a>)
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7745">#7745</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7728">#7728</a>)
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7672">#7672</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7662">#7662</a>)
+
+## v9.2.0 (2025-07-19)
+
+- refactor: Support url based cache entries (<a href="https://github.com/streetsidesoftware/cspell/pull/7639">#7639</a>)
+
+### Features
+
+- fix: Support remote dependencies in cache (<a href="https://github.com/streetsidesoftware/cspell/pull/7642">#7642</a>)
+
+### Fixes
+
+- fix: Remove `flat-cache` dependency (<a href="https://github.com/streetsidesoftware/cspell/pull/7636">#7636</a>)
+- refactor: move towards caching URLs (<a href="https://github.com/streetsidesoftware/cspell/pull/7634">#7634</a>)
+
+- fix: Support async cache (<a href="https://github.com/streetsidesoftware/cspell/pull/7631">#7631</a>)
+- fix: Replace file-entry-cache (<a href="https://github.com/streetsidesoftware/cspell/pull/6579">#6579</a>)
+
+- fix: Clean cspell-lib type exports (<a href="https://github.com/streetsidesoftware/cspell/pull/7615">#7615</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7618">#7618</a>)
+
+## v9.1.5 (2025-07-13)
+
+### Fixes
+
+- fix: Compile before publish (<a href="https://github.com/streetsidesoftware/cspell/pull/7610">#7610</a>)
+
+## v9.1.4 (2025-07-13)
+
+### Fixes
+
+- fix: show simple typos reporting (<a href="https://github.com/streetsidesoftware/cspell/pull/7606">#7606</a>)
+- fix: Reduce CSpell package size (<a href="https://github.com/streetsidesoftware/cspell/pull/7602">#7602</a>)
+
+- fix: Make it easier to create config files. (<a href="https://github.com/streetsidesoftware/cspell/pull/7598">#7598</a>)
+- fix: store reportIssueOptions in the cache (<a href="https://github.com/streetsidesoftware/cspell/pull/7597">#7597</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7591">#7591</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7574">#7574</a>)
+
+## v9.1.3 (2025-07-05)
+
+### Fixes
+
+- fix: Add toml config reader/writer (<a href="https://github.com/streetsidesoftware/cspell/pull/7565">#7565</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7569">#7569</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7564">#7564</a>)
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7560">#7560</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7549">#7549</a>)
+
+### Documentation
+
+- fix: Add toml config reader/writer (<a href="https://github.com/streetsidesoftware/cspell/pull/7565">#7565</a>)
+
+## v9.1.2 (2025-06-24)
+
+### Fixes
+
+- fix: Do not double encode stdin urls (<a href="https://github.com/streetsidesoftware/cspell/pull/7536">#7536</a>)
+- fix: cspell trace output (<a href="https://github.com/streetsidesoftware/cspell/pull/7528">#7528</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7526">#7526</a>)
+
+## v9.1.1 (2025-06-14)
+
+### Changes
+
+### Fixes
+
+- fix: Use the native JSON parser if possible (<a href="https://github.com/streetsidesoftware/cspell/pull/7502">#7502</a>)
+
+## v9.1.0 (2025-06-14)
+
+### Changes
+
+### Features
+
+- feat: Add command `dictionaries` (<a href="https://github.com/streetsidesoftware/cspell/pull/7445">#7445</a>)
+- feat: Add lint option `--dictionary` (<a href="https://github.com/streetsidesoftware/cspell/pull/7441">#7441</a>)
+
+- feat: Add init command to command-line. (<a href="https://github.com/streetsidesoftware/cspell/pull/7414">#7414</a>)
+- feat: Add command line option to set reporting level (<a href="https://github.com/streetsidesoftware/cspell/pull/7380">#7380</a>)
+
+### Fixes
+
+- fix: Fix perf issue related to searching for the config. (<a href="https://github.com/streetsidesoftware/cspell/pull/7483">#7483</a>)
+- fix: Hide `--config-search` option (<a href="https://github.com/streetsidesoftware/cspell/pull/7479">#7479</a>)
+
+- refactor: `isolatedDeclarations: true` (<a href="https://github.com/streetsidesoftware/cspell/pull/7459">#7459</a>)
+- refactor: enable isolatedDeclarations (<a href="https://github.com/streetsidesoftware/cspell/pull/7456">#7456</a>)
+
+- refactor: enable isolatedDeclarations (<a href="https://github.com/streetsidesoftware/cspell/pull/7452">#7452</a>)
+- fix: Add option to continue on error (<a href="https://github.com/streetsidesoftware/cspell/pull/7451">#7451</a>)
+
+- fix: Improve dictionaries command (<a href="https://github.com/streetsidesoftware/cspell/pull/7449">#7449</a>)
+- fix: Add trace option `--dictionary` (<a href="https://github.com/streetsidesoftware/cspell/pull/7443">#7443</a>)
+
+- fix: Add init options (<a href="https://github.com/streetsidesoftware/cspell/pull/7436">#7436</a>)
+- fix: Allow init of `cspell.config.yml` files (<a href="https://github.com/streetsidesoftware/cspell/pull/7432">#7432</a>)
+
+- fix: Only generate the context if necessary (<a href="https://github.com/streetsidesoftware/cspell/pull/7388">#7388</a>)
+- fix: Correct the schema generator (<a href="https://github.com/streetsidesoftware/cspell/pull/7395">#7395</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7499">#7499</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7485">#7485</a>)
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7474">#7474</a>)
+
+### Documentation
+
+- fix: Correct the schema generator (<a href="https://github.com/streetsidesoftware/cspell/pull/7395">#7395</a>)
+
+## v9.0.2 (2025-05-20)
+
+### Changes
+
+### Fixes
+
+- fix: Add eslint plugin helpers (<a href="https://github.com/streetsidesoftware/cspell/pull/7352">#7352</a>)
+- fix: Make it possible to define a strict dictionary. (<a href="https://github.com/streetsidesoftware/cspell/pull/7351">#7351</a>)
+
+- fix: Correct the Hunspell Reader usage. (<a href="https://github.com/streetsidesoftware/cspell/pull/7325">#7325</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7346">#7346</a>)
+
+## v9.0.1 (2025-05-08)
+
+### Changes
+
+### Fixes
+
+- fix: Add support to add words to config and keep comments. (<a href="https://github.com/streetsidesoftware/cspell/pull/7295">#7295</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7306">#7306</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7302">#7302</a>)
+
+## v9.0.0 (2025-05-05)
+
+### Changes
+
+### **BREAKING**
+
+- feat!: End support for Node 18 (<a href="https://github.com/streetsidesoftware/cspell/pull/7275">#7275</a>)
+
+### Fixes
+
+- fix: Update en-gb dictionary to en-gb-mit (<a href="https://github.com/streetsidesoftware/cspell/pull/7278">#7278</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7279">#7279</a>)
+
+## 8.19.4 (2025-05-03)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 8.19.3 (2025-04-27)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 8.19.2 (2025-04-20)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 8.19.1 (2025-04-18)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 8.19.0 (2025-04-16)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## <small>8.18.1 (2025-03-29)</small>
+
+* ci: Workflow Bot -- Update ALL Dependencies (main) (#7087) ([b570457](https://github.com/streetsidesoftware/cspell/commit/b570457)), closes [#7087](https://github.com/streetsidesoftware/cspell/issues/7087)
+
+## 8.18.0 (2025-03-26)
+
+* ci: Workflow Bot -- Update ALL Dependencies (main) (#7080) ([b9d57a1](https://github.com/streetsidesoftware/cspell/commit/b9d57a1)), closes [#7080](https://github.com/streetsidesoftware/cspell/issues/7080)
+
+## <small>8.17.5 (2025-02-22)</small>
+
+* fix: Workflow Bot -- Update Dictionaries (main) (#6937) ([2bfee05](https://github.com/streetsidesoftware/cspell/commit/2bfee05)), closes [#6937](https://github.com/streetsidesoftware/cspell/issues/6937)
+
+## <small>8.17.4 (2025-02-19)</small>
+
+* ci: Workflow Bot -- Update ALL Dependencies (main) (#6920) ([e92597c](https://github.com/streetsidesoftware/cspell/commit/e92597c)), closes [#6920](https://github.com/streetsidesoftware/cspell/issues/6920)
+
+## <small>8.17.3 (2025-01-28)</small>
+
+* chore: fix labeler ([ea51ed4](https://github.com/streetsidesoftware/cspell/commit/ea51ed4))
+
+## <small>8.17.2 (2025-01-13)</small>
+
+* fix: Dump stack on error when verbose (#6782) ([df0026c](https://github.com/streetsidesoftware/cspell/commit/df0026c)), closes [#6782](https://github.com/streetsidesoftware/cspell/issues/6782)
+
+## <small>8.17.1 (2024-12-16)</small>
+
+* chore: Update Integration Test Performance Data (#6681) ([4b19439](https://github.com/streetsidesoftware/cspell/commit/4b19439)), closes [#6681](https://github.com/streetsidesoftware/cspell/issues/6681)
+
+## 8.17.0 (2024-12-15)
+
+* chore: Update Integration Test Performance Data (#6676) ([f9cb45f](https://github.com/streetsidesoftware/cspell/commit/f9cb45f)), closes [#6676](https://github.com/streetsidesoftware/cspell/issues/6676)
+
+## <small>8.16.1 (2024-11-26)</small>
+
+* chore: Update Integration Test Performance Data (#6602) ([5d667a7](https://github.com/streetsidesoftware/cspell/commit/5d667a7)), closes [#6602](https://github.com/streetsidesoftware/cspell/issues/6602)
+
+## 8.16.0 (2024-11-07)
+
+* chore: Update Integration Test Performance Data (#6505) ([fb78a40](https://github.com/streetsidesoftware/cspell/commit/fb78a40)), closes [#6505](https://github.com/streetsidesoftware/cspell/issues/6505)
+
+## <small>8.15.7 (2024-11-03)</small>
+
+* ci: Workflow Bot -- Update ALL Dependencies (main) (#6456) ([d4bd0dd](https://github.com/streetsidesoftware/cspell/commit/d4bd0dd)), closes [#6456](https://github.com/streetsidesoftware/cspell/issues/6456)
+
+## <small>8.15.6 (2024-11-02)</small>
+
+* chore: Update Integration Test Performance Data (#6455) ([be8b15a](https://github.com/streetsidesoftware/cspell/commit/be8b15a)), closes [#6455](https://github.com/streetsidesoftware/cspell/issues/6455)
+
+## <small>8.15.5 (2024-10-30)</small>
+
+* ci: Workflow Bot -- Update ALL Dependencies (main) (#6442) ([70f43cc](https://github.com/streetsidesoftware/cspell/commit/70f43cc)), closes [#6442](https://github.com/streetsidesoftware/cspell/issues/6442)
+
+## <small>8.15.4 (2024-10-18)</small>
+
+* chore: Update Integration Test Performance Data (#6389) ([7ece6a7](https://github.com/streetsidesoftware/cspell/commit/7ece6a7)), closes [#6389](https://github.com/streetsidesoftware/cspell/issues/6389)
+
+## <small>8.15.3 (2024-10-16)</small>
+
+* chore: Update Integration Test Performance Data (#6377) ([7ff6781](https://github.com/streetsidesoftware/cspell/commit/7ff6781)), closes [#6377](https://github.com/streetsidesoftware/cspell/issues/6377)
+
+## <small>8.15.2 (2024-10-14)</small>
+
+* chore: Update Integration Test Performance Data (#6361) ([d639368](https://github.com/streetsidesoftware/cspell/commit/d639368)), closes [#6361](https://github.com/streetsidesoftware/cspell/issues/6361)
+
+## <small>8.15.1 (2024-10-11)</small>
+
+* fix: Sign Published Packages (#6350) ([633b060](https://github.com/streetsidesoftware/cspell/commit/633b060)), closes [#6350](https://github.com/streetsidesoftware/cspell/issues/6350)
+
+## 8.15.0 (2024-10-11)
+
+* chore: bump eslint-plugin-unicorn from 55.0.0 to 56.0.0 (#6332) ([67d1e92](https://github.com/streetsidesoftware/cspell/commit/67d1e92)), closes [#6332](https://github.com/streetsidesoftware/cspell/issues/6332)
+
+## <small>8.14.4 (2024-09-18)</small>
+
+* fix: Remove object from cache (#6257) ([ea24297](https://github.com/streetsidesoftware/cspell/commit/ea24297)), closes [#6257](https://github.com/streetsidesoftware/cspell/issues/6257)
+
+## <small>8.14.3 (2024-09-17)</small>
+
+* chore: Update Integration Test Performance Data (#6254) ([189ac16](https://github.com/streetsidesoftware/cspell/commit/189ac16)), closes [#6254](https://github.com/streetsidesoftware/cspell/issues/6254)
+
+## <small>8.14.2 (2024-08-20)</small>
+
+* chore: Update Integration Test Performance Data (#6126) ([012c897](https://github.com/streetsidesoftware/cspell/commit/012c897)), closes [#6126](https://github.com/streetsidesoftware/cspell/issues/6126)
+
+## <small>8.14.1 (2024-08-17)</small>
+
+* fix: Fix publishing ([8a56148](https://github.com/streetsidesoftware/cspell/commit/8a56148))
+
+## 8.14.0 (2024-08-17)
+
+* chore: Update Integration Test Performance Data (#6113) ([c3eb155](https://github.com/streetsidesoftware/cspell/commit/c3eb155)), closes [#6113](https://github.com/streetsidesoftware/cspell/issues/6113)
+
+## <small>8.13.3 (2024-08-12)</small>
+
+* chore: Update Integration Test Performance Data (#6079) ([dd28ef5](https://github.com/streetsidesoftware/cspell/commit/dd28ef5)), closes [#6079](https://github.com/streetsidesoftware/cspell/issues/6079)
+
+## <small>8.13.2 (2024-08-08)</small>
+
+* chore: Update Integration Test Performance Data (#6060) ([c766d18](https://github.com/streetsidesoftware/cspell/commit/c766d18)), closes [#6060](https://github.com/streetsidesoftware/cspell/issues/6060)
+
+## <small>8.13.1 (2024-08-02)</small>
+
+* chore: Update Integration Test Performance Data (#6028) ([738d2a9](https://github.com/streetsidesoftware/cspell/commit/738d2a9)), closes [#6028](https://github.com/streetsidesoftware/cspell/issues/6028)
+
+## 8.13.0 (2024-07-30)
+
+* chore: Update Integration Test Performance Data (#6011) ([135838a](https://github.com/streetsidesoftware/cspell/commit/135838a)), closes [#6011](https://github.com/streetsidesoftware/cspell/issues/6011)
+
+## <small>8.12.1 (2024-07-22)</small>
+
+* fix: make sure the version is up to date ([f6ab018](https://github.com/streetsidesoftware/cspell/commit/f6ab018))
+
+## 8.12.0 (2024-07-22)
+
+* chore: Update Integration Test Performance Data (#5959) ([ea71b8a](https://github.com/streetsidesoftware/cspell/commit/ea71b8a)), closes [#5959](https://github.com/streetsidesoftware/cspell/issues/5959)
+
+## 8.11.0 (2024-07-16)
+
+* refactor: char index (#5926) ([077b3ba](https://github.com/streetsidesoftware/cspell/commit/077b3ba)), closes [#5926](https://github.com/streetsidesoftware/cspell/issues/5926)
+
+## <small>8.10.4 (2024-07-05)</small>
+
+* chore: force 8.10.3 ([f18b8c7](https://github.com/streetsidesoftware/cspell/commit/f18b8c7))
+
+## <small>8.10.2 (2024-07-05)</small>
+
+* ci: Workflow Bot -- Update ALL Dependencies (main) (#5862) ([814e15c](https://github.com/streetsidesoftware/cspell/commit/814e15c)), closes [#5862](https://github.com/streetsidesoftware/cspell/issues/5862)
+
+## <small>8.10.1 (2024-07-05)</small>
+
+* fix(cspell-tools): support adding directives (#5860) ([b2e014f](https://github.com/streetsidesoftware/cspell/commit/b2e014f)), closes [#5860](https://github.com/streetsidesoftware/cspell/issues/5860)
+
+## 8.10.0 (2024-07-02)
+
+* chore: Update Integration Test Performance Data (#5859) ([898e806](https://github.com/streetsidesoftware/cspell/commit/898e806)), closes [#5859](https://github.com/streetsidesoftware/cspell/issues/5859)
+
+## <small>8.9.1 (2024-06-20)</small>
+
+* docs: format tables in generated docs (#5776) ([02e0359](https://github.com/streetsidesoftware/cspell/commit/02e0359)), closes [#5776](https://github.com/streetsidesoftware/cspell/issues/5776)
+
+## 8.9.0 (2024-06-18)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 8.9.0-alpha.0 (2024-06-18)
+
+* ci: Fix Lint -- Workflow Bot (#5770) ([b21032f](https://github.com/streetsidesoftware/cspell/commit/b21032f)), closes [#5770](https://github.com/streetsidesoftware/cspell/issues/5770)
+
+## <small>8.8.4 (2024-06-03)</small>
+
+* ci: Fix Lint -- Workflow Bot (#5699) ([211113a](https://github.com/streetsidesoftware/cspell/commit/211113a)), closes [#5699](https://github.com/streetsidesoftware/cspell/issues/5699)
+
+## <small>8.8.3 (2024-05-23)</small>
+
+* chore: Update Integration Test Performance Data (#5663) ([b605dd3](https://github.com/streetsidesoftware/cspell/commit/b605dd3)), closes [#5663](https://github.com/streetsidesoftware/cspell/issues/5663)
+
+## <small>8.8.2 (2024-05-22)</small>
+
+* ci: Workflow Bot -- Update ALL Dependencies (main) (#5659) ([5d93673](https://github.com/streetsidesoftware/cspell/commit/5d93673)), closes [#5659](https://github.com/streetsidesoftware/cspell/issues/5659)
+
+## <small>8.8.1 (2024-05-10)</small>
+
+* chore: Do not stop update if it fails to lint. ([64ba085](https://github.com/streetsidesoftware/cspell/commit/64ba085))
+
+## 8.8.0 (2024-05-03)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 8.7.0 (2024-04-10)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 8.6.1 (2024-03-25)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 8.6.0 (2024-03-05)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 8.5.0 (2024-03-01)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 8.4.1 (2024-02-20)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 8.4.0 (2024-02-19)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 8.3.2 (2024-01-02)
+
+### Bug Fixes
+
+* cspell-tools - support excluding words ([#5140](https://github.com/streetsidesoftware/cspell/issues/5140)) ([3fcdd89](https://github.com/streetsidesoftware/cspell/commit/3fcdd89fb319b659d218067c5366e02d036be59f))
+
+## 8.3.1 (2024-01-01)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 8.3.0 (2023-12-30)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 8.2.4 (2023-12-28)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 8.2.3 (2023-12-21)
+
+### Bug Fixes
+
+* Improve performance by reducing FS requests ([#5103](https://github.com/streetsidesoftware/cspell/issues/5103)) ([3f31569](https://github.com/streetsidesoftware/cspell/commit/3f31569a43b9ae0f21e90d84db57f87a2cb4f6dd))
+
+## 8.2.2 (2023-12-21)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 8.2.1 (2023-12-20)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 8.2.0 (2023-12-20)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 8.1.3 (2023-12-06)
+
+### Bug Fixes
+
+* Resolve relative imports without a leading `./` or `../`.  ([#5035](https://github.com/streetsidesoftware/cspell/issues/5035)) ([a28393b](https://github.com/streetsidesoftware/cspell/commit/a28393b30733b68e8b726c352e277ac4b5a0659d))
+
+## 8.1.2 (2023-12-04)
+
+### Bug Fixes
+
+* expose ConfigLoader API ([#5032](https://github.com/streetsidesoftware/cspell/issues/5032)) ([e839990](https://github.com/streetsidesoftware/cspell/commit/e839990e94f639000bc926ae87187840fb17dee9))
+
+## 8.1.1 (2023-12-04)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 8.1.0 (2023-12-01)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 8.0.0 (2023-11-07)
+
+* ci: Workflow Bot -- Update ALL Dependencies (main) (#4959) ([096066d](https://github.com/streetsidesoftware/cspell/commit/096066d)), closes [#4959](https://github.com/streetsidesoftware/cspell/issues/4959)
+
+## <small>7.3.9 (2023-11-07)</small>
+
+* refactor: remove debug code (#4951) ([4972a77](https://github.com/streetsidesoftware/cspell/commit/4972a77)), closes [#4951](https://github.com/streetsidesoftware/cspell/issues/4951)
+
+## <small>7.3.8 (2023-10-13)</small>
+
+* ci: Workflow Bot -- Update ALL Dependencies (main) (#4894) ([2a4e1d8](https://github.com/streetsidesoftware/cspell/commit/2a4e1d8)), closes [#4894](https://github.com/streetsidesoftware/cspell/issues/4894)
+
+## <small>7.3.7 (2023-09-28)</small>
+
+* test: Add sample package to test dictionaries in eslint (#4875) ([06c9e18](https://github.com/streetsidesoftware/cspell/commit/06c9e18)), closes [#4875](https://github.com/streetsidesoftware/cspell/issues/4875)
+
+## 7.3.6 (2023-09-13)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 7.3.5 (2023-09-10)
+
+### Bug Fixes
+
+* Remove `[@markdown](https://github.com/markdown)Description` from types ([#4818](https://github.com/streetsidesoftware/cspell/issues/4818)) ([3ba8eed](https://github.com/streetsidesoftware/cspell/commit/3ba8eed8588aafa3dcb401acb96e4fdc82811d24))
+
+## 7.3.4 (2023-09-10)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 7.3.3 (2023-09-09)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 7.3.2 (2023-09-01)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 7.3.1 (2023-09-01)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 7.3.0 (2023-08-31)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 7.2.0 (2023-08-29)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [7.1.1](https://github.com/streetsidesoftware/cspell/compare/v7.1.0...v7.1.1) (2023-08-28)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 7.0.2 (2023-08-28)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 7.0.1 (2023-08-21)
+
+### Bug Fixes
+
+* Workflow Bot -- Update Dictionaries (main) ([#4733](https://github.com/streetsidesoftware/cspell/issues/4733)) ([221b59b](https://github.com/streetsidesoftware/cspell/commit/221b59bfe726a3b1fe5f9dcbdef6632983ebebeb))
+
+## [7.0.0](https://github.com/streetsidesoftware/cspell/compare/v7.0.1-alpha.9...v7.0.0) (2023-08-10)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 7.0.1-alpha.9 (2023-08-10)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 7.0.1-alpha.8 (2023-07-21)
+
+### Bug Fixes
+
+* **cspell-tools:** support conditional builds. ([#4668](https://github.com/streetsidesoftware/cspell/issues/4668)) ([de4d897](https://github.com/streetsidesoftware/cspell/commit/de4d897139fe5c98a83af926be23727f42be98d6))
+
+## 7.0.1-alpha.7 (2023-07-19)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 7.0.1-alpha.6 (2023-07-14)
+
+### Bug Fixes
+
+* cspell-tools: be able to update shasum checksum files. ([#4634](https://github.com/streetsidesoftware/cspell/issues/4634)) ([a67ea47](https://github.com/streetsidesoftware/cspell/commit/a67ea4715bee40b4105139ca4fbfdb1da4800dce))
+
+## 7.0.1-alpha.5 (2023-07-13)
+
+### Bug Fixes
+
+* support automatic creation of `cspell-tools.config.yaml` ([#4631](https://github.com/streetsidesoftware/cspell/issues/4631)) ([f9fea67](https://github.com/streetsidesoftware/cspell/commit/f9fea67fc5aa8b6e4dcdc8b1bd9af8db2e22e62b))
+
+## 7.0.1-alpha.4 (2023-07-12)
+
+### Bug Fixes
+
+* Fix empty build target ([#4627](https://github.com/streetsidesoftware/cspell/issues/4627)) ([1fcbf98](https://github.com/streetsidesoftware/cspell/commit/1fcbf9897b70691eb9947e43b966a5069fe37feb))
+
+## 7.0.1-alpha.3 (2023-07-11)
+
+### Bug Fixes
+
+* support globs with `gzip` command. ([#4625](https://github.com/streetsidesoftware/cspell/issues/4625)) ([17fbc11](https://github.com/streetsidesoftware/cspell/commit/17fbc119d199ceac309df0d22fb4b1f9734b7015))
+
+## [7.0.1-alpha.2](https://github.com/streetsidesoftware/cspell/compare/v7.0.1-alpha.1...v7.0.1-alpha.2) (2023-07-09)
+
+### Reverts
+
+* Revert "v7.1.0-alpha.0" ([4835da6](https://github.com/streetsidesoftware/cspell/commit/4835da606a5710b6a0630bd7d0e57bddb2ecc2ba))
+
+## 7.0.1-alpha.1 (2023-07-03)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 7.0.1-alpha.0 (2023-06-09)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 7.0.0-alpha.2 (2023-05-07)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 7.0.0-alpha.1 (2023-04-14)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 6.31.2 (2023-04-14)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 6.31.1 (2023-03-24)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# 6.31.0 (2023-03-24)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 6.30.2 (2023-03-18)
+
+### Bug Fixes
+
+* lock cosmiconfig to 8.0.0 ([#4335](https://github.com/streetsidesoftware/cspell/issues/4335)) ([0f37e2c](https://github.com/streetsidesoftware/cspell/commit/0f37e2cfa4b854c49f82b01bce57abb3c2c7f9ab))
+
+## 6.30.1 (2023-03-17)
+
+### Bug Fixes
+
+* Update cosmiconfig to fix config loading issue. ([#4330](https://github.com/streetsidesoftware/cspell/issues/4330)) ([4a0bae5](https://github.com/streetsidesoftware/cspell/commit/4a0bae53074de54b748ce6b7124f585e28d2175e))
+
+# 6.30.0 (2023-03-16)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 6.29.3 (2023-03-14)
+
+### Bug Fixes
+
+* Add option to not auto stem during split ([#4310](https://github.com/streetsidesoftware/cspell/issues/4310)) ([23059da](https://github.com/streetsidesoftware/cspell/commit/23059dafd9ead91ef67cadf78a368e924b3436f6))
+
+## 6.29.2 (2023-03-13)
+
+### Bug Fixes
+
+* (cspell-tools) Delay splitting _ till later ([#4309](https://github.com/streetsidesoftware/cspell/issues/4309)) ([0e517d1](https://github.com/streetsidesoftware/cspell/commit/0e517d13a6611e4d8a4f826a7d8d75352f5be4df))
+
+## 6.29.1 (2023-03-13)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# 6.29.0 (2023-03-11)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# 6.28.0 (2023-03-03)
+
+### Features
+
+* Support multiple `repMap` combinations ([#4270](https://github.com/streetsidesoftware/cspell/issues/4270)) ([bbc3ed4](https://github.com/streetsidesoftware/cspell/commit/bbc3ed4a1edb704401f40cf8913a5a9f522562fc))
+
+# 6.27.0 (2023-02-26)
+
+### Features
+
+* Support spell checking utf16 files with BOM ([#4232](https://github.com/streetsidesoftware/cspell/issues/4232)) ([8062f62](https://github.com/streetsidesoftware/cspell/commit/8062f621dff0432cd53ae17b1a22aaffd61f1b3b))
+
+## 6.26.3 (2023-02-16)
+
+### Bug Fixes
+
+* Be able to read cache format from config ([#4190](https://github.com/streetsidesoftware/cspell/issues/4190)) ([6029893](https://github.com/streetsidesoftware/cspell/commit/60298938cd39669982ad1ca4293571242918761d))
+
+## 6.26.2 (2023-02-16)
+
+### Bug Fixes
+
+* `node:worker_threads` breaks on node 14 ([#4185](https://github.com/streetsidesoftware/cspell/issues/4185)) ([8654ac7](https://github.com/streetsidesoftware/cspell/commit/8654ac7161b0ac558e864cfc116a9ad9ce6dc32e))
+
+## 6.26.1 (2023-02-15)
+
+### Bug Fixes
+
+* improve Dynamic Import README.md ([#4178](https://github.com/streetsidesoftware/cspell/issues/4178)) ([4ad1133](https://github.com/streetsidesoftware/cspell/commit/4ad1133e6230969e9486d7e7a158cba5c3d75d7f))
+
+# 6.26.0 (2023-02-15)
+
+### Features
+
+* All `flagWords` and `suggestWords` suggestions are preferred. ([#4176](https://github.com/streetsidesoftware/cspell/issues/4176)) ([abfb09c](https://github.com/streetsidesoftware/cspell/commit/abfb09c1fefe0b17aae332a23bb79017496c416a))
+
+# 6.25.0 (2023-02-14)
+
+### Bug Fixes
+
+* Add `.webm` to know file types ([#4171](https://github.com/streetsidesoftware/cspell/issues/4171)) ([eeb9497](https://github.com/streetsidesoftware/cspell/commit/eeb9497143aa2215d857c8a872b94362c1ffe19e))
+
+# 6.24.0 (2023-02-13)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 6.23.1 (2023-02-12)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# 6.23.0 (2023-02-11)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# 6.22.0 (2023-02-05)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# 6.21.0 (2023-02-03)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 6.20.1 (2023-02-01)
+
+### Bug Fixes
+
+* Correct .gitignore comment detection ([#4083](https://github.com/streetsidesoftware/cspell/issues/4083)) ([cadfbc4](https://github.com/streetsidesoftware/cspell/commit/cadfbc489f17db348459a09e7bd49514d07152a2))
+
+# 6.20.0 (2023-02-01)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 6.19.2 (2023-01-17)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 6.19.1 (2023-01-17)
+
+### Bug Fixes
+
+* Remove `vitest` as a dependency ([#4031](https://github.com/streetsidesoftware/cspell/issues/4031)) ([2784b75](https://github.com/streetsidesoftware/cspell/commit/2784b75feefc81aa95806ac748fafb140c72b5fa))
+
+# 6.19.0 (2023-01-16)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 6.18.1 (2022-12-29)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# 6.18.0 (2022-12-21)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# 6.17.0 (2022-12-05)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# 6.16.0 (2022-12-02)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 6.15.1 (2022-11-30)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# 6.15.0 (2022-11-25)
+
+### Features
+
+* Preferred suggestions are listed first ([#3869](https://github.com/streetsidesoftware/cspell/issues/3869)) ([1b7a65d](https://github.com/streetsidesoftware/cspell/commit/1b7a65d6ec851b78e1cc27c56f32b77adfba36e5))
+
+## 6.14.3 (2022-11-17)
+
+### Bug Fixes
+
+* trie-lib - fix issue with reference radix. ([#3849](https://github.com/streetsidesoftware/cspell/issues/3849)) ([73af697](https://github.com/streetsidesoftware/cspell/commit/73af6978c53f2fd1f4cd528fd84e9d52a4149d5b))
+
+## 6.14.2 (2022-11-11)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 6.14.1 (2022-11-07)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# 6.14.0 (2022-11-03)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 6.13.3 (2022-10-31)
+
+### Bug Fixes
+
+* Update dictionaries ([#3795](https://github.com/streetsidesoftware/cspell/issues/3795)) ([ae8de27](https://github.com/streetsidesoftware/cspell/commit/ae8de2754daafcdeb7e187a80e27b6f6c09dc1d7))
+
+## 6.13.2 (2022-10-31)
+
+### Bug Fixes
+
+* Do not generate duplicate entries by default ([#3793](https://github.com/streetsidesoftware/cspell/issues/3793)) ([f27d3c6](https://github.com/streetsidesoftware/cspell/commit/f27d3c68ad454719d71724f92693db57270827b9))
+
+## 6.13.1 (2022-10-28)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# 6.13.0 (2022-10-28)
+
+### Bug Fixes
+
+* make sure all forms are generated. ([#3783](https://github.com/streetsidesoftware/cspell/issues/3783)) ([70949a5](https://github.com/streetsidesoftware/cspell/commit/70949a5823f7c58052f9627c9455dcaa3496e8fb))
+
+# 6.12.0 (2022-09-30)
+
+### Features
+
+* Use cspell-dictionary Module ([#3686](https://github.com/streetsidesoftware/cspell/issues/3686)) ([6441f4b](https://github.com/streetsidesoftware/cspell/commit/6441f4b41fe0e8b8188fa4c08999450c8958b6f0))
+
+## 6.11.1 (2022-09-30)
+
+### Bug Fixes
+
+* Fix export of SpellingDictionaryCollection ([#3683](https://github.com/streetsidesoftware/cspell/issues/3683)) ([7665cdb](https://github.com/streetsidesoftware/cspell/commit/7665cdba702ebf9517a3c1c1008193e239a829d4))
+
+# 6.11.0 (2022-09-30)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 6.10.1 (2022-09-20)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# 6.10.0 (2022-09-19)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 6.9.1 (2022-09-18)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# 6.9.0 (2022-09-15)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 6.8.2 (2022-09-12)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 6.8.1 (2022-08-26)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# 6.8.0 (2022-08-21)
+
+### Bug Fixes
+
+* Enable cli option `--validate-directives` ([#3461](https://github.com/streetsidesoftware/cspell/issues/3461)) ([52a5337](https://github.com/streetsidesoftware/cspell/commit/52a5337fb4090394342b45e31423752cda268559))
+
+# 6.7.0 (2022-08-18)
+
+### Features
+
+* Adjust `.trie` formatting ([e2643c0](https://github.com/streetsidesoftware/cspell/commit/e2643c0bf508aa566823d2c697e5b94c77e6b874)), closes [#3443](https://github.com/streetsidesoftware/cspell/issues/3443) [#3430](https://github.com/streetsidesoftware/cspell/issues/3430)
+
+## 6.6.1 (2022-08-10)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 6.6.1-alpha.9 (2022-08-10)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 6.6.1-alpha.8 (2022-08-10)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 6.6.1-alpha.7 (2022-08-10)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 6.6.1-alpha.6 (2022-08-10)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 6.6.1-alpha.5 (2022-08-10)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 6.6.1-alpha.4 (2022-08-10)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 6.6.1-alpha.3 (2022-08-10)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## 6.6.1-alpha.2 (2022-08-10)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [6.6.1-alpha.1](https://github.com/streetsidesoftware/cspell/compare/v6.6.1-alpha.0...v6.6.1-alpha.1) (2022-08-10)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [6.6.1-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v6.6.0...v6.6.1-alpha.0) (2022-08-10)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [6.6.0](https://github.com/streetsidesoftware/cspell/compare/v6.5.0...v6.6.0) (2022-08-08)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [6.5.0](https://github.com/streetsidesoftware/cspell/compare/v6.4.2...v6.5.0) (2022-07-29)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [6.4.2](https://github.com/streetsidesoftware/cspell/compare/v6.4.1...v6.4.2) (2022-07-26)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [6.4.1](https://github.com/streetsidesoftware/cspell/compare/v6.4.0...v6.4.1) (2022-07-23)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [6.4.0](https://github.com/streetsidesoftware/cspell/compare/v6.4.0-alpha.0...v6.4.0) (2022-07-19)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [6.4.0-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v6.3.0...v6.4.0-alpha.0) (2022-07-18)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [6.3.0](https://github.com/streetsidesoftware/cspell/compare/v6.2.4-alpha.0...v6.3.0) (2022-07-17)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [6.2.4-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v6.2.3...v6.2.4-alpha.0) (2022-07-13)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [6.2.3](https://github.com/streetsidesoftware/cspell/compare/v6.2.2...v6.2.3) (2022-07-07)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [6.2.2](https://github.com/streetsidesoftware/cspell/compare/v6.2.1...v6.2.2) (2022-07-01)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [6.2.1](https://github.com/streetsidesoftware/cspell/compare/v6.2.0...v6.2.1) (2022-07-01)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [6.2.0](https://github.com/streetsidesoftware/cspell/compare/v6.2.0-alpha.1...v6.2.0) (2022-06-30)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [6.2.0-alpha.1](https://github.com/streetsidesoftware/cspell/compare/v6.2.0-alpha.0...v6.2.0-alpha.1) (2022-06-29)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [6.2.0-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v6.1.3...v6.2.0-alpha.0) (2022-06-28)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [6.1.3](https://github.com/streetsidesoftware/cspell/compare/v6.1.3-alpha.1...v6.1.3) (2022-06-28)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [6.1.3-alpha.1](https://github.com/streetsidesoftware/cspell/compare/v6.1.3-alpha.0...v6.1.3-alpha.1) (2022-06-15)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [6.1.3-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v6.1.2...v6.1.3-alpha.0) (2022-06-15)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [6.1.2](https://github.com/streetsidesoftware/cspell/compare/v6.1.1...v6.1.2) (2022-06-09)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [6.1.1](https://github.com/streetsidesoftware/cspell/compare/v6.1.0...v6.1.1) (2022-06-02)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [6.1.0](https://github.com/streetsidesoftware/cspell/compare/v6.1.0-alpha.0...v6.1.0) (2022-05-31)
+
+### Features
+
+* Upgrade Java Dictionary ([#2992](https://github.com/streetsidesoftware/cspell/issues/2992)) ([e3059aa](https://github.com/streetsidesoftware/cspell/commit/e3059aaf440bd41b1613c4516397cd7a6411c9dd))
+
+# [6.1.0-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v6.0.0...v6.1.0-alpha.0) (2022-05-28)
+
+### Features
+
+* Upgrade npm and node dictionaries ([#2949](https://github.com/streetsidesoftware/cspell/issues/2949)) ([bedc60c](https://github.com/streetsidesoftware/cspell/commit/bedc60cfe0c8665f296592c196156c22032c59c9))
+
+# [6.0.0](https://github.com/streetsidesoftware/cspell/compare/v6.0.0-alpha.0...v6.0.0) (2022-05-21)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [6.0.0-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v5.21.1...v6.0.0-alpha.0) (2022-05-20)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.21.1](https://github.com/streetsidesoftware/cspell/compare/v5.21.0...v5.21.1) (2022-05-20)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [5.21.0](https://github.com/streetsidesoftware/cspell/compare/v5.20.0...v5.21.0) (2022-05-17)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [5.20.0](https://github.com/streetsidesoftware/cspell/compare/v5.19.7...v5.20.0) (2022-05-02)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.19.7](https://github.com/streetsidesoftware/cspell/compare/v5.19.6...v5.19.7) (2022-04-09)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.19.6](https://github.com/streetsidesoftware/cspell/compare/v5.19.5...v5.19.6) (2022-04-08)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.19.5](https://github.com/streetsidesoftware/cspell/compare/v5.19.4...v5.19.5) (2022-04-01)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.19.4](https://github.com/streetsidesoftware/cspell/compare/v5.19.3...v5.19.4) (2022-04-01)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.19.3](https://github.com/streetsidesoftware/cspell/compare/v5.19.2...v5.19.3) (2022-03-24)
+
+### Bug Fixes
+
+* eslint-plugin improve performance ([#2616](https://github.com/streetsidesoftware/cspell/issues/2616)) ([b1a9bed](https://github.com/streetsidesoftware/cspell/commit/b1a9bede6ccb7dd9b381cd11ea3889577fb1bb45))
+* Update English dictionary to remove British words ([#2612](https://github.com/streetsidesoftware/cspell/issues/2612)) ([5a6f143](https://github.com/streetsidesoftware/cspell/commit/5a6f143565b78b2062f6304c4c35499be35c71a4))
+
+## [5.19.2](https://github.com/streetsidesoftware/cspell/compare/v5.19.1...v5.19.2) (2022-03-14)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.19.1](https://github.com/streetsidesoftware/cspell/compare/v5.19.0...v5.19.1) (2022-03-13)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [5.19.0](https://github.com/streetsidesoftware/cspell/compare/v5.18.5...v5.19.0) (2022-03-12)
+
+### Bug Fixes
+
+* Use `exactOptionalPropertyTypes` ([#2493](https://github.com/streetsidesoftware/cspell/issues/2493)) ([ffde5ac](https://github.com/streetsidesoftware/cspell/commit/ffde5ac27e5354fa660c3e3d1cf5d6b48c53f22b))
+
+## [5.18.5](https://github.com/streetsidesoftware/cspell/compare/v5.18.4...v5.18.5) (2022-02-15)
+
+### Bug Fixes
+
+* Improve suggestions ([#2426](https://github.com/streetsidesoftware/cspell/issues/2426)) ([51d5a71](https://github.com/streetsidesoftware/cspell/commit/51d5a71894674f5a6986bda3d951ee987908e944))
+* Make sure suggestions are within limits ([#2428](https://github.com/streetsidesoftware/cspell/issues/2428)) ([d9f7943](https://github.com/streetsidesoftware/cspell/commit/d9f79430805e796add1c27315eb99fa3251d66e5))
+
+## [5.18.4](https://github.com/streetsidesoftware/cspell/compare/v5.18.3...v5.18.4) (2022-02-07)
+
+### Bug Fixes
+
+* Improve speed of suggestions for long words. ([#2406](https://github.com/streetsidesoftware/cspell/issues/2406)) ([6c76907](https://github.com/streetsidesoftware/cspell/commit/6c769079257e45877c4ee5ba5139351878037ab0))
+
+## [5.18.3](https://github.com/streetsidesoftware/cspell/compare/v5.18.2...v5.18.3) (2022-02-04)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.18.2](https://github.com/streetsidesoftware/cspell/compare/v5.18.1...v5.18.2) (2022-02-03)
+
+### Bug Fixes
+
+* fix suggestion output ([#2390](https://github.com/streetsidesoftware/cspell/issues/2390)) ([bda442d](https://github.com/streetsidesoftware/cspell/commit/bda442de1e529df15f0890c03d11907d4b0b86a1))
+
+### Reverts
+
+* Revert "ci: Workflow Bot -- Update ALL Dependencies (#2388)" (#2391) ([7f093f9](https://github.com/streetsidesoftware/cspell/commit/7f093f9429cb7b755392996d54449f29f46f138a)), closes [#2388](https://github.com/streetsidesoftware/cspell/issues/2388) [#2391](https://github.com/streetsidesoftware/cspell/issues/2391)
+
+## [5.18.1](https://github.com/streetsidesoftware/cspell/compare/v5.18.0...v5.18.1) (2022-02-03)
+
+### Bug Fixes
+
+* Ensure Weighted Suggestions are generated ([#2384](https://github.com/streetsidesoftware/cspell/issues/2384)) ([7e72b91](https://github.com/streetsidesoftware/cspell/commit/7e72b918584148afe0e0fd917aa38f99f606898c))
+* Fix first letter insert costs on suggestions. ([#2385](https://github.com/streetsidesoftware/cspell/issues/2385)) ([e5b7ed5](https://github.com/streetsidesoftware/cspell/commit/e5b7ed5fdb9cc6ddbc51e342dbf01970e6af2101))
+* Improve suggestions when using weights. ([#2387](https://github.com/streetsidesoftware/cspell/issues/2387)) ([c9d070d](https://github.com/streetsidesoftware/cspell/commit/c9d070d86a7f021f22428b2da56a98f185c3a128))
+
+# [5.18.0](https://github.com/streetsidesoftware/cspell/compare/v5.18.0-alpha.0...v5.18.0) (2022-01-31)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [5.18.0-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v5.17.0...v5.18.0-alpha.0) (2022-01-30)
+
+### Features
+
+* Enable support to dictionary alphabet and accents. ([#2355](https://github.com/streetsidesoftware/cspell/issues/2355)) ([b33453b](https://github.com/streetsidesoftware/cspell/commit/b33453b2c49b1753a2fcd593d8415c92d37a02f9))
+
+# [5.17.0](https://github.com/streetsidesoftware/cspell/compare/v5.17.0-alpha.0...v5.17.0) (2022-01-26)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [5.17.0-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v5.16.0...v5.17.0-alpha.0) (2022-01-26)
+
+### Bug Fixes
+
+* Explicitly import `types` ([#2343](https://github.com/streetsidesoftware/cspell/issues/2343)) ([7131001](https://github.com/streetsidesoftware/cspell/commit/71310012c63b7f77e8276e96f0885e8f7eec7e39)), closes [#2341](https://github.com/streetsidesoftware/cspell/issues/2341)
+
+### Features
+
+* Add cli command to show suggestions. ([#2299](https://github.com/streetsidesoftware/cspell/issues/2299)) ([1db4777](https://github.com/streetsidesoftware/cspell/commit/1db47775e7903a9b5838bdc5b49229258f5e683b))
+
+# [5.16.0](https://github.com/streetsidesoftware/cspell/compare/v5.15.3...v5.16.0) (2022-01-20)
+
+### Bug Fixes
+
+* Add ability to discourage certain types of suggestions. ([#2291](https://github.com/streetsidesoftware/cspell/issues/2291)) ([a6e1bf6](https://github.com/streetsidesoftware/cspell/commit/a6e1bf6b903ff4ff6f5f9dfaaf50f1f9505bb5a0))
+
+## [5.15.3](https://github.com/streetsidesoftware/cspell/compare/v5.15.2...v5.15.3) (2022-01-20)
+
+### Bug Fixes
+
+* Implement Weighted Distance Algorithm ([#2255](https://github.com/streetsidesoftware/cspell/issues/2255)) ([3a4f9db](https://github.com/streetsidesoftware/cspell/commit/3a4f9db8d0137a606cc350f0278b93d7d8c35e36))
+
+## [5.15.2](https://github.com/streetsidesoftware/cspell/compare/v5.15.1...v5.15.2) (2022-01-11)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.15.1](https://github.com/streetsidesoftware/cspell/compare/v5.15.0...v5.15.1) (2022-01-07)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [5.15.0](https://github.com/streetsidesoftware/cspell/compare/v5.14.0...v5.15.0) (2022-01-07)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [5.14.0](https://github.com/streetsidesoftware/cspell/compare/v5.14.0-alpha.0...v5.14.0) (2021-12-29)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [5.14.0-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v5.13.4...v5.14.0-alpha.0) (2021-12-29)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.13.4](https://github.com/streetsidesoftware/cspell/compare/v5.13.3...v5.13.4) (2021-12-18)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.13.3](https://github.com/streetsidesoftware/cspell/compare/v5.13.2...v5.13.3) (2021-12-11)
+
+### Bug Fixes
+
+* cspell-tools - limit memory usage when build dictionaries ([#2087](https://github.com/streetsidesoftware/cspell/issues/2087)) ([591860e](https://github.com/streetsidesoftware/cspell/commit/591860ec93737f943a0f76d615cdce4b25344457))
+* Hunspell make sure COMPOUNDFLAG is supported ([#2088](https://github.com/streetsidesoftware/cspell/issues/2088)) ([3bd772e](https://github.com/streetsidesoftware/cspell/commit/3bd772e827edfd0aa1bdabc5d7f21e2ec29f84b7))
+
+## [5.13.2](https://github.com/streetsidesoftware/cspell/compare/v5.13.1...v5.13.2) (2021-12-07)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.13.1](https://github.com/streetsidesoftware/cspell/compare/v5.13.0...v5.13.1) (2021-11-24)
+
+### Bug Fixes
+
+* fix [#2011](https://github.com/streetsidesoftware/cspell/issues/2011) ([#2013](https://github.com/streetsidesoftware/cspell/issues/2013)) ([15abecb](https://github.com/streetsidesoftware/cspell/commit/15abecba58bf940f6fe49852363649dde6f86beb))
+
+# [5.13.0](https://github.com/streetsidesoftware/cspell/compare/v5.12.6...v5.13.0) (2021-11-17)
+
+### Bug Fixes
+
+* Add `enableCaseSensitive`/`disableCaseSensitive` ([#1951](https://github.com/streetsidesoftware/cspell/issues/1951)) ([93387b7](https://github.com/streetsidesoftware/cspell/commit/93387b7df3e83ac9d7b05df8e35167a0c0c35065))
+
+## [5.12.6](https://github.com/streetsidesoftware/cspell/compare/v5.12.5...v5.12.6) (2021-11-04)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.12.5](https://github.com/streetsidesoftware/cspell/compare/v5.12.4...v5.12.5) (2021-11-02)
+
+### Bug Fixes
+
+* Fix reading dictionary test to use `path` ([#1938](https://github.com/streetsidesoftware/cspell/issues/1938)) ([fa4ea3f](https://github.com/streetsidesoftware/cspell/commit/fa4ea3f0a379c5175fe3e930e1915f4521295583))
+* prevent suggesting word break characters ([#1933](https://github.com/streetsidesoftware/cspell/issues/1933)) ([42ffb98](https://github.com/streetsidesoftware/cspell/commit/42ffb984b593e7d1651db7999474749e00028e48))
+
+## [5.12.4](https://github.com/streetsidesoftware/cspell/compare/v5.12.3...v5.12.4) (2021-10-31)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.12.3](https://github.com/streetsidesoftware/cspell/compare/v5.12.2...v5.12.3) (2021-10-08)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.12.2](https://github.com/streetsidesoftware/cspell/compare/v5.12.1...v5.12.2) (2021-10-06)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [5.12.0](https://github.com/streetsidesoftware/cspell/compare/v5.12.0-alpha.0...v5.12.0) (2021-10-05)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [5.12.0-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v5.11.1...v5.12.0-alpha.0) (2021-10-05)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.11.1](https://github.com/streetsidesoftware/cspell/compare/v5.11.0...v5.11.1) (2021-09-29)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [5.11.0](https://github.com/streetsidesoftware/cspell/compare/v5.11.0-alpha.0...v5.11.0) (2021-09-28)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [5.11.0-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v5.10.1...v5.11.0-alpha.0) (2021-09-28)
+
+### Bug Fixes
+
+* Ensure cli-reporter displays the correct message. ([#1774](https://github.com/streetsidesoftware/cspell/issues/1774)) ([c0aaf45](https://github.com/streetsidesoftware/cspell/commit/c0aaf45ea1f147fda3514149a85d2c2bd70a749f))
+
+## [5.10.1](https://github.com/streetsidesoftware/cspell/compare/v5.10.0...v5.10.1) (2021-09-17)
+
+### Bug Fixes
+
+* Use process directly instead of importing it. ([#1714](https://github.com/streetsidesoftware/cspell/issues/1714)) ([db18a52](https://github.com/streetsidesoftware/cspell/commit/db18a52fbd290077ccb1a5c002bf85be891a13fc)), closes [#1704](https://github.com/streetsidesoftware/cspell/issues/1704)
+
+# [5.10.0](https://github.com/streetsidesoftware/cspell/compare/v5.10.0-alpha.6...v5.10.0) (2021-09-17)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [5.10.0-alpha.6](https://github.com/streetsidesoftware/cspell/compare/v5.10.0-alpha.5...v5.10.0-alpha.6) (2021-09-17)
+
+### Bug Fixes
+
+* Make dict-en-gb version 2 optional because of license. ([#1710](https://github.com/streetsidesoftware/cspell/issues/1710)) ([046a704](https://github.com/streetsidesoftware/cspell/commit/046a704e7c5f4a45c065d33d815faa2e464e08c9))
+
+# [5.10.0-alpha.5](https://github.com/streetsidesoftware/cspell/compare/v5.10.0-alpha.4...v5.10.0-alpha.5) (2021-09-16)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [5.10.0-alpha.4](https://github.com/streetsidesoftware/cspell/compare/v5.10.0-alpha.3...v5.10.0-alpha.4) (2021-09-16)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [5.10.0-alpha.3](https://github.com/streetsidesoftware/cspell/compare/v5.10.0-alpha.2...v5.10.0-alpha.3) (2021-09-16)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [5.10.0-alpha.2](https://github.com/streetsidesoftware/cspell/compare/v5.10.0-alpha.0...v5.10.0-alpha.2) (2021-09-13)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [5.10.0-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v5.9.1...v5.10.0-alpha.0) (2021-09-13)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.9.1](https://github.com/streetsidesoftware/cspell/compare/v5.9.1-alpha.1...v5.9.1) (2021-09-12)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.9.1-alpha.1](https://github.com/streetsidesoftware/cspell/compare/v5.9.1-alpha.0...v5.9.1-alpha.1) (2021-09-12)
+
+### Reverts
+
+* Revert "enable incremental typescript builds (#1671)" ([65664b2](https://github.com/streetsidesoftware/cspell/commit/65664b213e67a4108a2d38692f8fbd471b00afb7)), closes [#1671](https://github.com/streetsidesoftware/cspell/issues/1671)
+
+## [5.9.1-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v5.9.0...v5.9.1-alpha.0) (2021-09-11)
+
+### Bug Fixes
+
+* Change the suggestions to not include ties by default. ([#1678](https://github.com/streetsidesoftware/cspell/issues/1678)) ([0efbd58](https://github.com/streetsidesoftware/cspell/commit/0efbd5847ca433799c81b8cc4a227da4925d4dbf))
+* drop need for iconv-lite and iterable-to-stream ([#1677](https://github.com/streetsidesoftware/cspell/issues/1677)) ([c7ffcc7](https://github.com/streetsidesoftware/cspell/commit/c7ffcc786ed360fc1a59f84915ea7d204d51d3a5))
+* Fix suggestions when working with case aware dictionaries. ([#1674](https://github.com/streetsidesoftware/cspell/issues/1674)) ([0ba056d](https://github.com/streetsidesoftware/cspell/commit/0ba056d55f778e0b732137d56a9b7c555e9ae966))
+* Perf - Try improving suggestion performance. ([#1639](https://github.com/streetsidesoftware/cspell/issues/1639)) ([aad4352](https://github.com/streetsidesoftware/cspell/commit/aad43524f502507f87fb6687d30d9684f2253c32))
+* sample more often to make sure the suggest stops on time. ([#1669](https://github.com/streetsidesoftware/cspell/issues/1669)) ([2bb6c82](https://github.com/streetsidesoftware/cspell/commit/2bb6c82abed296313fe551fc9767ea12f0f0f359))
+* Support Suggestion timeouts ([#1668](https://github.com/streetsidesoftware/cspell/issues/1668)) ([1698aaf](https://github.com/streetsidesoftware/cspell/commit/1698aaf25a07a5f4fb1eb0de46b56a8cae49e2c0))
+
+# [5.9.0](https://github.com/streetsidesoftware/cspell/compare/v5.9.0-alpha.0...v5.9.0) (2021-08-31)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [5.9.0-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v5.8.2...v5.9.0-alpha.0) (2021-08-31)
+
+### Features
+
+* Upgrade to the newest, (case sensitive), English dictionary ([#1545](https://github.com/streetsidesoftware/cspell/issues/1545)) ([581fc4d](https://github.com/streetsidesoftware/cspell/commit/581fc4d8ce0c18df779670cb6a41899d3b9c4e48))
+
+## [5.8.2](https://github.com/streetsidesoftware/cspell/compare/v5.8.1...v5.8.2) (2021-08-25)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.8.1](https://github.com/streetsidesoftware/cspell/compare/v5.8.0...v5.8.1) (2021-08-24)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [5.8.0](https://github.com/streetsidesoftware/cspell/compare/v5.7.2...v5.8.0) (2021-08-21)
+
+### Bug Fixes
+
+* clean up find results ([#1550](https://github.com/streetsidesoftware/cspell/issues/1550)) ([80cb6a3](https://github.com/streetsidesoftware/cspell/commit/80cb6a32122b2395d06814a9dead6f95d2ab057b))
+* fix allowCompoundWords find in case aware dictionaries. ([#1549](https://github.com/streetsidesoftware/cspell/issues/1549)) ([769de0b](https://github.com/streetsidesoftware/cspell/commit/769de0ba3f256018612f7539523e0f1cbd28d726))
+
+### Features
+
+* Add support for `noSuggest` dictionaries. ([#1554](https://github.com/streetsidesoftware/cspell/issues/1554)) ([f0ccda5](https://github.com/streetsidesoftware/cspell/commit/f0ccda5abec9c236eb5387bcf6a6349f31cb81b7))
+* Improve `trace` words command results. ([#1558](https://github.com/streetsidesoftware/cspell/issues/1558)) ([ed8a5dc](https://github.com/streetsidesoftware/cspell/commit/ed8a5dc17ffa6de901887d3bd5b6bacf67217866))
+
+# [5.7.0](https://github.com/streetsidesoftware/cspell/compare/v5.7.0-alpha.0...v5.7.0) (2021-08-14)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.6.7](https://github.com/streetsidesoftware/cspell/compare/v5.6.6...v5.6.7) (2021-08-13)
+
+### Bug Fixes
+
+* Fix issue with suggestions. ([#1507](https://github.com/streetsidesoftware/cspell/issues/1507)) ([6a44e26](https://github.com/streetsidesoftware/cspell/commit/6a44e26ba37af882f6330d054df9c05ec8f9b0d9))
+
+## [5.6.5](https://github.com/streetsidesoftware/cspell/compare/v5.6.4...v5.6.5) (2021-06-18)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.6.4](https://github.com/streetsidesoftware/cspell/compare/v5.6.3...v5.6.4) (2021-06-15)
+
+### Bug Fixes
+
+* Fix issue with missing suggestions ([#1339](https://github.com/streetsidesoftware/cspell/issues/1339)) ([cfecde8](https://github.com/streetsidesoftware/cspell/commit/cfecde85b80d70063aa647d0f6837c879a938ce1))
+
+## [5.6.3](https://github.com/streetsidesoftware/cspell/compare/v5.6.2...v5.6.3) (2021-06-11)
+
+### Bug Fixes
+
+* support case sensitive document checking. ([527de4a](https://github.com/streetsidesoftware/cspell/commit/527de4a80dd281526783404127d23a0b7a51ec52))
+
+## [5.6.2](https://github.com/streetsidesoftware/cspell/compare/v5.6.1...v5.6.2) (2021-06-10)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.6.1](https://github.com/streetsidesoftware/cspell/compare/v5.6.0...v5.6.1) (2021-06-09)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [5.6.0](https://github.com/streetsidesoftware/cspell/compare/v5.5.2...v5.6.0) (2021-06-05)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.5.2](https://github.com/streetsidesoftware/cspell/compare/v5.5.1...v5.5.2) (2021-05-30)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.5.1](https://github.com/streetsidesoftware/cspell/compare/v5.5.0...v5.5.1) (2021-05-29)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [5.5.0](https://github.com/streetsidesoftware/cspell/compare/v5.4.1...v5.5.0) (2021-05-29)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.4.1](https://github.com/streetsidesoftware/cspell/compare/v5.4.0...v5.4.1) (2021-05-11)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [5.4.0](https://github.com/streetsidesoftware/cspell/compare/v5.3.12...v5.4.0) (2021-05-05)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.3.12](https://github.com/streetsidesoftware/cspell/compare/v5.3.11...v5.3.12) (2021-04-06)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.3.11](https://github.com/streetsidesoftware/cspell/compare/v5.3.10...v5.3.11) (2021-04-03)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.3.10](https://github.com/streetsidesoftware/cspell/compare/v5.3.9...v5.3.10) (2021-04-02)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.3.8](https://github.com/streetsidesoftware/cspell/compare/v5.3.7...v5.3.8) (2021-03-17)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.3.7](https://github.com/streetsidesoftware/cspell/compare/v5.3.7-alpha.3...v5.3.7) (2021-03-05)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.3.7-alpha.3](https://github.com/streetsidesoftware/cspell/compare/v5.3.7-alpha.2...v5.3.7-alpha.3) (2021-03-05)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.3.5](https://github.com/streetsidesoftware/cspell/compare/v5.3.4...v5.3.5) (2021-03-05)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.3.4](https://github.com/streetsidesoftware/cspell/compare/v5.3.3...v5.3.4) (2021-03-01)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.3.3](https://github.com/streetsidesoftware/cspell/compare/v5.3.2...v5.3.3) (2021-02-26)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.3.2](https://github.com/streetsidesoftware/cspell/compare/v5.3.1...v5.3.2) (2021-02-26)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.3.1](https://github.com/streetsidesoftware/cspell/compare/v5.3.0...v5.3.1) (2021-02-25)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [5.3.0](https://github.com/streetsidesoftware/cspell/compare/v5.3.0-alpha.4...v5.3.0) (2021-02-25)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [5.3.0-alpha.4](https://github.com/streetsidesoftware/cspell/compare/v5.3.0-alpha.3...v5.3.0-alpha.4) (2021-02-25)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [5.3.0-alpha.3](https://github.com/streetsidesoftware/cspell/compare/v5.3.0-alpha.2...v5.3.0-alpha.3) (2021-02-23)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [5.3.0-alpha.2](https://github.com/streetsidesoftware/cspell/compare/v5.3.0-alpha.1...v5.3.0-alpha.2) (2021-02-22)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [5.3.0-alpha.1](https://github.com/streetsidesoftware/cspell/compare/v5.3.0-alpha.0...v5.3.0-alpha.1) (2021-02-19)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [5.3.0-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v5.2.4...v5.3.0-alpha.0) (2021-02-18)
+
+### Features
+
+* Part 1 - glob patterns are relative to the config file. ([#921](https://github.com/streetsidesoftware/cspell/issues/921)) ([a250448](https://github.com/streetsidesoftware/cspell/commit/a2504484ec38f15804cc0a203317266f83566b7c))
+
+## [5.2.2](https://github.com/streetsidesoftware/cspell/compare/v5.2.1...v5.2.2) (2021-01-26)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [5.2.0](https://github.com/streetsidesoftware/cspell/compare/v5.1.3...v5.2.0) (2021-01-23)
+
+### Bug Fixes
+
+* Improve suggestions for short words ([#872](https://github.com/streetsidesoftware/cspell/issues/872)) ([9c62d04](https://github.com/streetsidesoftware/cspell/commit/9c62d04fd987f807e9a20ba5326b578bce854d16)), closes [#753](https://github.com/streetsidesoftware/cspell/issues/753)
+
+### Features
+
+* improve word splitting options ([#846](https://github.com/streetsidesoftware/cspell/issues/846)) ([b4dc108](https://github.com/streetsidesoftware/cspell/commit/b4dc108a7409c72f7862fe8f08b9f6f7458db9d3))
+
+## [5.1.3](https://github.com/streetsidesoftware/cspell/compare/v5.1.2...v5.1.3) (2021-01-05)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# [5.1.0](https://github.com/streetsidesoftware/cspell/compare/v5.0.8...v5.1.0) (2020-12-27)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.0.8](https://github.com/streetsidesoftware/cspell/compare/v5.0.7...v5.0.8) (2020-12-17)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.0.4](https://github.com/streetsidesoftware/cspell/compare/v5.0.3...v5.0.4) (2020-12-15)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.0.3](https://github.com/streetsidesoftware/cspell/compare/v5.0.2...v5.0.3) (2020-12-04)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.0.2](https://github.com/streetsidesoftware/cspell/compare/v5.0.2-alpha.1...v5.0.2) (2020-11-26)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.0.1](https://github.com/streetsidesoftware/cspell/compare/v5.0.1-alpha.15...v5.0.1) (2020-11-20)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.0.1-alpha.15](https://github.com/streetsidesoftware/cspell/compare/v5.0.1-alpha.14...v5.0.1-alpha.15) (2020-11-18)
+
+### Bug Fixes
+
+* force new version ([3ab08ab](https://github.com/streetsidesoftware/cspell/commit/3ab08ab5ae1939d934b2f0fb23d33defc60c1a7f))
+
+## 5.0.1-alpha.14 (2020-11-17)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+## [5.0.1-alpha.0](https://github.com/streetsidesoftware/cspell/compare/cspell-trie-lib@4.1.8...cspell-trie-lib@5.0.1-alpha.0) (2020-02-20)
+
+**Note:** Version bump only for package cspell-trie-lib
+
+# Release Notes
+
+## 3.0.10
+
+- Separated from `cspell-trie`

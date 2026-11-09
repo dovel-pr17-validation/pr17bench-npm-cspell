@@ -1,0 +1,5 @@
+.docusaurus
+coverage
+node_modules
+**/auto_*
+**/*.mdx

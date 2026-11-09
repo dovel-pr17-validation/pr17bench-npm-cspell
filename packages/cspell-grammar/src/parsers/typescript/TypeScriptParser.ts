@@ -1,0 +1,118 @@
+import assert from 'node:assert';
+
+import { opFlatten, opMap, pipe } from '@cspell/cspell-pipe/sync';
+import type { ParsedText, ParseResult, Scope, ScopeChain } from '@cspell/cspell-types/Parser';
+
+import { grammar } from '../../grammars/typescript.js';
+import { appendParsedText } from '../../mappers/appendMappedText.js';
+import { mapRawString } from '../../mappers/typescript.js';
+import { compileGrammar } from '../../parser/grammar.js';
+import { createParser } from '../../parser/parser.js';
+import { ScopePool } from '../../parser/scope.js';
+import type { TokenizedLine } from '../../parser/types.js';
+
+const tsGrammar = compileGrammar(grammar);
+
+const pool = new ScopePool();
+
+const useScope = new WeakMap<ScopeChain, boolean>();
+
+function* transform(texts: ParseResult['parsedTexts']): ParseResult['parsedTexts'] {
+    for (const parsed of texts) {
+        if (doesScopeMatch(parsed.scope, 'constant.character.escape.ts')) {
+            const mapped = mapRawString(parsed.text);
+            const scope = parsed.scope ? pool.parseScope(parsed.scope) : undefined;
+            yield {
+                text: mapped.text,
+                scope: scope?.parent,
+                map: absMapToRelMap(mapped.offsetMap),
+                range: parsed.range,
+            };
+            continue;
+        }
+        yield parsed;
+    }
+}
+
+function* mergeStringResults(results: Iterable<ParsedText>): Iterable<ParsedText> {
+    let last: ParsedText | undefined;
+    for (const next of results) {
+        if (!doesScopeMatch(next.scope, 'string.')) {
+            if (last) {
+                yield last;
+                last = undefined;
+            }
+            yield next;
+            continue;
+        }
+        if (!last) {
+            last = next;
+            continue;
+        }
+        if (next.scope !== last.scope || last.range[1] !== next.range[0]) {
+            yield last;
+            last = next;
+            continue;
+        }
+        last = mergeParsedText(last, next);
+    }
+    if (last) yield last;
+}
+
+function mergeParsedText(a: ParsedText, b: ParsedText): ParsedText {
+    const abT = appendParsedText(a, b);
+    const ab: ParsedText = {
+        ...abT,
+        scope: a.scope,
+        delegate: a.delegate,
+    };
+
+    return ab;
+}
+
+function filterScope(scope: ScopeChain): boolean {
+    const cached = useScope.get(scope);
+    if (cached !== undefined) return cached;
+    const value = scope.value;
+    const use = !value.startsWith('punctuation') && !value.startsWith('keyword.');
+    useScope.set(scope, use);
+    return use;
+}
+
+function mapTokenizedLine(tl: TokenizedLine): ParseResult['parsedTexts'] {
+    return tl.tokens
+        .filter((t) => filterScope(t.scope))
+        .map((t) => ({
+            text: t.text,
+            range: [tl.offset + t.range[0], tl.offset + t.range[1]] as const,
+            scope: t.scope,
+        }));
+}
+
+function mapTokenizedLines(itl: Iterable<TokenizedLine>): ParseResult['parsedTexts'] {
+    return pipe(itl, opMap(mapTokenizedLine), opFlatten(), transform, mergeStringResults);
+}
+
+export const parser = createParser(tsGrammar, 'typescript', mapTokenizedLines);
+
+function doesScopeMatch(s: Scope | undefined, match: string): boolean {
+    if (!s) return false;
+    return typeof s === 'string' ? s.startsWith(match) : s.value.startsWith(match);
+}
+
+function absMapToRelMap(map: number[] | undefined): number[] | undefined {
+    if (!map) return undefined;
+    assert((map.length & 1) === 0, 'Map must be pairs of values.');
+    const relMap: number[] = [];
+    let base0 = 0;
+    let base1 = 0;
+    for (let i = 0; i < map.length; i += 2) {
+        const d0 = map[i] - base0;
+        const d1 = map[i + 1] - base1;
+        base0 += d0;
+        base1 += d1;
+        if (d0 === 0 && d1 === 0) continue;
+        relMap.push(d0, d1);
+    }
+    return relMap;
+}

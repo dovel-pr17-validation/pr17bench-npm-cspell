@@ -1,0 +1,47 @@
+name: smoke_test
+description: Run the smoke tests
+inputs:
+  shell:
+    required: false
+    description: Shell to use, defaults to (bash || powershell)
+  expect_cached:
+    required: false
+    description: Fail unless every file checked comes from the CSpell cache.
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Show inputs
+      env:
+        INPUTS: ${{ toJSON(inputs) }}
+        OS: ${{ runner.os }}
+      run: |
+        echo "$INPUTS"
+        echo "$OS"
+        node -v
+      shell: bash
+
+    - name: verify trace command
+      run: pnpm run test:bin-trace
+      shell: ${{ inputs.shell }}
+
+    - name: verify the spell checker runs
+      if: ${{ inputs.expect_cached != 'true' }}
+      run: pnpm run test:bin-spell
+      shell: ${{ inputs.shell }}
+
+    - name: verify the spell checker uses the cache
+      if: ${{ inputs.expect_cached == 'true' }}
+      run: |
+        pnpm run test:bin-spell 2>&1 | tee "$RUNNER_TEMP/smoke-test-spell.txt"
+        summary=$(grep 'Files checked:' "$RUNNER_TEMP/smoke-test-spell.txt" || true)
+        pattern='Files checked: ([0-9]+) \(([0-9]+) from cache\)'
+        if [[ ! $summary =~ $pattern ]] || [[ ${BASH_REMATCH[1]} != "${BASH_REMATCH[2]}" ]]; then
+          echo "::error::Expected every file to come from the CSpell cache. Summary: $summary"
+          exit 1
+        fi
+      shell: bash
+
+    - name: verify the check command
+      run: pnpm run test:bin-check
+      shell: ${{ inputs.shell }}

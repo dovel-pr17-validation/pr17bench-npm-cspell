@@ -1,0 +1,21 @@
+{
+  "name": "test-eslint-plugin",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "packageManager": "yarn@4.18.1+sha512.b2e1e7524f654f2749d32b4ebcb4622473cb5bcbc485df2007e12a154e50162a4d795526768bc5f5b8f81717bfd79deb2472813d86fb5ae2eb551fa9c872b08f",
+  "scripts": {
+    "lint": "eslint .",
+    "test": "echo \"Test is disabled because the yarn PNP loader for CJS files broke.\"",
+    "test:disable-because-yarn-is-broken": "yarn lint",
+    "update:dep": "yarn add --dev @cspell/dict-medicalterms@latest @cspell/cspell-types@latest @cspell/eslint-plugin@latest"
+  },
+  "devDependencies": {
+    "@cspell/cspell-types": "^10.4.1",
+    "@cspell/dict-medicalterms": "^4.1.9",
+    "@cspell/eslint-plugin": "^10.4.1",
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.4.0",
+    "globals": "^17.6.0"
+  }
+}

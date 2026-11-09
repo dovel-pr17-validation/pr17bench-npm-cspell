@@ -1,0 +1,635 @@
+
+Repository: vitest-dev/vitest
+Url: "https://github.com/vitest-dev/vitest"
+Args: ["--issues-summary-report","--locale=en,en-GB","."]
+Lines:
+ CSpell: Files checked: 2943, skipped: 5, Issues found: 1933 in 500 files.
+ exit code: 1
+AGENTS.md:146:46    - Unknown word (ivya)       -- do not import from `ivya` outside the files that
+AGENTS.md:170:51    - Unknown word (overexplain) -- be BRIEF and do not overexplain. If you wrote a big
+AGENTS.md:206:61    - Unknown word (zizmor)      -- gated by actionlint and zizmor (pedantic persona).
+AGENTS.md:227:85    - Unknown word (rrweb)       -- sinonjs/fake-timers`, `rrweb-snapshot`) are version
+LICENSE:3:46      - Unknown word (Vitest)     -- Present VoidZero Inc. and Vitest contributors
+README.md:104:5     - Unknown word (patak)      -- - [@patak-dev](https://github
+SECURITY.md:51:53     - Unknown word (cppp)       -- XSS [GHSA-2h32-95rg-cppp](https://github.com
+_typos.toml:19:1      - Unknown word (afte)       -- afte = "afte"
+_typos.toml:20:1      - Unknown word (wrapp)      -- wrapp = "wrapp"
+_typos.toml:24:1      - Unknown word (optio)      -- optio = "optio"
+_typos.toml:25:17     - Unknown word (evalite)    -- # Product name (evalite.dev)
+_typos.toml:26:1      - Unknown word (Evalite)    -- Evalite = "Evalite"
+_typos.toml:27:20     - Unknown word (tinyhighlight) -- # Typo in upstream tinyhighlight LICENSE (TODO: fix upstream
+_typos.toml:28:1      - Unknown word (Additionaly)   -- Additionaly = "Additionaly"
+_typos.toml:8:1       - Unknown word (styl)       -- styl = "styl"
+docs/AGENTS.md:13:26     - Unknown word (twoslash)   -- Code blocks tagged `ts twoslash` are type-checked during
+docs/AGENTS.md:21:20     - Unknown word (frontmatter) -- - Config pages use frontmatter `title: <name> | Config
+docs/api/advanced/artifacts.md:149:3     - Unknown word (wcag)             -- wcagLevel: 'A' | 'AA' |
+docs/api/advanced/artifacts.md:28:41     - Unknown word (recordartifact) -- <Experimental /> {#recordartifact}
+docs/api/advanced/artifacts.md:54:43     - Unknown word (testartifactbase) -- <Experimental /> {#testartifactbase}
+docs/api/advanced/plugin.md:131:56    - Unknown word (definecachekeygenerator) -- Version>5.0.0</Version> {#definecachekeygenerator}
+docs/api/advanced/reporters.md:322:50    - Unknown word (ontestcaseannotate) -- Version>3.2.0</Version> {#ontestcaseannotate}
+docs/api/advanced/reporters.md:335:77    - Unknown word (ontestcaseartifactrecord) -- >4.0.11</Version> {#ontestcaseartifactrecord}
+docs/api/advanced/reporters.md:89:20     - Unknown word (onbrowserinit) -- ## onBrowserInit {#onbrowserinit}
+docs/api/advanced/test-case.md:349:51    - Unknown word (totestspecification) -- Version>4.1.0</Version> {#totestspecification}
+docs/api/advanced/test-module.md:37:47     - Unknown word (viteenvironment) -- Version>4.1.0</Version> {#viteenvironment}
+docs/api/advanced/test-project.md:5:42      - Unknown word (testproject) -- Version>3.0.0</Version> {#testproject}
+docs/api/advanced/test-specification.md:81:47     - Unknown word (testnamepattern) -- Version>4.1.0</Version> {#testnamepattern}
+docs/api/advanced/test-specification.md:85:39     - Unknown word (testids)         -- Version>4.1.0</Version> {#testids}
+docs/api/advanced/test-specification.md:89:41     - Unknown word (testnames)       -- Version>5.1.0</Version> {#testnames}
+docs/api/advanced/test-specification.md:93:46     - Unknown word (testtagsfilter)  -- Version>4.1.0</Version> {#testtagsfilter}
+docs/api/advanced/vitest.md:325:44    - Unknown word (runtestfiles)               -- Version>4.1.0</Version> {#runtestfiles}
+docs/api/advanced/vitest.md:386:56    - Unknown word (getglobaltestnamepattern)   -- Version>4.0.0</Version> {#getglobaltestnamepattern}
+docs/api/advanced/vitest.md:49:91     - Unknown word (gettestspecificationresult) -- 4</Version> {#cache-gettestspecificationresult}
+docs/api/advanced/vitest.md:546:52    - Unknown word (matchesprojectfilter)       -- Version>3.1.0</Version> {#matchesprojectfilter}
+docs/api/advanced/vitest.md:556:49    - Unknown word (waitfortestrunend)          -- Version>4.0.0</Version> {#waitfortestrunend}
+docs/api/advanced/vitest.md:564:54    - Unknown word (createcoverageprovider)     -- Version>4.0.0</Version> {#createcoverageprovider}
+docs/api/advanced/vitest.md:576:46    - Unknown word (enablecoverage)             -- Version>4.0.0</Version> {#enablecoverage}
+docs/api/advanced/vitest.md:586:47    - Unknown word (disablecoverage)            -- Version>4.0.0</Version> {#disablecoverage}
+docs/api/advanced/vitest.md:594:39    - Unknown word (getseed)                    -- Version>4.0.0</Version> {#getseed}
+docs/api/advanced/vitest.md:602:100   - Unknown word (parsespecification)         -- <Experimental /> {#parsespecification}
+docs/api/advanced/vitest.md:634:51    - Unknown word (parsespecifications)        -- Version>5.0.0</Version> {#parsespecifications}
+docs/api/advanced/vitest.md:657:108   - Unknown word (getsourcemodulediagnostic)  -- <Experimental /> {#getsourcemodulediagnostic}
+docs/api/advanced/vitest.md:716:44    - Unknown word (createreport)               -- Version>5.0.0</Version> {#createreport}
+docs/api/assert.md:1085:75   - Unknown word (konacha)    -- } }, 'tea.green', 'konacha')
+docs/api/assert.md:1148:59   - Unknown word (Dont)       -- baz: 3 }, ['foo', 'iDontExist', 'baz'])
+docs/api/browser/assertions.md:1097:63   - Unknown word (ected)          -- )).toHaveSelection('ected')
+docs/api/browser/assertions.md:1103:41   - Unknown word (tomatchscreenshot) -- Screenshot <Experimental /> {#tomatchscreenshot}
+docs/api/browser/assertions.md:1245:39   - Unknown word (blazediff)         -- comparator uses [`@blazediff/core`](https://blazediff
+docs/api/browser/assertions.md:18:293    - Unknown word (retriable)  -- purpose, Vitest provides retriable assertions out of the
+docs/api/browser/assertions.md:305:46    - Unknown word (tobeinviewport) -- Version>4.0.0</Version> {#tobeinviewport}
+docs/api/browser/assertions.md:861:46    - Unknown word (Luca)           -- input-example" value="Luca" />
+docs/api/browser/assertions.md:870:18    - Unknown word (ananas)         -- <option value="ananas">Ananas</option>
+docs/api/browser/assertions.md:870:26    - Unknown word (Ananas)         -- option value="ananas">Ananas</option>
+docs/api/browser/context.md:140:38    - Unknown word (callsite)   -- stack` to override the callsite location in trace metadata
+docs/api/browser/context.md:307:51    - Unknown word (configureprettydom) -- Version>4.0.0</Version> {#configureprettydom}
+docs/api/browser/context.md:37:3      - Unknown word (unhover)    -- unhover: (element: Element,
+docs/api/browser/interactivity.md:143:24    - Unknown word (dblclick)   -- Playwright `locator.dblclick` API](https://playwright
+docs/api/browser/interactivity.md:156:65    - Unknown word (tripleclick) -- Since there is no `tripleclick` in browser api, this
+docs/api/browser/interactivity.md:186:47    - Unknown word (userevent)   -- Version>4.1.0</Version> {#userevent-wheel}
+docs/api/browser/interactivity.md:319:243   - Unknown word (selectall)   -- keyboard) (e.g., `{Shift}{selectall}`).
+docs/api/browser/locators.md:10:111    - Unknown word (Ivya)       -- class-locator) called [Ivya](https://npmx.dev/ivya
+docs/api/browser/locators.md:234:11    - Unknown word (Incredibles) -- <img alt="Incredibles 2 Poster" src="/incredibles
+docs/api/browser/locators.md:234:39    - Unknown word (incredibles) -- Incredibles 2 Poster" src="/incredibles-2.png" />
+docs/api/browser/locators.md:838:11    - Unknown word (fullpath)    -- // path - fullpath to the screenshot
+docs/api/browser/locators.md:989:44    - Unknown word (findelement) -- Version>4.1.0</Version> {#findelement}
+docs/api/browser/react.md:292:17    - Unknown word (renderhooks) -- #### rerender {#renderhooks-rerender}
+docs/api/expect.md:1005:26   - Unknown word (tomatchfilesnapshot) -- toMatchFileSnapshot {#tomatchfilesnapshot}
+docs/api/expect.md:1034:88   - Unknown word (tomatcharisnapshot)  -- <Experimental /> {#tomatcharisnapshot}
+docs/api/expect.md:1054:94   - Unknown word (tomatchariainlinesnapshot) -- <Experimental /> {#tomatchariainlinesnapshot}
+docs/api/expect.md:1475:51   - Unknown word (tohavebeenexhausted)       -- Version>5.0.0</Version> {#tohavebeenexhausted}
+docs/api/expect.md:1530:41   - Unknown word (callcount)                 -- Version>4.1.0</Version> {#callcount}
+docs/api/expect.md:1550:42   - Unknown word (calledwith)                -- Version>4.1.0</Version> {#calledwith}
+docs/api/expect.md:1570:42   - Unknown word (calledonce)                -- Version>4.1.0</Version> {#calledonce}
+docs/api/expect.md:1592:46   - Unknown word (calledoncewith)            -- Version>4.1.0</Version> {#calledoncewith}
+docs/api/expect.md:1610:43   - Unknown word (calledtwice)               -- Version>4.1.0</Version> {#calledtwice}
+docs/api/expect.md:1633:44   - Unknown word (calledthrice)              -- Version>4.1.0</Version> {#calledthrice}
+docs/api/expect.md:1714:44   - Unknown word (returnedwith)              -- Version>4.1.0</Version> {#returnedwith}
+docs/api/expect.md:1736:45   - Unknown word (returnedtimes)             -- Version>4.1.0</Version> {#returnedtimes}
+docs/api/expect.md:1800:44   - Unknown word (calledbefore)              -- Version>4.1.0</Version> {#calledbefore}
+docs/api/expect.md:1820:43   - Unknown word (calledafter)               -- Version>4.1.0</Version> {#calledafter}
+docs/api/expect.md:2091:28   - Unknown word (closeto)                   -- expect.closeTo {#expect-closeto}
+docs/api/expect.md:2232:23   - Unknown word (arktype)                   -- import { type } from 'arktype'
+docs/api/expect.md:2325:39   - Unknown word (addequalitytesters)        -- addEqualityTesters {#expect-addequalitytesters}
+docs/api/expect.md:740:11    - Unknown word (applefruits) -- expect('applefruits').toMatch('fruit')
+docs/api/hooks.md:372:22    - Unknown word (ontestfinished) -- ## onTestFinished {#ontestfinished}
+docs/api/mock.md:163:7     - Unknown word (Nellies)    -- const NelliesBucket = mockFn(0)
+docs/api/mock.md:429:41    - Unknown word (mockthrow)  -- Version>4.1.0</Version> {#mockthrow}
+docs/api/mock.md:443:45    - Unknown word (mockthrowonce) -- Version>4.1.0</Version> {#mockthrowonce}
+docs/api/test.md:668:52    - Unknown word (aroundeach) -- .0</Version> {#test-aroundeach}
+docs/api/test.md:672:51    - Unknown word (aroundall)  -- .0</Version> {#test-aroundall}
+docs/api/vi.md:1038:38   - Unknown word (advancetimerstonextframe) -- advanceTimersToNextFrame {#vi-advancetimerstonextframe}
+docs/api/vi.md:1240:55   - Unknown word (settimertickmode)         -- .1.0</Version> {#vi-settimertickmode}
+docs/api/vi.md:1247:98   - Unknown word (macrotask)                -- available timer after each macrotask.
+docs/api/vi.md:1280:26   - Unknown word (isfaketimers)             -- vi.isFakeTimers {#vi-isfaketimers}
+docs/api/vi.md:1369:35   - Unknown word (ECONNREFUSED)             -- server started: connect ECONNREFUSED
+docs/api/vi.md:1527:51   - Unknown word (definehelper)             -- .1.0</Version> {#vi-definehelper}
+docs/api/vi.md:694:21    - Unknown word (stubenv)    -- ### vi.stubEnv {#vi-stubenv}
+docs/api/vi.md:703:126   - Unknown word (unstub)     -- value by calling `vi.unstubAllEnvs`.
+docs/api/vi.md:734:27    - Unknown word (unstuballenvs) -- vi.unstubAllEnvs {#vi-unstuballenvs}
+docs/api/vi.md:800:30    - Unknown word (unstuballglobals) -- unstubAllGlobals {#vi-unstuballglobals}
+docs/api/vi.md:944:50    - Unknown word (iswhenchain)      -- .0.0</Version> {#vi-iswhenchain}
+docs/blog/vitest-3-2.md:209:94    - Unknown word (Perkkio)    -- Vitest maintainers, [AriPerkkio](https://github.com
+docs/blog/vitest-3-2.md:40:228    - Unknown word (Vitests)    -- treats them more like sub-Vitests. It also gives us more
+docs/blog/vitest-3.md:129:20    - Unknown word (mzhubail)   -- A big shutout to [@mzhubail](https://github.com
+docs/blog/vitest-3.md:146:510   - Unknown word (Zammad)     -- https://nuxtlabs.com), [Zammad](https://zammad.com
+docs/blog/vitest-3.md:34:310    - Unknown word (Pocock)     -- test-addon) and Matt Pocock is building [Evalite
+docs/blog/vitest-4-1.md:95:14     - Unknown word (pytest)     -- Inspired by [pytest](https://docs.pytest
+docs/blog/vitest-5-1.md:75:129    - Unknown word (Insta's)    -- review, inspired by [Insta's `review` command](https
+docs/blog/vitest-5.md:253:7     - Unknown word (unawaited)  -- test('unawaited assertion', async (
+docs/blog/vitest-5.md:83:35     - Unknown word (prebundles) -- Browser Mode.** Vitest prebundles its own runtime, prewarms
+docs/config/api.md:18:50     - Unknown word (allowwrite) -- 1.0</Version> {#api-allowwrite}
+docs/config/api.md:33:49     - Unknown word (allowexec)  -- 1.0</Version> {#api-allowexec}
+docs/config/browser/expect.md:159:57    - Unknown word (SSIM)       -- comparison algorithms, like [SSIM](https://en.wikipedia
+docs/config/browser/expect.md:241:216   - Unknown word (RGBA)       -- containing pixel data in RGBA format:
+docs/config/browser/importmapmocks.md:20:120    - Unknown word (automocked) -- mocked version: the automocked module, the file in
+docs/config/browser/locators.md:31:77     - Unknown word (errorformat) -- {#browser-locators-errorformat}
+docs/config/browser/playwright.md:120:11    - Unknown word (pwuser)     -- user: pwuser
+docs/config/browser/playwright.md:186:51    - Unknown word (persistentcontext) -- Version>4.1.0</Version> {#persistentcontext}
+docs/config/browser/traceview.md:41:54     - Unknown word (traceview)  -- Version>5.1.0</Version> {#traceview-mode}
+docs/config/browser/traceview.md:53:47     - Unknown word (inlineimages) -- inlineImages {#traceview-inlineimages}
+docs/config/browser/traceview.md:61:47     - Unknown word (recordcanvas) -- recordCanvas {#traceview-recordcanvas}
+docs/config/browser/traceview.md:69:72     - Unknown word (ariasnapshot) -- Version> {#traceview-ariasnapshot}
+docs/config/browser/webdriverio.md:66:4      - Unknown word (Headful)    -- ## Headful Chrome in CI
+docs/config/browser/webdriverio.md:74:55     - Unknown word (headful)    -- xvfb-run` when you need headful Chrome in GitHub
+docs/config/coverage.md:140:40    - Unknown word (reportonfailure) -- reportOnFailure {#coverage-reportonfailure}
+docs/config/coverage.md:410:60    - Unknown word (ignorenode)      -- Version> {#coverage-ignorenode}
+docs/config/coverage.md:477:13    - Unknown word (instrumenter)    -- ## coverage.instrumenter <Version type="experimental
+docs/config/coverage.md:479:24    - Unknown word (Instrumenter)    -- *Type:** `(options: InstrumenterOptions) => CoverageInstrument
+docs/config/coverage.md:544:70    - Unknown word (autoattachsubprocess) -- Version> {#coverage-autoattachsubprocess}
+docs/config/deps.md:31:213    - Unknown word (rebundling) -- it directly or force rebundling with `deps.optimizer
+docs/config/experimental.md:135:55    - Unknown word (importdurationsprint) -- print {#experimental-importdurationsprint}
+docs/config/experimental.md:146:62    - Unknown word (importdurationsfailondanger) -- failOnDanger {#experimental-importdurationsfailondanger}
+docs/config/experimental.md:159:55    - Unknown word (importdurationslimit)        -- limit {#experimental-importdurationslimit}
+docs/config/experimental.md:166:60    - Unknown word (importdurationsthresholds)   -- thresholds {#experimental-importdurationsthresholds}
+docs/config/experimental.md:180:94    - Unknown word (vitemodulerunner)            -- Version> {#experimental-vitemodulerunner}
+docs/config/experimental.md:317:89    - Unknown word (vcsprovider)                 -- Version> {#experimental-vcsprovider}
+docs/config/experimental.md:420:96    - Unknown word (recorddependencies)          -- Version> {#experimental-recorddependencies}
+docs/config/experimental.md:463:91    - Unknown word (tracetimeline)               -- Version> {#experimental-tracetimeline}
+docs/config/experimental.md:496:88    - Unknown word (nodeloader)                  -- Version> {#experimental-nodeloader}
+docs/config/experimental.md:505:86    - Unknown word (preparse)                    -- Version> {#experimental-preparse}
+docs/config/experimental.md:82:93     - Unknown word (importdurations) -- Version> {#experimental-importdurations}
+docs/config/faketimers.md:69:59     - Unknown word (faketimers) -- Version>5.1.0</Version> {#faketimers-fakenodebuiltins}
+docs/config/faketimers.md:69:70     - Unknown word (fakenodebuiltins) -- Version> {#faketimers-fakenodebuiltins}
+docs/config/outputfile.md:6:26      - Unknown word (outputfile) -- outputFile <CRoot /> {#outputfile}
+docs/config/pool.md:16:104    - Unknown word (chdir)      -- APIs such as `process.chdir()`. Changing `process
+docs/config/pool.md:29:331    - Unknown word (teardowns)  -- emorylimit) repeatedly, these teardowns pile up and also slow
+docs/config/retry.md:101:32    - Unknown word (ETIMEDOUT)  -- condition: /ECONNREFUSED|ETIMEDOUT/i, // Retry on connection
+docs/config/sequence.md:157:35    - Unknown word (setupfiles) -- setupFiles {#sequence-setupfiles}
+docs/config/snippets/trace-timeline-failure.ansi:21:54     - Unknown word (msrc)       -- +2ms 120ms  [2msrc/search.test.ts:5:12
+docs/config/stricttags.md:16:61     - Unknown word (fortnend)   -- error because the tag `fortnend` has a typo (it should
+docs/config/stricttags.md:6:41      - Unknown word (stricttags) -- Version>4.1.0</Version> {#stricttags}
+docs/config/tasktitlevalueformattruncate.md:6:44      - Unknown word (tasktitlevalueformattruncate) -- lueFormatTruncate <CRoot /> {#tasktitlevalueformattruncate}
+docs/config/teardowntimeout.md:6:31      - Unknown word (teardowntimeout) -- teardownTimeout <CRoot /> {#teardowntimeout}
+docs/guide/benchmarking.md:411:91    - Unknown word (Maglev)     -- timization tiers (Sparkplug → Maglev → TurboFan). A function
+docs/guide/benchmarking.md:412:5     - Unknown word (Deoptimization) -- - **Deoptimization**: V8 can "bail out
+docs/guide/benchmarking.md:416:32    - Unknown word (deoptimization) -- mixed shapes cause deoptimization
+docs/guide/browser/component-testing.md:10:131    - Unknown word (Qwik)       -- Svelte, Lit, Preact, Qwik, Solid, Marko, and more
+docs/guide/browser/component-testing.md:10:144    - Unknown word (Marko)      -- Preact, Qwik, Solid, Marko, and more. This guide
+docs/guide/browser/component-testing.md:171:6     - Unknown word (marko)      -- - [`@marko/testing-library`](https
+docs/guide/browser/index.md:243:8     - Unknown word (qwik)       -- ```ts [qwik]
+docs/guide/browser/index.md:364:129   - Unknown word (headlessly) -- UI but have tests run headlessly, you can install the
+docs/guide/browser/index.md:36:1      - Unknown word (bunx)       -- bunx vitest init browser
+docs/guide/browser/index.md:586:6     - Unknown word (solidjs)    -- - [`@solidjs/testing-library`](https
+docs/guide/browser/snippets/trace-failure.ansi:21:34     - Unknown word (mget)       -- [36mgetByLabel('Email')
+docs/guide/browser/snippets/trace-failure.ansi:2:25      - Unknown word (mexpect)    -- m[1mError[22m: [2mexpect([22melement[2m).toHaveTextC
+docs/guide/browser/snippets/trace-failure.ansi:2:37      - Unknown word (melement)   -- 22m: [2mexpect([22melement[2m).toHaveTextContent
+docs/guide/browser/trace-view.md:141:48    - Unknown word (CSSOM)      -- through the browser's CSSOM. Readable `<style>`
+docs/guide/browser/visual-regression-testing.md:162:66    - Unknown word (sunos)      -- linux`, `openbsd`, `sunos`, or `win32`.
+docs/guide/browser/visual-regression-testing.md:273:16    - Unknown word (ssim)       -- - [`@blazediff/ssim`](https://blazediff
+docs/guide/browser/visual-regression-testing.md:274:16    - Unknown word (gmsd)       -- - [`@blazediff/gmsd`](https://blazediff
+docs/guide/browser/visual-regression-testing.md:274:75    - Unknown word (GMSD)       -- , a single-threaded GMSD (Gradient Magnitude
+docs/guide/browser/visual-regression-testing.md:280:15    - Unknown word (Ssim)       -- import type { SsimOptionsExtended } from
+docs/guide/browser/visual-regression-testing.md:900:15    - Unknown word (chromaui)   -- uses: chromaui/action@latest
+docs/guide/cli.md:172:10    - Unknown word (Autocompletions) -- ## Shell Autocompletions
+docs/guide/cli.md:174:23    - Unknown word (autocompletions) -- Vitest provides shell autocompletions for commands, options
+docs/guide/cli.md:73:9      - Unknown word (lintstagedrc) -- ```js [.lintstagedrc.js]
+docs/guide/common-errors.md:240:7     - Unknown word (extensionless) -- - use extensionless relative imports in
+docs/guide/comparisons.md:11:46     - Unknown word (sodatea)    -- Jest in Vite setups. [@sodatea](https://bsky.app/profile
+docs/guide/comparisons.md:31:140    - Unknown word (Vitesse)    -- their App's UI using [Vitesse](https://github.com
+docs/guide/comparisons.md:45:52     - Unknown word (remcovaes)  -- Vite project, use [@remcovaes/web-test-runner-vite
+docs/guide/coverage.md:292:24    - Unknown word (println)    -- this.contentWriter.println('Start of custom coverage
+docs/guide/features.md:301:26    - Unknown word (unhandledrejection) -- window.addEventListener('unhandledrejection', () => {
+docs/guide/ide.md:27:73     - Unknown word (webstorm)   -- dark'}.png`" w-60 alt="webstorm logo">
+docs/guide/index.md:12:25     - Unknown word (veetest)    -- Vitest (pronounced as _"veetest"_) is a next generation
+docs/guide/learn/snippets/debug-output-fail.ansi:14:25     - Unknown word (mtest)      -- m 6|[22m   [34mtest[39m([32m'sets the
+docs/guide/learn/snippets/debug-output-fail.ansi:15:27     - Unknown word (mconst)     -- 7|[22m [35mconst[39m user = [34mcreateUser
+docs/guide/learn/snippets/debug-output-fail.ansi:15:50     - Unknown word (mcreate)    -- mconst[39m user = [34mcreateUser[39m([32m'Alice
+docs/guide/learn/snippets/test-output-fail.ansi:12:49     - Unknown word (msqrt)      -- mexpect[39m(Math.[34msqrt[39m([34m4[39m)).
+docs/guide/migration/index.md:211:4     - Unknown word (Automocked) -- ## Automocked Modules Stay Automocked
+docs/guide/migration/index.md:349:4     - Unknown word (Unawaited)  -- ## Unawaited Asynchronous Assertions
+docs/guide/migration/index.md:556:74    - Unknown word (attachements) -- attachmentsdir)): `.vitest-attachements/` → `.vitest/attachments
+docs/guide/mocking/functions.md:22:46     - Unknown word (Testman)    -- test message', from: 'Testman' },
+docs/guide/mocking/globals.md:14:3      - Unknown word (unobserve)  -- unobserve = vi.fn()
+docs/guide/open-telemetry.md:162:96    - Unknown word (TRACESTATE) -- the `TRACEPARENT` and `TRACESTATE` environment variables
+docs/guide/profiling-test-performance.md:243:4     - Unknown word (Speedscope)  -- - [Speedscope](https://www.speedscope
+docs/guide/profiling-test-performance.md:54:106    - Unknown word (heapprofile) -- test-runner-profile/*.heapprofile` files generated. See
+docs/guide/profiling-test-performance.md:54:67     - Unknown word (cpuprofile) -- test-runner-profile/*.cpuprofile` and `test-runner-profile
+docs/guide/recipes/db-transaction.md:38:76     - Unknown word (savepoints) -- nested transactions or savepoints, which covers most modern
+docs/guide/recipes/disable-isolation.md:41:24     - Unknown word (deisolate)  -- test file is safe to deisolate when it does not:
+docs/guide/reporters.md:420:5     - Unknown word (suitename)  -- - `{suitename}` – top-level `describe
+docs/guide/snippets/benchmark-per-project.ansi:4:193     - Unknown word (msamples)   -- [1m rme[22m  [1msamples[22m
+docs/guide/snippets/benchmark-per-project.ansi:4:7       - Unknown word (mname)      -- [1mname [22m  
+docs/guide/snippets/snapshot-review.ansi:15:18     - Unknown word (maccept)    -- [32ma[39m [0maccept[0m [2mkeep the new
+docs/guide/snippets/snapshot-review.ansi:15:34     - Unknown word (mkeep)      -- m [0maccept[0m  [2mkeep the new snapshot[2
+docs/guide/snippets/snapshot-review.ansi:16:18     - Unknown word (mreject)    -- [31mr[39m [0mreject[0m [2mretain the
+docs/guide/snippets/snapshot-review.ansi:16:34     - Unknown word (mretain)    -- m [0mreject[0m  [2mretain the old snapshot[2
+docs/guide/snippets/snapshot-review.ansi:3:15      - Unknown word (mrenders)   -- Snapshot: [33mrenders the full name 1[39m
+docs/guide/testing-types.md:120:20    - Unknown word (answr)      -- assertType<string>(answr)
+docs/guide/testing-types.md:80:36     - Unknown word (typeargs)   -- expected" objects vs typeargs
+docs/guide/testing-types.md:94:60     - Unknown word (typearg)    -- compiler needs to infer the typearg for the `.toEqualTypeOf
+docs/package.json:18:7      - Unknown word (vueuse)     -- "@vueuse/core": "catalog:",
+docs/package.json:23:7      - Unknown word (iconify)    -- "@iconify-json/carbon": "catalog
+docs/package.json:26:7      - Unknown word (shikijs)    -- "@shikijs/transformers": "^4.
+docs/package.json:28:7      - Unknown word (unocss)     -- "@unocss/reset": "catalog:",
+docs/package.json:32:7      - Unknown word (voidzero)   -- "@voidzero-dev/vitepress-theme
+docs/package.json:41:23     - Unknown word (llms)       -- "vitepress-plugin-llms": "^1.14.0",
+docs/public/_headers:4:27      - Unknown word (nosniff)    -- Content-Type-Options: nosniff
+docs/public/_redirects:24:16     - Unknown word (webdriverio) -- /guide/browser/webdriverio /config/browser/webdriverio
+docs/public/bolt.svg:1:542     - Unknown word (evenodd)    -- "/><path fill-rule="evenodd" clip-rule="evenodd
+docs/public/chromatic.svg:1:75      - Unknown word (xlink)      -- org/2000/svg" xmlns:xlink="http://www.w3.org/
+docs/public/vercel.svg:1:18      - Unknown word (Vercel)     -- <svg aria-label="Vercel logotype" height="5
+docs/public/zammad.svg:8:37      - Unknown word (Artboard)   -- logo" sketch:type="MSArtboardGroup">
+examples/basic/package.json:17:4      - Unknown word (stackblitz) -- "stackblitz": {
+examples/fastify/mockData.ts:14:12     - Unknown word (Arya)       -- name: 'Arya Stark',
+examples/fastify/mockData.ts:19:12     - Unknown word (Rhaenyra)   -- name: 'Rhaenyra Targaryen',
+examples/fastify/mockData.ts:9:12      - Unknown word (Daenerys)   -- name: 'Daenerys Targaryen',
+examples/fastify/mockData.ts:9:21      - Unknown word (Targaryen)  -- name: 'Daenerys Targaryen',
+examples/opentelemetry/README.md:1:10      - Unknown word (Opentelemtry) -- # Vitest Opentelemtry Example
+examples/opentelemetry/docker-compose.yaml:5:15      - Unknown word (jaegertracing) -- image: cr.jaegertracing.io/jaegertracing/jaeger
+netlify.toml:11:136    - Unknown word (keytype)    -- U4LhQAE57gj9cz1kzA","keytype":"ecdsa-sha2-nistp2
+netlify.toml:11:157    - Unknown word (nistp)      -- keytype":"ecdsa-sha2-nistp256","scheme":"ecdsa
+netlify.toml:11:75     - Unknown word (keyid)      -- -29T00:00:00.000Z","keyid":"SHA256:jl3bwswu80PjjokCgh
+netlify.toml:2:18      - Unknown word (vitepress)  -- publish = "docs/.vitepress/dist"
+package.json:36:6      - Unknown word (typebuild)  -- "typebuild": "node ./scripts/explain
+package.json:51:6      - Unknown word (bumpp)      -- "bumpp": "^12.3.0",
+package.json:52:6      - Unknown word (changelogithub) -- "changelogithub": "^15.0.5",
+packages/browser-playwright/package.json:45:15     - Unknown word (premove)    -- "build": "premove dist && pnpm rollup
+packages/browser-playwright/package.json:60:6      - Unknown word (tinyrainbow) -- "tinyrainbow": "catalog:"
+packages/browser-playwright/src/commands/keyboard.ts:65:4      - Unknown word (Backquote)  -- 'Backquote',
+packages/browser-playwright/src/playwright.ts:545:19    - Unknown word (unmocks)    -- // the tester unmocks by path, but the route
+packages/browser-playwright/src/playwright.ts:731:20    - Unknown word (frameattached) -- page.on('frameattached', (frame) => {
+packages/browser-playwright/src/playwright.ts:772:16    - Unknown word (requestfailed) -- page.on('requestfailed', (request) => {
+packages/browser-playwright/src/playwright.ts:932:6     - Unknown word (PWCDP)         -- type PWCDPSession = Pick<PlaywrightCDPSe
+packages/browser/aria-role.d.ts:15:6      - Unknown word (spinbutton)       -- | 'spinbutton'
+packages/browser/aria-role.d.ts:31:6      - Unknown word (treegrid)         -- | 'treegrid'
+packages/browser/aria-role.d.ts:76:6      - Unknown word (contentinfo)      -- | 'contentinfo'
+packages/browser/aria-role.d.ts:7:6       - Unknown word (menuitemcheckbox) -- | 'menuitemcheckbox'
+packages/browser/aria-role.d.ts:8:6       - Unknown word (menuitemradio)    -- | 'menuitemradio'
+packages/browser/context.d.ts:753:60    - Unknown word (contenteditable) -- input`, `textarea` or `contenteditable` element.
+packages/browser/jest-dom.d.ts:497:69    - Unknown word (describedby) -- "Company logo" aria-describedby="t1" />
+packages/browser/package.json:96:6      - Unknown word (birpc)      -- "birpc": "catalog:",
+packages/browser/src/client/client.ts:2:15      - Unknown word (Birpc)      -- import type { BirpcReturn } from 'birpc
+packages/browser/src/client/orchestrator.ts:241:36    - Unknown word (iframeerror) -- event = new CustomEvent('iframeerror', { detail: error }
+packages/browser/src/client/public/error-catcher.js:28:17     - Unknown word (Unhandler)  -- function throwUnhandlerError(e) {
+packages/browser/src/client/public/esm-client-injector.js:60:36     - Unknown word (gmix)       -- !/^(?!.*?(.).*?\1)[gmixXsuUAJ]+$/.test(m[3]
+packages/browser/src/client/tester/expect/toHaveAccessibleErrorMessage.ts:19:47     - Unknown word (redent)     -- entFromUserInput, getMessage, redent } from './utils'
+packages/browser/src/client/tester/expect/utils.ts:253:44    - Unknown word (valuenow)   -- element.getAttribute('aria-valuenow'))
+packages/browser/src/client/tester/logger.ts:100:23    - Unknown word (WDIO)       -- if (args[0] === '[WDIO]') {
+packages/browser/src/client/tester/logger.ts:98:37     - Unknown word (wdio)       -- shadow root logs from wdio
+packages/browser/src/client/tester/mocker-interceptor.ts:33:18     - Unknown word (importmap)  -- script.type = 'importmap'
+packages/browser/src/client/tester/runner.ts:345:22    - Unknown word (browserv)   -- const query = `browserv=${hash}`
+packages/browser/src/client/tester/runner.ts:346:13    - Unknown word (importpath) -- const importpath = `${prefix}${filepath
+packages/browser/src/node/commands/screenshotMatcher/types.ts:15:6      - Unknown word (Promisable) -- type Promisable<T> = T | Promise<T>
+packages/browser/src/node/index.ts:502:29    - Unknown word (effectful)  -- msw is a large, side-effectful service-worker library
+packages/browser/src/node/mocks.ts:77:27     - Unknown word (Unmocks)    -- (await getStaticUnmocks(vite, mockResolver,
+packages/browser/src/node/mocks.ts:9:3       - Unknown word (Autospied)  -- AutospiedModule,
+packages/browser/src/node/serverTester.ts:73:11     - Unknown word (indexhtml)  -- const indexhtml = await browserProject
+packages/coverage-istanbul/package.json:55:6      - Unknown word (magicast)   -- "magicast": "catalog:",
+packages/coverage-istanbul/package.json:56:6      - Unknown word (obug)       -- "obug": "catalog:",
+packages/coverage-istanbul/src/provider.ts:3:15      - Unknown word (Proxified)  -- import type { ProxifiedModule } from 'magicast
+packages/coverage-v8/package.json:57:7      - Unknown word (bcoe)       -- "@bcoe/v8-coverage": "^1.0
+packages/coverage-v8/src/provider.ts:8:21      - Unknown word (Covs)       -- import { mergeScriptCovs } from '@bcoe/v8-coverage
+packages/expect/rollup.config.js:36:5      - Unknown word (onwarn)     -- onwarn,
+packages/expect/src/jest-expect.ts:77:72     - Unknown word (ssfi)       -- error, utils.flag(this, 'ssfi'))
+packages/expect/src/types.ts:46:3      - Unknown word (dont)       -- dontThrow?: () => void
+packages/mocker/package.json:90:7      - Unknown word (jridgewell) -- "@jridgewell/trace-mapping": "catalog
+packages/mocker/src/browser/mocker.ts:1:54      - Unknown word (automocker) -- kInstanceProcedure } from '../automocker'
+packages/mocker/src/node/esmWalker.ts:14:18     - Unknown word (eswalk)     -- import { walk as eswalk } from 'estree-walker
+packages/mocker/src/node/hoistMocks.ts:663:17    - Unknown word (quasis)     -- return node.quasis[0].value.cooked ?? undefined
+packages/mocker/src/node/hoistMocksPlugin.ts:79:7      - Unknown word (keeb)       -- // to keeb backwards compat
+packages/snapshot/src/port/inlineSnapshot.ts:122:11    - Unknown word (Oneline)    -- const isOneline = lines.length <= 1
+packages/spy/src/index.ts:123:7     - Unknown word (reparent)   -- reparentMockPrototype(
+packages/spy/src/index.ts:519:68    - Unknown word (Klass)      -- with vi.spyOn(obj, 'Klass')
+packages/ui/client/components/BrowserIframe.vue:121:24    - Unknown word (splitpane)  -- margin-inline: var(--splitpane-handle-size);
+packages/ui/client/components/ModuleGraphImportBreakdown.vue:36:11     - Unknown word (raltive)    -- const raltiveModule = duration.external
+packages/ui/client/components/artifacts/visual-regression/SmallTabs.spec.ts:55:30     - Unknown word (labelledby) -- toHaveAttribute('aria-labelledby', firstTab.element(
+packages/ui/client/components/trace/TraceView.vue:103:74    - Unknown word (replayer)   -- pattern from rrweb replayer:
+packages/ui/client/components/trace/TraceView.vue:29:38     - Unknown word (rrweb's)    -- replay needs scripts for rrweb's image.onload -> drawImage
+packages/ui/client/components/trace/TraceView.vue:3:15      - Unknown word (Splitpanes) -- import type { SplitpanesResizedPayload } from
+packages/ui/client/components/trace/TraceView.vue:3:48      - Unknown word (splitpanes) -- itpanesResizedPayload } from 'splitpanes'
+packages/ui/client/components/views/ViewReportError.vue:25:13     - Unknown word (Showable)   -- const isDiffShowable = computed(() => {
+packages/ui/client/composables/client/static.ts:4:44      - Unknown word (fflate)     -- mpressSync, strFromU8 } from 'fflate'
+packages/ui/client/composables/codemirror.ts:16:33     - Unknown word (simplescrollbars) -- codemirror/addon/scroll/simplescrollbars'
+packages/ui/client/composables/explorer/collector.ts:1:15      - Unknown word (Arrayable)  -- import type { Arrayable } from '@vitest/utils
+packages/ui/client/composables/trace-view.ts:159:4     - Unknown word (Vueuse)     -- // Vueuse URL watcher pauses while
+packages/ui/client/styles/main.css:165:13    - Unknown word (simplescroll) -- .CodeMirror-simplescroll-horizontal,
+packages/ui/client/styles/main.css:16:54     - Unknown word (vitest)     -- too, for example the @vitest/istanbuljs html reporter
+packages/ui/client/styles/main.css:16:61     - Unknown word (istanbuljs) -- example the @vitest/istanbuljs html reporter */
+packages/ui/client/styles/main.css:4:17      - Unknown word (Readex)     -- font-family: 'Readex Pro', sans-serif;
+packages/ui/client/styles/main.css:97:13     - Unknown word (activeline) -- .CodeMirror-activeline-background {
+packages/ui/node/index.ts:70:49     - Unknown word (bypassable) -- would diverge and be bypassable (e.g. /__vitest__/Coverage
+packages/ui/vite.config.ts:7:8       - Unknown word (Unocss)     -- import Unocss from 'unocss/vite'
+packages/utils/src/constants.ts:10:4      - Unknown word (pjpeg)      -- 'pjpeg',
+packages/utils/src/constants.ts:40:72     - Unknown word (pcss)       -- sass|scss|styl|stylus|pcss|postcss|sss)(?:$|\?
+packages/utils/src/constants.ts:5:4       - Unknown word (apng)       -- 'apng',
+packages/utils/src/constants.ts:9:4       - Unknown word (jfif)       -- 'jfif',
+packages/utils/src/diff/cleanupSemantic.ts:109:7     - Unknown word (pointerend)   -- let pointerend = 0
+packages/utils/src/diff/cleanupSemantic.ts:245:16    - Unknown word (abcxxx)       -- // e.g: <del>abcxxx</del><ins>xxxdef</ins
+packages/utils/src/diff/cleanupSemantic.ts:245:33    - Unknown word (xxxdef)       -- del>abcxxx</del><ins>xxxdef</ins>
+packages/utils/src/diff/cleanupSemantic.ts:247:16    - Unknown word (xxxabc)       -- // e.g: <del>xxxabc</del><ins>defxxx</ins
+packages/utils/src/diff/cleanupSemantic.ts:247:33    - Unknown word (defxxx)       -- del>xxxabc</del><ins>defxxx</ins>
+packages/utils/src/diff/cleanupSemantic.ts:26:15     - Unknown word (pedrottimark) -- * CHANGES by pedrottimark to diff_match_patch
+packages/utils/src/diff/cleanupSemantic.ts:370:7     - Unknown word (commonlength) -- let commonlength
+packages/utils/src/diff/cleanupSemantic.ts:76:7      - Unknown word (pointermin)   -- let pointermin = 0
+packages/utils/src/diff/cleanupSemantic.ts:77:7      - Unknown word (pointermax)   -- let pointermax = Math.min(text1.length
+packages/utils/src/diff/cleanupSemantic.ts:78:7      - Unknown word (pointermid)   -- let pointermid = pointermax
+packages/utils/src/diff/cleanupSemantic.ts:79:7      - Unknown word (pointerstart) -- let pointerstart = 0
+packages/utils/src/diff/getAlignedDiffs.ts:157:17    - Unknown word (subdiff)    -- const subdiff = new Diff(op, substring
+packages/utils/src/diff/index.ts:302:16    - Unknown word (Diffable)   -- // if (isLineDiffable(expected, received)
+packages/utils/src/display.ts:106:40    - Unknown word (sdjifo)     -- formatRegExp: RegExp = /%[sdjifoOc%]/g
+packages/utils/src/nanoid.ts:3:22      - Unknown word (useandom)   -- const urlAlphabet = 'useandom-26T198340PX75pxJACKVERYMINDBU
+packages/utils/src/nanoid.ts:3:46      - Unknown word (JACKVERYMINDBUSHWOLF) -- useandom-26T198340PX75pxJACKVERYMINDBUSHWOLF_GQZbfghjklqvwyzrict
+packages/utils/src/nanoid.ts:3:69      - Unknown word (Zbfghjklqvwyzrict)    -- pxJACKVERYMINDBUSHWOLF_GQZbfghjklqvwyzrict'
+packages/utils/src/resolver.ts:8:36      - Unknown word (typeless)   -- modules" boundary, so typeless dependencies don't
+packages/utils/src/source-map.ts:155:14    - Unknown word (stacktracejs) -- // Credit to stacktracejs
+packages/vitest/LICENSE.md:205:12    - Unknown word (Haverbeke)  -- By: Marijn Haverbeke, Ingvar Stepanyan, Adrian
+packages/vitest/LICENSE.md:205:23    - Unknown word (Ingvar)     -- By: Marijn Haverbeke, Ingvar Stepanyan, Adrian Heine
+packages/vitest/LICENSE.md:205:30    - Unknown word (Stepanyan)  -- Marijn Haverbeke, Ingvar Stepanyan, Adrian Heine
+packages/vitest/LICENSE.md:205:5     - Unknown word (Marijn)     -- By: Marijn Haverbeke, Ingvar Stepanyan
+packages/vitest/LICENSE.md:322:30    - Unknown word (thlorenz)   -- Repository: git://github.com/thlorenz/convert-source-map.git
+packages/vitest/LICENSE.md:380:12    - Unknown word (Giammarchi) -- By: Andrea Giammarchi
+packages/vitest/LICENSE.md:403:11    - Unknown word (Lydell)     -- By: Simon Lydell
+packages/vitest/LICENSE.md:404:13    - Unknown word (lydell)     -- Repository: lydell/js-tokens
+packages/vitest/LICENSE.md:433:13    - Unknown word (lukeed)     -- Repository: lukeed/kleur
+packages/vitest/LICENSE.md:519:13    - Unknown word (unjs)       -- Repository: unjs/mlly
+packages/vitest/LICENSE.md:523:17    - Unknown word (Pooya)      -- > Copyright (c) Pooya Parsa <pooya@pi0.io
+packages/vitest/LICENSE.md:523:23    - Unknown word (Parsa)      -- Copyright (c) Pooya Parsa <pooya@pi0.io>
+packages/vitest/LICENSE.md:547:11    - Unknown word (Rooden)     -- By: Lauri Rooden
+packages/vitest/LICENSE.md:548:30    - Unknown word (litejs)     -- Repository: git://github.com/litejs/natural-compare-lite
+packages/vitest/LICENSE.md:632:11    - Unknown word (zeptomatch) -- > Bundled zeptomatch (https://github.com
+packages/vitest/LICENSE.md:636:36    - Unknown word (Spampinato) -- 2023-present Fabio Spampinato
+packages/vitest/LICENSE.md:660:12    - Unknown word (Gjervig)    -- By: Terkel Gjervig
+packages/vitest/LICENSE.md:661:13    - Unknown word (terkelg)    -- Repository: terkelg/prompts
+packages/vitest/LICENSE.md:687:4     - Unknown word (quansync)   -- ## quansync
+packages/vitest/LICENSE.md:744:4     - Unknown word (sisteransi) -- ## sisteransi
+packages/vitest/LICENSE.md:806:5     - Unknown word (Tinyhighlight) -- > # Tinyhighlight core license
+packages/vitest/LICENSE.md:810:22    - Unknown word (Tinylibs)      -- Copyright (c) 2023 Tinylibs
+packages/vitest/LICENSE.md:916:10    - Unknown word (Luer)          -- By: Jake Luer, Keith Cirkel, David
+packages/vitest/LICENSE.md:916:111   - Unknown word (Tice)          -- Grant Snodgrass, Jeremy Tice, Edward Betts, dvlsg
+packages/vitest/LICENSE.md:916:124   - Unknown word (Betts)         -- Jeremy Tice, Edward Betts, dvlsg, Amila Welihinda
+packages/vitest/LICENSE.md:916:131   - Unknown word (dvlsg)         -- Tice, Edward Betts, dvlsg, Amila Welihinda, Jake
+packages/vitest/LICENSE.md:916:138   - Unknown word (Amila)         -- Edward Betts, dvlsg, Amila Welihinda, Jake Champion
+packages/vitest/LICENSE.md:916:144   - Unknown word (Welihinda)     -- Betts, dvlsg, Amila Welihinda, Jake Champion, Miroslav
+packages/vitest/LICENSE.md:916:170   - Unknown word (Miroslav)      -- Welihinda, Jake Champion, Miroslav Bajtoš
+packages/vitest/LICENSE.md:916:179   - Unknown word (Bajtoš)        -- Jake Champion, Miroslav Bajtoš
+packages/vitest/LICENSE.md:916:22    - Unknown word (Cirkel)        -- By: Jake Luer, Keith Cirkel, David Losert, Aleksey
+packages/vitest/LICENSE.md:916:36    - Unknown word (Losert)        -- Keith Cirkel, David Losert, Aleksey Shvayka, Lucas
+packages/vitest/LICENSE.md:916:44    - Unknown word (Aleksey)       -- Cirkel, David Losert, Aleksey Shvayka, Lucas Fernandes
+packages/vitest/LICENSE.md:916:52    - Unknown word (Shvayka)       -- David Losert, Aleksey Shvayka, Lucas Fernandes da
+packages/vitest/LICENSE.md:917:38    - Unknown word (chaijs)        -- ssh://git@github.com/chaijs/type-detect.git
+packages/vitest/LICENSE.md:971:16    - Unknown word (Stangvik)      -- By: Einar Otto Stangvik
+packages/vitest/LICENSE.md:971:5     - Unknown word (Einar)         -- By: Einar Otto Stangvik
+packages/vitest/LICENSE.md:975:22    - Unknown word (Arnout)        -- Copyright (c) 2013 Arnout Kazemier and contributors
+packages/vitest/LICENSE.md:975:29    - Unknown word (Kazemier)      -- Copyright (c) 2013 Arnout Kazemier and contributors
+packages/vitest/LICENSE.md:976:28    - Unknown word (Pinca)         -- Copyright (c) 2016 Luigi Pinca and contributors
+packages/vitest/package.json:184:6     - Unknown word (tinyexec)   -- "tinyexec": "catalog:",
+packages/vitest/src/constants.ts:1:28      - Unknown word (jsdocs)     -- changed, update also jsdocs and docs
+packages/vitest/src/integrations/mock/timers.ts:13:11     - Unknown word (Timelike)   -- TemporalTimelike,
+packages/vitest/src/node/ast-collect.ts:615:34    - Unknown word (dfsjo)      -- pattern.replace(/%[i#dfsjo%]/g, (m) => kReplacers
+packages/vitest/src/node/cache/cachedirTag.ts:8:7       - Unknown word (CACHEDIR)   -- const CACHEDIR_TAG = `Signature: 8a
+packages/vitest/src/node/cache/dependencies.ts:10:32     - Unknown word (cachedir)   -- tagCacheDir } from './cachedirTag'
+packages/vitest/src/node/config/apiToken.ts:21:24     - Unknown word (LOCALAPPDATA) -- return process.env.LOCALAPPDATA || join(homedir(),
+packages/vitest/src/node/coverage.ts:927:15    - Unknown word (magicast's) -- // Reduce magicast's verbose errors to readable
+packages/vitest/src/node/environments/transformService.ts:582:5     - Unknown word (SOURCEMAPPING) -- let SOURCEMAPPING_URL = 'sourceMa'
+packages/vitest/src/node/environments/transformService.ts:583:23    - Unknown word (pping)         -- SOURCEMAPPING_URL += 'ppingURL'
+packages/vitest/src/node/environments/transformService.ts:633:32    - Unknown word (CAAA)          -- sourceMap.mappings = `AAAA,CAAA${sourceMap.mappings
+packages/vitest/src/node/pool.ts:91:22     - Unknown word (Argvs)      -- const projectExecArgvs = new WeakMap<TestProject
+packages/vitest/src/node/pool.ts:9:13      - Unknown word (nodeos)     -- import * as nodeos from 'node:os'
+packages/vitest/src/node/pools/browser.ts:100:17    - Unknown word (Evictable)  -- function countEvictableWorkers(): number {
+packages/vitest/src/node/pools/browser.ts:10:10     - Unknown word (statfs)     -- import { statfsSync } from 'node:fs
+packages/vitest/src/node/pools/browser.ts:311:9     - Unknown word (docblocks)  -- const docblocks = await Promise.all
+packages/vitest/src/node/pools/browser.ts:818:31    - Unknown word (bavail)     -- available = fsStats.bavail * fsStats.bsize
+packages/vitest/src/node/pools/rpc.ts:45:5      - Unknown word (tmps)       -- tmps: {},
+packages/vitest/src/node/pools/workers/threadsWorker.ts:62:32     - Unknown word (readables)  -- message port into these readables; keep the pipes attached
+packages/vitest/src/node/pools/workers/utils.ts:4:63      - Unknown word (unpiping)   -- end`/`close` before unpiping ensures
+packages/vitest/src/node/projects/resolveProjects.ts:328:7     - Unknown word (realpaths)  -- /** realpaths of the config files
+packages/vitest/src/node/reporters/base.ts:1211:15   - Unknown word (ditor)      -- // ...ditor/features/link/__test
+packages/vitest/src/node/reporters/json.ts:18:11     - Unknown word (Callsite)   -- interface Callsite {
+packages/vitest/src/node/reporters/junit.ts:216:24    - Unknown word (apos)       -- .replace(/'/g, '&apos;')
+packages/vitest/src/node/types/config.ts:1543:39   - Unknown word (bpass)      -- means that Vite will bpass the package to native
+packages/vitest/src/node/types/coverage.ts:316:31    - Unknown word (instrumenters) -- allows using faster instrumenters (e.g., oxc-coverage
+packages/vitest/src/node/vcs/git.ts:68:40     - Unknown word (cdup)       -- rev-parse', '--show-cdup']
+packages/vitest/src/runtime/benchmark.ts:491:20    - Unknown word (unrun)      -- // trigger the unrun-bench warning — the
+packages/vitest/src/runtime/detect-async-leaks.ts:10:4      - Unknown word (DNSCHANNEL) -- 'DNSCHANNEL',
+packages/vitest/src/runtime/detect-async-leaks.ts:11:4      - Unknown word (ELDHISTOGRAM) -- 'ELDHISTOGRAM',
+packages/vitest/src/runtime/detect-async-leaks.ts:13:4      - Unknown word (RANDOMBYTESREQUEST) -- 'RANDOMBYTESREQUEST',
+packages/vitest/src/runtime/detect-async-leaks.ts:14:4      - Unknown word (SIGNREQUEST)        -- 'SIGNREQUEST',
+packages/vitest/src/runtime/detect-async-leaks.ts:17:4      - Unknown word (TIMERWRAP)          -- 'TIMERWRAP',
+packages/vitest/src/runtime/detect-async-leaks.ts:18:4      - Unknown word (TLSWRAP)            -- 'TLSWRAP',
+packages/vitest/src/runtime/detect-async-leaks.ts:22:31     - Unknown word (PIPEWRAP)           -- STDIO_TYPES = new Set(['PIPEWRAP', 'TTYWRAP'])
+packages/vitest/src/runtime/detect-async-leaks.ts:22:43     - Unknown word (TTYWRAP)            -- new Set(['PIPEWRAP', 'TTYWRAP'])
+packages/vitest/src/runtime/external-executor.ts:220:16    - Unknown word (deadend)    -- const _deadend: never = type
+packages/vitest/src/runtime/moduleRunner/moduleRunner.ts:50:12     - Unknown word (callstacks) -- private _callstacks: WeakMap<EvaluatedModuleNode
+packages/vitest/src/runtime/nodejsWorkerLoader.ts:18:37     - Unknown word (Fvitest)    -- VITEST = new RegExp(`%3Fvitest=\\d{${NOW_LENGTH}}`
+packages/vitest/src/runtime/runner/hooks.ts:417:11    - Unknown word (fixtured)   -- const fixtured = withFixtures(wrapper
+packages/vitest/src/runtime/runner/run.ts:297:9     - Unknown word (timedout)   -- let timedout = false
+packages/vitest/src/runtime/runner/utils/tags.ts:92:14     - Unknown word (LPAREN)     -- | { type: 'LPAREN' }
+packages/vitest/src/runtime/runner/utils/tags.ts:93:14     - Unknown word (RPAREN)     -- | { type: 'RPAREN' }
+packages/vitest/src/runtime/utils.ts:52:8      - Unknown word (cnpm)       -- // cnpm
+packages/vitest/src/runtime/vm/esm-executor.ts:231:11    - Unknown word (worklist)   -- const worklist: string[] = [rootIdentifier
+packages/vitest/src/runtime/vm/types.ts:39:10     - Unknown word (contextified) -- * The contextified object as returned by
+packages/vitest/src/runtime/vm/utils.ts:22:18     - Unknown word (Kets)       -- const defaultKets = Object.keys(mod.default
+packages/vitest/src/runtime/workers/init.ts:58:11     - Unknown word (acks)       -- // parent acks the previous one. The
+packages/vitest/src/runtime/workers/init.ts:61:62     - Unknown word (acked)      -- buffered chunk has been acked, so awaiting
+packages/vitest/src/types/general.ts:64:37     - Unknown word (Tinyrainbow's) -- to be compatible with Tinyrainbow's bg-colors, and CSS's
+packages/vitest/src/types/jsdom-options.ts:14:118    - Unknown word (subresources) -- sent while fetching subresources.
+packages/vitest/src/types/jsdom-options.ts:16:70     - Unknown word (KHTML)        -- AppleWebKit/537.36 (KHTML, like Gecko) jsdom/
+packages/vitest/src/utils/memory-limit.ts:5:42      - Unknown word (jestjs)     -- the root directory of jestjs/jest GitHub project
+packages/vitest/src/utils/traces.ts:17:3      - Unknown word (tracestate) -- tracestate?: string
+packages/vitest/src/utils/traces.ts:287:47    - Unknown word (optelemetry) -- bind to user land's `@optelemetry/api` calls
+packages/web-worker/README.md:14:41     - Unknown word (sharedworker) -- MySharedWorker from './worker?sharedworker'`
+packages/web-worker/README.md:57:25     - Unknown word (ponyfill)     -- clone`: `'native' | 'ponyfill' | 'none'`. Defines
+packages/web-worker/package.json:47:13     - Unknown word (ungap)      -- "@types/ungap__structured-clone":
+packages/web-worker/src/shared-worker.ts:78:9      - Unknown word (onrtctransform) -- onrtctransform: null,
+patches/@sinonjs__fake-timers@15.4.0.patch:8:33      - Unknown word (sinonjs)    -- globalObject = require("@sinonjs/commons").global;
+patches/rrweb-snapshot@2.1.1.patch:30:8      - Unknown word (SRCSET)     -- const SRCSET_NOT_SPACES = /^[^ \t
+patches/rrweb-snapshot@2.1.1.patch:32:22     - Unknown word (Srcset)     -- function getAbsoluteSrcsetString(doc, attributeValue
+pnpm-workspace.yaml:113:3     - Unknown word (edgedriver) -- edgedriver: true
+pnpm-workspace.yaml:114:3     - Unknown word (esbuild)    -- esbuild: true
+pnpm-workspace.yaml:115:3     - Unknown word (geckodriver) -- geckodriver: true
+pnpm-workspace.yaml:117:3     - Unknown word (protobufjs)  -- protobufjs: true
+pnpm-workspace.yaml:120:3     - Unknown word (workerd)     -- workerd: true
+pnpm-workspace.yaml:122:7     - Unknown word (asamuzakjp)  -- - '@asamuzakjp/dom-selector@10.0.4
+pnpm-workspace.yaml:14:7      - Unknown word (trickfilm)  -- - '@trickfilm400/rollup-plugin-off
+pnpm-workspace.yaml:39:3      - Unknown word (mlly)       -- mlly: ^1.8.2
+pnpm-workspace.yaml:40:3      - Unknown word (rollup)     -- rollup: 'catalog:'
+pnpm-workspace.yaml:41:3      - Unknown word (vite)       -- vite: 'catalog:'
+pnpm-workspace.yaml:60:11     - Unknown word (estree)     -- '@types/estree': ^1.0.9
+pnpm-workspace.yaml:64:11     - Unknown word (yauzl)      -- '@types/yauzl': ^3.4.0
+pnpm-workspace.yaml:66:5      - Unknown word (vitejs)     -- '@vitejs/plugin-vue': ^6.0.1
+pnpm-workspace.yaml:71:3      - Unknown word (ansivision) -- ansivision: ^0.4.0
+pnpm-workspace.yaml:76:3      - Unknown word (knip)       -- knip: ^6.42.0
+pnpm-workspace.yaml:90:3      - Unknown word (sirv)       -- sirv: ^3.0.2
+pnpm-workspace.yaml:93:3      - Unknown word (tinybench)  -- tinybench: ^6.2.2
+pnpm-workspace.yaml:95:3      - Unknown word (tinyglobby) -- tinyglobby: ^0.2.17
+pnpm-workspace.yaml:98:3      - Unknown word (tinyspy)    -- tinyspy: ^4.0.6
+test/browser/fixtures/browser-crash/vitest.config.ts:14:38     - Unknown word (crashcontent) -- context.page.goto('about:crashcontent')
+test/browser/fixtures/expect-dom/toHaveAccessibleErrorMessage.test.ts:171:20    - Unknown word (asdflkje)       -- const msg = 'asdflkje2984fguyvb bnafdsasfa
+test/browser/fixtures/expect-dom/toHaveAccessibleErrorMessage.test.ts:171:32    - Unknown word (fguyvb)         -- const msg = 'asdflkje2984fguyvb bnafdsasfa;lj'
+test/browser/fixtures/expect-dom/toHaveAccessibleErrorMessage.test.ts:171:39    - Unknown word (bnafdsasfa)     -- 'asdflkje2984fguyvb bnafdsasfa;lj'
+test/browser/fixtures/expect-dom/toHaveAccessibleErrorMessage.test.ts:49:10     - Unknown word (asfdafbasdfasa) -- 'asfdafbasdfasa',
+test/browser/fixtures/expect-dom/toHaveClass.test.ts:27:59     - Unknown word (xtra)       -- )).not.toHaveClass('xtra')
+test/browser/fixtures/expect-dom/toHaveStyle.test.ts:26:16     - Unknown word (fakefake)   -- // border: fakefake doesn't exist
+test/browser/fixtures/expect-dom/toMatchScreenshot.test.ts:49:8      - Unknown word (oklch)      -- 'oklch(39.6% 0.141 25.723)
+test/browser/fixtures/locator-error-format/basic.test.ts:11:30     - Unknown word (eror)       -- TODO: surfacing element eror via expect.element is
+test/browser/fixtures/locators/blog.test.tsx:16:51     - Unknown word (molestiae)  -- toMatchTextContent(/molestiae ut ut quas/)
+test/browser/fixtures/locators/blog.test.tsx:16:67     - Unknown word (quas)       -- hTextContent(/molestiae ut ut quas/)
+test/browser/fixtures/locators/blog.test.tsx:17:72     - Unknown word (occaecati)  -- toMatchTextContent(/occaecati excepturi/)
+test/browser/fixtures/locators/blog.test.tsx:17:82     - Unknown word (excepturi)  -- toMatchTextContent(/occaecati excepturi/)
+test/browser/fixtures/trace/exotic.test.ts:20:33     - Unknown word (highlightable) -- shadow dom is rebuilt and highlightable by mirror id', async
+test/browser/fixtures/user-event/pointer.test.ts:62:18     - Unknown word (pntr)       -- // const id = 'pntr'
+test/browser/specs/aria-snapshot.test.ts:9:23      - Unknown word (Snaphsots)  -- function extractInlineSnaphsots(code: string) {
+test/browser/specs/errors.test.ts:88:15     - Unknown word (doesnt)     -- test('doesnt write attachment to
+test/browser/specs/update-snapshot.test.ts:19:59     - Unknown word (Sheremet)   -- // TODO 2024-12-11 Sheremet V.A. test with multiple
+test/browser/src/blog-app/blog.tsx:15:100    - Unknown word (nfugiat)        -- beatae ea dolores neque\nfugiat blanditiis voluptate
+test/browser/src/blog-app/blog.tsx:15:108    - Unknown word (blanditiis)     -- dolores neque\nfugiat blanditiis voluptate porro vel
+test/browser/src/blog-app/blog.tsx:15:119    - Unknown word (voluptate)      -- neque\nfugiat blanditiis voluptate porro vel nihil molestiae
+test/browser/src/blog-app/blog.tsx:15:129    - Unknown word (porro)          -- blanditiis voluptate porro vel nihil molestiae
+test/browser/src/blog-app/blog.tsx:15:158    - Unknown word (reiciendis)     -- vel nihil molestiae ut reiciendis\nqui aperiam non debitis
+test/browser/src/blog-app/blog.tsx:15:174    - Unknown word (aperiam)        -- molestiae ut reiciendis\nqui aperiam non debitis possimus
+test/browser/src/blog-app/blog.tsx:15:186    - Unknown word (debitis)        -- reiciendis\nqui aperiam non debitis possimus qui neque nisi
+test/browser/src/blog-app/blog.tsx:15:194    - Unknown word (possimus)       -- aperiam non debitis possimus qui neque nisi nulla
+test/browser/src/blog-app/blog.tsx:15:218    - Unknown word (nulla)          -- possimus qui neque nisi nulla',
+test/browser/src/blog-app/blog.tsx:15:38     - Unknown word (nsequi)         -- rerum tempore vitae\nsequi sint nihil reprehenderit
+test/browser/src/blog-app/blog.tsx:15:76     - Unknown word (beatae)         -- reprehenderit dolor beatae ea dolores neque\nfugiat
+test/browser/src/blog-app/blog.tsx:15:94     - Unknown word (neque)          -- dolor beatae ea dolores neque\nfugiat blanditiis voluptate
+test/browser/src/blog-app/blog.tsx:20:18     - Unknown word (molestias)      -- title: 'ea molestias quasi exercitationem
+test/browser/src/blog-app/blog.tsx:20:34     - Unknown word (exercitationem) -- 'ea molestias quasi exercitationem repellat qui ipsa sit
+test/browser/src/blog-app/blog.tsx:20:62     - Unknown word (ipsa)           -- exercitationem repellat qui ipsa sit aut',
+test/browser/src/blog-app/blog.tsx:21:106    - Unknown word (accusantium)    -- nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae
+test/browser/src/blog-app/blog.tsx:21:118    - Unknown word (quis)           -- doloribus vel accusantium quis pariatur\nmolestiae
+test/browser/src/blog-app/blog.tsx:21:123    - Unknown word (pariatur)       -- vel accusantium quis pariatur\nmolestiae porro eius
+test/browser/src/blog-app/blog.tsx:21:132    - Unknown word (nmolestiae)     -- accusantium quis pariatur\nmolestiae porro eius odio et labore
+test/browser/src/blog-app/blog.tsx:21:149    - Unknown word (eius)           -- pariatur\nmolestiae porro eius odio et labore et velit
+test/browser/src/blog-app/blog.tsx:21:154    - Unknown word (odio)           -- nmolestiae porro eius odio et labore et velit aut
+test/browser/src/blog-app/blog.tsx:21:162    - Unknown word (labore)         -- nmolestiae porro eius odio et labore et velit aut',
+test/browser/src/blog-app/blog.tsx:21:17     - Unknown word (iusto)          -- body: 'et iusto sed quo iure\nvoluptatem
+test/browser/src/blog-app/blog.tsx:21:172    - Unknown word (velit)          -- eius odio et labore et velit aut',
+test/browser/src/blog-app/blog.tsx:21:31     - Unknown word (iure)           -- body: 'et iusto sed quo iure\nvoluptatem occaecati
+test/browser/src/blog-app/blog.tsx:21:36     - Unknown word (nvoluptatem)    -- et iusto sed quo iure\nvoluptatem occaecati omnis eligendi
+test/browser/src/blog-app/blog.tsx:21:64     - Unknown word (eligendi)       -- nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus
+test/browser/src/blog-app/blog.tsx:21:92     - Unknown word (doloribus)      -- eligendi aut ad\nvoluptatem doloribus vel accusantium quis
+test/browser/src/blog-app/blog.tsx:27:108    - Unknown word (nquis)          -- provident rerum culpa\nquis hic commodi nesciunt
+test/browser/src/blog-app/blog.tsx:27:118    - Unknown word (commodi)        -- rerum culpa\nquis hic commodi nesciunt rem tenetur
+test/browser/src/blog-app/blog.tsx:27:126    - Unknown word (nesciunt)       -- culpa\nquis hic commodi nesciunt rem tenetur doloremque
+test/browser/src/blog-app/blog.tsx:27:139    - Unknown word (tenetur)        -- commodi nesciunt rem tenetur doloremque ipsam iure
+test/browser/src/blog-app/blog.tsx:27:14     - Unknown word (ullam)          -- body: 'ullam et saepe reiciendis
+test/browser/src/blog-app/blog.tsx:27:147    - Unknown word (doloremque)     -- nesciunt rem tenetur doloremque ipsam iure\nquis sunt
+test/browser/src/blog-app/blog.tsx:27:158    - Unknown word (ipsam)          -- rem tenetur doloremque ipsam iure\nquis sunt voluptatem
+test/browser/src/blog-app/blog.tsx:27:197    - Unknown word (illo)           -- sunt voluptatem rerum illo velit',
+test/browser/src/blog-app/blog.tsx:27:23     - Unknown word (saepe)          -- body: 'ullam et saepe reiciendis voluptatem
+test/browser/src/blog-app/blog.tsx:27:40     - Unknown word (voluptatem)     -- et saepe reiciendis voluptatem adipisci\nsit amet autem
+test/browser/src/blog-app/blog.tsx:27:51     - Unknown word (adipisci)       -- reiciendis voluptatem adipisci\nsit amet autem assumenda
+test/browser/src/blog-app/blog.tsx:27:65     - Unknown word (amet)           -- voluptatem adipisci\nsit amet autem assumenda provident
+test/browser/src/blog-app/blog.tsx:27:76     - Unknown word (assumenda)      -- adipisci\nsit amet autem assumenda provident rerum culpa
+test/browser/src/blog-app/blog.tsx:8:15      - Unknown word (sunt)       -- title: 'sunt aut facere repellat
+test/browser/src/blog-app/blog.tsx:8:24      - Unknown word (facere)     -- title: 'sunt aut facere repellat provident occaecati
+test/browser/src/blog-app/blog.tsx:8:31      - Unknown word (repellat)   -- title: 'sunt aut facere repellat provident occaecati
+test/browser/src/blog-app/blog.tsx:8:76      - Unknown word (reprehenderit) -- occaecati excepturi optio reprehenderit',
+test/browser/src/blog-app/blog.tsx:9:117     - Unknown word (totam)          -- molestiae ut ut quas totam\nnostrum rerum est autem
+test/browser/src/blog-app/blog.tsx:9:132     - Unknown word (rerum)          -- quas totam\nnostrum rerum est autem sunt rem eveniet
+test/browser/src/blog-app/blog.tsx:9:142     - Unknown word (autem)          -- totam\nnostrum rerum est autem sunt rem eveniet architecto
+test/browser/src/blog-app/blog.tsx:9:157     - Unknown word (eveniet)        -- rerum est autem sunt rem eveniet architecto',
+test/browser/src/blog-app/blog.tsx:9:165     - Unknown word (architecto)     -- autem sunt rem eveniet architecto',
+test/browser/src/blog-app/blog.tsx:9:22      - Unknown word (suscipit)      -- body: 'quia et suscipit\nsuscipit recusandae
+test/browser/src/blog-app/blog.tsx:9:31      - Unknown word (nsuscipit)     -- body: 'quia et suscipit\nsuscipit recusandae consequuntur
+test/browser/src/blog-app/blog.tsx:9:41      - Unknown word (recusandae)    -- et suscipit\nsuscipit recusandae consequuntur expedita
+test/browser/src/blog-app/blog.tsx:9:52      - Unknown word (consequuntur)  -- nsuscipit recusandae consequuntur expedita et cum\nreprehenderi
+test/browser/src/blog-app/blog.tsx:9:65      - Unknown word (expedita)      -- recusandae consequuntur expedita et cum\nreprehenderit
+test/browser/src/blog-app/blog.tsx:9:81      - Unknown word (nreprehenderit) -- consequuntur expedita et cum\nreprehenderit molestiae ut ut quas
+test/browser/test/cdp.test-d.ts:37:19     - Unknown word (cdps)       -- test('client side cdps', async () => {
+test/browser/test/cdp.test.ts:47:34     - Unknown word (asome)      -- input).toHaveValue('asome text')
+test/browser/test/userEvent.test.ts:515:39    - Unknown word (aaab)       -- ).toBe('Hello World!aaab')
+test/coverage-test/fixtures/src/throws-error.ts:5:11      - Unknown word (uncoverd)   -- return "uncoverd";
+test/coverage-test/fixtures/src/untested-with-]-in-filename.ts:9:11      - Unknown word (Untetsted)  -- return 'Untetsted'
+test/coverage-test/fixtures/workspaces/project/project2/src/konst.ts:3:14      - Unknown word (konst)      -- export const konst = <T>(value: T) =>
+test/e2e/deps/malformed-source-map/index.js:2:56      - Unknown word (Wpzb)       -- application/json;base64,bm90LWpzb24=
+test/e2e/fixtures/css/test/default-css.spec.ts:25:41     - Unknown word (cdbed)      -- module).toBe('_module_cdbed7')
+test/e2e/fixtures/inspect/vitest.config.ts.timestamp-1713887058308-b154731a64b17.mjs:2:45      - Unknown word (sheremet)   -- from "file:///Users/sheremet.mac/Projects/vitest
+test/e2e/fixtures/snapshot-review/first.test.ts:22:17     - Unknown word (Szapshot)   -- "title": "Szapshot catalogue",
+test/e2e/fixtures/snapshot-review/first.test.ts:32:19     - Unknown word (catallgue)  -- name=Snapshot catallgue
+test/e2e/fixtures/snapshot-review/first.test.ts:43:74     - Unknown word (CUSTIM)     -- atchUppercaseInlineSnapshot(`"CUSTIM INLINE SNAPSHOT"`)
+test/e2e/fixtures/snapshot-review/first.test.ts:52:6      - Unknown word (feader)     -- "feader
+test/e2e/fixtures/snapshot-review/first.test.ts:64:70     - Unknown word (inlinp)     -- oMatchInlineSnapshot(`"Shared inlinp result"`)
+test/e2e/fixtures/snapshot-review/raw/catalogue.html:1:100     - Unknown word (jnapshots)  -- Snapshot kinds"><li>Inline jnapshots</li><li>File snapsfots
+test/e2e/fixtures/snapshot-review/raw/catalogue.html:1:123     - Unknown word (snapsfots)  -- jnapshots</li><li>File snapsfots</li></ul><button>Capture
+test/e2e/fixtures/snapshot-review/raw/catalogue.html:1:158     - Unknown word (snapshht)   -- /ul><button>Capture snapshht</button></main>
+test/e2e/fixtures/snapshot-review/raw/catalogue.html:1:43      - Unknown word (catabogue)  -- Catalogue"><h1>Snapshot catabogue</h1><ul aria-label=
+test/e2e/fixtures/snapshot-review/raw/catalogue.json:2:13      - Unknown word (Snapshbt)   -- "title": "Snapshbt catalogue",
+test/e2e/fixtures/snapshot-review/raw/no-newline.txt:1:10      - Unknown word (newlind)    -- No final newlind
+test/e2e/fixtures/snapshot-review/raw/uppercase.txt:1:12      - Unknown word (SNAPSHGT)   -- CUSTOM RAW SNAPSHGT
+test/e2e/fixtures/snapshot-review/second.test.ts:25:101    - Unknown word (resuet)     -- tchInlineSnapshot(`"Recovered resuet"`)
+test/e2e/fixtures/snapshot-review/second.test.ts:29:118    - Unknown word (packticks)  -- "double" 'single' \`packticks\` \${literal} \\path
+test/e2e/fixtures/stacktraces/frame.spec.imba:4:3       - Unknown word (ciyet)      -- ciyet.
+test/e2e/fixtures/stacktraces/vite.config.ts:37:142    - Unknown word (QAAE)       -- IAAI,CAAC,MAAM,CAAE,QAAE,CAAC,CAAC,CAAE,CAAC
+test/e2e/fixtures/stacktraces/vite.config.ts:37:167    - Unknown word (IAAE)       -- CAAC,CAAC,CAAE,CAAC,IAAE,OAAA,CAAC,CAAC,CAAC
+test/e2e/fixtures/stacktraces/vite.config.ts:37:172    - Unknown word (OAAA)       -- CAAC,CAAE,CAAC,IAAE,OAAA,CAAC,CAAC,CAAC,CAAC
+test/e2e/fixtures/stacktraces/vite.config.ts:37:202    - Unknown word (IAAG)       -- CAAC,CAAC,CAAC,CAAC,IAAG,CAAC,CAAC;CAAA;;AAExC
+test/e2e/fixtures/stacktraces/vite.config.ts:37:23     - Unknown word (MAAM)       -- ';;AAAA,MAAM,EAAE,EAAE,CAAE,MAAM
+test/e2e/fixtures/stacktraces/vite.config.ts:37:239    - Unknown word (KAAK)       -- CAAA;;AAExC,EAAE,CAAC,KAAK,CAAE,QAAE,GAAA;;CACX
+test/e2e/fixtures/stacktraces/vite.config.ts:37:254    - Unknown word (GAAA)       -- CAAC,KAAK,CAAE,QAAE,GAAA;;CACX,MAAM,CAAC,GAAG
+test/e2e/fixtures/stacktraces/vite.config.ts:37:260    - Unknown word (CACX)       -- KAAK,CAAE,QAAE,GAAA;;CACX,MAAM,CAAC,GAAG,EAAE
+test/e2e/fixtures/stacktraces/vite.config.ts:37:28     - Unknown word (EAAE)       -- ';;AAAA,MAAM,EAAE,EAAE,CAAE,MAAM,OAAO
+test/e2e/fixtures/stacktraces/vite.config.ts:37:38     - Unknown word (CAAE)       -- AAAA,MAAM,EAAE,EAAE,CAAE,MAAM,OAAO,QAAQ;;AAEjC
+test/e2e/fixtures/stacktraces/vite.config.ts:37:48     - Unknown word (OAAO)       -- EAAE,EAAE,CAAE,MAAM,OAAO,QAAQ;;AAEjC,MAAM,CAAC
+test/e2e/fixtures/stacktraces/vite.config.ts:37:483    - Unknown word (AAIF)       -- CAAC,CAAA;CAAA,CAH1B;AAIF;',
+test/e2e/fixtures/stacktraces/vite.config.ts:37:53     - Unknown word (QAAQ)       -- EAAE,CAAE,MAAM,OAAO,QAAQ;;AAEjC,MAAM,CAAC,QAAG
+test/e2e/fixtures/stacktraces/vite.config.ts:37:70     - Unknown word (CAAC)       -- OAAO,QAAQ;;AAEjC,MAAM,CAAC,QAAG,CAAC,GAAG,IAAI
+test/e2e/fixtures/stacktraces/vite.config.ts:37:75     - Unknown word (QAAG)       -- QAAQ;;AAEjC,MAAM,CAAC,QAAG,CAAC,GAAG,IAAI,IAAI
+test/e2e/fixtures/stacktraces/vite.config.ts:37:85     - Unknown word (GAAG)       -- MAAM,CAAC,QAAG,CAAC,GAAG,IAAI,IAAI,CAAC;;CACtB
+test/e2e/fixtures/stacktraces/vite.config.ts:37:90     - Unknown word (IAAI)       -- CAAC,QAAG,CAAC,GAAG,IAAI,IAAI,CAAC;;CACtB,MAAM
+test/e2e/fixtures/stacktraces/vite.config.ts:5:24      - Unknown word (imba)       -- name: 'vite-plugin-imba',
+test/e2e/test/around-each.test.ts:167:9     - Unknown word (runtest)    -- 'no-runtest.test.ts': `
+test/e2e/test/benchmarking.test.ts:1328:35   - Unknown word (mreceived)   -- [2mexpect([22m[31mreceived[39m[2m).toBeFasterThan
+test/e2e/test/benchmarking.test.ts:1328:79   - Unknown word (mexpected)   -- toBeFasterThan([22m[32mexpected[39m[2m)[22m
+test/e2e/test/benchmarking.test.ts:577:6     - Unknown word (readfn)     -- 'readfn.bench.ts',
+test/e2e/test/benchmarking.test.ts:596:6     - Unknown word (missingfile) -- 'missingfile.bench.ts',
+test/e2e/test/benchmarking.test.ts:879:8     - Unknown word (nosamples)   -- 'nosamples.bench.ts': /* ts */
+test/e2e/test/config/browser-configs.test.ts:235:15    - Unknown word (chrom)      -- project: 'chrom*',
+test/e2e/test/config/browser-configs.test.ts:403:47    - Unknown word (workspaced) -- works correctly in workspaced browser mode if instances
+test/e2e/test/config/browser-configs.test.ts:499:16    - Unknown word (myproject)  -- project: '!myproject',
+test/e2e/test/config/sequence-shuffle.test.ts:66:17     - Unknown word (unshuffle)  -- describe('unshuffle', { shuffle: false
+test/e2e/test/console-color.test.ts:19:36     - Unknown word (mtrue)      -- stdout).toContain('\x1B[33mtrue\x1B[39m\n')
+test/e2e/test/detect-async-leaks.test.ts:240:5     - Unknown word (FSEVENTWRAP) -- FSEVENTWRAP leaking in packages
+test/e2e/test/git-changed.test.ts:104:25    - Unknown word (gpgsign)    -- git('config', 'commit.gpgsign', 'false')
+test/e2e/test/git-changed.test.ts:93:10     - Unknown word (größe)      -- 'src/größe.js': 'export const size
+test/e2e/test/location-filters.test.ts:129:36    - Unknown word (doesn)      -- fixturePath}/:a/file/that/doesn-t/exit:10`,
+test/e2e/test/mocker-redirect-traversal.test.ts:81:43     - Unknown word (inroot)     -- sterRedirect(port, 'traversal:inroot.js')
+test/e2e/test/mocking.test.ts:47:28     - Unknown word (autospied)  -- mockReset works with autospied Node modules', async
+test/e2e/test/no-unexpected-logging.test.ts:47:26     - Unknown word (stdtout)    -- function normalizeOutput(stdtout: string) {
+test/e2e/test/print-error.test.ts:59:9      - Unknown word (uintarray)  -- uintarray: Uint8Array.from([1
+test/e2e/test/public-api.test.ts:21:27     - Unknown word (Metas)      -- const finishedTestCaseMetas: TaskMeta[] = []
+test/e2e/test/reporters/tree.test.ts:39:51     - Unknown word (testname)   -- when all passed with testname filter as a tree', async
+test/e2e/test/reporters/utils.ts:299:23    - Unknown word (merror)     -- content: '[33merror[39m',
+test/e2e/test/scoped-fixtures.test.ts:1705:81   - Unknown word (fixtu)      -- cannot access file-scoped fixtu…
+test/e2e/test/scoped-fixtures.test.ts:3131:77   - Unknown word (productio)  -- { scope: "file" }, "productio…
+test/e2e/test/server-runner.test.ts:14:31     - Unknown word (échec)      -- return new Error('échec').stack!
+test/e2e/test/stacktraces.test.ts:58:24     - Unknown word (framestack) -- // expect to print framestack of foo.js
+test/e2e/test/test-tags.test.ts:850:28    - Unknown word (alid)       -- for(['!invalid', 'inv*alid', 'inv&alid', 'inv|alid
+test/e2e/test/vm-threads.test.ts:590:87    - Unknown word (QEAAAA)     -- application/wasm;base64,AGFzbQEAAAA="',
+test/e2e/test/watch/raw/snapshot-review-accepted.diff:14:7      - Unknown word (Snaushot)   -- -name=Snaushot catalogue
+test/e2e/test/watch/raw/snapshot-review-accepted.diff:20:84     - Unknown word (PNAPSHOT)   -- = `"CUSTOM EXTERNAL PNAPSHOT"`;
+test/e2e/test/watch/raw/snapshot-review-accepted.diff:38:23     - Unknown word (catalngue)  -- "title": "Snapshot catalngue",
+test/e2e/test/watch/raw/snapshot-review-accepted.diff:47:23     - Unknown word (cadalogue)  -- "title": "Snapshot cadalogue",
+test/e2e/test/watch/raw/snapshot-review-accepted.diff:61:8      - Unknown word (listitem)   -- - - listitem: Inline jnapshots
+test/e2e/test/watch/raw/snapshot-review-accepted.diff:6:62      - Unknown word (Concjrrent) -- expect: alpha 1`] = `"Concjrrent alpha"`;
+test/e2e/test/watch/raw/snapshot-review-accepted.diff:74:81     - Unknown word (knapshot)   -- [TypeError: Invalid knapshot input]`;
+test/e2e/test/watch/raw/snapshot-review-accepted.diff:9:72      - Unknown word (betc)       -- beta 1`] = `"Concurrent betc"`;
+test/typescript/test-d/test.test-d.ts:75:16     - Unknown word (wolk)       -- expectTypeOf({ wolk: 'true' }).toHaveProperty
+test/ui/fixtures/trace/basic.test.ts:125:23    - Unknown word (lightskyblue) -- background-color: lightskyblue;
+test/ui/test/ui.spec.ts:66:11     - Unknown word (tokenless)  -- const tokenless = await request.get
+test/unit/deps/dep-cjs/package.json:5:8       - Unknown word (esmodule)   -- "./esmodule": "./esmodule.js",
+test/unit/src/mocks/external/default-cjs.cjs:1:33      - Unknown word (pseudoesm)  -- exports = require('./cjs-pseudoesm.cjs')
+test/unit/src/wasm/wasm-bindgen-no-cyclic/index_bg.js:105:49    - Unknown word (wbindgen)   -- assStringToWasm0(name, wasm.__wbindgen_malloc, wasm.__wbindgen
+test/unit/src/wasm/wasm-bindgen-no-cyclic/package.json:5:15      - Unknown word (bindgen)    -- "The wasm-bindgen Developers"
+test/unit/test/environments/happy-dom.spec.ts:54:11     - Unknown word (contextification) -- // Node contextification reports this getter
+test/unit/test/error.test.ts:96:42     - Unknown word (nessage)    -- toJSON doesn't override nessage, stack and name if it
+test/unit/test/expect.test-d.ts:3:23      - Unknown word (asymmetrict) -- test('expect.* allows asymmetrict mattchers with different
+test/unit/test/expect.test-d.ts:3:35      - Unknown word (mattchers)   -- allows asymmetrict mattchers with different types
+test/unit/test/expect.test.ts:228:61    - Unknown word (Tatooine)   -- Skywalker', new Address('Tatooine'))
+test/unit/test/expect.test.ts:317:50    - Unknown word (inequal)    -- given iterator within inequal objects', () => {
+test/unit/test/fixtures/timers.suite.ts:1557:41   - Unknown word (immediates) -- isChildProcess)('includes immediates and ticks', () => {
+test/unit/test/injector-mock.test.ts:1838:140  - Unknown word (AAEF)       -- GAAG,KAAK,kBAAkB;EAC1B;AAEF,KAAK,mBAAmB;CACtB,IAAI
+test/unit/test/injector-mock.test.ts:1838:25   - Unknown word (UAAU)       -- 'AAAA,SAAS,MAAM,UAAU;;AAGzB,GAAG,KAAK,kBAAkB
+test/unit/test/injector-mock.test.ts:1838:65   - Unknown word (WAAW)       -- KAAK,kBAAkB;AAE1B,IAAI,WAAW;CACb,GAAG,KAAK,kBAAkB
+test/unit/test/isolate.test.ts:6:12      - Unknown word (fooooo)     -- expect(g.fooooo).toBe(undefined)
+test/unit/test/jest-expect.test.ts:1819:16   - Unknown word (Harkonnen)  -- lastName: 'Harkonnen',
+test/unit/test/jest-expect.test.ts:1822:51   - Unknown word (Atreides)   -- Jessica', lastName: 'Atreides', colors: ['red', 'green
+test/unit/test/jest-mock.test.ts:369:7     - Unknown word (respyin)    -- it('respyin on a spy resets the
+test/unit/test/mocking/autospying.test.ts:4:51      - Unknown word (autospying) -- from '../../src/mocks/autospying-namespace/index.js'
+test/unit/test/mocking/vi-mockObject.test.ts:49:27     - Unknown word (respied)    -- vi.mockRestore() on respied method does not restore
+test/unit/test/mocking/vi-spyOn.test.ts:755:24    - Unknown word (respy)      -- test('vi.spyOn() can respy the metthod with new
+test/unit/test/mocking/vi-spyOn.test.ts:755:34    - Unknown word (metthod)    -- spyOn() can respy the metthod with new state when
+test/unit/test/module.test.ts:32:5      - Unknown word (extect)     -- it('extect vite.noExternal to be
+test/unit/test/pretty-format.test.ts:1159:19   - Unknown word (surragete)  -- test('truncates surragete pair correctly', ()
+test/unit/test/pretty-format.test.ts:520:27    - Unknown word (symval)     -- val[Symbol('sym')] = 'symval'
+test/unit/test/resolve-file-url.test.ts:4:48      - Unknown word (Edep)       -- ./resolve-file-url%7Edep.js', import.meta.url

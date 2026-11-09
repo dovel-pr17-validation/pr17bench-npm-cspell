@@ -1,0 +1,14 @@
+{
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "tsBuildInfoFile": "../../dist/plugin/compile.tsbuildInfo",
+        "rootDir": ".",
+        "outDir": "../../dist/plugin"
+    },
+    "include": ["."],
+    "references": [
+        { "path": "../common/tsconfig.json" },
+        { "path": "../spellCheckAST/tsconfig.json" },
+        { "path": "../generated/tsconfig.json" }
+    ]
+}

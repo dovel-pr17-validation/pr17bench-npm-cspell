@@ -1,0 +1,33 @@
+{
+  "name": "perf-chart",
+  "private": true,
+  "version": "8.3.2",
+  "description": "Generate performance charts from cspell performance data.",
+  "bin": {
+    "cspell-integration-tests": "bin.ts"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "build": "pnpm run build:tsc",
+    "build:tsc": "tsc -p .",
+    "test-run": "./bin.ts  ../../integration-tests/perf/perf.csv -o ../../perf-report.md --daily-csv ../../static/daily-stats.csv",
+    "watch": "tsc -p . -w"
+  },
+  "author": "Jason Dent",
+  "license": "MIT",
+  "keywords": [],
+  "files": [
+    "src",
+    "bin.ts"
+  ],
+  "dependencies": {
+    "@streetsidesoftware/unindent": "^1.0.1",
+    "commander": "^15.0.0",
+    "csv-parse": "^7.0.3",
+    "csv-stringify": "^6.9.0",
+    "thistogram": "^2.0.0"
+  }
+}

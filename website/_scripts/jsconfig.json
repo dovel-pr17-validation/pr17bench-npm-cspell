@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "ESNext",
+        "allowImportingTsExtensions": true,
+        "lib": ["ES2022"]
+    },
+    "exclude": ["node_modules", "**/node_modules/*"]
+}

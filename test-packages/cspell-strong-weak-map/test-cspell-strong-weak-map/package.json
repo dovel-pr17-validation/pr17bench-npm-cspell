@@ -1,0 +1,34 @@
+{
+  "name": "test-cspell-strong-weak-map",
+  "version": "9.0.2",
+  "description": "Pure testing package",
+  "private": true,
+  "bin": {
+    "test-mjs": "./bin.mjs",
+    "test-tsdown-cjs": "./bin.tsdown.cjs",
+    "test-tsdown-mjs": "./bin.tsdown.mjs"
+  },
+  "type": "module",
+  "module": "./dist/esm/index.mjs",
+  "browser": "./dist/browser/index.mjs",
+  "scripts": {
+    "clean": "shx rm -rf dist",
+    "build": "pnpm build:ts && tsdown && pnpm run build:no-node",
+    "build:no-node": "node ../../check-no-node-types.mjs",
+    "build:ts": "pnpm run compile",
+    "clean-build": "pnpm run clean && pnpm run build",
+    "compile": "tsc -p .",
+    "test": "pnpm test:unit && pnpm test:smoke",
+    "test:smoke": "node ./bin.mjs && node ./bin.tsdown.mjs && node ./bin.tsdown.cjs",
+    "test:unit": "vitest run"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@cspell/strong-weak-map": "workspace:*"
+  },
+  "keywords": [],
+  "engines": {
+    "node": ">=22.18.0"
+  }
+}

@@ -1,0 +1,8847 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## v10.2.0-alpha.0 (2026-08-28)
+
+### Features
+
+<details>
+<summary>feat: Add `--force-check` cli option (<a href="https://github.com/streetsidesoftware/cspell/pull/9080">#9080</a>)</summary>
+
+### feat: Add `--force-check` cli option ([#9080](https://github.com/streetsidesoftware/cspell/pull/9080))
+
+This pull request introduces a new `--force-check` option to the CLI, allowing users to force specific files to be checked even if they would normally be excluded. It also standardizes dependency configuration naming, improves error handling and reporting for the CLI, and updates TypeScript target versions in config files. The most important changes are grouped below.
+
+**New CLI Feature: Force Check**
+
+- Added a `--force-check` option to the `lint` command, allowing files specified with `--file`, `--files`, or `--file-list` to be checked even if they would normally be excluded. This includes updates to the CLI interface, validation logic, and documentation/help output. [\[1\]](diffhunk://#diff-38a56740ba7522444717e53cdaf593980c2527964b07a05aaab07340e0d015a7R118-R121) [\[2\]](diffhunk://#diff-38a56740ba7522444717e53cdaf593980c2527964b07a05aaab07340e0d015a7L216-R226) [\[3\]](diffhunk://#diff-05d4916cc710922aec6dff5f7d5849852864fd844bda27afd042fabd511615deR80-R84) [\[4\]](diffhunk://#diff-05d4916cc710922aec6dff5f7d5849852864fd844bda27afd042fabd511615deL191-R196) [\[5\]](diffhunk://#diff-a0fc773e2c6532cc5fdf360dc95f2c1d33c6f96b743094a5ab2b1f1d96c11440R403-R410)
+- Implemented logic in the file determination and processing flow to honor the `forceCheck` flag, ensuring excluded files can be checked when requested, and updated reporting of skipped files. [\[1\]](diffhunk://#diff-0f04f6e0be4c776ea5d7956e8118ff955df92084a4dc434a4d5572fde3323f27L144-R144) [\[2\]](diffhunk://#diff-0f04f6e0be4c776ea5d7956e8118ff955df92084a4dc434a4d5572fde3323f27R162-R163) [\[3\]](diffhunk://#diff-0f04f6e0be4c776ea5d7956e8118ff955df92084a4dc434a4d5572fde3323f27R269-R281) [\[4\]](diffhunk://#diff-0f04f6e0be4c776ea5d7956e8118ff955df92084a4dc434a4d5572fde3323f27R329-R342) [\[5\]](diffhunk://#diff-0f04f6e0be4c776ea5d7956e8118ff955df92084a4dc434a4d5572fde3323f27L352-R367) [\[6\]](diffhunk://#diff-02c03bf65428035d02eb6561793ee281bbd609722d831c27c688b0865693a74dL100-R112)
+
+**CLI Error Handling and Testing**
+
+- Improved error handling for invalid combinations of CLI options (e.g., using `--force-check` without specifying files, or mixing globs and `--file`), with corresponding error messages and test cases. [\[1\]](diffhunk://#diff-38a56740ba7522444717e53cdaf593980c2527964b07a05aaab07340e0d015a7L216-R226) [\[2\]](diffhunk://#diff-c382f7d721027eac952154bf67a6dd35b0f86f9cbddefebff13b1ea568e1fcbaR331-R355)
+- Enhanced test coverage for the new `--force-check` option, including snapshot updates for help and error outputs. [\[1\]](diffhunk://#diff-36711bc52fa23cc9a64e178df1fb419ddb4d144953e7c673099ab669725ae8bbR1017-R1018) [\[2\]](diffhunk://#diff-36711bc52fa23cc9a64e178df1fb419ddb4d144953e7c673099ab669725ae8bbR3828-R3856) [\[3\]](diffhunk://#diff-36711bc52fa23cc9a64e178df1fb419ddb4d144953e7c673099ab669725ae8bbR4362-R4363) [\[4\]](diffhunk://#diff-36711bc52fa23cc9a64e178df1fb419ddb4d144953e7c673099ab669725ae8bbR4498-R4499) [\[5\]](diffhunk://#diff-36711bc52fa23cc9a64e178df1fb419ddb4d144953e7c673099ab669725ae8bbR4661-R4662) [\[6\]](diffhunk://#diff-c382f7d721027eac952154bf67a6dd35b0f86f9cbddefebff13b1ea568e1fcbaR109-R116) [\[7\]](diffhunk://#diff-c382f7d721027eac952154bf67a6dd35b0f86f9cbddefebff13b1ea568e1fcbaR331-R355)
+
+**Dependency Configuration Standardization**
+
+- Renamed the dependency configuration property from `onlyAllowBundle` to `onlyBundle` across all relevant config files and documentation for consistency. [\[1\]](diffhunk://#diff-f125c2d9f65791d1be4e2a909fb652b0d2d8a870b7e224948aeb2aa060e9db1fL9-R15) [\[2\]](diffhunk://#diff-f125c2d9f65791d1be4e2a909fb652b0d2d8a870b7e224948aeb2aa060e9db1fL42-R42) [\[3\]](diffhunk://#diff-c83979aa9775219f3f937fa211f5defa27cf2b701766f31ad4f8366a8da86629L9-R9) [\[4\]](diffhunk://#diff-87bc6b738d071bbd2922d5922bfddc365157fd9a038739b4c80466ec7b2624ffL9-R9)
+
+**Other Improvements**
+
+- Updated TypeScript target version in default config from `Node20` to `Node22`.
+- Improved CLI process exit code handling for error scenarios.
+- Minor improvement to CLI reporter logic to avoid emitting empty results.
+- Cleaned up and simplified the coverage collection script in `package.json`.
+
+---
+
+</details>
+
+### Fixes
+
+<details>
+<summary>fix: Updated package.json exports (<a href="https://github.com/streetsidesoftware/cspell/pull/8965">#8965</a>)</summary>
+
+### fix: Updated package.json exports ([#8965](https://github.com/streetsidesoftware/cspell/pull/8965))
+
+This fixes a few package exports that were wrong or inconsistent (e.g. `exports["."]` not the same path as `main`).
+
+The `pnpm test` script was failing locally due to my `~/.npmrc` having `ignore-scripts=true`, which prevented the `preinstall` script from running. I updated `test:prep` to call the `preinstall` script, which should be fast if you already have `yarn` installed.
+
+---
+
+</details>
+
+### Dictionary Updates
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9067">#9067</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#9067](https://github.com/streetsidesoftware/cspell/pull/9067))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/django/django/report.yaml            | 82 ++++++++++------------
+ .../snapshots/django/django/snapshot.txt           | 51 ++++++--------
+ packages/cspell-bundled-dicts/package.json         |  6 +-
+ pnpm-lock.yaml                                     | 30 +++++---
+ 4 files changed, 84 insertions(+), 85 deletions(-)
+```
+
+---
+
+</details>
+
+## v10.2.0-alpha.1 (2026-08-28)
+
+- No changes
+
+## v10.2.0-alpha.2 (2026-08-28)
+
+### Fixes
+
+<details>
+<summary>fix(ci): push release tag with GitHub App token so publish.yml triggers (<a href="https://github.com/streetsidesoftware/cspell/pull/9097">#9097</a>)</summary>
+
+### fix(ci): push release tag with GitHub App token so publish.yml triggers ([#9097](https://github.com/streetsidesoftware/cspell/pull/9097))
+
+## Summary
+
+`publish.yml` (the NPM trusted-publishing workflow) is triggered by a `push: tags: v*` event, among other triggers. `build-version-release.yml` creates that tag via `pnpm lerna version`, but the tag was never actually triggering `publish.yml`.
+
+Root cause: `lerna version` pushes the version commit/tag to the `origin` remote, and `origin`'s credentials were still the _default_ `GITHUB_TOKEN` persisted by `actions/checkout` (the `Setup Git` step's `gh-token` remote was unused — `lerna` pushes to `origin`, not `gh-token` — and was seeded before the GitHub App token even existed). GitHub explicitly does not trigger downstream workflow runs for pushes authenticated with the default `GITHUB_TOKEN`, to avoid recursive triggering. So the tag got created, but `publish.yml` never fired.
+
+## Changes
+
+- `actions/checkout`: set `persist-credentials: false` so the default token isn't left wired into `origin`.
+- `Setup Git`: drop the unused/misconfigured `gh-token` remote (it referenced the default token anyway, and nothing pushed to it).
+- `Push Version`: before running `lerna version`, point `origin` at the already-generated GitHub App installation token (`x-access-token:${GITHUB_TOKEN}`) so the resulting tag push is authenticated as the GitHub App and correctly triggers `publish.yml`'s `push: tags: v*` trigger.
+
+## Test plan
+
+- [ ] YAML validated (`python3 -c "import yaml; yaml.safe_load(open(...))"` passes).
+- [ ] Run `build-version-release.yml` via `workflow_dispatch` with `dry_run: false` (or the next real release) and confirm `publish.yml` fires automatically off the resulting tag push, without needing a manual `workflow_dispatch`.
+
+---
+
+_Generated by [Claude Code](https://claude.ai/code/session_019uQbKT8r9tdmjLo3XfDnBa)_
+
+---
+
+</details>
+
+## v10.2.0-alpha.3 (2026-08-29)
+
+### Dictionary Updates
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9102">#9102</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#9102](https://github.com/streetsidesoftware/cspell/pull/9102))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/gitbucket/gitbucket/report.yaml      |   3 +-
+ .../snapshots/gitbucket/gitbucket/snapshot.txt     |   3 +-
+ .../snapshots/neovim/nvim-lspconfig/report.yaml    |   3 +-
+ .../snapshots/neovim/nvim-lspconfig/snapshot.txt   |   5 +-
+ .../snapshots/wireapp/wire-webapp/report.yaml      | 184 +--------------------
+ .../snapshots/wireapp/wire-webapp/snapshot.txt     | 182 +-------------------
+ packages/cspell-bundled-dicts/package.json         |   4 +-
+ pnpm-lock.yaml                                     |  20 ++-
+ 8 files changed, 26 insertions(+), 378 deletions(-)
+```
+
+---
+
+</details>
+
+## v10.2.0-alpha.4 (2026-08-30)
+
+- No changes
+
+## v10.2.0-alpha.5 (2026-08-30)
+
+- No changes
+
+## v10.2.0-alpha.6 (2026-08-30)
+
+### Fixes
+
+<details>
+<summary>fix: Reduce the size of cspell types when bundled (<a href="https://github.com/streetsidesoftware/cspell/pull/9119">#9119</a>)</summary>
+
+### fix: Reduce the size of cspell types when bundled ([#9119](https://github.com/streetsidesoftware/cspell/pull/9119))
+
+---
+
+</details>
+
+## v10.2.0-alpha.7 (2026-08-30)
+
+- No changes
+
+## v10.3.0-alpha.0 (2026-09-04)
+
+### Features
+
+<details>
+<summary>feat: Add an option to set the kind of dictionary file (<a href="https://github.com/streetsidesoftware/cspell/pull/9178">#9178</a>)</summary>
+
+### feat: Add an option to set the kind of dictionary file ([#9178](https://github.com/streetsidesoftware/cspell/pull/9178))
+
+This pull request introduces support for the new `kind` property in dictionary definitions, enabling explicit specification of dictionary types such as `words`, `flag-words`, and `ignore-words`.
+
+```jsonc
+{
+  "version": "0.2",
+  "language": "en-US",
+  "caseSensitive": false,
+  "dictionaryDefinitions": [
+    {
+      "name": "forbidden-spelling",
+      "path": "./forbidden-spelling.txt",
+      "kind": "flag-words"
+    }
+  ],
+  "dictionaries": ["forbidden-spelling"]
+}
+```
+
+`forbidden-spelling.txt`
+
+```
+# Add forbidden words below.
+# Words starting with `!` are exceptions.
+# cspell:disable
+english:English # Do not allow `english` and suggest `English`
+!English # needed to allow `English`
+!ENGLISH # needed to allow `ENGLISH`
+
+forbidden_word # All variants of `forbidden_word` are not allowed.
+
+# Mixed case words:
+cSpell # only `cSpell` is flagged. `cspell` will not be.
+```
+
+It updates the JSON schema, dictionary loading logic, and adds new APIs and tests to handle these kinds, including support for loading forbidden (flag) words from trie files.
+
+**Schema and API Enhancements:**
+
+- Added a `kind` property to dictionary definitions in the `cspell.schema.json` schema, allowing configuration of dictionary type as `words`, `flag-words`, or `ignore-words` [\[1\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cR357-R362) [\[2\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cR426-R431) [\[3\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cR502-R507) [\[4\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cR838-R843) [\[5\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cR1002-R1028).
+- Updated the internal dictionary settings and loader logic to recognize and handle the new `kind` property, ensuring correct dictionary instantiation based on its value [\[1\]](diffhunk://#diff-f02fad169c5857d97fd6add642623e889d3f2900ef6a4b39845f02be39d95366R193) [\[2\]](diffhunk://#diff-f02fad169c5857d97fd6add642623e889d3f2900ef6a4b39845f02be39d95366R218) [\[3\]](diffhunk://#diff-c6ea5963a21891d1145b0febf601f1d09d67ffd8e9a95e993493960d677293e0L251-R259) [\[4\]](diffhunk://#diff-c6ea5963a21891d1145b0febf601f1d09d67ffd8e9a95e993493960d677293e0L285-R296).
+
+**Flag Words Dictionary Support:**
+
+- Introduced `createFlagWordsDictionaryFromTrieFile` to allow creating forbidden words dictionaries directly from trie files, and exposed this function in the public API [\[1\]](diffhunk://#diff-209c43823378da2ca4c4bac833fae779c2a009f252f6b43ec626ad5e07c400d5R174-R189) [\[2\]](diffhunk://#diff-3c748c962ce2a5c78dcb8194b342d04689da8ccd7714f27a2ce4ba939eabf62eL2-R10) [\[3\]](diffhunk://#diff-88ab425aebdb40b0de4f3d847e37602f47fd5ef2ad71b0c07ded58634a82b0b9R6) [\[4\]](diffhunk://#diff-7d72bee0f62b6e247b5a59aa6add20496cac0d3007fd4370c8324f9f8d2e81f1R26) [\[5\]](diffhunk://#diff-3c53de7765d44a629523ad4f0ca1a25ee56961c7e6b1cf07ca348387fc0a6715R9).
+- Added comprehensive tests for the new `kind` behaviors and for loading flag words from trie files, ensuring correct forbidden word detection and suggestion handling [\[1\]](diffhunk://#diff-3c748c962ce2a5c78dcb8194b342d04689da8ccd7714f27a2ce4ba939eabf62eR252-R267) [\[2\]](diffhunk://#diff-c29257264530048b2c751d506584bbf8a5324bbca6095e8307bc7cc547983ff0R180-R225).
+
+**Sample and Fixture Updates:**
+
+- Added a new sample file `flag-words.txt` to demonstrate and test the flag words functionality.
+
+These changes collectively provide more flexible and explicit dictionary configuration, improve forbidden word handling, and ensure robust support for new and existing dictionary formats.
+
+---
+
+</details>
+
+### Fixes
+
+<details>
+<summary>fix: Only hide code-like partial words (<a href="https://github.com/streetsidesoftware/cspell/pull/9163">#9163</a>)</summary>
+
+### fix: Only hide code-like partial words ([#9163](https://github.com/streetsidesoftware/cspell/pull/9163))
+
+---
+
+</details>
+
+### Documentation
+
+<details>
+<summary>feat: Add an option to set the kind of dictionary file (<a href="https://github.com/streetsidesoftware/cspell/pull/9178">#9178</a>)</summary>
+
+### feat: Add an option to set the kind of dictionary file ([#9178](https://github.com/streetsidesoftware/cspell/pull/9178))
+
+This pull request introduces support for the new `kind` property in dictionary definitions, enabling explicit specification of dictionary types such as `words`, `flag-words`, and `ignore-words`.
+
+```jsonc
+{
+  "version": "0.2",
+  "language": "en-US",
+  "caseSensitive": false,
+  "dictionaryDefinitions": [
+    {
+      "name": "forbidden-spelling",
+      "path": "./forbidden-spelling.txt",
+      "kind": "flag-words"
+    }
+  ],
+  "dictionaries": ["forbidden-spelling"]
+}
+```
+
+`forbidden-spelling.txt`
+
+```
+# Add forbidden words below.
+# Words starting with `!` are exceptions.
+# cspell:disable
+english:English # Do not allow `english` and suggest `English`
+!English # needed to allow `English`
+!ENGLISH # needed to allow `ENGLISH`
+
+forbidden_word # All variants of `forbidden_word` are not allowed.
+
+# Mixed case words:
+cSpell # only `cSpell` is flagged. `cspell` will not be.
+```
+
+It updates the JSON schema, dictionary loading logic, and adds new APIs and tests to handle these kinds, including support for loading forbidden (flag) words from trie files.
+
+**Schema and API Enhancements:**
+
+- Added a `kind` property to dictionary definitions in the `cspell.schema.json` schema, allowing configuration of dictionary type as `words`, `flag-words`, or `ignore-words` [\[1\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cR357-R362) [\[2\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cR426-R431) [\[3\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cR502-R507) [\[4\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cR838-R843) [\[5\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cR1002-R1028).
+- Updated the internal dictionary settings and loader logic to recognize and handle the new `kind` property, ensuring correct dictionary instantiation based on its value [\[1\]](diffhunk://#diff-f02fad169c5857d97fd6add642623e889d3f2900ef6a4b39845f02be39d95366R193) [\[2\]](diffhunk://#diff-f02fad169c5857d97fd6add642623e889d3f2900ef6a4b39845f02be39d95366R218) [\[3\]](diffhunk://#diff-c6ea5963a21891d1145b0febf601f1d09d67ffd8e9a95e993493960d677293e0L251-R259) [\[4\]](diffhunk://#diff-c6ea5963a21891d1145b0febf601f1d09d67ffd8e9a95e993493960d677293e0L285-R296).
+
+**Flag Words Dictionary Support:**
+
+- Introduced `createFlagWordsDictionaryFromTrieFile` to allow creating forbidden words dictionaries directly from trie files, and exposed this function in the public API [\[1\]](diffhunk://#diff-209c43823378da2ca4c4bac833fae779c2a009f252f6b43ec626ad5e07c400d5R174-R189) [\[2\]](diffhunk://#diff-3c748c962ce2a5c78dcb8194b342d04689da8ccd7714f27a2ce4ba939eabf62eL2-R10) [\[3\]](diffhunk://#diff-88ab425aebdb40b0de4f3d847e37602f47fd5ef2ad71b0c07ded58634a82b0b9R6) [\[4\]](diffhunk://#diff-7d72bee0f62b6e247b5a59aa6add20496cac0d3007fd4370c8324f9f8d2e81f1R26) [\[5\]](diffhunk://#diff-3c53de7765d44a629523ad4f0ca1a25ee56961c7e6b1cf07ca348387fc0a6715R9).
+- Added comprehensive tests for the new `kind` behaviors and for loading flag words from trie files, ensuring correct forbidden word detection and suggestion handling [\[1\]](diffhunk://#diff-3c748c962ce2a5c78dcb8194b342d04689da8ccd7714f27a2ce4ba939eabf62eR252-R267) [\[2\]](diffhunk://#diff-c29257264530048b2c751d506584bbf8a5324bbca6095e8307bc7cc547983ff0R180-R225).
+
+**Sample and Fixture Updates:**
+
+- Added a new sample file `flag-words.txt` to demonstrate and test the flag words functionality.
+
+These changes collectively provide more flexible and explicit dictionary configuration, improve forbidden word handling, and ensure robust support for new and existing dictionary formats.
+
+---
+
+</details>
+
+## v10.3.1-alpha.0 (2026-09-12)
+
+### Fixes
+
+<details>
+<summary>fix: CSpell-Tools support replacements (<a href="https://github.com/streetsidesoftware/cspell/pull/9205">#9205</a>)</summary>
+
+### fix: CSpell-Tools support replacements ([#9205](https://github.com/streetsidesoftware/cspell/pull/9205))
+
+Support replacing word fragments before adding the word to the dictionary.
+
+## **TL;DR**
+
+Be able to replace `’` with `'`.
+
+## Details
+
+This pull request adds support for applying word replacement rules during dictionary compilation in `cspell-tools`. The main change is the introduction of a `replacements` option, allowing users to specify patterns and their replacements, which are then applied to all words in the dictionary. The changes include updates to the configuration schema, TypeScript interfaces, core compilation logic, and tests to support and verify this new feature.
+
+**Add support for word replacements in dictionary compilation:**
+
+- **Configuration and Schema Updates:**
+  - Added a `Replacements` definition and a `replacements` property to the JSON schema and TypeScript interfaces, allowing users to specify replacement rules in config files and programmatic interfaces. [\[1\]](diffhunk://#diff-461485728e7d7363d70fa003d157b2fee76ebe81d66639fafbeef7aa6ee58b7cR158-R164) [\[2\]](diffhunk://#diff-461485728e7d7363d70fa003d157b2fee76ebe81d66639fafbeef7aa6ee58b7cR248-R251) [\[3\]](diffhunk://#diff-a5d02ba854b88e2e8b83197c4a15e410e10b931ebc8bbda6b777780c4448bb77R95-R108) [\[4\]](diffhunk://#diff-10cc7cfa8dee170e380d597cc6f37d0fe78a1b8b53bab0b9980d74e8f1dd8b99R10)
+
+- **Compiler Logic Enhancements:**
+  - Updated the core compilation pipeline (`compile.ts`, `wordListParser.ts`) to accept and apply the `replacements` option, mapping specified patterns to their replacements during normalization of dictionary words. [\[1\]](diffhunk://#diff-abbcc701a68b0b884bc77813c1be1e438f830466ead1b838f0dff1dd75eb5becR194) [\[2\]](diffhunk://#diff-1fa6211a0e9f939021351f0ed3cfdffe9b4c3209c92b369c328811c986e1140fR25) [\[3\]](diffhunk://#diff-1fa6211a0e9f939021351f0ed3cfdffe9b4c3209c92b369c328811c986e1140fR280-R289)
+
+- **Testing and Fixtures:**
+  - Extended and added tests to verify that replacements are correctly applied, including new test cases and fixtures (such as `rep-words.txt`) and snapshot updates. [\[1\]](diffhunk://#diff-a09bfea2415f93e38ba5d6b778e9e0204e4db8ac19ea06a019390e06587fed42R1-R12) [\[2\]](diffhunk://#diff-643cf9dbc1c82e07338902ef990406fabc2a4fd22da5d2694f5ab5f6115c2e08R59-R96) [\[3\]](diffhunk://#diff-643cf9dbc1c82e07338902ef990406fabc2a4fd22da5d2694f5ab5f6115c2e08R132) [\[4\]](diffhunk://#diff-643cf9dbc1c82e07338902ef990406fabc2a4fd22da5d2694f5ab5f6115c2e08R169) [\[5\]](diffhunk://#diff-643cf9dbc1c82e07338902ef990406fabc2a4fd22da5d2694f5ab5f6115c2e08R207) [\[6\]](diffhunk://#diff-643cf9dbc1c82e07338902ef990406fabc2a4fd22da5d2694f5ab5f6115c2e08R247) [\[7\]](diffhunk://#diff-a7f698e8f0adcfceb8260e1236de114c5fcbbd051b4e5f50837ae50f3b039954R34-R37)
+
+- **Type and Interface Adjustments:**
+  - Refactored relevant interfaces (`CompileOptions`, `CompileRequest`, etc.) to include or omit the new `replacements` property as appropriate, ensuring type safety and clarity throughout the codebase. [\[1\]](diffhunk://#diff-035305fe90cbce5bf3bd1ff6b32c44c4093b00bf9acfc08733671afbc9b1a05aL1-R3) [\[2\]](diffhunk://#diff-a5d02ba854b88e2e8b83197c4a15e410e10b931ebc8bbda6b777780c4448bb77L20-R20)
+
+These changes collectively enable more flexible and accurate dictionary generation by allowing systematic normalization or correction of word forms via configurable replacement rules.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Revert #9198 (<a href="https://github.com/streetsidesoftware/cspell/pull/9202">#9202</a>)</summary>
+
+### fix: Revert #9198 ([#9202](https://github.com/streetsidesoftware/cspell/pull/9202))
+
+---
+
+</details>
+
+<details>
+<summary>fix: Add definitions for custom word breaks (<a href="https://github.com/streetsidesoftware/cspell/pull/9199">#9199</a>)</summary>
+
+### fix: Add definitions for custom word breaks ([#9199](https://github.com/streetsidesoftware/cspell/pull/9199))
+
+This pull request introduces support for customizable "soft word break" rules in both the JSON schema (`cspell.schema.json`) and the TypeScript types (`packages/cspell-types/api/index.d.mts`). These changes allow users to define and enable/disable advanced word segmentation behaviors, improving spell checking for languages and naming patterns that aren't well handled by default camel case detection.
+
+The most important changes are:
+
+**Schema and Configuration Enhancements:**
+
+- Added new properties `softWordBreakDefinitions` and `softWordBreaks` to the JSON schema, allowing users to define and control custom soft word break rules for text segmentation. These rules help split words at specific positions (like between "error" and "code" in "errorcode") and support advanced language scenarios. [\[1\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cR1380-R1391) [\[2\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cR1678-R1689) [\[3\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cR2483-R2494)
+- Defined new schema types: `SoftWordBreak`, `SoftWordBreakDefinitions`, `SoftWordBreakPattern`, `SoftWordBreakRegExpString`, `SoftWordBreakRule`, and `SoftWordBreaks`, with detailed descriptions and usage examples for each.
+
+**TypeScript API Updates:**
+
+- Introduced the `WordSegmentationSettings` interface, which includes `softWordBreakDefinitions`, `softWordBreaks`, and `useIntlWordSegmentation` options, providing a type-safe way to configure segmentation rules in code.
+- Integrated `WordSegmentationSettings` into the main `BaseSetting` interface, ensuring all configuration objects can use the new word break features.
+- Cleaned up the `BaseSetting` interface by removing the now redundant `useIntlWordSegmentation` property (since it's included in `WordSegmentationSettings`).
+
+These changes make the spell checker more flexible and powerful, especially for users working with languages or code styles that require custom word splitting logic.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Split words on soft hyphens (<a href="https://github.com/streetsidesoftware/cspell/pull/9196">#9196</a>)</summary>
+
+### fix: Split words on soft hyphens ([#9196](https://github.com/streetsidesoftware/cspell/pull/9196))
+
+This pull request enhances the word splitting utilities in the `cspell-lib` package, particularly improving how camelCase and compound words are split, especially when soft hyphens are present. It also introduces and tests new utility functions that return word segments along with their offsets, and refactors the implementation for better accuracy and maintainability.
+
+**Key changes:**
+
+### Feature enhancements and bug fixes
+
+- Improved the regular expression `regExpCamelCaseWordBreaksWithEnglishSuffix` to handle soft hyphens (`\u00AD`), ensuring words like `'hello\u00ADthere'` are split correctly.
+- Refactored `splitWordWithOffset` to compute word splits and their offsets more accurately, replacing the previous use of `scanMap` with a custom implementation.
+- Updated `splitCamelCaseWordWithOffset` to use the new `splitWordWithOffset` implementation, improving consistency and correctness.
+
+### Testing improvements
+
+- Added comprehensive tests for both `splitCamelCaseWordWithOffset` and `splitWordWithOffset`, covering a variety of word forms, including those with soft hyphens and mixed casing.
+- Expanded test cases for word splitting to include words with soft hyphens, ensuring the new logic is properly validated.
+
+### Dependency and import updates
+
+- Updated imports in `text.test.ts` to include the new or modified regular expressions used for word splitting.
+
+---
+
+</details>
+
+### Dictionary Updates
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9208">#9208</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#9208](https://github.com/streetsidesoftware/cspell/pull/9208))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ packages/cspell-bundled-dicts/package.json |  30 ++--
+ pnpm-lock.yaml                             | 274 +++++++++++++++--------------
+ 2 files changed, 159 insertions(+), 145 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9198">#9198</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#9198](https://github.com/streetsidesoftware/cspell/pull/9198))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/AdaDoom3/AdaDoom3/report.yaml        |  238 +---
+ .../snapshots/AdaDoom3/AdaDoom3/snapshot.txt       |  246 +---
+ .../Azure/azure-rest-api-specs/report.yaml         |   54 +-
+ .../Azure/azure-rest-api-specs/snapshot.txt        |   82 +-
+ .../MartinThoma/LaTeX-examples/report.yaml         |  120 +-
+ .../MartinThoma/LaTeX-examples/snapshot.txt        |  104 +-
+ .../MicrosoftDocs/PowerShell-Docs/report.yaml      |  335 +----
+ .../MicrosoftDocs/PowerShell-Docs/snapshot.txt     |  329 +----
+ .../snapshots/RustPython/RustPython/report.yaml    |   70 +-
+ .../snapshots/RustPython/RustPython/snapshot.txt   |  212 ++--
+ .../SoftwareBrothers/admin-bro/report.yaml         |    7 +-
+ .../SoftwareBrothers/admin-bro/snapshot.txt        |    5 +-
+ .../snapshots/TheAlgorithms/Python/report.yaml     |  256 +---
+ .../snapshots/TheAlgorithms/Python/snapshot.txt    |  240 +---
+ .../snapshots/alexiosc/megistos/report.yaml        |   65 +-
+ .../snapshots/alexiosc/megistos/snapshot.txt       |   75 +-
+ .../aspnetboilerplate/report.yaml                  |   36 +-
+ .../aspnetboilerplate/snapshot.txt                 |   32 +-
+ .../snapshots/aws-amplify/docs/report.yaml         |    5 +-
+ .../snapshots/aws-amplify/docs/snapshot.txt        |    5 +-
+ .../snapshots/caddyserver/caddy/report.yaml        |  320 ++---
+ .../snapshots/caddyserver/caddy/snapshot.txt       |  184 +--
+ .../snapshots/dart-lang/sdk/report.yaml            |   96 +-
+ .../snapshots/dart-lang/sdk/snapshot.txt           |   55 +-
+ .../snapshots/django/django/report.yaml            | 1096 ++++------------
+ .../snapshots/django/django/snapshot.txt           |  615 +--------
+ .../snapshots/eslint/eslint/report.yaml            |   54 +-
+ .../snapshots/eslint/eslint/snapshot.txt           |   26 +-
+ .../snapshots/flutter/samples/report.yaml          |  398 +-----
+ .../snapshots/flutter/samples/snapshot.txt         |  660 +++-------
+ .../snapshots/gitbucket/gitbucket/report.yaml      |   90 +-
+ .../snapshots/gitbucket/gitbucket/snapshot.txt     |   86 +-
+ .../googleapis/google-cloud-cpp/report.yaml        |  103 +-
+ .../googleapis/google-cloud-cpp/snapshot.txt       |  111 +-
+ .../snapshots/graphql/graphql-spec/report.yaml     |   46 +-
+ .../snapshots/graphql/graphql-spec/snapshot.txt    |   24 +-
+ .../iluwatar/java-design-patterns/report.yaml      |  135 +-
+ .../iluwatar/java-design-patterns/snapshot.txt     |  201 +--
+ .../snapshots/ktaranov/sqlserver-kit/report.yaml   | 1227 +++---------------
+ .../snapshots/ktaranov/sqlserver-kit/snapshot.txt  | 1303 +++++---------------
+ .../snapshots/liriliri/licia/report.yaml           |   45 +-
+ .../snapshots/liriliri/licia/snapshot.txt          |   33 +-
+ integration-tests/snapshots/mdx-js/mdx/report.yaml |   42 +-
+ .../snapshots/mdx-js/mdx/snapshot.txt              |   31 +-
+ .../microsoft/TypeScript-Website/report.yaml       |   65 +-
+ .../microsoft/TypeScript-Website/snapshot.txt      |   42 +-
+ .../snapshots/neovim/nvim-lspconfig/report.yaml    |   50 +-
+ .../snapshots/neovim/nvim-lspconfig/snapshot.txt   |   72 +-
+ .../snapshots/pagekit/pagekit/report.yaml          |   16 +-
+ .../snapshots/pagekit/pagekit/snapshot.txt         |   14 +-
+ .../snapshots/php/php-src/report.yaml              | 1011 ++-------------
+ .../snapshots/php/php-src/snapshot.txt             | 1247 ++++---------------
+ .../snapshots/pycontribs/jira/report.yaml          |   16 +-
+ .../snapshots/pycontribs/jira/snapshot.txt         |    8 +-
+ .../snapshots/shoelace-style/shoelace/report.yaml  |    6 +-
+ .../snapshots/shoelace-style/shoelace/snapshot.txt |    4 +-
+ .../snapshots/sveltejs/svelte/report.yaml          |   75 +-
+ .../snapshots/sveltejs/svelte/snapshot.txt         |   87 +-
+ .../typescript-cheatsheets/react/report.yaml       |    8 +-
+ .../typescript-cheatsheets/react/snapshot.txt      |   10 +-
+ .../snapshots/vitest-dev/vitest/report.yaml        |   10 +-
+ .../snapshots/vitest-dev/vitest/snapshot.txt       |    6 +-
+ .../snapshots/wireapp/wire-desktop/report.yaml     |   10 +-
+ .../snapshots/wireapp/wire-desktop/snapshot.txt    |    6 +-
+ .../snapshots/wireapp/wire-webapp/report.yaml      |  203 +--
+ .../snapshots/wireapp/wire-webapp/snapshot.txt     |  237 +---
+ packages/cspell-bundled-dicts/package.json         |   30 +-
+ .../__snapshots__/docValidator.test.ts.snap        |    8 +-
+ .../__snapshots__/validator.test.ts.snap           |   22 +-
+ pnpm-lock.yaml                                     |  274 ++--
+ 70 files changed, 2258 insertions(+), 10776 deletions(-)
+```
+
+---
+
+</details>
+
+## v10.3.1-alpha.1 (2026-09-12)
+
+### Fixes
+
+<details>
+<summary>fix(cspell-tools): Support multiple replacements in a single entry (<a href="https://github.com/streetsidesoftware/cspell/pull/9212">#9212</a>)</summary>
+
+### fix(cspell-tools): Support multiple replacements in a single entry ([#9212](https://github.com/streetsidesoftware/cspell/pull/9212))
+
+This pull request enhances the `cspell-tools.config.schema.json` schema file by adding `markdownDescription` fields alongside existing `description` fields throughout the schema. This improves support for tools and editors that render markdown-formatted descriptions, making configuration options clearer and more readable. Additionally, the schema for replacements has been refactored for clarity and extensibility.
+
+The most important changes are:
+
+**Documentation Improvements:**
+
+- Added `markdownDescription` fields to nearly all properties and definitions, providing markdown-formatted explanations for better editor and tool integration. [\[1\]](diffhunk://#diff-461485728e7d7363d70fa003d157b2fee76ebe81d66639fafbeef7aa6ee58b7cR10-R20) [\[2\]](diffhunk://#diff-461485728e7d7363d70fa003d157b2fee76ebe81d66639fafbeef7aa6ee58b7cL50-R73) [\[3\]](diffhunk://#diff-461485728e7d7363d70fa003d157b2fee76ebe81d66639fafbeef7aa6ee58b7cL80-R93) [\[4\]](diffhunk://#diff-461485728e7d7363d70fa003d157b2fee76ebe81d66639fafbeef7aa6ee58b7cR104) [\[5\]](diffhunk://#diff-461485728e7d7363d70fa003d157b2fee76ebe81d66639fafbeef7aa6ee58b7cL115-R145) [\[6\]](diffhunk://#diff-461485728e7d7363d70fa003d157b2fee76ebe81d66639fafbeef7aa6ee58b7cL145-R165) [\[7\]](diffhunk://#diff-461485728e7d7363d70fa003d157b2fee76ebe81d66639fafbeef7aa6ee58b7cL180-R205) [\[8\]](diffhunk://#diff-461485728e7d7363d70fa003d157b2fee76ebe81d66639fafbeef7aa6ee58b7cL191-R311) [\[9\]](diffhunk://#diff-461485728e7d7363d70fa003d157b2fee76ebe81d66639fafbeef7aa6ee58b7cR327) [\[10\]](diffhunk://#diff-461485728e7d7363d70fa003d157b2fee76ebe81d66639fafbeef7aa6ee58b7cL300-R347)
+
+**Schema Structure Improvements:**
+
+- Refactored the `Replacements` definition: introduced a `ReplaceWith` type, added `propertyNames` with descriptions, and enhanced the overall documentation and structure for replacement rules.
+
+These changes collectively improve the developer experience when working with the schema in modern editors and tooling.
+
+---
+
+</details>
+
+## v10.3.2-alpha.0 (2026-09-13)
+
+### Fixes
+
+<details>
+<summary>fix: Add tags to ParsedText (<a href="https://github.com/streetsidesoftware/cspell/pull/9237">#9237</a>)</summary>
+
+### fix: Add tags to ParsedText ([#9237](https://github.com/streetsidesoftware/cspell/pull/9237))
+
+This pull request introduces the concept of "tags" for parsed text segments in the CSpell types, allowing each segment of text to be annotated with a set of named tags. These tags can hold boolean, string, or undefined values, supporting richer metadata for parsers and downstream consumers. The changes affect both the TypeScript source and the type definitions.
+
+The most important changes are:
+
+### Tagging Support for Parsed Text
+
+- Added a new optional `tags` property to the `ParsedText` interface, allowing each parsed text segment to carry a set of tags as metadata. (`ParsedText` in `parser.ts`, `index.d.mts`, `index.d.mts`) [\[1\]](diffhunk://#diff-d4bedbf21c899fa1f9dc91855211fc8dd4ed7d1b54a6433514b0ca86974bbea4R39-R42) [\[2\]](diffhunk://#diff-8e581864afed8f70400dbe392449ab40296a78133cee216ab4ad6ef2a38981f6R108-R111) [\[3\]](diffhunk://#diff-14f40e062c024a63c555a8565984f3d45268e79b41d2dbea8960eab1473be840R1275-R1278)
+- Introduced the `ParsedTag` type (boolean | string | undefined) and the `ParsedTags` interface (a map of tag names to `ParsedTag` values) to define the structure of tags. (`parser.ts`, `index.d.mts`, `index.d.mts`) [\[1\]](diffhunk://#diff-d4bedbf21c899fa1f9dc91855211fc8dd4ed7d1b54a6433514b0ca86974bbea4R100-R112) [\[2\]](diffhunk://#diff-8e581864afed8f70400dbe392449ab40296a78133cee216ab4ad6ef2a38981f6R165-R175) [\[3\]](diffhunk://#diff-14f40e062c024a63c555a8565984f3d45268e79b41d2dbea8960eab1473be840R1332-R1342)
+
+### Type Exports and API Surface
+
+- Updated exports throughout the codebase to include `ParsedTag` and `ParsedTags`, making these types available to consumers. (`src/Parser/index.ts`, `src/index.ts`, `index.d.mts`, `index.d.mts`) [\[1\]](diffhunk://#diff-b71809898342d9c1f1a1caf095f9aea7e4b6ec8d4c1dc17caf71dc6337c44db8R3-R4) [\[2\]](diffhunk://#diff-7f7f37af8b6440a510f8d18217f859f88481fb728d873d1af2943032e57c9f0eR128-R129) [\[3\]](diffhunk://#diff-8e581864afed8f70400dbe392449ab40296a78133cee216ab4ad6ef2a38981f6L175-R190) [\[4\]](diffhunk://#diff-14f40e062c024a63c555a8565984f3d45268e79b41d2dbea8960eab1473be840L2349-R2364)
+- Changed the export style in `src/Parser/index.mts` from `export *` to `export type *`, ensuring only types are exported.
+
+These changes lay the groundwork for parsers and other tools to annotate text with structured metadata, improving extensibility and downstream processing.
+
+---
+
+</details>
+
+## v10.3.4-alpha.0 (2026-09-17)
+
+### Fixes
+
+<details>
+<summary>fix: Fix Sponsor cards on npmjs (<a href="https://github.com/streetsidesoftware/cspell/pull/9260">#9260</a>)</summary>
+
+### fix: Fix Sponsor cards on npmjs ([#9260](https://github.com/streetsidesoftware/cspell/pull/9260))
+
+---
+
+</details>
+
+## v10.4.0-alpha.0 (2026-09-30)
+
+### Features
+
+<details>
+<summary>feat: Add `--glob-symlinks` to follow symbolic links when matching globs (<a href="https://github.com/streetsidesoftware/cspell/pull/9342">#9342</a>)</summary>
+
+### feat: Add `--glob-symlinks` to follow symbolic links when matching globs ([#9342](https://github.com/streetsidesoftware/cspell/pull/9342))
+
+## Summary
+
+`cspell lint` can now follow symbolic links in glob searches, with `--glob-symlinks`. Glob searches skip linked files and linked directories by default, so a tree made of links, such as Bazel runfiles, found nothing to check.
+
+Closes #7700.
+
+## Feature
+
+```sh
+cspell lint --glob-symlinks "**"
+```
+
+- `--glob-symlinks` follows symbolic links, and searches linked directories, when matching globs. Links are followed wherever they point.
+- `CSPELL_GLOB_SYMLINKS=true` does the same for a whole job. `--no-glob-symlinks` overrides it.
+- API: `globSymlinks` in the `lint` options.
+- It can't be set in a configuration file.
+- Files are reported by the path through the link. A file reached by two paths is checked under both.
+- It applies only to glob searches. For `--file`, `--files`, and `--file-list` documents, use `--follow-symlinks`.
+
+<details>
+<summary>Technical Details</summary>
+
+- The design decisions are recorded in `docs/ADRs/glob-symlinks/`.
+- Link loops, such as a link to a parent directory, are stopped by the glob search after one level.
+
+</details>
+
+---
+
+</details>
+
+<details>
+<summary>feat: Respect `COLUMNS` for help and table width (<a href="https://github.com/streetsidesoftware/cspell/pull/9358">#9358</a>)</summary>
+
+### feat: Respect `COLUMNS` for help and table width ([#9358](https://github.com/streetsidesoftware/cspell/pull/9358))
+
+## Summary
+
+Help, and the tables from `cspell trace` and `cspell dictionaries`, now follow the `COLUMNS` environment variable. That lets you choose a narrower width, which helps with large fonts and screen magnifiers. The help in the `cspell` README now fits on npmjs.com without scrolling sideways.
+
+## Feature
+
+Set `COLUMNS` to pick the output width:
+
+```sh
+COLUMNS=60 cspell lint --help
+```
+
+Before, `cspell lint --help` at 80 columns:
+
+```text
+Usage: cspell lint [options] [globs...] [file://<path> ...] [stdin[://<path>]]
+...
+Options:
+  -c, --config <cspell.json>     Configuration file to use.  By default cspell
+                                 looks for cspell.json in the current directory.
+  --no-config-search             Disable automatic searching for additional
+                                 configuration files in parent directories. Only
+                                 the specified config file (if any) will be
+                                 used.
+```
+
+After, `COLUMNS=72 cspell lint --help`:
+
+```text
+Usage: cspell lint [options] [globs...] [file://<path> ...]
+                   [stdin[://<path>]]
+...
+Options:
+  -c, --config <cspell.json>     Configuration file to use.  By default
+                                 cspell looks for cspell.json in the
+                                 current directory.
+  --no-config-search             Disable automatic searching for
+                                 additional configuration files in
+                                 parent directories. Only the specified
+                                 config file (if any) will be used.
+```
+
+- `COLUMNS` takes priority over the terminal width when it is set to a positive number.
+- Without it, cspell uses the terminal width as before, or 80 when output isn't a terminal.
+- Option descriptions in help now wrap at narrower widths. Before, anything narrower than about 73 columns left them unwrapped.
+
+## Other changes
+
+- A few lines in `cspell lint --help` are shorter, so the help fits in 72 columns. The usage line now breaks before `[stdin[://<path>]]`.
+- The help in the `cspell` README is generated at 72 columns, which is what npmjs.com shows in a code block.
+
+---
+
+</details>
+
+<details>
+<summary>feat: Add `--follow-symlinks` and skip files referenced by symbolic links (<a href="https://github.com/streetsidesoftware/cspell/pull/9340">#9340</a>)</summary>
+
+### feat: Add `--follow-symlinks` and skip files referenced by symbolic links ([#9340](https://github.com/streetsidesoftware/cspell/pull/9340))
+
+## Summary
+
+`cspell lint` now skips files that are symbolic links, or are in a linked directory, and adds `--follow-symlinks` to check them.
+
+Glob searches already skipped linked files and linked directories. Files named explicitly were read through links. Now every way of naming files behaves the same:
+
+- A file that is a symbolic link, or is in a linked directory, is skipped. This applies to `--file`, `--files`, `--file-list` entries, the `files` option of `lint`, and file or glob arguments.
+- A glob that goes through a linked directory, such as `docs/*.md` when `docs` is a link, is not searched.
+- A `--file-list` file that is a symbolic link is an error, like a missing list.
+- A linked file named with `--file`, `--files`, or `--file-list` shows as `skipped` in the progress. File and glob arguments leave links out, as glob searches always have. Use `--verbose` to see why a file or glob was skipped.
+- With `--force-check`, a linked file is an error instead of being skipped.
+
+If you check linked files on purpose, for example Bazel runfiles, add `--follow-symlinks`.
+
+## Feature
+
+```sh
+cspell lint --follow-symlinks --file-list files.txt
+```
+
+- `--follow-symlinks` allows checking `--file` and `--file-list` documents referenced by symbolic links. Glob searches don't follow links unless `--glob-symlinks` is used ([#9342](https://github.com/streetsidesoftware/cspell/pull/9342)).
+- `CSPELL_FOLLOW_SYMLINKS=true` does the same for a whole job. `--no-follow-symlinks` overrides it.
+- API: `followSymlinks` in the `lint` options.
+
+<details>
+<summary>Technical Details</summary>
+
+- For a file under the root, each folder from the root down, and the file itself, is checked for a symbolic link. For a file outside the root, only the file itself is checked, so paths such as a worktree's commit message file still work.
+- Links above the root, such as `/tmp` on macOS, don't count.
+- A link is recognized without following it, so a link to a missing file is skipped the same way as any other link.
+
+</details>
+
+---
+
+</details>
+
+<details>
+<summary>feat: `--must-find-files` fails when every file was skipped (<a href="https://github.com/streetsidesoftware/cspell/pull/9327">#9327</a>)</summary>
+
+### feat: `--must-find-files` fails when every file was skipped ([#9327](https://github.com/streetsidesoftware/cspell/pull/9327))
+
+## Summary
+
+With `--must-find-files`, which is on by default, `cspell lint` now fails when every file it found was skipped, and says so. Since 10.2.0 the summary shows skipped files, but they still counted as found, so a run that checked nothing could pass.
+
+Fixes #9326.
+
+## Feature
+
+A file is skipped when it is excluded by `ignorePaths`, `.gitignore`, or the `files` setting, when it is binary, or when an override or language setting turns off checking for it. Skipped files are still listed in the summary, but they no longer count as found.
+
+```text
+$ cspell lint --file sub/doc.md
+CSpell: Files checked: 0, skipped: 1, Issues found: 0 in 0 files.
+No files found to check (1 skipped).
+$ echo $?
+1
+```
+
+- This applies to `--file`, `--file-list`, and globs alike.
+- A run that checks at least one file is not affected.
+- To let a run pass when every file is skipped, use `--no-must-find-files`.
+- `--silent` hides the new message.
+
+<details>
+<summary>Technical Details</summary>
+
+- The file count passed to custom reporters has included skipped files since 10.2.0. Its documentation now says so.
+
+</details>
+
+---
+
+</details>
+
+### Fixes
+
+<details>
+<summary>fix: `@cspell/strong-weak-map` types compile with the `esnext` lib (<a href="https://github.com/streetsidesoftware/cspell/pull/9371">#9371</a>)</summary>
+
+### fix: `@cspell/strong-weak-map` types compile with the `esnext` lib ([#9371](https://github.com/streetsidesoftware/cspell/pull/9371))
+
+## Summary
+
+`@cspell/strong-weak-map`'s types now compile in projects that use TypeScript's `esnext` lib with `skipLibCheck: false`.
+
+- `keys()`, `values()`, `entries()`, and iterating a `StrongWeakMap` are now typed as returning a `MapIterator`, like a `Map`, so the iterator helpers (`map`, `filter`, `take`, …) are typed too. Before, they returned `IterableIterator`, which `esnext` rejects.
+- `StrongWeakMap` no longer declares that it implements `Map`. With `esnext`, `Map` has `getOrInsert` and `getOrInsertComputed`, which `StrongWeakMap` doesn't have, so the declaration was already an error there. It keeps all of its methods and works the same. Code that passes a `StrongWeakMap` where a `Map` is expected only compiles where the two still match.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Published types no longer need `@types/node` (<a href="https://github.com/streetsidesoftware/cspell/pull/9359">#9359</a>)</summary>
+
+### fix: Published types no longer need `@types/node` ([#9359](https://github.com/streetsidesoftware/cspell/pull/9359))
+
+## Summary
+
+The TypeScript types published with `cspell`, `cspell-lib`, and `cspell-io` no longer need `@types/node`. Projects that use these packages' types, but don't install Node.js types, now type-check cleanly.
+
+- `cspell-io`: the types no longer import from `node:buffer`.
+- `cspell-lib`: the `encoding` option of `spellCheckFile`, and `resolveDocument`, accept the same encodings as before, without Node's global `BufferEncoding`.
+- `cspell`: `AppError` keeps the same shape. A reporter's `console.stdoutChannel.stream` and `console.stderrChannel.stream` are now typed as the parts of the stream cspell uses: `write`, `isTTY`, `rows`, `columns`, and optional `hasColors`, `clearLine`, and `getColorDepth`. A reporter written in TypeScript that calls other stream methods, such as `on` or `end`, needs to cast.
+- The types still use the standard web globals, such as `URL` and `AbortSignal`, so the `dom` lib (or `@types/node`) is still needed for those.
+
+<details>
+<summary>Technical Details</summary>
+
+- The `cspell` types no longer pull in `chalk`'s types, which themselves need Node.js types.
+
+</details>
+
+---
+
+</details>
+
+<details>
+<summary>fix: Show the lint options in cspell --help (<a href="https://github.com/streetsidesoftware/cspell/pull/9362">#9362</a>)</summary>
+
+### fix: Show the lint options in cspell --help ([#9362](https://github.com/streetsidesoftware/cspell/pull/9362))
+
+## Summary
+
+`cspell --help` now lists the options for `cspell lint`, the command that runs when no command is given. Before, it only listed the commands, so you had to know to run `cspell lint --help` to see options such as `--no-progress` or `--cache`.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Honor `--language-id` and `--locale` when deciding whether to check a file (<a href="https://github.com/streetsidesoftware/cspell/pull/9316">#9316</a>)</summary>
+
+### fix: Honor `--language-id` and `--locale` when deciding whether to check a file ([#9316](https://github.com/streetsidesoftware/cspell/pull/9316))
+
+## Summary
+
+`cspell lint` now uses `--language-id` and `--locale` when it decides whether to check a file. Before, a file could be skipped because of a `languageSettings` entry that didn't match the language or locale given on the command line.
+
+For example, with this config, `cspell lint --language-id markdown notes.txt` skipped `notes.txt`. It's now checked as Markdown. `--locale fr` works the same way.
+
+```yaml
+languageSettings:
+  - languageId: plaintext
+    locale: en
+    enabled: false
+```
+
+<details>
+<summary>Technical Details</summary>
+
+- cspell decides which files to check before reading them, and then checks only those.
+- That first decision worked out the language from the file name, and ignored `--locale`. The check itself used both flags.
+- Now both steps use the same language and locale, so they agree.
+
+</details>
+
+---
+
+</details>
+
+<details>
+<summary>fix(cspell-lib): Check remote documents by URI without passing their text (<a href="https://github.com/streetsidesoftware/cspell/pull/9343">#9343</a>)</summary>
+
+### fix(cspell-lib): Check remote documents by URI without passing their text ([#9343](https://github.com/streetsidesoftware/cspell/pull/9343))
+
+## Summary
+
+`spellCheckDocument` and `spellCheckFile` in `cspell-lib` can now read a document from any URL the file system supports, such as `https:`, `data:`, or a virtual file system like the one the VS Code extension uses for remote repositories. Before, a document passed without its text had to be a `file:` URL, or the check failed with "Unsupported schema".
+
+- A remote document gets the same issues as the same file checked locally.
+- `stdin:` documents still need their text.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Don't apply a repository's .gitignore to worktrees and submodules inside it (<a href="https://github.com/streetsidesoftware/cspell/pull/9341">#9341</a>)</summary>
+
+### fix: Don't apply a repository's .gitignore to worktrees and submodules inside it ([#9341](https://github.com/streetsidesoftware/cspell/pull/9341))
+
+## Summary
+
+With `useGitignore`, cspell now stops looking for `.gitignore` files at the root of the file's git repository, as git does. A repository's `.gitignore` no longer applies to a worktree or submodule inside it.
+
+## Why
+
+- cspell kept reading `.gitignore` files above the repository. A worktree kept in an ignored folder of its clone, such as `.worktrees/` or `.claude/worktrees/`, had all of its files skipped. The result was `Files checked: 0`, locally only.
+- Files in a submodule were skipped when the outer repository's `.gitignore` matched them, even though git does not ignore them.
+- Setting `gitignoreRoot` to a folder above a worktree or submodule had the same effect.
+
+Linting from inside a worktree already worked with the `cspell` command-line tool, because it starts at the current repository. Other paths, including the `cspell-gitignore` package's API with no roots, did not. The VS Code extension uses that API.
+
+Files that are not in a git repository are unchanged: `.gitignore` files are read up to the `gitignoreRoot`, or to the top of the file system.
+
+Related: #8975, streetsidesoftware/vscode-spell-checker#3099, streetsidesoftware/vscode-spell-checker#2366
+
+<details>
+<summary>Technical Details</summary>
+
+- While walking up from a file, a folder with a `.git` folder or a `.git` file marks the root of a repository, and the search stops there. A clone has a `.git` folder, and a worktree or submodule has a `.git` file.
+- `gitignoreRoot` can still stop the search earlier, but it no longer extends it past a repository root.
+- This applies to remote files in the VS Code extension too, when that file system can see the `.git`.
+- The `cspell-gitignore` tests go back to using the default search, and new tests cover a worktree and a submodule inside a clone, and a repository on a remote file system.
+
+</details>
+
+---
+
+</details>
+
+## v10.4.0-alpha.1 (2026-09-30)
+
+### Fixes
+
+<details>
+<summary>fix: Deprecate `cspell-lib/rpc`; import from `@cspell/rpc` (<a href="https://github.com/streetsidesoftware/cspell/pull/9376">#9376</a>)</summary>
+
+### fix: Deprecate `cspell-lib/rpc`; import from `@cspell/rpc` ([#9376](https://github.com/streetsidesoftware/cspell/pull/9376))
+
+## Summary
+
+`cspell-lib/rpc` is deprecated: import from `@cspell/rpc` instead. It still works, and editors now mark each of its exports as deprecated.
+
+- `cspell-lib/rpc` only passes `@cspell/rpc` through. Everything it exports (`RPCClient`, `RPCServer`, the RPC error classes, and their types) is available from `@cspell/rpc` directly.
+- Nothing else changes for users: every package exports the same names as before.
+
+<details>
+<summary>Technical Details</summary>
+
+- The published packages now list their exports by name instead of re-exporting whole modules, so the public API of each package is visible in its entry file, and anything added to an internal module only becomes public on purpose.
+- `cspell` and `cspell-lib` still re-export everything from `@cspell/cspell-types`, so everything their users need comes from one place.
+- The `@cspell/eslint-plugin` `recommended` config, from `@cspell/eslint-plugin/configs`, is now a plain config object with the same `plugins` and `rules`.
+- Unused files that only re-exported other modules were removed from `@cspell/cspell-types` and `cspell-grammar`.
+
+</details>
+
+---
+
+</details>
+
+## v10.4.1 (2026-11-06)
+
+### Fixes
+
+<details>
+<summary>fix: `cspell init` updates the config in the current directory (<a href="https://github.com/streetsidesoftware/cspell/pull/9552">#9552</a>)</summary>
+
+### fix: `cspell init` updates the config in the current directory ([#9552](https://github.com/streetsidesoftware/cspell/pull/9552))
+
+## Summary
+
+`cspell init` now updates the config file in the current directory, so you no longer need `-c` to point at it. Parent directories are not searched.
+
+## Feature
+
+Run `cspell init` with the options you want, and it updates the config that cspell would load for the current directory:
+
+```sh
+cspell init --locale en-GB --dictionary python
+```
+
+- **Which file:** the first match in cspell's usual search order, including `.vscode/` and `.config/`.
+- **`package.json`:** it counts only if it has a `cspell` section.
+- **Creating a new file:** `--output` or `--format` still creates a new file, even if a config exists. `--config` still names the file to use.
+- **No config found:** `cspell init` creates `cspell.config.yaml`, as before.
+
+### JavaScript and TypeScript configs
+
+`cspell init` can't edit a config such as `cspell.config.mjs`, so changes go in a new `cspell.config.yaml` that imports it. The code file is not changed, and the new file holds only what you asked for.
+
+For example, `cspell init --locale en-GB` beside `cspell.config.mjs` creates this file:
+
+```yaml
+# The locale to use when spell checking. (e.g., en, en-GB, de-DE
+language: en-GB
+# Configuration or packages to import.
+import:
+  - ./cspell.config.mjs
+```
+
+Before, it created a separate config that did not import the code file, which hid its settings.
+
+The new file takes priority over the code file, so a setting it holds overrides the same setting there. If no option asks for a change, nothing is written.
+
+---
+
+</details>
+
+<details>
+<summary>fix: `cspell init` only changes what you ask for and handles new JSON paths (<a href="https://github.com/streetsidesoftware/cspell/pull/9551">#9551</a>)</summary>
+
+### fix: `cspell init` only changes what you ask for and handles new JSON paths ([#9551](https://github.com/streetsidesoftware/cspell/pull/9551))
+
+## Summary
+
+`cspell init` now changes only what you ask for in a config that already has settings, and no longer crashes when creating a new JSON file by path.
+
+- **Existing settings are left alone:** `version`, `language`, and their comments are no longer added. Options such as `--locale`, `--import`, and `--dictionary` still apply.
+- **Configs with no settings are still initialized:** this covers a new file, an empty `{}` file, and a `package.json` with no `cspell` section. They get the default settings, and the schema reference where the format supports it.
+- **New JSON files work by path:** `cspell init -c cspell.json` and `cspell init -o cspell.json` used to fail with `Unable to parse` unless you also passed `--format json`. The file extension now decides the format of a new file named this way.
+
+For this existing `cspell.config.yaml`:
+
+```yaml
+words:
+  - foo
+```
+
+Before, `cspell init -c cspell.config.yaml` wrote:
+
+```yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json
+
+words:
+  - foo
+# The version of the configuration file format.
+version: "0.2"
+# The locale to use when spell checking. (e.g., en, en-GB, de-DE
+language: en
+```
+
+After, the file is unchanged.
+
+---
+
+</details>
+
+<details>
+<summary>fix: `cspell init` no longer adds the schema to existing config files (<a href="https://github.com/streetsidesoftware/cspell/pull/9550">#9550</a>)</summary>
+
+### fix: `cspell init` no longer adds the schema to existing config files ([#9550](https://github.com/streetsidesoftware/cspell/pull/9550))
+
+## Summary
+
+`cspell init` no longer adds or replaces the schema reference in a config file that already exists, unless you ask for it with the new `--schema` flag.
+
+- **New file:** the schema reference is added by default, as before. `--no-schema` still leaves it out.
+- **Existing file:** the schema reference is left as it is by default. This applies to JSON and YAML config files.
+- **`--schema`:** adds the schema reference to an existing file, or replaces the one it has.
+
+For this existing `cspell.json`:
+
+```json
+{
+  "words": ["foo"]
+}
+```
+
+Before, `cspell init -c cspell.json` wrote:
+
+```json
+{
+  "words": ["foo"],
+  "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+  "version": "0.2",
+  "language": "en"
+}
+```
+
+After:
+
+```json
+{
+  "words": ["foo"],
+  "version": "0.2",
+  "language": "en"
+}
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: cspell-tools no longer depends on the glob package (<a href="https://github.com/streetsidesoftware/cspell/pull/9540">#9540</a>)</summary>
+
+### fix: cspell-tools no longer depends on the glob package ([#9540](https://github.com/streetsidesoftware/cspell/pull/9540))
+
+## Summary
+
+`@cspell/cspell-tools` now finds files with the glob support built into Node.js, so installing it no longer pulls in the `glob` package.
+
+`cspell-tools compile` and `cspell-tools gzip` match the same files as before, except for these cases:
+
+- **Symbolic links to directories:** patterns that reach files through a symbolic link, such as `*/*.txt` or `./**/*.txt`, can find different files than before. The result depends on the pattern and the Node.js version. Naming the link in the pattern, such as `link/*.txt`, works as before.
+- **`**` followed by a dot name, such as `**/.hidden/*`:** these patterns match nothing on older Node.js versions, such as 22.21.1. They work on 22.23.0 and 24.13.1 and later.
+
+Matching files can also be processed in a different order. This can only affect the output of `compile --no-sort`, when several files are merged into one dictionary.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Stop storing the file paths of issues in the cache (<a href="https://github.com/streetsidesoftware/cspell/pull/9522">#9522</a>)</summary>
+
+### fix: Stop storing the file paths of issues in the cache ([#9522](https://github.com/streetsidesoftware/cspell/pull/9522))
+
+## Summary
+
+The cache no longer stores the full path of the file with each spelling issue. A `universal` cache shared with others no longer shows where the project lived on the machine that made it, and cache files with issues are smaller.
+
+Follows up on #9519.
+
+- Reported issues don't change: cached issues are still reported at the file's current location.
+
+<details>
+<summary>Technical Details</summary>
+
+- Each cache entry already belongs to one file, so the issues inside it are now stored without a location.
+- When a cached result is reused, its issues take the location of the file being checked.
+- As with every cspell release, existing cache files are rebuilt after upgrading.
+
+</details>
+
+---
+
+</details>
+
+<details>
+<summary>fix: Report cached issues at the file's current location (<a href="https://github.com/streetsidesoftware/cspell/pull/9519">#9519</a>)</summary>
+
+### fix: Report cached issues at the file's current location ([#9519](https://github.com/streetsidesoftware/cspell/pull/9519))
+
+## Summary
+
+Issues read from a `universal` cache are now reported at the file's current location. Before, a cache copied to another folder or machine reported issues at the path of the folder that made it.
+
+Fixes #9427
+
+- Running `cspell doc.md` in a copied folder now prints `doc.md:1:12 - Unknown word (speling)`, the same as `--no-cache`.
+- Nothing changes for caches that were not moved.
+
+<details>
+<summary>Technical Details</summary>
+
+- A cached result stores the full location of the file it came from.
+- When a cached result is reused, each issue now takes the location of the file being checked in this run, instead of the stored one.
+- Existing cache files need no rebuild: the stored location is simply replaced when read.
+
+</details>
+
+---
+
+</details>
+
+<details>
+<summary>fix: cspell-tools: apply top-level target options and remove options that have no effect (<a href="https://github.com/streetsidesoftware/cspell/pull/9470">#9470</a>)</summary>
+
+### fix: cspell-tools: apply top-level target options and remove options that have no effect ([#9470](https://github.com/streetsidesoftware/cspell/pull/9470))
+
+## Summary
+
+`cspell-tools build` now applies target options set at the top level of `cspell-tools.config.yaml` to every target. Options that were accepted but never had an effect are removed, so the config only offers settings that work.
+
+## What changed
+
+Top-level target options now work. Each one is a default for every target, and a target's own value wins:
+
+- `generateNonStrict`
+- `locale`
+- `sort`
+- `removeDuplicates`
+- `dictionaryDirectives`
+
+Source options belong on sources. They were accepted in other places but ignored there, and are now removed:
+
+- `split`, `maxDepth`, `allowedSplitWords`, `storeSplitWordsAsCompounds`, and `minCompoundLength` at the top level.
+- `allowedSplitWords` on a target.
+
+`keepRawCase` is removed everywhere. It has had no effect since at least early 2023. To keep the case of words read with `split: legacy`, add `# cspell-tools: keep-case` to the word list file.
+
+For the `compile` command:
+
+- `--keep-raw-case` is deprecated. It had no effect. It is hidden from `--help`, and using it prints a warning.
+- `--max_depth` now takes effect. It was ignored before.
+- `--init` writes `--max_depth` and `--split` on each source, so `build` uses them.
+
+## Example
+
+```yaml
+targets:
+  - name: words
+    format: plaintext
+    sources:
+      - src/words.txt
+generateNonStrict: true
+```
+
+With `src/words.txt` containing `Hello`, the built `words.txt` before this change:
+
+```text
+Hello
+```
+
+After:
+
+```text
+Hello
+~hello
+```
+
+## Does this affect my dictionaries?
+
+- No dictionary output changes on its own. Removed options were already ignored.
+- If your config sets a removed option at the top level, it never took effect. To use it, move it onto the sources. This can change the output a lot: Hebrew in `cspell-dicts` sets `maxDepth: 0` at the top level, and moving it onto its Hunspell source shrinks the dictionary from about 108 million words to about 325 thousand.
+- If a build script passes `--keep-raw-case` to `cspell-tools compile`, it still works, and prints `--keep-raw-case has no effect and will be removed in future versions.` Remove the flag to silence the warning.
+
+---
+
+</details>
+
+<details>
+<summary>fix: A locale that isn't valid no longer stops a file from being checked (<a href="https://github.com/streetsidesoftware/cspell/pull/9501">#9501</a>)</summary>
+
+### fix: A locale that isn't valid no longer stops a file from being checked ([#9501](https://github.com/streetsidesoftware/cspell/pull/9501))
+
+## Summary
+
+With word segmentation on, a locale that isn't valid stopped the whole file from being checked. Now cspell ignores
+that locale and checks the file.
+
+Word segmentation is on for Thai and a few other languages. The error was easy to hit with a locale comment in
+Markdown or HTML when a word after the locale wasn't one, for example:
+
+```markdown
+<!-- cspell:locale th,en !! -->
+```
+
+Before:
+
+```text
+Failed to process "README.md" RangeError: Invalid language tag:
+```
+
+After: the file is checked using `th` and `en`.
+
+<details>
+<summary>Technical Details</summary>
+
+- Locales are now checked by JavaScript's built-in `Intl`, which also does the word segmentation. Before, a pattern
+  allowed only forms like `en` and `en-US`, and word segmentation didn't check locales at all.
+- Locales such as `zh-Hant-TW`, `es-419`, and `fil` are now also used for the case of suggestions and for dictionaries.
+- A `cspell:locale` directive stops at the first word that doesn't look like a locale.
+
+</details>
+
+---
+
+</details>
+
+<details>
+<summary>fix: Ignore the comment closing marker in a locale directive (<a href="https://github.com/streetsidesoftware/cspell/pull/9496">#9496</a>)</summary>
+
+### fix: Ignore the comment closing marker in a locale directive ([#9496](https://github.com/streetsidesoftware/cspell/pull/9496))
+
+## Summary
+
+- A `cspell:locale` (or `cspell:language`) directive no longer treats the closing `-->` of an HTML comment, or `*/` of a block comment, as an extra locale.
+- Before, `<!-- cspell:locale en -->` made files fail with `RangeError: Invalid language tag` when `useIntlWordSegmentation` was on.
+
+Fixes #9480
+
+---
+
+</details>
+
+<details>
+<summary>fix: Show "stdin" as the file name when checking stdin (<a href="https://github.com/streetsidesoftware/cspell/pull/9487">#9487</a>)</summary>
+
+### fix: Show "stdin" as the file name when checking stdin ([#9487](https://github.com/streetsidesoftware/cspell/pull/9487))
+
+## Summary
+
+When `cspell lint` checks text from `stdin`, the issues it reports now name the file `stdin`. Before, the file name was empty.
+
+This applies to `cspell lint stdin`, `cspell lint --file stdin`, and `cspell lint stdin://`. With `stdin://<path>`, the issues still show `<path>`.
+
+Before:
+
+```text
+$ echo 'const recieve = 1;' | cspell lint --no-progress --file stdin
+:1:7 - Unknown word (recieve) fix: (receive)
+```
+
+After:
+
+```text
+$ echo 'const recieve = 1;' | cspell lint --no-progress --file stdin
+stdin:1:7 - Unknown word (recieve) fix: (receive)
+```
+
+With `--no-relative`, the name is also `stdin`, instead of a `stdin:` URL that points to the current folder.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Recognize Fortran source files (<a href="https://github.com/streetsidesoftware/cspell/pull/9490">#9490</a>)</summary>
+
+### fix: Recognize Fortran source files ([#9490](https://github.com/streetsidesoftware/cspell/pull/9490))
+
+## Summary
+
+cspell now recognizes Fortran source files. Each one gets the file type `fortran`, plus `FortranFreeForm` or `FortranFixedForm`, the language IDs used by the Modern Fortran extension for VS Code. Settings and dictionaries can now target Fortran files.
+
+## Feature
+
+| File type          | Extensions                                                                            |
+| ------------------ | ------------------------------------------------------------------------------------- |
+| `fortran`          | all of the extensions below                                                           |
+| `FortranFreeForm`  | `.f90`, `.f95`, `.f03`, `.f08`, `.f18`, `.fpp`, `.fypp`, `.pf`, `.cuf` (CUDA Fortran) |
+| `FortranFixedForm` | `.f`, `.f77`, `.for`, `.ftn`                                                          |
+
+Uppercase extensions, such as `.F90`, match too.
+
+Use `fortran` to match both forms:
+
+```json
+{
+  "languageSettings": [
+    {
+      "languageId": "fortran",
+      "words": ["gfortran", "nvfortran"]
+    }
+  ]
+}
+```
+
+To match a Fortran file opened in VS Code, list the VS Code IDs too: `"languageId": "fortran,FortranFreeForm,FortranFixedForm"`.
+
+---
+
+</details>
+
+### Dictionary Updates
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9548">#9548</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#9548](https://github.com/streetsidesoftware/cspell/pull/9548))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/php/php-src/report.yaml              |  7 +--
+ .../snapshots/php/php-src/snapshot.txt             | 17 +++----
+ .../snapshots/wireapp/wire-webapp/report.yaml      |  3 +-
+ .../snapshots/wireapp/wire-webapp/snapshot.txt     |  3 +-
+ packages/cspell-bundled-dicts/package.json         | 12 ++---
+ pnpm-lock.yaml                                     | 56 +++++++++++++++++-----
+ 6 files changed, 59 insertions(+), 39 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9494">#9494</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#9494](https://github.com/streetsidesoftware/cspell/pull/9494))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../MicrosoftDocs/PowerShell-Docs/report.yaml      | 37 ++++++++++------------
+ .../MicrosoftDocs/PowerShell-Docs/snapshot.txt     |  7 +---
+ .../snapshots/php/php-src/report.yaml              |  6 +---
+ .../snapshots/php/php-src/snapshot.txt             | 14 +++-----
+ packages/cspell-bundled-dicts/package.json         |  8 ++---
+ packages/cspell/src/__snapshots__/app.test.ts.snap | 12 ++++---
+ pnpm-lock.yaml                                     | 37 +++++++++++++++-------
+ 7 files changed, 61 insertions(+), 60 deletions(-)
+```
+
+---
+
+</details>
+
+## v10.4.0 (2026-10-14)
+
+### Features
+
+<details>
+<summary>feat: Add `--glob-symlinks` to follow symbolic links when matching globs (<a href="https://github.com/streetsidesoftware/cspell/pull/9342">#9342</a>)</summary>
+
+### feat: Add `--glob-symlinks` to follow symbolic links when matching globs ([#9342](https://github.com/streetsidesoftware/cspell/pull/9342))
+
+## Summary
+
+`cspell lint` can now follow symbolic links in glob searches, with `--glob-symlinks`. Glob searches skip linked files and linked directories by default, so a tree made of links, such as Bazel runfiles, found nothing to check.
+
+Closes #7700.
+
+## Feature
+
+```sh
+cspell lint --glob-symlinks "**"
+```
+
+- `--glob-symlinks` follows symbolic links, and searches linked directories, when matching globs. Links are followed wherever they point.
+- `CSPELL_GLOB_SYMLINKS=true` does the same for a whole job. `--no-glob-symlinks` overrides it.
+- API: `globSymlinks` in the `lint` options.
+- It can't be set in a configuration file.
+- Files are reported by the path through the link. A file reached by two paths is checked under both.
+- It applies only to glob searches. For `--file`, `--files`, and `--file-list` documents, use `--follow-symlinks`.
+
+<details>
+<summary>Technical Details</summary>
+
+- The design decisions are recorded in `docs/ADRs/glob-symlinks/`.
+- Link loops, such as a link to a parent directory, are stopped by the glob search after one level.
+
+</details>
+
+---
+
+</details>
+
+<details>
+<summary>feat: Respect `COLUMNS` for help and table width (<a href="https://github.com/streetsidesoftware/cspell/pull/9358">#9358</a>)</summary>
+
+### feat: Respect `COLUMNS` for help and table width ([#9358](https://github.com/streetsidesoftware/cspell/pull/9358))
+
+## Summary
+
+Help, and the tables from `cspell trace` and `cspell dictionaries`, now follow the `COLUMNS` environment variable. That lets you choose a narrower width, which helps with large fonts and screen magnifiers. The help in the `cspell` README now fits on npmjs.com without scrolling sideways.
+
+## Feature
+
+Set `COLUMNS` to pick the output width:
+
+```sh
+COLUMNS=60 cspell lint --help
+```
+
+Before, `cspell lint --help` at 80 columns:
+
+```text
+Usage: cspell lint [options] [globs...] [file://<path> ...] [stdin[://<path>]]
+...
+Options:
+  -c, --config <cspell.json>     Configuration file to use.  By default cspell
+                                 looks for cspell.json in the current directory.
+  --no-config-search             Disable automatic searching for additional
+                                 configuration files in parent directories. Only
+                                 the specified config file (if any) will be
+                                 used.
+```
+
+After, `COLUMNS=72 cspell lint --help`:
+
+```text
+Usage: cspell lint [options] [globs...] [file://<path> ...]
+                   [stdin[://<path>]]
+...
+Options:
+  -c, --config <cspell.json>     Configuration file to use.  By default
+                                 cspell looks for cspell.json in the
+                                 current directory.
+  --no-config-search             Disable automatic searching for
+                                 additional configuration files in
+                                 parent directories. Only the specified
+                                 config file (if any) will be used.
+```
+
+- `COLUMNS` takes priority over the terminal width when it is set to a positive number.
+- Without it, cspell uses the terminal width as before, or 80 when output isn't a terminal.
+- Option descriptions in help now wrap at narrower widths. Before, anything narrower than about 73 columns left them unwrapped.
+
+## Other changes
+
+- A few lines in `cspell lint --help` are shorter, so the help fits in 72 columns. The usage line now breaks before `[stdin[://<path>]]`.
+- The help in the `cspell` README is generated at 72 columns, which is what npmjs.com shows in a code block.
+
+---
+
+</details>
+
+<details>
+<summary>feat: Add `--follow-symlinks` and skip files referenced by symbolic links (<a href="https://github.com/streetsidesoftware/cspell/pull/9340">#9340</a>)</summary>
+
+### feat: Add `--follow-symlinks` and skip files referenced by symbolic links ([#9340](https://github.com/streetsidesoftware/cspell/pull/9340))
+
+## Summary
+
+`cspell lint` now skips files that are symbolic links, or are in a linked directory, and adds `--follow-symlinks` to check them.
+
+Glob searches already skipped linked files and linked directories. Files named explicitly were read through links. Now every way of naming files behaves the same:
+
+- A file that is a symbolic link, or is in a linked directory, is skipped. This applies to `--file`, `--files`, `--file-list` entries, the `files` option of `lint`, and file or glob arguments.
+- A glob that goes through a linked directory, such as `docs/*.md` when `docs` is a link, is not searched.
+- A `--file-list` file that is a symbolic link is an error, like a missing list.
+- A linked file named with `--file`, `--files`, or `--file-list` shows as `skipped` in the progress. File and glob arguments leave links out, as glob searches always have. Use `--verbose` to see why a file or glob was skipped.
+- With `--force-check`, a linked file is an error instead of being skipped.
+
+If you check linked files on purpose, for example Bazel runfiles, add `--follow-symlinks`.
+
+## Feature
+
+```sh
+cspell lint --follow-symlinks --file-list files.txt
+```
+
+- `--follow-symlinks` allows checking `--file` and `--file-list` documents referenced by symbolic links. Glob searches don't follow links unless `--glob-symlinks` is used ([#9342](https://github.com/streetsidesoftware/cspell/pull/9342)).
+- `CSPELL_FOLLOW_SYMLINKS=true` does the same for a whole job. `--no-follow-symlinks` overrides it.
+- API: `followSymlinks` in the `lint` options.
+
+<details>
+<summary>Technical Details</summary>
+
+- For a file under the root, each folder from the root down, and the file itself, is checked for a symbolic link. For a file outside the root, only the file itself is checked, so paths such as a worktree's commit message file still work.
+- Links above the root, such as `/tmp` on macOS, don't count.
+- A link is recognized without following it, so a link to a missing file is skipped the same way as any other link.
+
+</details>
+
+---
+
+</details>
+
+<details>
+<summary>feat: `--must-find-files` fails when every file was skipped (<a href="https://github.com/streetsidesoftware/cspell/pull/9327">#9327</a>)</summary>
+
+### feat: `--must-find-files` fails when every file was skipped ([#9327](https://github.com/streetsidesoftware/cspell/pull/9327))
+
+## Summary
+
+With `--must-find-files`, which is on by default, `cspell lint` now fails when every file it found was skipped, and says so. Since 10.2.0 the summary shows skipped files, but they still counted as found, so a run that checked nothing could pass.
+
+Fixes #9326.
+
+## Feature
+
+A file is skipped when it is excluded by `ignorePaths`, `.gitignore`, or the `files` setting, when it is binary, or when an override or language setting turns off checking for it. Skipped files are still listed in the summary, but they no longer count as found.
+
+```text
+$ cspell lint --file sub/doc.md
+CSpell: Files checked: 0, skipped: 1, Issues found: 0 in 0 files.
+No files found to check (1 skipped).
+$ echo $?
+1
+```
+
+- This applies to `--file`, `--file-list`, and globs alike.
+- A run that checks at least one file is not affected.
+- To let a run pass when every file is skipped, use `--no-must-find-files`.
+- `--silent` hides the new message.
+
+<details>
+<summary>Technical Details</summary>
+
+- The file count passed to custom reporters has included skipped files since 10.2.0. Its documentation now says so.
+
+</details>
+
+---
+
+</details>
+
+### Fixes
+
+<details>
+<summary>fix: Apply `.gitignore` and `ignorePaths` rules in order (<a href="https://github.com/streetsidesoftware/cspell/pull/9408">#9408</a>)</summary>
+
+### fix: Apply `.gitignore` and `ignorePaths` rules in order ([#9408](https://github.com/streetsidesoftware/cspell/pull/9408))
+
+## Summary
+
+Glob patterns in a list are now applied in the order they are written, and the last pattern that matches a file decides. Before, a pattern that starts with `!` always won, wherever it was in the list.
+
+For example, in a `.gitignore` file, a later `node_modules/` rule now ignores files beneath an earlier `!un-ignored/` rule.
+
+This applies to:
+
+- Rules in `.gitignore` files.
+- Patterns in `ignorePaths` that start with `!`, when files are checked through the `cspell-lib` API. The `cspell` command line still skips these patterns and shows a warning.
+- Patterns in `overrides[].filename`.
+- The globs that filter files passed with `--file` or `--file-list`.
+
+Part of #5104.
+
+---
+
+</details>
+
+<details>
+<summary>fix: cspell-tools: build case-insensitive forms with the dictionary's locale (<a href="https://github.com/streetsidesoftware/cspell/pull/9458">#9458</a>)</summary>
+
+### fix: cspell-tools: build case-insensitive forms with the dictionary's locale ([#9458](https://github.com/streetsidesoftware/cspell/pull/9458))
+
+## Summary
+
+`cspell-tools` can now build a dictionary with its language's case rules. Set `locale` in `cspell-tools.config.yaml`, and words are lower-cased with that locale's rules instead of the default ones. In a Turkish dictionary, `Irak` then gets the case-insensitive form `ırak`, not `irak`.
+
+## Feature
+
+Set `locale` at the top level, or per target:
+
+```yaml
+targets:
+  - name: turkish
+    format: trie3
+    sources:
+      - src/turkish.txt
+    generateNonStrict: true
+    locale: tr-TR
+```
+
+Set `dictionaryInformation.locale` in the dictionary definition to the same locale, so cspell searches the dictionary with the case rules it was built with. If the definition lists more than one locale, cspell uses the first valid one for case rules, so put this locale first.
+
+The locale applies everywhere `cspell-tools` lower-cases a word:
+
+- the case-insensitive forms made with `generateNonStrict`
+- words lower-cased before they're stored, for example with the `legacy` splitter
+- `removeDuplicates`
+- matching words against `allowedSplitWords`, `excludeWordsFrom`, and `excludeWordsNotFoundIn`
+
+An invalid locale stops the build with an error that names the target.
+
+Before, the case-insensitive form stored for `Irak` in a Turkish dictionary:
+
+```text
+~irak
+```
+
+After, with `locale: tr-TR`:
+
+```text
+~ırak
+```
+
+Without `locale`, dictionaries are built as before.
+
+This is the last part of the dictionary locale feature ([#6282](https://github.com/streetsidesoftware/cspell/issues/6282), [#9449](https://github.com/streetsidesoftware/cspell/pull/9449)). Once dictionaries are rebuilt with their locale, a lower-case word such as `ırak` is found in a Turkish dictionary that has `Irak`.
+
+<details>
+<summary>Technical Details</summary>
+
+- `cspell-trie-lib`: `normalizeWordForCaseInsensitive` takes an optional locale, and the dictionary line parser has a `locale` option.
+- `cspell-trie-lib`: `normalizeWordToLowercase` is renamed `normalizeWordToLowercaseAndRemoveAccents`. The old name still works, and is deprecated.
+
+</details>
+
+---
+
+</details>
+
+<details>
+<summary>fix: Search dictionaries using the dictionary's locale case rules, to support Turkish `İ` and `I` (<a href="https://github.com/streetsidesoftware/cspell/pull/9449">#9449</a>)</summary>
+
+### fix: Search dictionaries using the dictionary's locale case rules, to support Turkish `İ` and `I` ([#9449](https://github.com/streetsidesoftware/cspell/pull/9449))
+
+## Summary
+
+Words in a dictionary are no longer reported when finding them needs that language's case rules. With the Turkish dictionary, `İnceleme` and `Ispanak` now pass. Fixes #6282.
+
+- A dictionary uses the case rules of its own locale, set by `dictionaryInformation.locale`. The Turkish, Azerbaijani, and Lithuanian dictionaries are affected.
+- Rules from one language never apply to another language's dictionary: with `"language": "en,tr"`, a word typed with `İ`, such as `İnside`, is still reported.
+- With `caseSensitive: true`, a word with capitals that are wrong in the dictionary's language, such as `Inceleme` for `İnceleme`, is reported.
+
+With `"language": "en,tr"`, checking `İnceleme Ispanak Ispanakk İnside`:
+
+Before:
+
+```text
+sample.md:1:1 - Unknown word (İnceleme)
+sample.md:1:10 - Unknown word (Ispanak)
+sample.md:1:18 - Unknown word (Ispanakk)
+sample.md:1:27 - Unknown word (İnside)
+```
+
+After:
+
+```text
+sample.md:1:18 - Unknown word (Ispanakk)
+sample.md:1:27 - Unknown word (İnside)
+```
+
+<details>
+<summary>Technical Details</summary>
+
+- When a word isn't found as written, cspell looks up other forms of it, such as its lower-case form. These forms now follow the dictionary's locale. When case is ignored, the forms used before are also tried, so no word that passed before is reported.
+- An invalid `dictionaryInformation.locale` is ignored, as it is for suggestions.
+- The design is in `docs/designs/dictionary-locale.md`.
+
+</details>
+
+---
+
+</details>
+
+<details>
+<summary>fix: Recognize MATLAB files (<a href="https://github.com/streetsidesoftware/cspell/pull/9402">#9402</a>)</summary>
+
+### fix: Recognize MATLAB files ([#9402](https://github.com/streetsidesoftware/cspell/pull/9402))
+
+## Summary
+
+- Associates `.m` and `.matlab` with the `matlab` file type.
+- Marks MATLAB's binary formats as binary, so cspell doesn't treat them as text: `.mat`, `.fig`, `.mlx`, `.mlapp`,
+  `.mltbx`, `.mlappinstall`, and MEX files (`.mexa64`, `.mexmaca64`, `.mexmaci64`, `.mexw64`).
+
+Notes:
+
+- `.m` stays associated with `objective-c` too, since both languages use it.
+- `.p` (MATLAB P-code) isn't marked binary, because Pascal uses `.p` for source files.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Show hidden lint options and issue template help in `cspell --help` (<a href="https://github.com/streetsidesoftware/cspell/pull/9387">#9387</a>)</summary>
+
+### fix: Show hidden lint options and issue template help in `cspell --help` ([#9387](https://github.com/streetsidesoftware/cspell/pull/9387))
+
+## Summary
+
+Running `cspell --help --verbose` or `cspell --help --issue-template` now shows the same extra help as the `cspell lint --help` forms. Before, those flags were silently ignored, even though the help for `--issue-template` says "See --help --issue-template for details."
+
+- With `--verbose`, the hidden `lint` options are listed under `Hidden options for "lint":`.
+- With `--issue-template`, the help explains the issue template placeholders and styles.
+- The plain `cspell --help` now ends with the same "More Examples" as `cspell lint --help`.
+
+Before:
+
+```
+$ cspell --help --verbose
+...
+Options for "lint" (the default command):
+  ...
+  -h, --help                     display help for command
+```
+
+After:
+
+```
+$ cspell --help --verbose
+...
+Options for "lint" (the default command):
+  ...
+
+Hidden options for "lint":
+  --config-search                Allow searching for configuration files.
+  ...
+
+More Examples:
+  ...
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Deprecate `cspell-lib/rpc`; import from `@cspell/rpc` (<a href="https://github.com/streetsidesoftware/cspell/pull/9376">#9376</a>)</summary>
+
+### fix: Deprecate `cspell-lib/rpc`; import from `@cspell/rpc` ([#9376](https://github.com/streetsidesoftware/cspell/pull/9376))
+
+## Summary
+
+`cspell-lib/rpc` is deprecated: import from `@cspell/rpc` instead. It still works, and editors now mark each of its exports as deprecated.
+
+- `cspell-lib/rpc` only passes `@cspell/rpc` through. Everything it exports (`RPCClient`, `RPCServer`, the RPC error classes, and their types) is available from `@cspell/rpc` directly.
+- Nothing else changes for users: every package exports the same names as before.
+
+<details>
+<summary>Technical Details</summary>
+
+- The published packages now list their exports by name instead of re-exporting whole modules, so the public API of each package is visible in its entry file, and anything added to an internal module only becomes public on purpose.
+- `cspell` and `cspell-lib` still re-export everything from `@cspell/cspell-types`, so everything their users need comes from one place.
+- The `@cspell/eslint-plugin` `recommended` config, from `@cspell/eslint-plugin/configs`, is now a plain config object with the same `plugins` and `rules`.
+- Unused files that only re-exported other modules were removed from `@cspell/cspell-types` and `cspell-grammar`.
+
+</details>
+
+---
+
+</details>
+
+<details>
+<summary>fix: `@cspell/strong-weak-map` types compile with the `esnext` lib (<a href="https://github.com/streetsidesoftware/cspell/pull/9371">#9371</a>)</summary>
+
+### fix: `@cspell/strong-weak-map` types compile with the `esnext` lib ([#9371](https://github.com/streetsidesoftware/cspell/pull/9371))
+
+## Summary
+
+`@cspell/strong-weak-map`'s types now compile in projects that use TypeScript's `esnext` lib with `skipLibCheck: false`.
+
+- `keys()`, `values()`, `entries()`, and iterating a `StrongWeakMap` are now typed as returning a `MapIterator`, like a `Map`, so the iterator helpers (`map`, `filter`, `take`, …) are typed too. Before, they returned `IterableIterator`, which `esnext` rejects.
+- `StrongWeakMap` no longer declares that it implements `Map`. With `esnext`, `Map` has `getOrInsert` and `getOrInsertComputed`, which `StrongWeakMap` doesn't have, so the declaration was already an error there. It keeps all of its methods and works the same. Code that passes a `StrongWeakMap` where a `Map` is expected only compiles where the two still match.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Published types no longer need `@types/node` (<a href="https://github.com/streetsidesoftware/cspell/pull/9359">#9359</a>)</summary>
+
+### fix: Published types no longer need `@types/node` ([#9359](https://github.com/streetsidesoftware/cspell/pull/9359))
+
+## Summary
+
+The TypeScript types published with `cspell`, `cspell-lib`, and `cspell-io` no longer need `@types/node`. Projects that use these packages' types, but don't install Node.js types, now type-check cleanly.
+
+- `cspell-io`: the types no longer import from `node:buffer`.
+- `cspell-lib`: the `encoding` option of `spellCheckFile`, and `resolveDocument`, accept the same encodings as before, without Node's global `BufferEncoding`.
+- `cspell`: `AppError` keeps the same shape. A reporter's `console.stdoutChannel.stream` and `console.stderrChannel.stream` are now typed as the parts of the stream cspell uses: `write`, `isTTY`, `rows`, `columns`, and optional `hasColors`, `clearLine`, and `getColorDepth`. A reporter written in TypeScript that calls other stream methods, such as `on` or `end`, needs to cast.
+- The types still use the standard web globals, such as `URL` and `AbortSignal`, so the `dom` lib (or `@types/node`) is still needed for those.
+
+<details>
+<summary>Technical Details</summary>
+
+- The `cspell` types no longer pull in `chalk`'s types, which themselves need Node.js types.
+
+</details>
+
+---
+
+</details>
+
+<details>
+<summary>fix: Show the lint options in cspell --help (<a href="https://github.com/streetsidesoftware/cspell/pull/9362">#9362</a>)</summary>
+
+### fix: Show the lint options in cspell --help ([#9362](https://github.com/streetsidesoftware/cspell/pull/9362))
+
+## Summary
+
+`cspell --help` now lists the options for `cspell lint`, the command that runs when no command is given. Before, it only listed the commands, so you had to know to run `cspell lint --help` to see options such as `--no-progress` or `--cache`.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Honor `--language-id` and `--locale` when deciding whether to check a file (<a href="https://github.com/streetsidesoftware/cspell/pull/9316">#9316</a>)</summary>
+
+### fix: Honor `--language-id` and `--locale` when deciding whether to check a file ([#9316](https://github.com/streetsidesoftware/cspell/pull/9316))
+
+## Summary
+
+`cspell lint` now uses `--language-id` and `--locale` when it decides whether to check a file. Before, a file could be skipped because of a `languageSettings` entry that didn't match the language or locale given on the command line.
+
+For example, with this config, `cspell lint --language-id markdown notes.txt` skipped `notes.txt`. It's now checked as Markdown. `--locale fr` works the same way.
+
+```yaml
+languageSettings:
+  - languageId: plaintext
+    locale: en
+    enabled: false
+```
+
+<details>
+<summary>Technical Details</summary>
+
+- cspell decides which files to check before reading them, and then checks only those.
+- That first decision worked out the language from the file name, and ignored `--locale`. The check itself used both flags.
+- Now both steps use the same language and locale, so they agree.
+
+</details>
+
+---
+
+</details>
+
+<details>
+<summary>fix(cspell-lib): Check remote documents by URI without passing their text (<a href="https://github.com/streetsidesoftware/cspell/pull/9343">#9343</a>)</summary>
+
+### fix(cspell-lib): Check remote documents by URI without passing their text ([#9343](https://github.com/streetsidesoftware/cspell/pull/9343))
+
+## Summary
+
+`spellCheckDocument` and `spellCheckFile` in `cspell-lib` can now read a document from any URL the file system supports, such as `https:`, `data:`, or a virtual file system like the one the VS Code extension uses for remote repositories. Before, a document passed without its text had to be a `file:` URL, or the check failed with "Unsupported schema".
+
+- A remote document gets the same issues as the same file checked locally.
+- `stdin:` documents still need their text.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Don't apply a repository's .gitignore to worktrees and submodules inside it (<a href="https://github.com/streetsidesoftware/cspell/pull/9341">#9341</a>)</summary>
+
+### fix: Don't apply a repository's .gitignore to worktrees and submodules inside it ([#9341](https://github.com/streetsidesoftware/cspell/pull/9341))
+
+## Summary
+
+With `useGitignore`, cspell now stops looking for `.gitignore` files at the root of the file's git repository, as git does. A repository's `.gitignore` no longer applies to a worktree or submodule inside it.
+
+## Why
+
+- cspell kept reading `.gitignore` files above the repository. A worktree kept in an ignored folder of its clone, such as `.worktrees/` or `.claude/worktrees/`, had all of its files skipped. The result was `Files checked: 0`, locally only.
+- Files in a submodule were skipped when the outer repository's `.gitignore` matched them, even though git does not ignore them.
+- Setting `gitignoreRoot` to a folder above a worktree or submodule had the same effect.
+
+Linting from inside a worktree already worked with the `cspell` command-line tool, because it starts at the current repository. Other paths, including the `cspell-gitignore` package's API with no roots, did not. The VS Code extension uses that API.
+
+Files that are not in a git repository are unchanged: `.gitignore` files are read up to the `gitignoreRoot`, or to the top of the file system.
+
+Related: #8975, streetsidesoftware/vscode-spell-checker#3099, streetsidesoftware/vscode-spell-checker#2366
+
+<details>
+<summary>Technical Details</summary>
+
+- While walking up from a file, a folder with a `.git` folder or a `.git` file marks the root of a repository, and the search stops there. A clone has a `.git` folder, and a worktree or submodule has a `.git` file.
+- `gitignoreRoot` can still stop the search earlier, but it no longer extends it past a repository root.
+- This applies to remote files in the VS Code extension too, when that file system can see the `.git`.
+- The `cspell-gitignore` tests go back to using the default search, and new tests cover a worktree and a submodule inside a clone, and a repository on a remote file system.
+
+</details>
+
+---
+
+</details>
+
+### Dictionary Updates
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9446">#9446</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#9446](https://github.com/streetsidesoftware/cspell/pull/9446))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ packages/cspell-bundled-dicts/package.json | 10 +++----
+ pnpm-lock.yaml                             | 46 +++++++++++++++++++++---------
+ 2 files changed, 38 insertions(+), 18 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9405">#9405</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#9405](https://github.com/streetsidesoftware/cspell/pull/9405))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/AdaDoom3/AdaDoom3/report.yaml        |  120 +-
+ .../MartinThoma/LaTeX-examples/report.yaml         |   30 +-
+ .../MicrosoftDocs/PowerShell-Docs/report.yaml      |   32 +-
+ .../snapshots/RustPython/RustPython/report.yaml    |  120 +-
+ .../snapshots/TheAlgorithms/Python/report.yaml     |   14 +-
+ .../snapshots/alexiosc/megistos/report.yaml        |  148 +-
+ .../aspnetboilerplate/report.yaml                  |   18 +-
+ .../snapshots/caddyserver/caddy/report.yaml        |   20 +-
+ .../snapshots/caddyserver/caddy/snapshot.txt       |   20 +-
+ .../snapshots/dart-lang/sdk/report.yaml            |   82 +-
+ .../snapshots/django/django/report.yaml            |  376 +-
+ .../snapshots/eslint/eslint/report.yaml            |    2 +-
+ .../snapshots/flutter/samples/report.yaml          |   34 +-
+ .../snapshots/gitbucket/gitbucket/report.yaml      |    8 +-
+ .../googleapis/google-cloud-cpp/report.yaml        |   45 +-
+ .../googleapis/google-cloud-cpp/snapshot.txt       |    3 +-
+ .../snapshots/graphql/graphql-spec/report.yaml     |  102 +-
+ .../iluwatar/java-design-patterns/report.yaml      |   12 +-
+ .../snapshots/ktaranov/sqlserver-kit/report.yaml   | 2952 +++---
+ .../snapshots/ktaranov/sqlserver-kit/snapshot.txt  |    3 +-
+ .../microsoft/TypeScript-Website/report.yaml       |    4 +-
+ .../snapshots/neovim/nvim-lspconfig/report.yaml    |   43 +-
+ .../snapshots/neovim/nvim-lspconfig/snapshot.txt   |    3 +-
+ .../snapshots/pagekit/pagekit/report.yaml          |   18 +-
+ .../snapshots/php/php-src/report.yaml              | 9373 ++++++++++----------
+ .../snapshots/php/php-src/snapshot.txt             |    3 +-
+ .../snapshots/shoelace-style/shoelace/report.yaml  |    2 +-
+ .../snapshots/sveltejs/svelte/report.yaml          | 2526 +++---
+ .../snapshots/vitest-dev/vitest/report.yaml        |    6 +-
+ .../snapshots/vitest-dev/vitest/snapshot.txt       |    3 +-
+ .../snapshots/wireapp/wire-webapp/report.yaml      |   60 +-
+ packages/cspell-bundled-dicts/package.json         |   14 +-
+ packages/cspell/src/__snapshots__/app.test.ts.snap |    2 +-
+ pnpm-lock.yaml                                     |   63 +-
+ 34 files changed, 8124 insertions(+), 8137 deletions(-)
+```
+
+---
+
+</details>
+
+## v10.3.6 (2026-09-29)
+
+### Fixes
+
+<details>
+<summary>fix: Report unknown CSpell directives again (<a href="https://github.com/streetsidesoftware/cspell/pull/9319">#9319</a>)</summary>
+
+### fix: Report unknown CSpell directives again ([#9319](https://github.com/streetsidesoftware/cspell/pull/9319))
+
+## Summary
+
+`cspell lint` reports unknown in-document directives again, such as `cspell:bad-dir`, when `--validate-directives` or `validateDirectives: true` in the config asks for them. Since 9.1.0 they were found but never shown or counted.
+
+- `--validate-directives` and `--no-validate-directives` override the config setting.
+- An unknown directive counts as an issue, so `cspell lint` exits with an error, as it did before 9.1.0.
+- The JSON reporter, `@cspell/cspell-json-reporter`, includes them in its output again.
+
+<details>
+<summary>Technical Details</summary>
+
+- The default reporter and the JSON reporter now ask to receive directive issues. Other reporters still only get them if they ask for them.
+- The command-line flag is now applied as a setting, like `--report`, so it controls what is shown as well as what is checked.
+
+</details>
+
+---
+
+</details>
+
+<details>
+<summary>fix(cspell-io): Keep redirected requests under the private root (<a href="https://github.com/streetsidesoftware/cspell/pull/9329">#9329</a>)</summary>
+
+### fix(cspell-io): Keep redirected requests under the private root ([#9329](https://github.com/streetsidesoftware/cspell/pull/9329))
+
+## Summary
+
+`createRedirectProvider` in `cspell-io` now only serves requests that map to a location under its private root. A request that would resolve outside the private root is refused with `VFSErrorUnsupportedRequest`, the same error as a request outside the public root.
+
+- Refused: a path that starts with a separator (`/`, `\`, `%2F`, `%5C`) right after the public root.
+- Now served from inside the private root: file names that look like a URL scheme or a drive, such as `a:b.txt` or `C|`. They used to resolve to a different URL.
+
+cspell itself does not use `createRedirectProvider`. This affects projects that use `cspell-io` directly.
+
+<details>
+<summary>Technical Details</summary>
+
+- The part of the URL after the public root is resolved as a relative path under the private root, and the result is checked to be under the private root: same protocol, same host, and the same path prefix.
+- Results coming back from the private file system are checked the same way before they are shown under the public root.
+- The change is in commit [25359026e1](https://github.com/streetsidesoftware/cspell/commit/25359026e157f349185d39ff814bc91b85b1c4d9).
+
+</details>
+
+---
+
+</details>
+
+<details>
+<summary>fix: Don't reuse cached results made with different command-line options (<a href="https://github.com/streetsidesoftware/cspell/pull/9318">#9318</a>)</summary>
+
+### fix: Don't reuse cached results made with different command-line options ([#9318](https://github.com/streetsidesoftware/cspell/pull/9318))
+
+## Summary
+
+With `--cache`, `cspell lint` now rechecks a file when `--language-id`, `--locale`, `--report`, `--show-suggestions`, or `--validate-directives` differ from the run that cached its result. Before, the cached result was reused, so a run could report issues from the wrong language, at the wrong reporting level, or without suggestions.
+
+Existing cache files keep working.
+
+<details>
+<summary>Technical Details</summary>
+
+- Each cached result now also records which of these options were set.
+- A result cached without any of them, including every result in an existing cache file, is still reused by a run that doesn't set them either.
+
+</details>
+
+---
+
+</details>
+
+<details>
+<summary>fix(cspell-lib): Don't scan the text of documents that won't be checked (<a href="https://github.com/streetsidesoftware/cspell/pull/9311">#9311</a>)</summary>
+
+### fix(cspell-lib): Don't scan the text of documents that won't be checked ([#9311](https://github.com/streetsidesoftware/cspell/pull/9311))
+
+## Summary
+
+cspell-lib no longer searches the whole text of a document that won't be checked, such as one excluded by `ignorePaths` or with `enabled: false`. Tools built on cspell-lib that pass it such documents get their result faster, most noticeably for large files like lockfiles.
+
+The `cspell` command line isn't affected: it already skips excluded files before this point.
+
+<details>
+<summary>Technical Details</summary>
+
+- Before checking a document, cspell marks the parts of the text to skip, such as URLs and long hex strings, by searching the whole text with each ignore pattern.
+- That search used to run for every document, even one that then wasn't checked, and the result was thrown away.
+- Now the search runs only when the text is actually checked. Forcing a check of an excluded document still works.
+- In this repository, the 38 files excluded by `ignorePaths`, mostly lockfiles with 33 million characters in total, took about 1.2 seconds of this wasted work.
+- `DocumentValidator._getPreparations()` is deprecated. It was only meant for use inside cspell-lib, and will be removed in a future major version.
+
+</details>
+
+---
+
+</details>
+
+<details>
+<summary>fix: `--show-perf-summary` shows where all of the run's time goes (<a href="https://github.com/streetsidesoftware/cspell/pull/9307">#9307</a>)</summary>
+
+### fix: `--show-perf-summary` shows where all of the run's time goes ([#9307](https://github.com/streetsidesoftware/cspell/pull/9307))
+
+## Summary
+
+`--show-perf-summary` now accounts for all of Total Time. Before, about a sixth of it wasn't shown anywhere. Three new lines, together with Processing Time, add up to Total Time:
+
+- **Setup Time:** before the first file is checked: loading configuration and finding files.
+- **Between Files:** between one file and the next: deciding whether to check it, and reading it.
+- **Other Time:** everything else.
+
+---
+
+</details>
+
+## v10.3.5 (2026-09-27)
+
+### Fixes
+
+<details>
+<summary>fix(cspell-lib): `shouldCheckDocument` honors the `forceCheck` option (<a href="https://github.com/streetsidesoftware/cspell/pull/9303">#9303</a>)</summary>
+
+### fix(cspell-lib): `shouldCheckDocument` honors the `forceCheck` option ([#9303](https://github.com/streetsidesoftware/cspell/pull/9303))
+
+## Summary
+
+For users of the `cspell-lib` API:
+
+- `shouldCheckDocument` now honors `forceCheck`. It returns `shouldCheck: true` for a document excluded by `ignorePaths`, or disabled by `overrides` or `languageSettings`. Before, the option was accepted but ignored. `DocumentValidator` already worked this way.
+- `SpellCheckFileOptions` now declares `forceCheck`, so it can be passed to `spellCheckDocument` and `spellCheckFile` with type checking.
+
+---
+
+</details>
+
+<details>
+<summary>fix: `--force-check` checks the listed files even when `ignorePaths` or `files` would skip them (<a href="https://github.com/streetsidesoftware/cspell/pull/9300">#9300</a>)</summary>
+
+### fix: `--force-check` checks the listed files even when `ignorePaths` or `files` would skip them ([#9300](https://github.com/streetsidesoftware/cspell/pull/9300))
+
+## Summary
+
+`--force-check` now checks every file given with `--file` or `--file-list`, as its help says. Before, some of those files were still skipped:
+
+- files matched by `ignorePaths` in the config;
+- files that don't match the `files` setting in the config.
+
+Using globs on the command line together with `--force-check` is now an error, the same as globs with `--file`:
+
+```text
+error: mixing globs and --force-check is not supported
+```
+
+Before, `cspell lint --file-list list.txt "**/*.md" --force-check` was accepted. To filter a file list by glob, leave out `--force-check`.
+
+---
+
+</details>
+
+<details>
+<summary>fix: `files` globs starting with `**` no longer skip `--file` and `--file-list` files in a project under a dot folder (<a href="https://github.com/streetsidesoftware/cspell/pull/9299">#9299</a>)</summary>
+
+### fix: `files` globs starting with `**` no longer skip `--file` and `--file-list` files in a project under a dot folder ([#9299](https://github.com/streetsidesoftware/cspell/pull/9299))
+
+## Summary
+
+When a project was under a folder whose name starts with a dot, such as `~/.local/src/my-project` or a git worktree in `.claude/worktrees/`, files given with `--file` or `--file-list` could be skipped without any warning. CSpell then reported `Files checked: 0` and exited with success.
+
+This happened when the listed files were filtered by a glob starting with `**`:
+
+- from the `files` setting in the config, for `--file` and `--file-list`;
+- from globs on the command line, for `--file-list`, for example `cspell lint --file-list changed-files.txt "**/*.md"`.
+
+These files are now checked.
+
+- Files and folders inside the project whose names start with a dot are still left out unless `--dot` or `enableGlobDot` is set, as before.
+- Checking with globs alone (`cspell lint "**/*.md"`) was not affected.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Thai text and substitutions are checked and reported correctly (<a href="https://github.com/streetsidesoftware/cspell/pull/9289">#9289</a>)</summary>
+
+### fix: Thai text and substitutions are checked and reported correctly ([#9289](https://github.com/streetsidesoftware/cspell/pull/9289))
+
+Fixes problems with checking text that cspell changes before spell checking, such as Thai text split into words with `useIntlWordSegmentation`, or text changed by `substitutions` (for example HTML entities or escaped quotes).
+
+- **Thai text no longer stops the check with an error.** Checking Thai text, or any text with `useIntlWordSegmentation` turned on, could stop with an internal error (`AssertionError [ERR_ASSERTION]`) on certain words. In cspell 10.3.3 and earlier, the file was reported as skipped and not checked. Starting with 10.3.4, the whole run failed. These files are now checked normally. The problem was found with the Thai word `กระดูกสฟีนอยด์`.
+- **Issues are reported at the right place.** When text was changed more than once before checking, for example by two sets of substitutions, issues after the first change could be reported at the wrong position in the file. They are now reported where the word actually is.
+- **Substitutions without definitions are applied.** Substitutions given directly as `[find, replacement]` pairs were ignored unless `substitutionDefinitions` was also set. They are now always applied.
+
+Fixes #9281
+
+---
+
+</details>
+
+## v10.3.4 (2026-09-24)
+
+### Fixes
+
+<details>
+<summary>fix: Report errors (<a href="https://github.com/streetsidesoftware/cspell/pull/9267">#9267</a>)</summary>
+
+### fix: Report errors ([#9267](https://github.com/streetsidesoftware/cspell/pull/9267))
+
+This pull request introduces improvements to error handling and debugging information in the spell-checking workflow. The main changes focus on providing more informative error messages and ensuring that errors encountered during document processing are surfaced promptly.
+
+Error handling improvements:
+
+- In `processFile` (`packages/cspell/src/lint/processFile.ts`), the function now throws the first error from `r.errors` if any are present, ensuring that errors encountered during spell checking are not silently ignored.
+
+Debugging and diagnostics:
+
+- In `resolveParser` (`packages/cspell-lib/src/lib/Settings/CSpellSettingsServer.ts`), the assertion message has been enhanced to include a list of available parsers when a requested parser is not found, making it easier to diagnose configuration issues.
+
+---
+
+</details>
+
+<details>
+<summary>fix: ParsedTag can only be boolean values for now. (<a href="https://github.com/streetsidesoftware/cspell/pull/9268">#9268</a>)</summary>
+
+### fix: ParsedTag can only be boolean values for now. ([#9268](https://github.com/streetsidesoftware/cspell/pull/9268))
+
+This pull request updates the `ParsedTag` type throughout the codebase to remove the possibility of a `string` value, restricting it to only `boolean` or `undefined`. This change is applied consistently across type definitions and source files.
+
+Note: The is possible because it has only been an experimental feature and isn't used.
+
+**Type definition changes:**
+
+- Updated the `ParsedTag` type in `packages/cspell-types/api/Parser/index.d.mts` to only allow `boolean` or `undefined`, removing support for `string`.
+- Updated the `ParsedTag` type in `packages/cspell-types/api/index.d.mts` to only allow `boolean` or `undefined`, removing support for `string`.
+- Updated the `ParsedTag` type in `packages/cspell-types/src/Parser/parser.ts` to only allow `boolean` or `undefined`, removing support for `string`.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Fix Sponsor cards on npmjs (<a href="https://github.com/streetsidesoftware/cspell/pull/9260">#9260</a>)</summary>
+
+### fix: Fix Sponsor cards on npmjs ([#9260](https://github.com/streetsidesoftware/cspell/pull/9260))
+
+---
+
+</details>
+
+### Dictionary Updates
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9266">#9266</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#9266](https://github.com/streetsidesoftware/cspell/pull/9266))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/dart-lang/sdk/report.yaml            |  6 +----
+ .../snapshots/dart-lang/sdk/snapshot.txt           |  4 +--
+ .../snapshots/gitbucket/gitbucket/report.yaml      |  3 +--
+ .../snapshots/gitbucket/gitbucket/snapshot.txt     |  3 +--
+ packages/cspell-bundled-dicts/package.json         |  6 ++---
+ pnpm-lock.yaml                                     | 29 +++++++++++++---------
+ 6 files changed, 24 insertions(+), 27 deletions(-)
+```
+
+---
+
+</details>
+
+## v10.3.3 (2026-09-16)
+
+### Fixes
+
+<details>
+<summary>fix: Add `--json` option to check text for use with AI (<a href="https://github.com/streetsidesoftware/cspell/pull/9254">#9254</a>)</summary>
+
+### fix: Add `--json` option to check text for use with AI ([#9254](https://github.com/streetsidesoftware/cspell/pull/9254))
+
+This pull request adds support for a `--json` output mode to the `check` CLI command, enabling results to be emitted as structured JSON per file. It also introduces comprehensive test coverage for the new JSON output behavior, including error handling and exit code logic.
+
+**CLI Enhancements:**
+
+- Added a `--json` flag to the `check` command, allowing users to receive results in JSON format. This includes proper handling of multiple files and error cases, such as missing files. [\[1\]](diffhunk://#diff-de8ed463c6df180ecc865246357f10b77889b850f68e73245990c30978098f2fL11-R13) [\[2\]](diffhunk://#diff-de8ed463c6df180ecc865246357f10b77889b850f68e73245990c30978098f2fR25)
+- Updated the exit code logic to work with both standard and JSON output, respecting the `--no-exit-code` flag. [\[1\]](diffhunk://#diff-de8ed463c6df180ecc865246357f10b77889b850f68e73245990c30978098f2fR42-R52) [\[2\]](diffhunk://#diff-de8ed463c6df180ecc865246357f10b77889b850f68e73245990c30978098f2fL65-R114)
+
+**Implementation Details:**
+
+- Introduced separate processing functions: `processRequestAnsi` for standard output and `processRequestJSON` for JSON output, with the latter aggregating results and errors per file. [\[1\]](diffhunk://#diff-de8ed463c6df180ecc865246357f10b77889b850f68e73245990c30978098f2fR42-R52) [\[2\]](diffhunk://#diff-de8ed463c6df180ecc865246357f10b77889b850f68e73245990c30978098f2fL65-R114)
+- Added a helper function to detect missing files and report them as JSON errors.
+
+**Testing Improvements:**
+
+- Expanded CLI test coverage to include various `--json` scenarios, such as files with spelling errors, missing files, and the interaction with `--no-exit-code`. [\[1\]](diffhunk://#diff-c382f7d721027eac952154bf67a6dd35b0f86f9cbddefebff13b1ea568e1fcbaR226-R230) [\[2\]](diffhunk://#diff-c382f7d721027eac952154bf67a6dd35b0f86f9cbddefebff13b1ea568e1fcbaR287-R340)
+- Added utility functions and interfaces in tests to parse and validate the JSON output.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Mark ParsedTags as read only. (<a href="https://github.com/streetsidesoftware/cspell/pull/9253">#9253</a>)</summary>
+
+### fix: Mark ParsedTags as read only. ([#9253](https://github.com/streetsidesoftware/cspell/pull/9253))
+
+This pull request makes a small but important change to the `ParsedText` interface in several files, improving type safety by marking the `tags` property as a read-only type. This ensures that the `tags` associated with a parsed text segment cannot be modified after creation.
+
+- Updated the `tags` property in the `ParsedText` interface to use `Readonly<ParsedTags>` instead of `ParsedTags`, making the tags immutable in the following files:
+  - `packages/cspell-types/api/Parser/index.d.mts`
+  - `packages/cspell-types/api/index.d.mts`
+  - `packages/cspell-types/src/Parser/parser.ts`
+
+---
+
+</details>
+
+<details>
+<summary>fix: Make sure Parser and DocumentParser can be used together. (<a href="https://github.com/streetsidesoftware/cspell/pull/9252">#9252</a>)</summary>
+
+### fix: Make sure Parser and DocumentParser can be used together. ([#9252](https://github.com/streetsidesoftware/cspell/pull/9252))
+
+This pull request enhances the parser interface definitions in the `cspell-types` package to provide better flexibility and clarity for parser implementations. The main changes introduce optional `parseDocument` and `parse` methods to both the `Parser` and `DocumentParser` interfaces, across both type declaration and source files.
+
+**Parser interface enhancements:**
+
+- Added an optional `parseDocument` method to the `Parser` interface, allowing parsers to optionally implement document-based parsing. (`packages/cspell-types/api/Parser/index.d.mts` [\[1\]](diffhunk://#diff-8e581864afed8f70400dbe392449ab40296a78133cee216ab4ad6ef2a38981f6R115-R119) `packages/cspell-types/api/index.d.mts` [\[2\]](diffhunk://#diff-14f40e062c024a63c555a8565984f3d45268e79b41d2dbea8960eab1473be840R1342-R1346) `packages/cspell-types/src/Parser/parser.ts` [\[3\]](diffhunk://#diff-d4bedbf21c899fa1f9dc91855211fc8dd4ed7d1b54a6433514b0ca86974bbea4R12-R17)
+- Added an optional `parse` method to the `DocumentParser` interface, enabling parsers to optionally implement content-and-filename-based parsing. (`packages/cspell-types/api/Parser/index.d.mts` [\[1\]](diffhunk://#diff-8e581864afed8f70400dbe392449ab40296a78133cee216ab4ad6ef2a38981f6R136-R141) `packages/cspell-types/api/index.d.mts` [\[2\]](diffhunk://#diff-14f40e062c024a63c555a8565984f3d45268e79b41d2dbea8960eab1473be840R1363-R1368) `packages/cspell-types/src/Parser/parser.ts` [\[3\]](diffhunk://#diff-d4bedbf21c899fa1f9dc91855211fc8dd4ed7d1b54a6433514b0ca86974bbea4R39-R45)
+
+---
+
+</details>
+
+## v10.3.2 (2026-09-15)
+
+### Fixes
+
+<details>
+<summary>fix: Add Experimental Validation setting. (<a href="https://github.com/streetsidesoftware/cspell/pull/9250">#9250</a>)</summary>
+
+### fix: Add Experimental Validation setting. ([#9250](https://github.com/streetsidesoftware/cspell/pull/9250))
+
+This pull request introduces new experimental support for fine-grained validation control and refactors plugin support in the CSpell types package. The main changes add the ability to specify which segments of parsed text should be spell-checked using tag-based validation, and reorganize plugin configuration for future extensibility. The changes also update type definitions and exports to support these new features.
+
+**Validation Tag Support:**
+
+- Introduced the `CSpellSettingsValidation` interface, allowing configuration of which tagged segments of text are spell-checked via the new `validate` property. This uses the new `ValidationTags` and `TagPattern` types to enable hierarchical and wildcard matching of tags. [\[1\]](diffhunk://#diff-14f40e062c024a63c555a8565984f3d45268e79b41d2dbea8960eab1473be840R398-R457) [\[2\]](diffhunk://#diff-3605d81907fcde30506786453f36feee1c508db40428fc284dbaaf5e46f53018R1-R61)
+- Updated exports to include `TagPattern` and `ValidationTags` for external usage.
+
+**Plugin Configuration Refactor:**
+
+- Added the `CSpellSettingsPlugins` interface to encapsulate plugin-related settings, including an experimental `plugins` array. [\[1\]](diffhunk://#diff-14f40e062c024a63c555a8565984f3d45268e79b41d2dbea8960eab1473be840R1503-R1510) [\[2\]](diffhunk://#diff-57a9576432ab7ab5a6bbc5aef158a517d2e4a48a7210fd2fd309d13a3ad3927aR78-R86)
+- Refactored `ExperimentalFileSettings` to extend both `CSpellSettingsPlugins` and `CSpellSettingsValidation`, consolidating experimental settings. [\[1\]](diffhunk://#diff-14f40e062c024a63c555a8565984f3d45268e79b41d2dbea8960eab1473be840L2364-R2432) [\[2\]](diffhunk://#diff-41935efb918069d62bfc4f3ca69b275ee0acf75785e3fda671f68a95c485d1e9L891-R892)
+
+**API and Type Definition Updates:**
+
+- Changed the `defineConfig` function and its type definition to accept `AdvancedCSpellSettings` instead of `CSpellSettings`, reflecting the expanded configuration options. [\[1\]](diffhunk://#diff-14f40e062c024a63c555a8565984f3d45268e79b41d2dbea8960eab1473be840L2436-R2504) [\[2\]](diffhunk://#diff-46b5a5d0dc45c4b85df4756c8c8f41b5885b5cd3693d73696aef5ea72782a6b6L1-R3)
+- Updated imports and type usage throughout the codebase to align with the new structure for plugins and validation settings.
+
+These changes lay the groundwork for more flexible and precise spell-checking configuration and future plugin extensibility.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Plugin (<a href="https://github.com/streetsidesoftware/cspell/pull/9244">#9244</a>)</summary>
+
+### fix: Plugin ([#9244](https://github.com/streetsidesoftware/cspell/pull/9244))
+
+This pull request introduces support for a new `DocumentParser` interface alongside the existing `Parser` interface, modernizing the way documents are parsed throughout the codebase. It updates type definitions, internal APIs, and logic to handle both parser types, and refactors related code for improved clarity and flexibility.
+
+Key changes include:
+
+**API and Type Definition Updates:**
+
+- Added `DocumentParser`, `TextDocument`, and related types to `@cspell/cspell-types`, and updated the `ParseResult` interface to remove `content` and `filename` fields, making it compatible with both parser interfaces.
+- Deprecated the old `Plugin` interface in favor of the new `CSpellPlugin` interface, which now supports both `Parser` and `DocumentParser` instances.
+
+**Core Library Refactoring:**
+
+- Updated parser handling in `CSpellSettingsServer.ts` to support both `Parser` and `DocumentParser`, including changes to caches, type signatures, and plugin mapping functions.
+- Refactored `DocumentValidator` in `docValidator.ts` to use a new `parseDocumentWithParser` helper, which abstracts over the two parser interfaces.
+
+**Parser Implementation and Test Updates:**
+
+- Modified the TypeScript parser and its tests to align with the new `ParseResult` structure, removing direct dependencies on `content` and `filename` in the result.
+
+These changes make the system more flexible and future-proof by supporting richer document parsing scenarios and decoupling the parsing logic from file-based assumptions.
+
+---
+
+</details>
+
+<details>
+<summary>fix: remove unused dependency `fast-json-stable-stringify` (<a href="https://github.com/streetsidesoftware/cspell/pull/9243">#9243</a>)</summary>
+
+### fix: remove unused dependency `fast-json-stable-stringify` ([#9243](https://github.com/streetsidesoftware/cspell/pull/9243))
+
+---
+
+</details>
+
+<details>
+<summary>fix: Adjust check text to show only the text that was actually checked. (<a href="https://github.com/streetsidesoftware/cspell/pull/9241">#9241</a>)</summary>
+
+### fix: Adjust check text to show only the text that was actually checked. ([#9241](https://github.com/streetsidesoftware/cspell/pull/9241))
+
+---
+
+</details>
+
+<details>
+<summary>fix: Add tags to ParsedText (<a href="https://github.com/streetsidesoftware/cspell/pull/9237">#9237</a>)</summary>
+
+### fix: Add tags to ParsedText ([#9237](https://github.com/streetsidesoftware/cspell/pull/9237))
+
+This pull request introduces the concept of "tags" for parsed text segments in the CSpell types, allowing each segment of text to be annotated with a set of named tags. These tags can hold boolean, string, or undefined values, supporting richer metadata for parsers and downstream consumers. The changes affect both the TypeScript source and the type definitions.
+
+The most important changes are:
+
+### Tagging Support for Parsed Text
+
+- Added a new optional `tags` property to the `ParsedText` interface, allowing each parsed text segment to carry a set of tags as metadata. (`ParsedText` in `parser.ts`, `index.d.mts`, `index.d.mts`) [\[1\]](diffhunk://#diff-d4bedbf21c899fa1f9dc91855211fc8dd4ed7d1b54a6433514b0ca86974bbea4R39-R42) [\[2\]](diffhunk://#diff-8e581864afed8f70400dbe392449ab40296a78133cee216ab4ad6ef2a38981f6R108-R111) [\[3\]](diffhunk://#diff-14f40e062c024a63c555a8565984f3d45268e79b41d2dbea8960eab1473be840R1275-R1278)
+- Introduced the `ParsedTag` type (boolean | string | undefined) and the `ParsedTags` interface (a map of tag names to `ParsedTag` values) to define the structure of tags. (`parser.ts`, `index.d.mts`, `index.d.mts`) [\[1\]](diffhunk://#diff-d4bedbf21c899fa1f9dc91855211fc8dd4ed7d1b54a6433514b0ca86974bbea4R100-R112) [\[2\]](diffhunk://#diff-8e581864afed8f70400dbe392449ab40296a78133cee216ab4ad6ef2a38981f6R165-R175) [\[3\]](diffhunk://#diff-14f40e062c024a63c555a8565984f3d45268e79b41d2dbea8960eab1473be840R1332-R1342)
+
+### Type Exports and API Surface
+
+- Updated exports throughout the codebase to include `ParsedTag` and `ParsedTags`, making these types available to consumers. (`src/Parser/index.ts`, `src/index.ts`, `index.d.mts`, `index.d.mts`) [\[1\]](diffhunk://#diff-b71809898342d9c1f1a1caf095f9aea7e4b6ec8d4c1dc17caf71dc6337c44db8R3-R4) [\[2\]](diffhunk://#diff-7f7f37af8b6440a510f8d18217f859f88481fb728d873d1af2943032e57c9f0eR128-R129) [\[3\]](diffhunk://#diff-8e581864afed8f70400dbe392449ab40296a78133cee216ab4ad6ef2a38981f6L175-R190) [\[4\]](diffhunk://#diff-14f40e062c024a63c555a8565984f3d45268e79b41d2dbea8960eab1473be840L2349-R2364)
+- Changed the export style in `src/Parser/index.mts` from `export *` to `export type *`, ensuring only types are exported.
+
+These changes lay the groundwork for parsers and other tools to annotate text with structured metadata, improving extensibility and downstream processing.
+
+---
+
+</details>
+
+## v10.3.1 (2026-09-13)
+
+### Fixes
+
+<details>
+<summary>fix: Update documentation and schema for recent improvements (<a href="https://github.com/streetsidesoftware/cspell/pull/9222">#9222</a>)</summary>
+
+### fix: Update documentation and schema for recent improvements ([#9222](https://github.com/streetsidesoftware/cspell/pull/9222))
+
+This pull request updates documentation and default values in both the `cspell.schema.json` and TypeScript type definitions to improve clarity and accuracy. The main changes include updating the default cache strategy, fixing typos and grammatical errors, and clarifying descriptions for several configuration options.
+
+**Configuration behavior changes:**
+
+- The default value for `cacheStrategy` is now `"content"` instead of `"metadata"`, and the descriptions have been updated accordingly in both the schema and type definitions. [\[1\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cL91-R93) [\[2\]](diffhunk://#diff-14f40e062c024a63c555a8565984f3d45268e79b41d2dbea8960eab1473be840L1858-R1859) [\[3\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cL91-R93)
+
+**Documentation and description improvements:**
+
+- Fixed typos and clarified grammar in descriptions for `useIntlWordSegmentation`, `enableFiletypes`, `globRoot`, and `languageId` across both the schema and type definitions. These changes ensure consistency and make the documentation easier to understand. [\[1\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cL1420-R1421) [\[2\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cL1494-R1498) [\[3\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cL1730-R1731) [\[4\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cL2201-R2205) [\[5\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cL2294-R2295) [\[6\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cL2357-R2358) [\[7\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cL2547-R2548) [\[8\]](diffhunk://#diff-14f40e062c024a63c555a8565984f3d45268e79b41d2dbea8960eab1473be840L1405-R1405) [\[9\]](diffhunk://#diff-14f40e062c024a63c555a8565984f3d45268e79b41d2dbea8960eab1473be840L1568-R1573) [\[10\]](diffhunk://#diff-14f40e062c024a63c555a8565984f3d45268e79b41d2dbea8960eab1473be840L1714-R1715) [\[11\]](diffhunk://#diff-14f40e062c024a63c555a8565984f3d45268e79b41d2dbea8960eab1473be840L1780-R1780)
+
+No functional code changes were made; all updates are to documentation, default values, and descriptions to improve developer experience and reduce ambiguity.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Add support for soft word breaks (<a href="https://github.com/streetsidesoftware/cspell/pull/9215">#9215</a>)</summary>
+
+### fix: Add support for soft word breaks ([#9215](https://github.com/streetsidesoftware/cspell/pull/9215))
+
+This pull request introduces support for "soft word breaks" in CSpell, allowing users to define custom rules for segmenting compound words (such as splitting `fnptrvalue` into `fnptr` + `value`) to improve spell checking accuracy. The main changes include implementing the new text transformer, integrating it into the document validation pipeline, and updating related utilities and tests.
+
+**Soft Word Breaks Feature:**
+
+- Added a new `SoftWordBreakTextTransformer` and the `createSoftWordBreakTextTransformer` factory function to apply user-configurable soft word break rules based on patterns or regular expressions. (`WordBreakTextTransformer.ts`, `Transformer.ts`, `index.ts`) [\[1\]](diffhunk://#diff-a91e85d0297b77dc78c8782be9c54e9f82a9bb903be0f7924015768da704b13fR1-R130) [\[2\]](diffhunk://#diff-d3cad4fc45f34097e47b0dfa854415dedbaed5ec7748470f0a004167ab7ba98dR12) [\[3\]](diffhunk://#diff-39f1dbd22cabc2a0476f3ba36f1f3c758bbcfa5011c2dd95a7b6ba7d7d730ef7R4-R5)
+- Integrated the soft word break transformer into the `DocumentValidator` so that, if enabled in user settings, documents are preprocessed to insert soft hyphens at defined break points before spell checking. (`docValidator.ts`) [\[1\]](diffhunk://#diff-05d4916cc710922aec6dff5f7d5849852864fd844bda27afd042fabd511615deR47) [\[2\]](diffhunk://#diff-05d4916cc710922aec6dff5f7d5849852864fd844bda27afd042fabd511615deL272-R282)
+
+**Testing and Validation:**
+
+- Added comprehensive tests for the new transformer to ensure correct segmentation behavior, and added integration tests to verify that enabling/disabling soft word breaks affects spell checking as expected. (`WordBreakTextTransformer.test.ts`, `docValidator.test.ts`) [\[1\]](diffhunk://#diff-71f4db45dc9c2e401018d5b8b6114a7a1a76685b1db9b666b498b339356b762cR1-R54) [\[2\]](diffhunk://#diff-1839873763e6706c9e8be8d19ec2e8a893dcaaf51c05c9abdb117f6dd35594e6R59-R96)
+
+**Utility and Refactoring:**
+
+- Introduced `stringToRegExpOrUndefined` as a safer version of `stringToRegExp` for parsing regex patterns, and refactored codebase to use it where appropriate. (`patterns.ts`, `textRegex.ts`, `text.ts`, `textRegex.test.ts`) [\[1\]](diffhunk://#diff-75d314363a9eff661831a8fb47b851395b39d3370933d1d070ed1ad7a2628810L3-R3) [\[2\]](diffhunk://#diff-75d314363a9eff661831a8fb47b851395b39d3370933d1d070ed1ad7a2628810L52-R52) [\[3\]](diffhunk://#diff-ec3bfbb6cec37771e3ebdb2ac3b42af274b2d41fa9f2d60d1f4867c7ed9e627fL18-R18) [\[4\]](diffhunk://#diff-fecc7a1849029f34ac9f78f1bff9f15e892ce5d9ec09bb080cfb1a54dfb7289fL15-R15) [\[5\]](diffhunk://#diff-fecc7a1849029f34ac9f78f1bff9f15e892ce5d9ec09bb080cfb1a54dfb7289fL195-R195) [\[6\]](diffhunk://#diff-0176a677e285eec3b45fe6f82c27706d533247eede21e68d17c066eaf3678ef7L30-L50)
+- Moved the `softHyphen` constant to `Transformer.ts` for shared use and updated imports accordingly. (`IntlSegmentTextTransformer.ts`, `IntlSegmentTextTransformer.test.ts`, `Transformer.ts`) [\[1\]](diffhunk://#diff-b03d87dd3ae4df592e9449eedf7da60987efe19e05a630ac889e305f47efbd03L6-R6) [\[2\]](diffhunk://#diff-7e6d66ba690aa3f4db0f427d48fa252440a3c77d4ea67061998610863cd348b8L3-R4) [\[3\]](diffhunk://#diff-39f1dbd22cabc2a0476f3ba36f1f3c758bbcfa5011c2dd95a7b6ba7d7d730ef7R4-R5)
+
+These changes collectively add a flexible mechanism for advanced word segmentation, improving the accuracy of spell checking for compound identifiers and domain-specific terms.
+
+---
+
+</details>
+
+<details>
+<summary>fix(cspell-tools): Support multiple replacements in a single entry (<a href="https://github.com/streetsidesoftware/cspell/pull/9212">#9212</a>)</summary>
+
+### fix(cspell-tools): Support multiple replacements in a single entry ([#9212](https://github.com/streetsidesoftware/cspell/pull/9212))
+
+This pull request enhances the `cspell-tools.config.schema.json` schema file by adding `markdownDescription` fields alongside existing `description` fields throughout the schema. This improves support for tools and editors that render markdown-formatted descriptions, making configuration options clearer and more readable. Additionally, the schema for replacements has been refactored for clarity and extensibility.
+
+The most important changes are:
+
+**Documentation Improvements:**
+
+- Added `markdownDescription` fields to nearly all properties and definitions, providing markdown-formatted explanations for better editor and tool integration. [\[1\]](diffhunk://#diff-461485728e7d7363d70fa003d157b2fee76ebe81d66639fafbeef7aa6ee58b7cR10-R20) [\[2\]](diffhunk://#diff-461485728e7d7363d70fa003d157b2fee76ebe81d66639fafbeef7aa6ee58b7cL50-R73) [\[3\]](diffhunk://#diff-461485728e7d7363d70fa003d157b2fee76ebe81d66639fafbeef7aa6ee58b7cL80-R93) [\[4\]](diffhunk://#diff-461485728e7d7363d70fa003d157b2fee76ebe81d66639fafbeef7aa6ee58b7cR104) [\[5\]](diffhunk://#diff-461485728e7d7363d70fa003d157b2fee76ebe81d66639fafbeef7aa6ee58b7cL115-R145) [\[6\]](diffhunk://#diff-461485728e7d7363d70fa003d157b2fee76ebe81d66639fafbeef7aa6ee58b7cL145-R165) [\[7\]](diffhunk://#diff-461485728e7d7363d70fa003d157b2fee76ebe81d66639fafbeef7aa6ee58b7cL180-R205) [\[8\]](diffhunk://#diff-461485728e7d7363d70fa003d157b2fee76ebe81d66639fafbeef7aa6ee58b7cL191-R311) [\[9\]](diffhunk://#diff-461485728e7d7363d70fa003d157b2fee76ebe81d66639fafbeef7aa6ee58b7cR327) [\[10\]](diffhunk://#diff-461485728e7d7363d70fa003d157b2fee76ebe81d66639fafbeef7aa6ee58b7cL300-R347)
+
+**Schema Structure Improvements:**
+
+- Refactored the `Replacements` definition: introduced a `ReplaceWith` type, added `propertyNames` with descriptions, and enhanced the overall documentation and structure for replacement rules.
+
+These changes collectively improve the developer experience when working with the schema in modern editors and tooling.
+
+---
+
+</details>
+
+<details>
+<summary>fix: CSpell-Tools support replacements (<a href="https://github.com/streetsidesoftware/cspell/pull/9205">#9205</a>)</summary>
+
+### fix: CSpell-Tools support replacements ([#9205](https://github.com/streetsidesoftware/cspell/pull/9205))
+
+Support replacing word fragments before adding the word to the dictionary.
+
+## **TL;DR**
+
+Be able to replace `’` with `'`.
+
+## Details
+
+This pull request adds support for applying word replacement rules during dictionary compilation in `cspell-tools`. The main change is the introduction of a `replacements` option, allowing users to specify patterns and their replacements, which are then applied to all words in the dictionary. The changes include updates to the configuration schema, TypeScript interfaces, core compilation logic, and tests to support and verify this new feature.
+
+**Add support for word replacements in dictionary compilation:**
+
+- **Configuration and Schema Updates:**
+  - Added a `Replacements` definition and a `replacements` property to the JSON schema and TypeScript interfaces, allowing users to specify replacement rules in config files and programmatic interfaces. [\[1\]](diffhunk://#diff-461485728e7d7363d70fa003d157b2fee76ebe81d66639fafbeef7aa6ee58b7cR158-R164) [\[2\]](diffhunk://#diff-461485728e7d7363d70fa003d157b2fee76ebe81d66639fafbeef7aa6ee58b7cR248-R251) [\[3\]](diffhunk://#diff-a5d02ba854b88e2e8b83197c4a15e410e10b931ebc8bbda6b777780c4448bb77R95-R108) [\[4\]](diffhunk://#diff-10cc7cfa8dee170e380d597cc6f37d0fe78a1b8b53bab0b9980d74e8f1dd8b99R10)
+
+- **Compiler Logic Enhancements:**
+  - Updated the core compilation pipeline (`compile.ts`, `wordListParser.ts`) to accept and apply the `replacements` option, mapping specified patterns to their replacements during normalization of dictionary words. [\[1\]](diffhunk://#diff-abbcc701a68b0b884bc77813c1be1e438f830466ead1b838f0dff1dd75eb5becR194) [\[2\]](diffhunk://#diff-1fa6211a0e9f939021351f0ed3cfdffe9b4c3209c92b369c328811c986e1140fR25) [\[3\]](diffhunk://#diff-1fa6211a0e9f939021351f0ed3cfdffe9b4c3209c92b369c328811c986e1140fR280-R289)
+
+- **Testing and Fixtures:**
+  - Extended and added tests to verify that replacements are correctly applied, including new test cases and fixtures (such as `rep-words.txt`) and snapshot updates. [\[1\]](diffhunk://#diff-a09bfea2415f93e38ba5d6b778e9e0204e4db8ac19ea06a019390e06587fed42R1-R12) [\[2\]](diffhunk://#diff-643cf9dbc1c82e07338902ef990406fabc2a4fd22da5d2694f5ab5f6115c2e08R59-R96) [\[3\]](diffhunk://#diff-643cf9dbc1c82e07338902ef990406fabc2a4fd22da5d2694f5ab5f6115c2e08R132) [\[4\]](diffhunk://#diff-643cf9dbc1c82e07338902ef990406fabc2a4fd22da5d2694f5ab5f6115c2e08R169) [\[5\]](diffhunk://#diff-643cf9dbc1c82e07338902ef990406fabc2a4fd22da5d2694f5ab5f6115c2e08R207) [\[6\]](diffhunk://#diff-643cf9dbc1c82e07338902ef990406fabc2a4fd22da5d2694f5ab5f6115c2e08R247) [\[7\]](diffhunk://#diff-a7f698e8f0adcfceb8260e1236de114c5fcbbd051b4e5f50837ae50f3b039954R34-R37)
+
+- **Type and Interface Adjustments:**
+  - Refactored relevant interfaces (`CompileOptions`, `CompileRequest`, etc.) to include or omit the new `replacements` property as appropriate, ensuring type safety and clarity throughout the codebase. [\[1\]](diffhunk://#diff-035305fe90cbce5bf3bd1ff6b32c44c4093b00bf9acfc08733671afbc9b1a05aL1-R3) [\[2\]](diffhunk://#diff-a5d02ba854b88e2e8b83197c4a15e410e10b931ebc8bbda6b777780c4448bb77L20-R20)
+
+These changes collectively enable more flexible and accurate dictionary generation by allowing systematic normalization or correction of word forms via configurable replacement rules.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Revert #9198 (<a href="https://github.com/streetsidesoftware/cspell/pull/9202">#9202</a>)</summary>
+
+### fix: Revert #9198 ([#9202](https://github.com/streetsidesoftware/cspell/pull/9202))
+
+---
+
+</details>
+
+<details>
+<summary>fix: Add definitions for custom word breaks (<a href="https://github.com/streetsidesoftware/cspell/pull/9199">#9199</a>)</summary>
+
+### fix: Add definitions for custom word breaks ([#9199](https://github.com/streetsidesoftware/cspell/pull/9199))
+
+This pull request introduces support for customizable "soft word break" rules in both the JSON schema (`cspell.schema.json`) and the TypeScript types (`packages/cspell-types/api/index.d.mts`). These changes allow users to define and enable/disable advanced word segmentation behaviors, improving spell checking for languages and naming patterns that aren't well handled by default camel case detection.
+
+The most important changes are:
+
+**Schema and Configuration Enhancements:**
+
+- Added new properties `softWordBreakDefinitions` and `softWordBreaks` to the JSON schema, allowing users to define and control custom soft word break rules for text segmentation. These rules help split words at specific positions (like between "error" and "code" in "errorcode") and support advanced language scenarios. [\[1\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cR1380-R1391) [\[2\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cR1678-R1689) [\[3\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cR2483-R2494)
+- Defined new schema types: `SoftWordBreak`, `SoftWordBreakDefinitions`, `SoftWordBreakPattern`, `SoftWordBreakRegExpString`, `SoftWordBreakRule`, and `SoftWordBreaks`, with detailed descriptions and usage examples for each.
+
+**TypeScript API Updates:**
+
+- Introduced the `WordSegmentationSettings` interface, which includes `softWordBreakDefinitions`, `softWordBreaks`, and `useIntlWordSegmentation` options, providing a type-safe way to configure segmentation rules in code.
+- Integrated `WordSegmentationSettings` into the main `BaseSetting` interface, ensuring all configuration objects can use the new word break features.
+- Cleaned up the `BaseSetting` interface by removing the now redundant `useIntlWordSegmentation` property (since it's included in `WordSegmentationSettings`).
+
+These changes make the spell checker more flexible and powerful, especially for users working with languages or code styles that require custom word splitting logic.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Split words on soft hyphens (<a href="https://github.com/streetsidesoftware/cspell/pull/9196">#9196</a>)</summary>
+
+### fix: Split words on soft hyphens ([#9196](https://github.com/streetsidesoftware/cspell/pull/9196))
+
+This pull request enhances the word splitting utilities in the `cspell-lib` package, particularly improving how camelCase and compound words are split, especially when soft hyphens are present. It also introduces and tests new utility functions that return word segments along with their offsets, and refactors the implementation for better accuracy and maintainability.
+
+**Key changes:**
+
+### Feature enhancements and bug fixes
+
+- Improved the regular expression `regExpCamelCaseWordBreaksWithEnglishSuffix` to handle soft hyphens (`\u00AD`), ensuring words like `'hello\u00ADthere'` are split correctly.
+- Refactored `splitWordWithOffset` to compute word splits and their offsets more accurately, replacing the previous use of `scanMap` with a custom implementation.
+- Updated `splitCamelCaseWordWithOffset` to use the new `splitWordWithOffset` implementation, improving consistency and correctness.
+
+### Testing improvements
+
+- Added comprehensive tests for both `splitCamelCaseWordWithOffset` and `splitWordWithOffset`, covering a variety of word forms, including those with soft hyphens and mixed casing.
+- Expanded test cases for word splitting to include words with soft hyphens, ensuring the new logic is properly validated.
+
+### Dependency and import updates
+
+- Updated imports in `text.test.ts` to include the new or modified regular expressions used for word splitting.
+
+---
+
+</details>
+
+### Dictionary Updates
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9218">#9218</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#9218](https://github.com/streetsidesoftware/cspell/pull/9218))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ packages/cspell-bundled-dicts/package.json |  4 ++--
+ pnpm-lock.yaml                             | 20 ++++++++++----------
+ 2 files changed, 12 insertions(+), 12 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9208">#9208</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#9208](https://github.com/streetsidesoftware/cspell/pull/9208))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ packages/cspell-bundled-dicts/package.json |  30 ++--
+ pnpm-lock.yaml                             | 274 +++++++++++++++--------------
+ 2 files changed, 159 insertions(+), 145 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9198">#9198</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#9198](https://github.com/streetsidesoftware/cspell/pull/9198))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/AdaDoom3/AdaDoom3/report.yaml        |  238 +---
+ .../snapshots/AdaDoom3/AdaDoom3/snapshot.txt       |  246 +---
+ .../Azure/azure-rest-api-specs/report.yaml         |   54 +-
+ .../Azure/azure-rest-api-specs/snapshot.txt        |   82 +-
+ .../MartinThoma/LaTeX-examples/report.yaml         |  120 +-
+ .../MartinThoma/LaTeX-examples/snapshot.txt        |  104 +-
+ .../MicrosoftDocs/PowerShell-Docs/report.yaml      |  335 +----
+ .../MicrosoftDocs/PowerShell-Docs/snapshot.txt     |  329 +----
+ .../snapshots/RustPython/RustPython/report.yaml    |   70 +-
+ .../snapshots/RustPython/RustPython/snapshot.txt   |  212 ++--
+ .../SoftwareBrothers/admin-bro/report.yaml         |    7 +-
+ .../SoftwareBrothers/admin-bro/snapshot.txt        |    5 +-
+ .../snapshots/TheAlgorithms/Python/report.yaml     |  256 +---
+ .../snapshots/TheAlgorithms/Python/snapshot.txt    |  240 +---
+ .../snapshots/alexiosc/megistos/report.yaml        |   65 +-
+ .../snapshots/alexiosc/megistos/snapshot.txt       |   75 +-
+ .../aspnetboilerplate/report.yaml                  |   36 +-
+ .../aspnetboilerplate/snapshot.txt                 |   32 +-
+ .../snapshots/aws-amplify/docs/report.yaml         |    5 +-
+ .../snapshots/aws-amplify/docs/snapshot.txt        |    5 +-
+ .../snapshots/caddyserver/caddy/report.yaml        |  320 ++---
+ .../snapshots/caddyserver/caddy/snapshot.txt       |  184 +--
+ .../snapshots/dart-lang/sdk/report.yaml            |   96 +-
+ .../snapshots/dart-lang/sdk/snapshot.txt           |   55 +-
+ .../snapshots/django/django/report.yaml            | 1096 ++++------------
+ .../snapshots/django/django/snapshot.txt           |  615 +--------
+ .../snapshots/eslint/eslint/report.yaml            |   54 +-
+ .../snapshots/eslint/eslint/snapshot.txt           |   26 +-
+ .../snapshots/flutter/samples/report.yaml          |  398 +-----
+ .../snapshots/flutter/samples/snapshot.txt         |  660 +++-------
+ .../snapshots/gitbucket/gitbucket/report.yaml      |   90 +-
+ .../snapshots/gitbucket/gitbucket/snapshot.txt     |   86 +-
+ .../googleapis/google-cloud-cpp/report.yaml        |  103 +-
+ .../googleapis/google-cloud-cpp/snapshot.txt       |  111 +-
+ .../snapshots/graphql/graphql-spec/report.yaml     |   46 +-
+ .../snapshots/graphql/graphql-spec/snapshot.txt    |   24 +-
+ .../iluwatar/java-design-patterns/report.yaml      |  135 +-
+ .../iluwatar/java-design-patterns/snapshot.txt     |  201 +--
+ .../snapshots/ktaranov/sqlserver-kit/report.yaml   | 1227 +++---------------
+ .../snapshots/ktaranov/sqlserver-kit/snapshot.txt  | 1303 +++++---------------
+ .../snapshots/liriliri/licia/report.yaml           |   45 +-
+ .../snapshots/liriliri/licia/snapshot.txt          |   33 +-
+ integration-tests/snapshots/mdx-js/mdx/report.yaml |   42 +-
+ .../snapshots/mdx-js/mdx/snapshot.txt              |   31 +-
+ .../microsoft/TypeScript-Website/report.yaml       |   65 +-
+ .../microsoft/TypeScript-Website/snapshot.txt      |   42 +-
+ .../snapshots/neovim/nvim-lspconfig/report.yaml    |   50 +-
+ .../snapshots/neovim/nvim-lspconfig/snapshot.txt   |   72 +-
+ .../snapshots/pagekit/pagekit/report.yaml          |   16 +-
+ .../snapshots/pagekit/pagekit/snapshot.txt         |   14 +-
+ .../snapshots/php/php-src/report.yaml              | 1011 ++-------------
+ .../snapshots/php/php-src/snapshot.txt             | 1247 ++++---------------
+ .../snapshots/pycontribs/jira/report.yaml          |   16 +-
+ .../snapshots/pycontribs/jira/snapshot.txt         |    8 +-
+ .../snapshots/shoelace-style/shoelace/report.yaml  |    6 +-
+ .../snapshots/shoelace-style/shoelace/snapshot.txt |    4 +-
+ .../snapshots/sveltejs/svelte/report.yaml          |   75 +-
+ .../snapshots/sveltejs/svelte/snapshot.txt         |   87 +-
+ .../typescript-cheatsheets/react/report.yaml       |    8 +-
+ .../typescript-cheatsheets/react/snapshot.txt      |   10 +-
+ .../snapshots/vitest-dev/vitest/report.yaml        |   10 +-
+ .../snapshots/vitest-dev/vitest/snapshot.txt       |    6 +-
+ .../snapshots/wireapp/wire-desktop/report.yaml     |   10 +-
+ .../snapshots/wireapp/wire-desktop/snapshot.txt    |    6 +-
+ .../snapshots/wireapp/wire-webapp/report.yaml      |  203 +--
+ .../snapshots/wireapp/wire-webapp/snapshot.txt     |  237 +---
+ packages/cspell-bundled-dicts/package.json         |   30 +-
+ .../__snapshots__/docValidator.test.ts.snap        |    8 +-
+ .../__snapshots__/validator.test.ts.snap           |   22 +-
+ pnpm-lock.yaml                                     |  274 ++--
+ 70 files changed, 2258 insertions(+), 10776 deletions(-)
+```
+
+---
+
+</details>
+
+## v10.3.0 (2026-09-08)
+
+### Features
+
+<details>
+<summary>feat: Add an option to set the kind of dictionary file (<a href="https://github.com/streetsidesoftware/cspell/pull/9178">#9178</a>)</summary>
+
+### feat: Add an option to set the kind of dictionary file ([#9178](https://github.com/streetsidesoftware/cspell/pull/9178))
+
+This pull request introduces support for the new `kind` property in dictionary definitions, enabling explicit specification of dictionary types such as `words`, `flag-words`, and `ignore-words`.
+
+```jsonc
+{
+  "version": "0.2",
+  "language": "en-US",
+  "caseSensitive": false,
+  "dictionaryDefinitions": [
+    {
+      "name": "forbidden-spelling",
+      "path": "./forbidden-spelling.txt",
+      "kind": "flag-words"
+    }
+  ],
+  "dictionaries": ["forbidden-spelling"]
+}
+```
+
+`forbidden-spelling.txt`
+
+```
+# Add forbidden words below.
+# Words starting with `!` are exceptions.
+# cspell:disable
+english:English # Do not allow `english` and suggest `English`
+!English # needed to allow `English`
+!ENGLISH # needed to allow `ENGLISH`
+
+forbidden_word # All variants of `forbidden_word` are not allowed.
+
+# Mixed case words:
+cSpell # only `cSpell` is flagged. `cspell` will not be.
+```
+
+It updates the JSON schema, dictionary loading logic, and adds new APIs and tests to handle these kinds, including support for loading forbidden (flag) words from trie files.
+
+**Schema and API Enhancements:**
+
+- Added a `kind` property to dictionary definitions in the `cspell.schema.json` schema, allowing configuration of dictionary type as `words`, `flag-words`, or `ignore-words` [\[1\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cR357-R362) [\[2\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cR426-R431) [\[3\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cR502-R507) [\[4\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cR838-R843) [\[5\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cR1002-R1028).
+- Updated the internal dictionary settings and loader logic to recognize and handle the new `kind` property, ensuring correct dictionary instantiation based on its value [\[1\]](diffhunk://#diff-f02fad169c5857d97fd6add642623e889d3f2900ef6a4b39845f02be39d95366R193) [\[2\]](diffhunk://#diff-f02fad169c5857d97fd6add642623e889d3f2900ef6a4b39845f02be39d95366R218) [\[3\]](diffhunk://#diff-c6ea5963a21891d1145b0febf601f1d09d67ffd8e9a95e993493960d677293e0L251-R259) [\[4\]](diffhunk://#diff-c6ea5963a21891d1145b0febf601f1d09d67ffd8e9a95e993493960d677293e0L285-R296).
+
+**Flag Words Dictionary Support:**
+
+- Introduced `createFlagWordsDictionaryFromTrieFile` to allow creating forbidden words dictionaries directly from trie files, and exposed this function in the public API [\[1\]](diffhunk://#diff-209c43823378da2ca4c4bac833fae779c2a009f252f6b43ec626ad5e07c400d5R174-R189) [\[2\]](diffhunk://#diff-3c748c962ce2a5c78dcb8194b342d04689da8ccd7714f27a2ce4ba939eabf62eL2-R10) [\[3\]](diffhunk://#diff-88ab425aebdb40b0de4f3d847e37602f47fd5ef2ad71b0c07ded58634a82b0b9R6) [\[4\]](diffhunk://#diff-7d72bee0f62b6e247b5a59aa6add20496cac0d3007fd4370c8324f9f8d2e81f1R26) [\[5\]](diffhunk://#diff-3c53de7765d44a629523ad4f0ca1a25ee56961c7e6b1cf07ca348387fc0a6715R9).
+- Added comprehensive tests for the new `kind` behaviors and for loading flag words from trie files, ensuring correct forbidden word detection and suggestion handling [\[1\]](diffhunk://#diff-3c748c962ce2a5c78dcb8194b342d04689da8ccd7714f27a2ce4ba939eabf62eR252-R267) [\[2\]](diffhunk://#diff-c29257264530048b2c751d506584bbf8a5324bbca6095e8307bc7cc547983ff0R180-R225).
+
+**Sample and Fixture Updates:**
+
+- Added a new sample file `flag-words.txt` to demonstrate and test the flag words functionality.
+
+These changes collectively provide more flexible and explicit dictionary configuration, improve forbidden word handling, and ensure robust support for new and existing dictionary formats.
+
+---
+
+</details>
+
+### Fixes
+
+<details>
+<summary>fix: Add dictionary kind: suggest-words (<a href="https://github.com/streetsidesoftware/cspell/pull/9189">#9189</a>)</summary>
+
+### fix: Add dictionary kind: suggest-words ([#9189](https://github.com/streetsidesoftware/cspell/pull/9189))
+
+This pull request adds support for a new dictionary kind, `suggest-words`, which allows dictionaries to provide suggested word corrections without treating the words as valid or forbidden. The changes include updates to the JSON schema, implementation of the `SuggestDictionary` for this new kind (including support for loading from trie files), and comprehensive tests to ensure correct behavior. Additionally, the API is extended to expose the new functionality.
+
+**Support for "suggest-words" dictionary kind**
+
+- [`cspell.schema.json`](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cL359-R360): Added the `suggest-words` type to the `DictionaryKind` definition and updated descriptions/documentation throughout the schema to reflect this new kind. [\[1\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cL359-R360) [\[2\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cL428-R429) [\[3\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cL504-R505) [\[4\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cL840-R841) [\[5\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cR1012-R1018) [\[6\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cR1028-R1031)
+
+**Implementation of SuggestDictionary for "suggest-words"**
+
+- [`packages/cspell-dictionary/src/SpellingDictionary/SuggestDictionary.ts`](diffhunk://#diff-0ef0e8042a78662ed7798a839e2acaaaba36f84f43cee47691cf0da5527512f7R3): Added `createSuggestDictionaryFromTrieFile`, enabling creation of suggestion dictionaries from trie file contents. [\[1\]](diffhunk://#diff-0ef0e8042a78662ed7798a839e2acaaaba36f84f43cee47691cf0da5527512f7R3) [\[2\]](diffhunk://#diff-0ef0e8042a78662ed7798a839e2acaaaba36f84f43cee47691cf0da5527512f7R151-R166)
+- `packages/cspell-dictionary/src/SpellingDictionary/index.ts`, `packages/cspell-dictionary/src/index.ts`: Exported the new `createSuggestDictionaryFromTrieFile` function from the package API. [\[1\]](diffhunk://#diff-88ab425aebdb40b0de4f3d847e37602f47fd5ef2ad71b0c07ded58634a82b0b9L23-R23) [\[2\]](diffhunk://#diff-7d72bee0f62b6e247b5a59aa6add20496cac0d3007fd4370c8324f9f8d2e81f1R33)
+- [`packages/cspell-dictionary/src/__snapshots__/index.test.ts.snap`](diffhunk://#diff-3c53de7765d44a629523ad4f0ca1a25ee56961c7e6b1cf07ca348387fc0a6715R16): Updated API snapshot to include the new export.
+
+**Dictionary loading and integration**
+
+- [`packages/cspell-lib/src/lib/SpellingDictionary/DictionaryController/DictionaryLoader.ts`](diffhunk://#diff-c6ea5963a21891d1145b0febf601f1d09d67ffd8e9a95e993493960d677293e0R12-R13): Updated loader to handle `suggest-words` kind for both legacy and words-per-line formats, using the appropriate factory. [\[1\]](diffhunk://#diff-c6ea5963a21891d1145b0febf601f1d09d67ffd8e9a95e993493960d677293e0R12-R13) [\[2\]](diffhunk://#diff-c6ea5963a21891d1145b0febf601f1d09d67ffd8e9a95e993493960d677293e0R298-R300) [\[3\]](diffhunk://#diff-c6ea5963a21891d1145b0febf601f1d09d67ffd8e9a95e993493960d677293e0R318-R320)
+
+**Testing and validation**
+
+- [`packages/cspell-dictionary/src/SpellingDictionary/SuggestDictionary.test.ts`](diffhunk://#diff-6ed6ff78b238680cd5b120ad98774b1181aa261b26700367d7f9a8b30caffc63R1-R4): Added tests for `createSuggestDictionaryFromTrieFile` to ensure suggestions are provided as expected. [\[1\]](diffhunk://#diff-6ed6ff78b238680cd5b120ad98774b1181aa261b26700367d7f9a8b30caffc63R1-R4) [\[2\]](diffhunk://#diff-6ed6ff78b238680cd5b120ad98774b1181aa261b26700367d7f9a8b30caffc63R161-R178)
+- [`packages/cspell-lib/src/lib/SpellingDictionary/DictionaryController/DictionaryLoader.test.ts`](diffhunk://#diff-c29257264530048b2c751d506584bbf8a5324bbca6095e8307bc7cc547983ff0R189-R216): Added tests for the new `suggest-words` kind, including loading from both text and trie files, and verifying correct suggestion and lookup behavior. [\[1\]](diffhunk://#diff-c29257264530048b2c751d506584bbf8a5324bbca6095e8307bc7cc547983ff0R189-R216) [\[2\]](diffhunk://#diff-c29257264530048b2c751d506584bbf8a5324bbca6095e8307bc7cc547983ff0R233-R258)
+
+**Sample data updates**
+
+- `packages/cspell-lib/samples/ignore-words.txt`, `packages/cspell-lib/samples/words.txt`: Updated sample dictionary files to include entries relevant for testing the new kind and its suggestion behavior. [\[1\]](diffhunk://#diff-7d31a455a84dc5891ebe79c10dde43ff8a534a9495119be21c1d06413cde00a9R1-R4) [\[2\]](diffhunk://#diff-0e49e6682b2ab85e823f9ced3b6da4029a7c9093c6bcc1290a119ee2824b1ac0R1) [\[3\]](diffhunk://#diff-0e49e6682b2ab85e823f9ced3b6da4029a7c9093c6bcc1290a119ee2824b1ac0R13-R14)
+
+---
+
+</details>
+
+<details>
+<summary>fix: Only hide code-like partial words (<a href="https://github.com/streetsidesoftware/cspell/pull/9163">#9163</a>)</summary>
+
+### fix: Only hide code-like partial words ([#9163](https://github.com/streetsidesoftware/cspell/pull/9163))
+
+---
+
+</details>
+
+### Documentation
+
+<details>
+<summary>fix: Add dictionary kind: suggest-words (<a href="https://github.com/streetsidesoftware/cspell/pull/9189">#9189</a>)</summary>
+
+### fix: Add dictionary kind: suggest-words ([#9189](https://github.com/streetsidesoftware/cspell/pull/9189))
+
+This pull request adds support for a new dictionary kind, `suggest-words`, which allows dictionaries to provide suggested word corrections without treating the words as valid or forbidden. The changes include updates to the JSON schema, implementation of the `SuggestDictionary` for this new kind (including support for loading from trie files), and comprehensive tests to ensure correct behavior. Additionally, the API is extended to expose the new functionality.
+
+**Support for "suggest-words" dictionary kind**
+
+- [`cspell.schema.json`](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cL359-R360): Added the `suggest-words` type to the `DictionaryKind` definition and updated descriptions/documentation throughout the schema to reflect this new kind. [\[1\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cL359-R360) [\[2\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cL428-R429) [\[3\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cL504-R505) [\[4\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cL840-R841) [\[5\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cR1012-R1018) [\[6\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cR1028-R1031)
+
+**Implementation of SuggestDictionary for "suggest-words"**
+
+- [`packages/cspell-dictionary/src/SpellingDictionary/SuggestDictionary.ts`](diffhunk://#diff-0ef0e8042a78662ed7798a839e2acaaaba36f84f43cee47691cf0da5527512f7R3): Added `createSuggestDictionaryFromTrieFile`, enabling creation of suggestion dictionaries from trie file contents. [\[1\]](diffhunk://#diff-0ef0e8042a78662ed7798a839e2acaaaba36f84f43cee47691cf0da5527512f7R3) [\[2\]](diffhunk://#diff-0ef0e8042a78662ed7798a839e2acaaaba36f84f43cee47691cf0da5527512f7R151-R166)
+- `packages/cspell-dictionary/src/SpellingDictionary/index.ts`, `packages/cspell-dictionary/src/index.ts`: Exported the new `createSuggestDictionaryFromTrieFile` function from the package API. [\[1\]](diffhunk://#diff-88ab425aebdb40b0de4f3d847e37602f47fd5ef2ad71b0c07ded58634a82b0b9L23-R23) [\[2\]](diffhunk://#diff-7d72bee0f62b6e247b5a59aa6add20496cac0d3007fd4370c8324f9f8d2e81f1R33)
+- [`packages/cspell-dictionary/src/__snapshots__/index.test.ts.snap`](diffhunk://#diff-3c53de7765d44a629523ad4f0ca1a25ee56961c7e6b1cf07ca348387fc0a6715R16): Updated API snapshot to include the new export.
+
+**Dictionary loading and integration**
+
+- [`packages/cspell-lib/src/lib/SpellingDictionary/DictionaryController/DictionaryLoader.ts`](diffhunk://#diff-c6ea5963a21891d1145b0febf601f1d09d67ffd8e9a95e993493960d677293e0R12-R13): Updated loader to handle `suggest-words` kind for both legacy and words-per-line formats, using the appropriate factory. [\[1\]](diffhunk://#diff-c6ea5963a21891d1145b0febf601f1d09d67ffd8e9a95e993493960d677293e0R12-R13) [\[2\]](diffhunk://#diff-c6ea5963a21891d1145b0febf601f1d09d67ffd8e9a95e993493960d677293e0R298-R300) [\[3\]](diffhunk://#diff-c6ea5963a21891d1145b0febf601f1d09d67ffd8e9a95e993493960d677293e0R318-R320)
+
+**Testing and validation**
+
+- [`packages/cspell-dictionary/src/SpellingDictionary/SuggestDictionary.test.ts`](diffhunk://#diff-6ed6ff78b238680cd5b120ad98774b1181aa261b26700367d7f9a8b30caffc63R1-R4): Added tests for `createSuggestDictionaryFromTrieFile` to ensure suggestions are provided as expected. [\[1\]](diffhunk://#diff-6ed6ff78b238680cd5b120ad98774b1181aa261b26700367d7f9a8b30caffc63R1-R4) [\[2\]](diffhunk://#diff-6ed6ff78b238680cd5b120ad98774b1181aa261b26700367d7f9a8b30caffc63R161-R178)
+- [`packages/cspell-lib/src/lib/SpellingDictionary/DictionaryController/DictionaryLoader.test.ts`](diffhunk://#diff-c29257264530048b2c751d506584bbf8a5324bbca6095e8307bc7cc547983ff0R189-R216): Added tests for the new `suggest-words` kind, including loading from both text and trie files, and verifying correct suggestion and lookup behavior. [\[1\]](diffhunk://#diff-c29257264530048b2c751d506584bbf8a5324bbca6095e8307bc7cc547983ff0R189-R216) [\[2\]](diffhunk://#diff-c29257264530048b2c751d506584bbf8a5324bbca6095e8307bc7cc547983ff0R233-R258)
+
+**Sample data updates**
+
+- `packages/cspell-lib/samples/ignore-words.txt`, `packages/cspell-lib/samples/words.txt`: Updated sample dictionary files to include entries relevant for testing the new kind and its suggestion behavior. [\[1\]](diffhunk://#diff-7d31a455a84dc5891ebe79c10dde43ff8a534a9495119be21c1d06413cde00a9R1-R4) [\[2\]](diffhunk://#diff-0e49e6682b2ab85e823f9ced3b6da4029a7c9093c6bcc1290a119ee2824b1ac0R1) [\[3\]](diffhunk://#diff-0e49e6682b2ab85e823f9ced3b6da4029a7c9093c6bcc1290a119ee2824b1ac0R13-R14)
+
+---
+
+</details>
+
+<details>
+<summary>feat: Add an option to set the kind of dictionary file (<a href="https://github.com/streetsidesoftware/cspell/pull/9178">#9178</a>)</summary>
+
+### feat: Add an option to set the kind of dictionary file ([#9178](https://github.com/streetsidesoftware/cspell/pull/9178))
+
+This pull request introduces support for the new `kind` property in dictionary definitions, enabling explicit specification of dictionary types such as `words`, `flag-words`, and `ignore-words`.
+
+```jsonc
+{
+  "version": "0.2",
+  "language": "en-US",
+  "caseSensitive": false,
+  "dictionaryDefinitions": [
+    {
+      "name": "forbidden-spelling",
+      "path": "./forbidden-spelling.txt",
+      "kind": "flag-words"
+    }
+  ],
+  "dictionaries": ["forbidden-spelling"]
+}
+```
+
+`forbidden-spelling.txt`
+
+```
+# Add forbidden words below.
+# Words starting with `!` are exceptions.
+# cspell:disable
+english:English # Do not allow `english` and suggest `English`
+!English # needed to allow `English`
+!ENGLISH # needed to allow `ENGLISH`
+
+forbidden_word # All variants of `forbidden_word` are not allowed.
+
+# Mixed case words:
+cSpell # only `cSpell` is flagged. `cspell` will not be.
+```
+
+It updates the JSON schema, dictionary loading logic, and adds new APIs and tests to handle these kinds, including support for loading forbidden (flag) words from trie files.
+
+**Schema and API Enhancements:**
+
+- Added a `kind` property to dictionary definitions in the `cspell.schema.json` schema, allowing configuration of dictionary type as `words`, `flag-words`, or `ignore-words` [\[1\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cR357-R362) [\[2\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cR426-R431) [\[3\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cR502-R507) [\[4\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cR838-R843) [\[5\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cR1002-R1028).
+- Updated the internal dictionary settings and loader logic to recognize and handle the new `kind` property, ensuring correct dictionary instantiation based on its value [\[1\]](diffhunk://#diff-f02fad169c5857d97fd6add642623e889d3f2900ef6a4b39845f02be39d95366R193) [\[2\]](diffhunk://#diff-f02fad169c5857d97fd6add642623e889d3f2900ef6a4b39845f02be39d95366R218) [\[3\]](diffhunk://#diff-c6ea5963a21891d1145b0febf601f1d09d67ffd8e9a95e993493960d677293e0L251-R259) [\[4\]](diffhunk://#diff-c6ea5963a21891d1145b0febf601f1d09d67ffd8e9a95e993493960d677293e0L285-R296).
+
+**Flag Words Dictionary Support:**
+
+- Introduced `createFlagWordsDictionaryFromTrieFile` to allow creating forbidden words dictionaries directly from trie files, and exposed this function in the public API [\[1\]](diffhunk://#diff-209c43823378da2ca4c4bac833fae779c2a009f252f6b43ec626ad5e07c400d5R174-R189) [\[2\]](diffhunk://#diff-3c748c962ce2a5c78dcb8194b342d04689da8ccd7714f27a2ce4ba939eabf62eL2-R10) [\[3\]](diffhunk://#diff-88ab425aebdb40b0de4f3d847e37602f47fd5ef2ad71b0c07ded58634a82b0b9R6) [\[4\]](diffhunk://#diff-7d72bee0f62b6e247b5a59aa6add20496cac0d3007fd4370c8324f9f8d2e81f1R26) [\[5\]](diffhunk://#diff-3c53de7765d44a629523ad4f0ca1a25ee56961c7e6b1cf07ca348387fc0a6715R9).
+- Added comprehensive tests for the new `kind` behaviors and for loading flag words from trie files, ensuring correct forbidden word detection and suggestion handling [\[1\]](diffhunk://#diff-3c748c962ce2a5c78dcb8194b342d04689da8ccd7714f27a2ce4ba939eabf62eR252-R267) [\[2\]](diffhunk://#diff-c29257264530048b2c751d506584bbf8a5324bbca6095e8307bc7cc547983ff0R180-R225).
+
+**Sample and Fixture Updates:**
+
+- Added a new sample file `flag-words.txt` to demonstrate and test the flag words functionality.
+
+These changes collectively provide more flexible and explicit dictionary configuration, improve forbidden word handling, and ensure robust support for new and existing dictionary formats.
+
+---
+
+</details>
+
+## v10.2.2 (2026-09-04)
+
+### Fixes
+
+<details>
+<summary>fix: Workaround for #9164 (<a href="https://github.com/streetsidesoftware/cspell/pull/9168">#9168</a>)</summary>
+
+### fix: Workaround for #9164 ([#9168](https://github.com/streetsidesoftware/cspell/pull/9168))
+
+This pull request updates the word splitter to improve its handling of long or complex words and adds new test cases to ensure correct behavior. The main changes include increasing the allowed number of skipped breaks and attempts for word splitting, updating test cases to cover additional scenarios, and adjusting ignored words in the dictionary tests.
+
+**Word splitting improvements:**
+
+- Increased the maximum number of skipped breaks (`maxSkippedBreaks`) from 8 to 16 and set a new maximum number of attempts (`maxAttempts`) to 64,000 in `wordSplitter.ts` to better handle complex word splitting cases.
+- Removed the local `maxAttempts` limit in the `splitIntoWords` function, relying instead on the new global constant.
+
+**Test enhancements:**
+
+- Updated the ignored words in the dictionary test to include a new Base64 string (`QmFzZTY0IHN0cmluZyBvZiB0ZXh0IGhlcmU`) and used `cspell:disable`/`cspell:enable` comments for clarity.
+- Added a new test case to validate splitting of the string `'QmFzZTY0IHN0cmluZyBvZiB0ZXh0IGhlcmU.access'` in the word splitter tests.
+
+---
+
+</details>
+
+## v10.2.1 (2026-09-03)
+
+### Fixes
+
+<details>
+<summary>fix: support soft hyphens in the word splitter (<a href="https://github.com/streetsidesoftware/cspell/pull/9144">#9144</a>)</summary>
+
+### fix: support soft hyphens in the word splitter ([#9144](https://github.com/streetsidesoftware/cspell/pull/9144))
+
+This pull request introduces several improvements and fixes to the word segmentation and word splitting logic, especially for Thai language support and symbol handling. The main changes include updating the Thai segmentation to use soft hyphens, enhancing the word splitting logic to handle more cases (including camelCase, symbols, and soft hyphens), and refactoring the code for better modularity and test coverage.
+
+**Word segmentation and Thai language improvements:**
+
+- Updated Thai (`th-TH`) segmentation to use soft hyphens (`\u00AD`) instead of spaces, improving the accuracy of word breaks and ensuring better compatibility with spell checking and downstream processing. [\[1\]](diffhunk://#diff-7e6d66ba690aa3f4db0f427d48fa252440a3c77d4ea67061998610863cd348b8L12-R12) [\[2\]](diffhunk://#diff-7e6d66ba690aa3f4db0f427d48fa252440a3c77d4ea67061998610863cd348b8L34-R37) [\[3\]](diffhunk://#diff-b03d87dd3ae4df592e9449eedf7da60987efe19e05a630ac889e305f47efbd03L35-R41)
+- Added the `@cspell/dict-th-th` package to dependencies, enabling Thai dictionary support.
+- Adjusted tests and expectations for Thai segmentation to reflect the use of soft hyphens and to ensure no false positives in validation.
+
+**Word splitting and symbol handling enhancements:**
+
+- Introduced a new `generateWordBreaks` utility that generates all possible word breaks in a string, including camelCase, symbols, numbers, and soft hyphens. Includes comprehensive tests and snapshot coverage for various edge cases. [\[1\]](diffhunk://#diff-1af9794db3b5bd643d24a0d49e0137d758bbf1416e63d730fa3f081cadafb56aR1-R189) [\[2\]](diffhunk://#diff-9ab27094a671423adb0ab4f7d9869b1d26c9b4e786fa587cedf760bf5eba53c4R1-R139) [\[3\]](diffhunk://#diff-863473f380fff6d05d75bd98ad6cd872079e8a45de1fa3a9722620a77491acf2R1-R122) [\[4\]](diffhunk://#diff-602c299db43e9579e1382d7d0b64dce571b12ed3504e3ae626db2dbbb987d75fR1-R158)
+- Improved regular expressions for word splitting to support soft hyphens and better handle punctuation and symbols.
+
+**Refactoring and code organization:**
+
+- Refactored imports to use the new `wordSplitter/index.js` entry point, improving modularity and future maintainability. [\[1\]](diffhunk://#diff-705ddf5c40147096787da55ecdeff33dea86cf8e1bd39cdeeb4aa7492f9f5f08L27-R27) [\[2\]](diffhunk://#diff-fab6f36b25e18a4d8971b4983c9fb28bf3d080c7ff9b69e03b646ab6b05527eeL18-R18)
+- Added explicit exports for `split`, `SplitOptions`, and `SplitResult` in `wordSplitter/index.ts` to clarify and centralize the public API.
+
+**Other enhancements:**
+
+- Exposed the `softHyphen` constant for consistent use throughout the codebase. [\[1\]](diffhunk://#diff-b03d87dd3ae4df592e9449eedf7da60987efe19e05a630ac889e305f47efbd03R8-R9) [\[2\]](diffhunk://#diff-1af9794db3b5bd643d24a0d49e0137d758bbf1416e63d730fa3f081cadafb56aR1-R189)
+
+---
+
+</details>
+
+### Dictionary Updates
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9143">#9143</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#9143](https://github.com/streetsidesoftware/cspell/pull/9143))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ packages/cspell-bundled-dicts/package.json |  2 +-
+ pnpm-lock.yaml                             | 25 +++++++++----------------
+ 2 files changed, 10 insertions(+), 17 deletions(-)
+```
+
+---
+
+</details>
+
+## v10.2.0 (2026-08-31)
+
+### Features
+
+<details>
+<summary>feat: Support languages without word breaks (Part 2) (<a href="https://github.com/streetsidesoftware/cspell/pull/9133">#9133</a>)</summary>
+
+### feat: Support languages without word breaks (Part 2) ([#9133](https://github.com/streetsidesoftware/cspell/pull/9133))
+
+This pull request introduces support for locale-sensitive word segmentation, enabling better spell checking for languages such as Japanese, Chinese, Thai, Lao, Khmer, and Myanmar. The main changes add a new configuration option, `useIntlWordSegmentation`, to the schema and internal types, implement the corresponding text transformation logic, and update the document validation pipeline to use this feature. Additional test fixtures and tests are included to ensure correct behavior.
+
+**Support for locale-sensitive word segmentation:**
+
+- Added a new boolean configuration option, `useIntlWordSegmentation`, to the JSON schema (`cspell.schema.json`) and internal TypeScript types (`BaseSetting`), allowing users to enable locale-aware text segmentation for supported languages. [\[1\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cR1349-R1354) [\[2\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cR1647-R1652) [\[3\]](diffhunk://#diff-ad9ad04ccf6ebafd4ec4d6b18ad6b3338e9262d9c29b0d780e27ac73e84c9f4cR2398-R2403) [\[4\]](diffhunk://#diff-14f40e062c024a63c555a8565984f3d45268e79b41d2dbea8960eab1473be840R1905-R1911)
+- Implemented the `IntlSegmentTextTransformer` and a factory function, `createIntlSegmentTextTransformer`, to perform locale-sensitive segmentation using the specified language.
+- Introduced a new utility, `chainTransformers`, and an `IdentityTextTransformer` to allow chaining multiple text transformers in the validation pipeline.
+- Updated the document validation logic (`docValidator.ts` and related files) to use the new transformer when `useIntlWordSegmentation` is enabled, ensuring correct segmentation for complex scripts. [\[1\]](diffhunk://#diff-05d4916cc710922aec6dff5f7d5849852864fd844bda27afd042fabd511615deL42-R48) [\[2\]](diffhunk://#diff-05d4916cc710922aec6dff5f7d5849852864fd844bda27afd042fabd511615deL203-R211) [\[3\]](diffhunk://#diff-05d4916cc710922aec6dff5f7d5849852864fd844bda27afd042fabd511615deL227-R227) [\[4\]](diffhunk://#diff-05d4916cc710922aec6dff5f7d5849852864fd844bda27afd042fabd511615deL246-R284) [\[5\]](diffhunk://#diff-05d4916cc710922aec6dff5f7d5849852864fd844bda27afd042fabd511615deL580-R595) [\[6\]](diffhunk://#diff-9b87082559aa03ec5df8f2f10d264a70e2fdea766b3b1b6ffa01224fefbcfd62R94) [\[7\]](diffhunk://#diff-9b87082559aa03ec5df8f2f10d264a70e2fdea766b3b1b6ffa01224fefbcfd62R249) [\[8\]](diffhunk://#diff-9b87082559aa03ec5df8f2f10d264a70e2fdea766b3b1b6ffa01224fefbcfd62R321) [\[9\]](diffhunk://#diff-705ddf5c40147096787da55ecdeff33dea86cf8e1bd39cdeeb4aa7492f9f5f08L17-R17) [\[10\]](diffhunk://#diff-705ddf5c40147096787da55ecdeff33dea86cf8e1bd39cdeeb4aa7492f9f5f08L441-R441) [\[11\]](diffhunk://#diff-98d9aea6465018e6168599a40bbe005ba72f81911bbc35e1cc22b458bfcc719fL5-R5) [\[12\]](diffhunk://#diff-98d9aea6465018e6168599a40bbe005ba72f81911bbc35e1cc22b458bfcc719fL51-R51) [\[13\]](diffhunk://#diff-98d9aea6465018e6168599a40bbe005ba72f81911bbc35e1cc22b458bfcc719fL71-R71) [\[14\]](diffhunk://#diff-0d2de2b81fc5cd19d3e9d6b00e2bf1f7f0d5718587052708b25d8c3edf98e02cR66)
+
+**Testing and fixtures:**
+
+- Added new test fixtures and a test document containing Thai text, as well as a corresponding dictionary file and configuration to verify correct segmentation and spell checking. [\[1\]](diffhunk://#diff-127930f41c3ec55c49935517ea3836de5a90a88e197de44312c2a9b4b622426dR1-R11) [\[2\]](diffhunk://#diff-fb27155d9796109af32eedd1e6f2cbd9a14228962a2efa6ca235db2cd7e90331R1-R5) [\[3\]](diffhunk://#diff-29d914e2fcb22e95822a76f2bb73c792a6278582bd4e06e1762791d3789d2df8R1-R24)
+- Extended the document validator tests to cover the new segmentation feature.
+
+These changes collectively improve support for non-space-delimited languages and provide a more robust spell-checking experience for a wider range of languages.
+
+---
+
+</details>
+
+<details>
+<summary>feat: Support languages without word breaks (Part 1) (<a href="https://github.com/streetsidesoftware/cspell/pull/9131">#9131</a>)</summary>
+
+### feat: Support languages without word breaks (Part 1) ([#9131](https://github.com/streetsidesoftware/cspell/pull/9131))
+
+This pull request introduces a new `IntlSegmentTextTransformer` for locale-aware text segmentation, refactors text transformation infrastructure for better composability, and improves locale normalization to BCP 47 standards. It also adds comprehensive tests for these new features and refactors existing transformers for consistency.
+
+### Locale normalization improvements
+
+- Improved the `normalizeLocaleIntl` function in `LanguageSettings.ts` to support BCP 47 language tag normalization, including script and region subtags, and added tests for these cases. [\[1\]](diffhunk://#diff-8add39a2fb63a57375d818b7bc3a6add323be3b06883e55b457fbc9b61b5a563L66-R89) [\[2\]](diffhunk://#diff-f8304df429482ee7ec10e3c26d8d84ab5018b527c6b9dd5f524791717fa8fb9fR129-R140)
+
+### New locale-aware text transformer
+
+- Added the `IntlSegmentTextTransformer` class for locale-aware word segmentation using `Intl.Segmenter`, along with tests covering multiple locales (including Thai). [\[1\]](diffhunk://#diff-b03d87dd3ae4df592e9449eedf7da60987efe19e05a630ac889e305f47efbd03R1-R46) [\[2\]](diffhunk://#diff-7e6d66ba690aa3f4db0f427d48fa252440a3c77d4ea67061998610863cd348b8R1-R40)
+
+### Transformer infrastructure and API improvements
+
+- Introduced a generic `TextTransformer` interface and the `Edit` type in `Transformer.ts` to standardize text transformation operations.
+- Added utility functions `applyEditsToMappedText` and `applyEditsToText` in `TextMapEdit.ts` for applying edits and maintaining source maps, used by all transformers.
+
+### Refactoring and consistency
+
+- Refactored `SubstitutionTransformer` to implement the new `TextTransformer` interface and use the new edit application utilities, simplifying and unifying its implementation. [\[1\]](diffhunk://#diff-e8f172cb83557b8eb1695bd0a1414d4a7dfe0d59a988223058764f7622998483L2-R8) [\[2\]](diffhunk://#diff-e8f172cb83557b8eb1695bd0a1414d4a7dfe0d59a988223058764f7622998483L19-R21) [\[3\]](diffhunk://#diff-e8f172cb83557b8eb1695bd0a1414d4a7dfe0d59a988223058764f7622998483L46-L95)
+
+These changes collectively improve the flexibility, correctness, and internationalization support of the text transformation pipeline.
+
+---
+
+</details>
+
+<details>
+<summary>feat: Add `--force-check` cli option (<a href="https://github.com/streetsidesoftware/cspell/pull/9080">#9080</a>)</summary>
+
+### feat: Add `--force-check` cli option ([#9080](https://github.com/streetsidesoftware/cspell/pull/9080))
+
+This pull request introduces a new `--force-check` option to the CLI, allowing users to force specific files to be checked even if they would normally be excluded. It also standardizes dependency configuration naming, improves error handling and reporting for the CLI, and updates TypeScript target versions in config files. The most important changes are grouped below.
+
+**New CLI Feature: Force Check**
+
+- Added a `--force-check` option to the `lint` command, allowing files specified with `--file`, `--files`, or `--file-list` to be checked even if they would normally be excluded. This includes updates to the CLI interface, validation logic, and documentation/help output. [\[1\]](diffhunk://#diff-38a56740ba7522444717e53cdaf593980c2527964b07a05aaab07340e0d015a7R118-R121) [\[2\]](diffhunk://#diff-38a56740ba7522444717e53cdaf593980c2527964b07a05aaab07340e0d015a7L216-R226) [\[3\]](diffhunk://#diff-05d4916cc710922aec6dff5f7d5849852864fd844bda27afd042fabd511615deR80-R84) [\[4\]](diffhunk://#diff-05d4916cc710922aec6dff5f7d5849852864fd844bda27afd042fabd511615deL191-R196) [\[5\]](diffhunk://#diff-a0fc773e2c6532cc5fdf360dc95f2c1d33c6f96b743094a5ab2b1f1d96c11440R403-R410)
+- Implemented logic in the file determination and processing flow to honor the `forceCheck` flag, ensuring excluded files can be checked when requested, and updated reporting of skipped files. [\[1\]](diffhunk://#diff-0f04f6e0be4c776ea5d7956e8118ff955df92084a4dc434a4d5572fde3323f27L144-R144) [\[2\]](diffhunk://#diff-0f04f6e0be4c776ea5d7956e8118ff955df92084a4dc434a4d5572fde3323f27R162-R163) [\[3\]](diffhunk://#diff-0f04f6e0be4c776ea5d7956e8118ff955df92084a4dc434a4d5572fde3323f27R269-R281) [\[4\]](diffhunk://#diff-0f04f6e0be4c776ea5d7956e8118ff955df92084a4dc434a4d5572fde3323f27R329-R342) [\[5\]](diffhunk://#diff-0f04f6e0be4c776ea5d7956e8118ff955df92084a4dc434a4d5572fde3323f27L352-R367) [\[6\]](diffhunk://#diff-02c03bf65428035d02eb6561793ee281bbd609722d831c27c688b0865693a74dL100-R112)
+
+**CLI Error Handling and Testing**
+
+- Improved error handling for invalid combinations of CLI options (e.g., using `--force-check` without specifying files, or mixing globs and `--file`), with corresponding error messages and test cases. [\[1\]](diffhunk://#diff-38a56740ba7522444717e53cdaf593980c2527964b07a05aaab07340e0d015a7L216-R226) [\[2\]](diffhunk://#diff-c382f7d721027eac952154bf67a6dd35b0f86f9cbddefebff13b1ea568e1fcbaR331-R355)
+- Enhanced test coverage for the new `--force-check` option, including snapshot updates for help and error outputs. [\[1\]](diffhunk://#diff-36711bc52fa23cc9a64e178df1fb419ddb4d144953e7c673099ab669725ae8bbR1017-R1018) [\[2\]](diffhunk://#diff-36711bc52fa23cc9a64e178df1fb419ddb4d144953e7c673099ab669725ae8bbR3828-R3856) [\[3\]](diffhunk://#diff-36711bc52fa23cc9a64e178df1fb419ddb4d144953e7c673099ab669725ae8bbR4362-R4363) [\[4\]](diffhunk://#diff-36711bc52fa23cc9a64e178df1fb419ddb4d144953e7c673099ab669725ae8bbR4498-R4499) [\[5\]](diffhunk://#diff-36711bc52fa23cc9a64e178df1fb419ddb4d144953e7c673099ab669725ae8bbR4661-R4662) [\[6\]](diffhunk://#diff-c382f7d721027eac952154bf67a6dd35b0f86f9cbddefebff13b1ea568e1fcbaR109-R116) [\[7\]](diffhunk://#diff-c382f7d721027eac952154bf67a6dd35b0f86f9cbddefebff13b1ea568e1fcbaR331-R355)
+
+**Dependency Configuration Standardization**
+
+- Renamed the dependency configuration property from `onlyAllowBundle` to `onlyBundle` across all relevant config files and documentation for consistency. [\[1\]](diffhunk://#diff-f125c2d9f65791d1be4e2a909fb652b0d2d8a870b7e224948aeb2aa060e9db1fL9-R15) [\[2\]](diffhunk://#diff-f125c2d9f65791d1be4e2a909fb652b0d2d8a870b7e224948aeb2aa060e9db1fL42-R42) [\[3\]](diffhunk://#diff-c83979aa9775219f3f937fa211f5defa27cf2b701766f31ad4f8366a8da86629L9-R9) [\[4\]](diffhunk://#diff-87bc6b738d071bbd2922d5922bfddc365157fd9a038739b4c80466ec7b2624ffL9-R9)
+
+**Other Improvements**
+
+- Updated TypeScript target version in default config from `Node20` to `Node22`.
+- Improved CLI process exit code handling for error scenarios.
+- Minor improvement to CLI reporter logic to avoid emitting empty results.
+- Cleaned up and simplified the coverage collection script in `package.json`.
+
+---
+
+</details>
+
+### Fixes
+
+<details>
+<summary>fix: Reduce the size of cspell types when bundled (<a href="https://github.com/streetsidesoftware/cspell/pull/9119">#9119</a>)</summary>
+
+### fix: Reduce the size of cspell types when bundled ([#9119](https://github.com/streetsidesoftware/cspell/pull/9119))
+
+This pull request introduces a new test package, `test-cspell-types-define-config`, designed to verify the size and correct bundling of the `defineConfig` function from `@cspell/cspell-types`. It also includes minor internal refactoring in the `mergeConfig` logic. The main themes are the addition of the test package and improvements to configuration merging.
+
+**New test package: `test-cspell-types-define-config`**
+
+- Added the `test-cspell-types-define-config` package with configuration files (`package.json`, `tsconfig.json`, `tsdown.config.ts`) and a basic test harness to ensure the `defineConfig` utility is small when bundled and functions as expected. The tests check that the output files remain below specified size thresholds and that `defineConfig` is a function returning the same config object when called twice. [\[1\]](diffhunk://#diff-88e499e22179cc3a3ab1d9c892deedcef8c3390fd76fa23e7d773d70d1cc1341R1-R32) [\[2\]](diffhunk://#diff-c65a4d2ab754abde9448f8d22da99d4ff6a1baa50830d44dc857345652e3fcf6R1-R9) [\[3\]](diffhunk://#diff-a34c883564d2baee3dcf13f515665a44aa11befd3d2b7c212446109dda0fae85R1-R13) [\[4\]](diffhunk://#diff-ec66f0ad585f357c27c81fa3e62f7d0653e67998ebc7a4b1d1a768ef200214e4R1-R4) [\[5\]](diffhunk://#diff-5f690b6ff167e605d5b9e7a2601e9701887702417ab8131b3e02ce081d04fb93R1-R8) [\[6\]](diffhunk://#diff-9e74122672eb3e69b76b2b79f9d92c9f6c9834b666a50b1055c5f9cd7c6ff53aR1-R39)
+
+- Updated `pnpm-lock.yaml` to add the new test package to the workspace and ensure it depends on the local `@cspell/cspell-types` package.
+
+**Internal refactoring**
+
+- Moved the creation of the `mergeIndividualSettingsFns` array inside the `mergeConfig` function in `merge.ts` to avoid unnecessary computation and improve encapsulation.
+
+---
+
+</details>
+
+<details>
+<summary>fix(ci): push release tag with GitHub App token so publish.yml triggers (<a href="https://github.com/streetsidesoftware/cspell/pull/9097">#9097</a>)</summary>
+
+### fix(ci): push release tag with GitHub App token so publish.yml triggers ([#9097](https://github.com/streetsidesoftware/cspell/pull/9097))
+
+## Summary
+
+`publish.yml` (the NPM trusted-publishing workflow) is triggered by a `push: tags: v*` event, among other triggers. `build-version-release.yml` creates that tag via `pnpm lerna version`, but the tag was never actually triggering `publish.yml`.
+
+Root cause: `lerna version` pushes the version commit/tag to the `origin` remote, and `origin`'s credentials were still the _default_ `GITHUB_TOKEN` persisted by `actions/checkout` (the `Setup Git` step's `gh-token` remote was unused — `lerna` pushes to `origin`, not `gh-token` — and was seeded before the GitHub App token even existed). GitHub explicitly does not trigger downstream workflow runs for pushes authenticated with the default `GITHUB_TOKEN`, to avoid recursive triggering. So the tag got created, but `publish.yml` never fired.
+
+## Changes
+
+- `actions/checkout`: set `persist-credentials: false` so the default token isn't left wired into `origin`.
+- `Setup Git`: drop the unused/misconfigured `gh-token` remote (it referenced the default token anyway, and nothing pushed to it).
+- `Push Version`: before running `lerna version`, point `origin` at the already-generated GitHub App installation token (`x-access-token:${GITHUB_TOKEN}`) so the resulting tag push is authenticated as the GitHub App and correctly triggers `publish.yml`'s `push: tags: v*` trigger.
+
+## Test plan
+
+- [ ] YAML validated (`python3 -c "import yaml; yaml.safe_load(open(...))"` passes).
+- [ ] Run `build-version-release.yml` via `workflow_dispatch` with `dry_run: false` (or the next real release) and confirm `publish.yml` fires automatically off the resulting tag push, without needing a manual `workflow_dispatch`.
+
+---
+
+_Generated by [Claude Code](https://claude.ai/code/session_019uQbKT8r9tdmjLo3XfDnBa)_
+
+---
+
+</details>
+
+<details>
+<summary>fix: Updated package.json exports (<a href="https://github.com/streetsidesoftware/cspell/pull/8965">#8965</a>)</summary>
+
+### fix: Updated package.json exports ([#8965](https://github.com/streetsidesoftware/cspell/pull/8965))
+
+This fixes a few package exports that were wrong or inconsistent (e.g. `exports["."]` not the same path as `main`).
+
+The `pnpm test` script was failing locally due to my `~/.npmrc` having `ignore-scripts=true`, which prevented the `preinstall` script from running. I updated `test:prep` to call the `preinstall` script, which should be fast if you already have `yarn` installed.
+
+---
+
+</details>
+
+### Dictionary Updates
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9102">#9102</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#9102](https://github.com/streetsidesoftware/cspell/pull/9102))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/gitbucket/gitbucket/report.yaml      |   3 +-
+ .../snapshots/gitbucket/gitbucket/snapshot.txt     |   3 +-
+ .../snapshots/neovim/nvim-lspconfig/report.yaml    |   3 +-
+ .../snapshots/neovim/nvim-lspconfig/snapshot.txt   |   5 +-
+ .../snapshots/wireapp/wire-webapp/report.yaml      | 184 +--------------------
+ .../snapshots/wireapp/wire-webapp/snapshot.txt     | 182 +-------------------
+ packages/cspell-bundled-dicts/package.json         |   4 +-
+ pnpm-lock.yaml                                     |  20 ++-
+ 8 files changed, 26 insertions(+), 378 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9067">#9067</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#9067](https://github.com/streetsidesoftware/cspell/pull/9067))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/django/django/report.yaml            | 82 ++++++++++------------
+ .../snapshots/django/django/snapshot.txt           | 51 ++++++--------
+ packages/cspell-bundled-dicts/package.json         |  6 +-
+ pnpm-lock.yaml                                     | 30 +++++---
+ 4 files changed, 84 insertions(+), 85 deletions(-)
+```
+
+---
+
+</details>
+
+## v10.1.1 (2026-08-25)
+
+### Fixes
+
+<details>
+<summary>fix: Do not load .pnp.js files when untrusted (<a href="https://github.com/streetsidesoftware/cspell/pull/9064">#9064</a>)</summary>
+
+### fix: Do not load .pnp.js files when untrusted ([#9064](https://github.com/streetsidesoftware/cspell/pull/9064))
+
+---
+
+</details>
+
+### Dictionary Updates
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9055">#9055</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#9055](https://github.com/streetsidesoftware/cspell/pull/9055))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ packages/cspell-bundled-dicts/package.json | 2 +-
+ pnpm-lock.yaml                             | 9 +++++++--
+ 2 files changed, 8 insertions(+), 3 deletions(-)
+```
+
+---
+
+</details>
+
+## v10.1.0 (2026-08-22)
+
+### Features
+
+<details>
+<summary>feat(cspell-junit-reporter): add JUnit XML reporter package (<a href="https://github.com/streetsidesoftware/cspell/pull/8945">#8945</a>)</summary>
+
+### feat(cspell-junit-reporter): add JUnit XML reporter package ([#8945](https://github.com/streetsidesoftware/cspell/pull/8945))
+
+Closes #4570.
+
+Adds `@cspell/cspell-junit-reporter`, a new workspace package modeled on `packages/cspell-json-reporter`, that emits a JUnit-compatible XML report of a cspell run.
+
+The issue asked for a minimal mapping along the lines of:
+
+```xml
+<testsuite tests="3">
+  <testcase classname="File1" name"/>
+  <testcase classname="File2" name="AnotherSuccessfulTest"/>
+  <testcase classname="foo3" name="AFailingTest">
+    <failure type="prohibited word"> zzz </failure>
+  </testcase>
+</testsuite>
+```
+
+This PR follows that shape but wraps it in a `<testsuites>` root and groups by file (one `<testsuite>` per file, suite name = file path), since that is the convention used by other widely-consumed JUnit reporters (for example ESLint's JUnit formatter) and is what most CI JUnit parsers expect. The package README documents the full mapping.
+
+- `package.json`, `tsconfig.json`, test framework, and `files`/`exports`/`publishConfig` shape are copied from `cspell-json-reporter`. Version pinned to 10.0.1 to match the monorepo's locked versioning.
+- No third-party XML library was added. The repo has no existing XML dependency, so a small escaping helper (`src/utils/escapeXml.ts`) and a pure XML-string builder (`src/utils/buildJUnitXml.ts`) were written in-repo, consistent with the monorepo's small-utility-file convention.
+- Unit tests (32) cover: no files, a clean file (single passing testcase), a file with issues, escaping of special characters in paths/words/messages, a skipped file, and non-issue processing errors (`error` emitter routed to a dedicated `cspell-errors` testsuite using `<error>`).
+
+Assumptions the issue thread left ambiguous, called out for review:
+
+1. One `<testsuite>` per file rather than one flat suite for the whole run. Matches common JUnit reporter convention and keeps per-file counts meaningful in CI UIs.
+2. A clean file gets one synthetic passing `<testcase name="no issues found">` so a suite is never reported with `tests="0"`, which some JUnit consumers treat as suspicious.
+3. Settings are intentionally slimmer than `cspell-json-reporter`'s (`outFile`, `suiteName` only). JUnit XML has no natural place for arbitrary debug/progress log dumps.
+4. cspell processing errors are reported as `<error>` elements, distinct from spelling `<failure>` elements, per the JUnit failure-vs-error distinction.
+
+Verified locally: `tsc -b` clean, vitest 32/32, eslint and prettier clean, and the full monorepo `build:prod` succeeds with the package in the workspace. One environment note: the package's CLI smoke-test script wasn't runnable locally (repo requires Node >=22.18.0, local was 22.17.0 — the sibling json-reporter fails identically there), so CI is the first place it will run.
+
+---
+
+</details>
+
+### Fixes
+
+<details>
+<summary>fix: allow substitutions across ignored ranges (<a href="https://github.com/streetsidesoftware/cspell/pull/9017">#9017</a>)</summary>
+
+### fix: allow substitutions across ignored ranges ([#9017](https://github.com/streetsidesoftware/cspell/pull/9017))
+
+## Summary
+
+- let configured substitutions take precedence when they consume an entire ignored range
+- preserve exclusions that are not fully matched by a substitution
+- add range-level and document-level regressions for soft-hyphen entities
+
+## Testing
+
+- `pnpm --filter cspell-lib test -- src/lib/textValidation/docValidator.test.ts src/lib/textValidation/textValidator.test.ts -t substitutions`
+- `pnpm --filter cspell-lib test -- src/lib/textValidation/textValidator.test.ts`
+- `pnpm --filter cspell-lib build`
+- ESLint and Prettier on the changed files
+- `pnpm --filter cspell-lib test` (1571 passed; 16 local environment-dependent tests failed because Yarn PnP/symlink fixtures were unavailable in this Windows clone or network requests timed out)
+
+Closes #8962.
+
+AI assistance: OpenAI Codex was used to investigate, implement, and test this change. I reviewed the diff and test results before submission.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Find the nearest `.git` when a worktree is inside a clone (<a href="https://github.com/streetsidesoftware/cspell/pull/8976">#8976</a>)</summary>
+
+### fix: Find the nearest `.git` when a worktree is inside a clone ([#8976](https://github.com/streetsidesoftware/cspell/pull/8976))
+
+Fixes #8975.
+
+`findRepoRoot` runs two independent `findUp` searches and prefers the directory result, so a clone further up wins over a worktree's own `.git` file:
+
+```ts
+const foundDir = await vfs.findUp('.git', directory, { type: 'directory' });
+const foundFile = await vfs.findUp('.git', directory, { type: 'file' });
+const found = foundDir || foundFile;
+```
+
+With `useGitignore: true` the clone's `.gitignore` is then applied to the worktree's files, so a worktree kept in a gitignored folder inside its own clone — the `.worktrees` layout this repository uses itself — has every file treated as ignored and `cspell` reports `Files checked: 0`.
+
+This searches once for a `.git` of either kind, via a predicate, so the nearest one marks the root. That also drops one full walk up the tree.
+
+Note that omitting `type` is not an alternative: `findUpFromUrl` defaults it to `'file'`, so a plain `findUp('.git', directory)` stops finding normal clones.
+
+The new test builds a clone with a worktree nested inside it under `temp/` and checks both roots resolve to themselves. It fails on `main` with the worktree resolving to the clone.
+
+Verified with the built CLI on a scratch repository, run from a subdirectory of the worktree so that the `findRepoRoot(cwd) || cwd` fallback in `generateGitIgnore` cannot mask the result: before, `Files checked: 0`; after, the misspellings are reported.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Add .typ extension for Typst (<a href="https://github.com/streetsidesoftware/cspell/pull/8961">#8961</a>)</summary>
+
+### fix: Add .typ extension for Typst ([#8961](https://github.com/streetsidesoftware/cspell/pull/8961))
+
+Typst files typically have the `.typ` extension, not `.typst`. This PR adds `.typ` as an alternative filetype extension so that cspell can recognize those files automatically.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Handle Windows UNC Long Path Names (<a href="https://github.com/streetsidesoftware/cspell/pull/8914">#8914</a>)</summary>
+
+### fix: Handle Windows UNC Long Path Names ([#8914](https://github.com/streetsidesoftware/cspell/pull/8914))
+
+## Pull request overview
+
+This PR improves `cspell-url`’s handling of Windows long/UNC path formats by adding long-path prefix utilities and ensuring `FileUrlBuilder` can generate correct `file:` URLs for UNC/extended-length paths. It also adds fixtures and tests to exercise long-path behavior.
+
+**Changes:**
+
+- Add Windows long-path/UNC prefix helpers (`\\?\`, `\\?\UNC\`, `\\.\`) and normalization (`fixLongPathPrefix`) in `fileUrl.mts`.
+- Update `FileUrlBuilder` to special-case UNC/extended-length paths when converting to `file:` URLs.
+- Add long-path fixtures and new tests that read and convert long Windows paths/URLs.
+
+Related to:
+
+- <https://github.com/streetsidesoftware/vscode-spell-checker/issues/5260>
+- <https://github.com/streetsidesoftware/vscode-spell-checker/issues/4978>
+
+---
+
+</details>
+
+### Dictionary Updates
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9024">#9024</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#9024](https://github.com/streetsidesoftware/cspell/pull/9024))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/AdaDoom3/AdaDoom3/report.yaml        |  3 +-
+ .../snapshots/AdaDoom3/AdaDoom3/snapshot.txt       |  3 +-
+ .../snapshots/dart-lang/sdk/report.yaml            |  6 +-
+ .../snapshots/dart-lang/sdk/snapshot.txt           |  4 +-
+ .../snapshots/django/django/report.yaml            |  5 +-
+ .../snapshots/django/django/snapshot.txt           |  4 +-
+ .../googleapis/google-cloud-cpp/report.yaml        |  3 +-
+ .../googleapis/google-cloud-cpp/snapshot.txt       |  3 +-
+ packages/cspell-bundled-dicts/package.json         | 14 ++--
+ packages/cspell/src/__snapshots__/app.test.ts.snap |  8 +++
+ pnpm-lock.yaml                                     | 75 ++++++++++++++++++----
+ 11 files changed, 84 insertions(+), 44 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8995">#8995</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#8995](https://github.com/streetsidesoftware/cspell/pull/8995))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/caddyserver/caddy/report.yaml        |   3 +-
+ .../snapshots/caddyserver/caddy/snapshot.txt       |   3 +-
+ .../snapshots/dart-lang/sdk/report.yaml            |  10 +-
+ .../snapshots/dart-lang/sdk/snapshot.txt           |   5 +-
+ .../snapshots/django/django/report.yaml            |  44 ++------
+ .../snapshots/django/django/snapshot.txt           |  64 ++++-------
+ .../iluwatar/java-design-patterns/report.yaml      |  13 +--
+ .../iluwatar/java-design-patterns/snapshot.txt     |   3 +-
+ .../snapshots/ktaranov/sqlserver-kit/report.yaml   |   6 +-
+ .../snapshots/ktaranov/sqlserver-kit/snapshot.txt  |   5 +-
+ .../snapshots/neovim/nvim-lspconfig/report.yaml    |   6 +-
+ .../snapshots/neovim/nvim-lspconfig/snapshot.txt   | 122 ++++++++++-----------
+ .../snapshots/php/php-src/report.yaml              |  29 +----
+ .../snapshots/php/php-src/snapshot.txt             |  29 +----
+ .../snapshots/pycontribs/jira/report.yaml          |   3 +-
+ .../snapshots/pycontribs/jira/snapshot.txt         |  13 +--
+ .../snapshots/wireapp/wire-webapp/report.yaml      |  42 +++----
+ .../snapshots/wireapp/wire-webapp/snapshot.txt     |  18 +--
+ packages/cspell-bundled-dicts/package.json         |  12 +-
+ pnpm-lock.yaml                                     |  70 +++++++-----
+ 20 files changed, 174 insertions(+), 326 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8990">#8990</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#8990](https://github.com/streetsidesoftware/cspell/pull/8990))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/neovim/nvim-lspconfig/report.yaml    |  8 +-------
+ .../snapshots/neovim/nvim-lspconfig/snapshot.txt   | 12 +++--------
+ .../snapshots/vitest-dev/vitest/report.yaml        |  6 ++----
+ .../snapshots/vitest-dev/vitest/snapshot.txt       |  3 +--
+ packages/cspell-bundled-dicts/package.json         |  4 ++--
+ pnpm-lock.yaml                                     | 24 +++++++++++-----------
+ 6 files changed, 21 insertions(+), 36 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8956">#8956</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#8956](https://github.com/streetsidesoftware/cspell/pull/8956))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../MicrosoftDocs/PowerShell-Docs/report.yaml      |  42 +-----
+ .../MicrosoftDocs/PowerShell-Docs/snapshot.txt     |  40 +-----
+ .../snapshots/TheAlgorithms/Python/report.yaml     |  11 +-
+ .../snapshots/TheAlgorithms/Python/snapshot.txt    |   7 +-
+ .../snapshots/caddyserver/caddy/report.yaml        |  17 +--
+ .../snapshots/caddyserver/caddy/snapshot.txt       |  17 +--
+ .../snapshots/eslint/eslint/report.yaml            |   4 +-
+ .../snapshots/eslint/eslint/snapshot.txt           |   3 +-
+ .../snapshots/gitbucket/gitbucket/report.yaml      |   3 +-
+ .../snapshots/gitbucket/gitbucket/snapshot.txt     |   3 +-
+ .../googleapis/google-cloud-cpp/report.yaml        |   6 +-
+ .../googleapis/google-cloud-cpp/snapshot.txt       |   4 +-
+ .../snapshots/ktaranov/sqlserver-kit/report.yaml   | 112 +--------------
+ .../snapshots/ktaranov/sqlserver-kit/snapshot.txt  | 155 ++++-----------------
+ .../snapshots/php/php-src/report.yaml              |   3 +-
+ .../snapshots/php/php-src/snapshot.txt             |   3 +-
+ .../snapshots/vitest-dev/vitest/report.yaml        |   6 +-
+ .../snapshots/vitest-dev/vitest/snapshot.txt       |   8 +-
+ .../snapshots/wireapp/wire-webapp/report.yaml      | 117 +---------------
+ .../snapshots/wireapp/wire-webapp/snapshot.txt     | 109 +--------------
+ packages/cspell-bundled-dicts/package.json         |  20 +--
+ pnpm-lock.yaml                                     | 120 +++++++++-------
+ 22 files changed, 133 insertions(+), 677 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8881">#8881</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#8881](https://github.com/streetsidesoftware/cspell/pull/8881))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../iluwatar/java-design-patterns/report.yaml      |   5 +-
+ .../iluwatar/java-design-patterns/snapshot.txt     |   5 +-
+ integration-tests/snapshots/mdx-js/mdx/report.yaml |   7 +-
+ .../snapshots/mdx-js/mdx/snapshot.txt              |   7 +-
+ .../snapshots/sveltejs/svelte/report.yaml          |   3 +-
+ .../snapshots/sveltejs/svelte/snapshot.txt         |   3 +-
+ packages/cspell-bundled-dicts/package.json         |  18 ++--
+ pnpm-lock.yaml                                     | 112 ++++++++++++---------
+ 8 files changed, 84 insertions(+), 76 deletions(-)
+```
+
+---
+
+</details>
+
+## v10.0.1 (2026-05-31)
+
+### Fixes
+
+<details>
+<summary>fix(cli): ignore closed readline after stdin (<a href="https://github.com/streetsidesoftware/cspell/pull/8862">#8862</a>)</summary>
+
+### fix(cli): ignore closed readline after stdin ([#8862](https://github.com/streetsidesoftware/cspell/pull/8862))
+
+## What changed
+
+Wrap the stdin readline async iterator so CSpell ignores the terminal `readline was closed` error that can occur after stdin has already yielded its file list.
+
+Other readline errors are still rethrown.
+
+## Why
+
+Fixes #8778. On Node 24, `cspell lint --file-list stdin` can finish processing a large stdin file list and then report `Linter Error: readline was closed` instead of completing cleanly.
+
+## Tests
+
+Added unit coverage for:
+
+- preserving all yielded stdin lines when readline throws `readline was closed` after reading
+- continuing to throw unrelated readline errors
+
+I could not run the package test command locally in this sandbox because the checkout has no `node_modules`, and Corepack is blocked from creating its user cache directory (`EPERM` under `~/.cache/node/corepack`).
+
+---
+
+</details>
+
+<details>
+<summary>fix(docs): replace `.json` with `package.json` in configuration docs (<a href="https://github.com/streetsidesoftware/cspell/pull/8861">#8861</a>)</summary>
+
+### fix(docs): replace `.json` with `package.json` in configuration docs ([#8861](https://github.com/streetsidesoftware/cspell/pull/8861))
+
+## Fix
+
+In the `package.json` configuration section, the sentence referred to
+"the `.json` file" instead of "the `package.json` file".
+
+Before: "CSpell looks for the configuration in the `cspell` field of the `.json` file."
+After:  "CSpell looks for the configuration in the `cspell` field of the `package.json` file."
+
+---
+
+</details>
+
+<details>
+<summary>fix: substitution display and ranges for output checking (<a href="https://github.com/streetsidesoftware/cspell/pull/8838">#8838</a>)</summary>
+
+### fix: substitution display and ranges for output checking ([#8838](https://github.com/streetsidesoftware/cspell/pull/8838))
+
+Added a French dictionary and fixed the positioning logic for error reporting of replacement words.
+
+---
+
+</details>
+
+<details>
+<summary>fix: use env vars for GitHub context expressions in run steps to prevent injection (<a href="https://github.com/streetsidesoftware/cspell/pull/8852">#8852</a>)</summary>
+
+### fix: use env vars for GitHub context expressions in run steps to prevent injection ([#8852](https://github.com/streetsidesoftware/cspell/pull/8852))
+
+## Summary
+
+This PR fixes script injection and secret exposure security issues found in GitHub Actions workflows and composite actions. In each case, a GitHub expression (`${{ ... }}`) was used directly inside a `run:` shell command instead of being passed through an environment variable — the recommended approach per [GitHub's security hardening guide](https://docs.google.com/document/d/1-GkDHLMHHJtibPGvY-KYi-CeTuoaIVJF/edit).
+
+## Issues Fixed
+
+### 🔴 Secrets exposed in process arguments (visible via `ps aux`)
+
+| File                                        | Issue                                                                              |
+| ------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `update-readme.yml`                         | `pnpm update-contributors ${{ secrets.GITHUB_TOKEN }}` — token as CLI arg          |
+| `reuseable-load-integrations-repo-list.yml` | `./tester.js list --json $DIRTY -t ${{ secrets.GITHUB_TOKEN }}` — token as CLI arg |
+| `build-version-release.yml`                 | `"https://${{ secrets.GITHUB_TOKEN }}@github.com/..."` — token inline in URL       |
+
+### 🔴 GITHUB\_ENV injection (allows setting arbitrary environment variables)
+
+| File                  | Issue                                                                          |
+| --------------------- | ------------------------------------------------------------------------------ |
+| `set-env/action.yaml` | `echo "${{ inputs.name }}<<delimiter" >> $GITHUB_ENV` — name injected directly |
+
+### 🟠 Shell script injection via unsanitised expressions in `run:` steps
+
+| File                                  | Expression                                                             |
+| ------------------------------------- | ---------------------------------------------------------------------- |
+| `build-version-release.yml`           | `${{ steps.version.outputs.version }}` in lerna/gh commands            |
+| `publish.yml`                         | `${{ steps.dist_tag.outputs.value }}` in lerna publish command         |
+| `integration-test.yml`                | `${{ matrix.repo }}` in shell run and jq selector                      |
+| `update-dictionaries.yml`             | `${{ matrix.repo }}` in shell run and jq selector                      |
+| `update-integration-repositories.yml` | `${{ matrix.repo }}` and `${{ github.event.inputs.ref }}` in run steps |
+| `reuseable-pr-from-artifact.yml`      | `${{ inputs.patch_path }}` in git apply command                        |
+| `update-dependencies-old.yml`         | `${{ toJson(github.event.inputs) }}` in echo command                   |
+
+## Fix Pattern
+
+For each issue, the expression is moved to an `env:` block and referenced via shell variable:
+
+```yaml
+# Before (unsafe)
+run: some-command ${{ github.event.inputs.ref }}
+
+# After (safe)
+env:
+  REF: ${{ github.event.inputs.ref }}
+run: some-command "$REF"
+```
+
+For jq queries using `matrix.repo`, the injection-safe `--arg` flag is used:
+
+```yaml
+# Before (jq injection risk)
+run: jq '.[] | select(.path == "${{ matrix.repo }}")'
+
+# After (safe)
+env:
+  REPO: ${{ matrix.repo }}
+run: jq --arg repo "$REPO" '.[] | select(.path == $repo)'
+```
+
+---
+
+</details>
+
+## v10.0.0 (2026-04-06)
+
+### Features
+
+<details>
+<summary>fix: upgrade import-fresh from v3 to v4 (<a href="https://github.com/streetsidesoftware/cspell/pull/8786">#8786</a>)</summary>
+
+### fix: upgrade import-fresh from v3 to v4 ([#8786](https://github.com/streetsidesoftware/cspell/pull/8786))
+
+## Summary
+
+Upgrades `import-fresh` from v3 to v4.
+
+## API changes in v4
+
+- **v3**: Synchronous default export — `importFresh(modulePath)` returns the module directly
+- **v4**: Factory pattern — `createImportFresh(parentURL)` returns an **async** function; v4 is ESM-only and uses Node.js module loader hooks instead of manipulating the require cache
+
+## Changes
+
+- **`packages/cspell-lib/package.json`**: bump `import-fresh` to `^4.0.0`; remove `clear-module` dependency (no longer needed since v4 uses module loader hooks instead of Node's require cache)
+- **`packages/cspell-lib/src/lib/Settings/Controller/pnpLoader.ts`**:
+  - Import `createImportFresh` factory; call `createImportFresh(pnpFileUrl)` at use time inside `loadPnp()`, bound to the pnp file's own URL so each load is correctly scoped to the file being loaded
+  - Make `loadPnp` and `loadPnpIfNeeded` async
+  - Change `cachedPnpImportsSync` → `cachedPnpImports` (now stores `Promise<LoaderResult>`)
+  - Remove `clearModule.single` usage (v4 cache-busts via loader hooks; clearing the require cache is no longer applicable)
+  - Pass a file URL (`toFileUrl(pnpFile).href`) to `importFresh` since v4 uses `import()` under the hood, which requires URLs or relative specifiers for absolute paths
+  - Use optional chaining on the module's default export to handle edge cases
+- **`test-packages/cspell-lib/test-cspell-lib-rollup/package.json`**: bump `import-fresh` to `^4.0.0`
+- **`test-packages/cspell-lib/test-cspell-lib-webpack/package.json`**: bump `import-fresh` to `^4.0.0`
+
+## Testing
+
+All 91 test files (1584 tests) pass, including the 10 dedicated `pnpLoader` tests.
+
+---
+
+</details>
+
+<details>
+<summary>feat!: Drop support for Node 20 (<a href="https://github.com/streetsidesoftware/cspell/pull/8779">#8779</a>)</summary>
+
+### feat!: Drop support for Node 20 ([#8779](https://github.com/streetsidesoftware/cspell/pull/8779))
+
+## Pull request overview
+
+This PR updates the monorepo to require Node.js 22.18+ (dropping Node 20 support), aligning package engine constraints, CI matrices, and documentation with the new baseline.
+
+**Changes:**
+
+- Bump `engines.node` across packages/test-packages to `>=22.18.0` and update root `@types/node` to `^22.19.15`.
+- Update CI workflows to test Node 22/24/25 and adjust integration update workflow to Node 22.
+- Remove `eslint-plugin-n` “unsupported node builtins” disables now that the minimum Node version includes those built-ins.
+
+---
+
+</details>
+
+### **BREAKING**
+
+<details>
+<summary>feat!: Drop support for Node 20 (<a href="https://github.com/streetsidesoftware/cspell/pull/8779">#8779</a>)</summary>
+
+### feat!: Drop support for Node 20 ([#8779](https://github.com/streetsidesoftware/cspell/pull/8779))
+
+## Pull request overview
+
+This PR updates the monorepo to require Node.js 22.18+ (dropping Node 20 support), aligning package engine constraints, CI matrices, and documentation with the new baseline.
+
+**Changes:**
+
+- Bump `engines.node` across packages/test-packages to `>=22.18.0` and update root `@types/node` to `^22.19.15`.
+- Update CI workflows to test Node 22/24/25 and adjust integration update workflow to Node 22.
+- Remove `eslint-plugin-n` “unsupported node builtins” disables now that the minimum Node version includes those built-ins.
+
+---
+
+</details>
+
+### Documentation
+
+<details>
+<summary>feat!: Drop support for Node 20 (<a href="https://github.com/streetsidesoftware/cspell/pull/8779">#8779</a>)</summary>
+
+### feat!: Drop support for Node 20 ([#8779](https://github.com/streetsidesoftware/cspell/pull/8779))
+
+## Pull request overview
+
+This PR updates the monorepo to require Node.js 22.18+ (dropping Node 20 support), aligning package engine constraints, CI matrices, and documentation with the new baseline.
+
+**Changes:**
+
+- Bump `engines.node` across packages/test-packages to `>=22.18.0` and update root `@types/node` to `^22.19.15`.
+- Update CI workflows to test Node 22/24/25 and adjust integration update workflow to Node 22.
+- Remove `eslint-plugin-n` “unsupported node builtins” disables now that the minimum Node version includes those built-ins.
+
+---
+
+</details>
+
+## v9.8.0 (2026-03-30)
+
+### Features
+
+<details>
+<summary>feat: make flatpack diff friendly (<a href="https://github.com/streetsidesoftware/cspell/pull/8680">#8680</a>)</summary>
+
+### feat: make flatpack diff friendly ([#8680](https://github.com/streetsidesoftware/cspell/pull/8680))
+
+## Pull request overview
+
+This PR introduces a new Flatpack JSON **V2** format to produce more diff-friendly serialized output, centered on a **string table** (for deduped/compact string storage) and a configurable pretty stringifier, while keeping **V1** available for compatibility.
+
+**Changes:**
+
+- Added Flatpack format selection (`V1`/`V2`) and implemented V2 packing/unpacking primitives (string table + negative string refs) plus metadata/annotation helpers.
+- Updated `stringifyFlatpacked` to support diff-friendly, line-batched formatting for arrays (configurable via options).
+- Expanded optimization and test coverage for V2 (including circular structures), plus supporting utilities (Trie, WeakCache, RefCounter).
+
+---
+
+</details>
+
+### Dictionary Updates
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8739">#8739</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#8739](https://github.com/streetsidesoftware/cspell/pull/8739))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/caddyserver/caddy/report.yaml        | 691 +--------------------
+ .../snapshots/caddyserver/caddy/snapshot.txt       | 653 +------------------
+ .../snapshots/django/django/report.yaml            |  65 +-
+ .../snapshots/django/django/snapshot.txt           |  60 +-
+ .../googleapis/google-cloud-cpp/report.yaml        |   3 +-
+ .../googleapis/google-cloud-cpp/snapshot.txt       |   3 +-
+ packages/cspell-bundled-dicts/package.json         |  14 +-
+ pnpm-lock.yaml                                     |  82 +--
+ 8 files changed, 80 insertions(+), 1491 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8688">#8688</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#8688](https://github.com/streetsidesoftware/cspell/pull/8688))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/TheAlgorithms/Python/report.yaml     |   5 +-
+ .../snapshots/TheAlgorithms/Python/snapshot.txt    |   3 +-
+ .../aspnetboilerplate/report.yaml                  |   7 +-
+ .../aspnetboilerplate/snapshot.txt                 |   5 +-
+ .../snapshots/eslint/eslint/report.yaml            |   7 +-
+ .../snapshots/eslint/eslint/snapshot.txt           |   3 +-
+ .../iluwatar/java-design-patterns/report.yaml      |   4 +-
+ .../iluwatar/java-design-patterns/snapshot.txt     |   4 +-
+ .../snapshots/ktaranov/sqlserver-kit/report.yaml   |   9 +-
+ .../snapshots/ktaranov/sqlserver-kit/snapshot.txt  |   7 +-
+ .../snapshots/liriliri/licia/report.yaml           |   6 +-
+ .../snapshots/liriliri/licia/snapshot.txt          |   4 +-
+ .../microsoft/TypeScript-Website/report.yaml       |  11 +-
+ .../microsoft/TypeScript-Website/snapshot.txt      |   3 +-
+ .../snapshots/sveltejs/svelte/report.yaml          |   7 +-
+ .../snapshots/sveltejs/svelte/snapshot.txt         |   5 +-
+ .../snapshots/wireapp/wire-webapp/report.yaml      |   5 +-
+ .../snapshots/wireapp/wire-webapp/snapshot.txt     |   3 +-
+ packages/cspell-bundled-dicts/package.json         |  22 +--
+ packages/cspell/src/__snapshots__/app.test.ts.snap | 190 +++++++++++----------
+ pnpm-lock.yaml                                     | 135 ++++++++-------
+ 21 files changed, 219 insertions(+), 226 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8670">#8670</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#8670](https://github.com/streetsidesoftware/cspell/pull/8670))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../microsoft/TypeScript-Website/report.yaml       | 13 ++--
+ .../microsoft/TypeScript-Website/snapshot.txt      |  3 +-
+ .../snapshots/vitest-dev/vitest/report.yaml        |  8 +--
+ .../snapshots/vitest-dev/vitest/snapshot.txt       |  5 +-
+ packages/cspell-bundled-dicts/package.json         | 12 ++--
+ pnpm-lock.yaml                                     | 72 ++++++++++++----------
+ 6 files changed, 56 insertions(+), 57 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8647">#8647</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#8647](https://github.com/streetsidesoftware/cspell/pull/8647))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ packages/cspell-bundled-dicts/package.json |  2 +-
+ pnpm-lock.yaml                             | 12 ++++++------
+ 2 files changed, 7 insertions(+), 7 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8637">#8637</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#8637](https://github.com/streetsidesoftware/cspell/pull/8637))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../MartinThoma/LaTeX-examples/report.yaml         | 10 +---
+ .../MartinThoma/LaTeX-examples/snapshot.txt        | 10 +---
+ .../aspnetboilerplate/report.yaml                  |  3 +-
+ .../aspnetboilerplate/snapshot.txt                 |  3 +-
+ .../snapshots/django/django/report.yaml            |  6 +--
+ .../snapshots/django/django/snapshot.txt           |  3 +-
+ .../snapshots/eslint/eslint/report.yaml            |  4 +-
+ .../snapshots/eslint/eslint/snapshot.txt           |  3 +-
+ .../snapshots/liriliri/licia/report.yaml           |  3 +-
+ .../snapshots/liriliri/licia/snapshot.txt          |  3 +-
+ .../snapshots/neovim/nvim-lspconfig/report.yaml    |  6 +--
+ .../snapshots/neovim/nvim-lspconfig/snapshot.txt   |  8 +--
+ .../snapshots/sveltejs/svelte/report.yaml          |  3 +-
+ .../snapshots/sveltejs/svelte/snapshot.txt         |  3 +-
+ .../snapshots/vitest-dev/vitest/report.yaml        |  4 +-
+ .../snapshots/vitest-dev/vitest/snapshot.txt       |  5 +-
+ .../snapshots/wireapp/wire-webapp/report.yaml      |  9 +---
+ .../snapshots/wireapp/wire-webapp/snapshot.txt     |  7 +--
+ packages/cspell-bundled-dicts/package.json         | 10 ++--
+ pnpm-lock.yaml                                     | 58 +++++++++++-----------
+ 20 files changed, 62 insertions(+), 99 deletions(-)
+```
+
+---
+
+</details>
+
+## v9.7.0 (2026-02-23)
+
+### Features
+
+<details>
+<summary>feat: Substitution Part 4 - enable substitutions during document check (<a href="https://github.com/streetsidesoftware/cspell/pull/8630">#8630</a>)</summary>
+
+### feat: Substitution Part 4 - enable substitutions during document check ([#8630](https://github.com/streetsidesoftware/cspell/pull/8630))
+
+## Pull request overview
+
+This PR enables substitution-based text transformations during document spell checking, allowing configured text patterns to be replaced before validation occurs.
+
+**Changes:**
+
+- Added substitution transformer support to the text validation pipeline
+- Enhanced `SubstitutionTransformer` to handle both string and `MappedText` inputs with source map merging
+- Refactored `settingsToValidateOptions` to explicitly map all validation option fields
+
+---
+
+</details>
+
+<details>
+<summary>feat: Substitution Part 3 (<a href="https://github.com/streetsidesoftware/cspell/pull/8616">#8616</a>)</summary>
+
+### feat: Substitution Part 3 ([#8616](https://github.com/streetsidesoftware/cspell/pull/8616))
+
+## Pull request overview
+
+This PR updates the SourceMap encoding/handling to use _relative span-length pairs_ (instead of absolute offset pairs) so transformations can be composed more reliably, while updating affected parsers, mappers, and tests across the monorepo.
+
+**Changes:**
+
+- Redefines SourceMap documentation/usage to represent relative `[srcSpanLen, dstSpanLen]` segments (with non-linear segment semantics).
+- Introduces new SourceMap utilities in `cspell-lib` and refactors `TextMap`/mapping code and tests to use them.
+- Updates TypeScript grammar parsing/mappers to emit relative maps and adjusts fixtures/tests accordingly.
+
+> \[!CAUTION]
+> Internal breaking: SourceMaps are now span lengths instead of being offsets. This makes them invariant during translation, making concatenation, and slicing much easier.
+> A minor version change was chosen instead of a major version change since it was only used with the experimental TypeScript parser.
+
+---
+
+</details>
+
+<details>
+<summary>feat: Substitution Part 2 (<a href="https://github.com/streetsidesoftware/cspell/pull/8599">#8599</a>)</summary>
+
+### feat: Substitution Part 2 ([#8599](https://github.com/streetsidesoftware/cspell/pull/8599))
+
+## Pull request overview
+
+This pull request is part of a "Substitution" feature series (Part 2), focusing on reorganizing type definitions and adding utility functions for text transformation and source mapping. The main purpose is to consolidate Parser-related types and introduce new mapping utilities needed for the substitution feature.
+
+**Changes:**
+
+- Reorganizes type definitions by moving `MappedText`, `Range`, and `SourceMap` from root-level exports to the Parser directory structure
+- Adds new source map manipulation functions (`mapOffsetToSource`, `mapRangeToSource`, `mergeSourceMaps`) to support text transformation workflows
+- Introduces API declaration file generation for documentation purposes via separate tsdown build configurations
+
+---
+
+</details>
+
+<details>
+<summary>feat: Support text substitutions prior to spell checking - part 1 (<a href="https://github.com/streetsidesoftware/cspell/pull/8592">#8592</a>)</summary>
+
+### feat: Support text substitutions prior to spell checking - part 1 ([#8592](https://github.com/streetsidesoftware/cspell/pull/8592))
+
+## Text Substitution Support Part 1
+
+Steps towards supporting text substitutions prior to spell checking by introducing a Transform layer (range/mapping + substitution) and wiring it into document validation configuration.
+
+It is not yet added to the normal spell checking flow. That will happen in a later PR.
+
+**Changes:**
+
+- Extend types + JSON schema to support substitution definitions keyed by `name` and export `Range` for reuse.
+- Add `cspell-lib` Transform module (TextRange/TextMap/parsedText mapping + `SubstitutionTransformer`) and update validators/tests to use it.
+- Export `GTrie`/`GTrieNode` from `cspell-trie-lib` to support efficient substitution matching.
+
+## Related Issues
+
+- [Support Latex umlauts and accents · Issue #340 · streetsidesoftware/cspell](https://github.com/streetsidesoftware/cspell/issues/340)
+- [Words containing HTML Symbol Entities should not be marked as an error · Issue #4104 · streetsidesoftware/cspell](https://github.com/streetsidesoftware/cspell/issues/4104)
+
+---
+
+</details>
+
+### Fixes
+
+<details>
+<summary>fix: Publish 9.7 (<a href="https://github.com/streetsidesoftware/cspell/pull/8634">#8634</a>)</summary>
+
+### fix: Publish 9.7 ([#8634](https://github.com/streetsidesoftware/cspell/pull/8634))
+
+Fix issue with test packages having the same name preventing publishing.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Support ESLint 10 (<a href="https://github.com/streetsidesoftware/cspell/pull/8620">#8620</a>)</summary>
+
+### fix: Support ESLint 10 ([#8620](https://github.com/streetsidesoftware/cspell/pull/8620))
+
+---
+
+</details>
+
+<details>
+<summary>fix: Prepare to support substitutions (<a href="https://github.com/streetsidesoftware/cspell/pull/8584">#8584</a>)</summary>
+
+### fix: Prepare to support substitutions ([#8584](https://github.com/streetsidesoftware/cspell/pull/8584))
+
+## Pull request overview
+
+Adds initial type/schema/plumbing in `cspell-types` and `cspell-lib` to support upcoming “substitutions” configuration fields (definitions + per-document substitutions) throughout config merging, exported field lists, and JSON schema.
+
+**Changes:**
+
+- Introduces `Substitutions` types and wires them into `CSpellSettingsDef` and the public `@cspell/cspell-types` index exports.
+- Adds `substitutionDefinitions` / `substitutions` to config field registries and config merge behavior.
+- Updates JSON schemas (package + root) and adjusts API snapshot / settings sanitization to recognize the new fields.
+
+---
+
+</details>
+
+<details>
+<summary>fix: cspell-rpc - reduce the size of an RPC result. (<a href="https://github.com/streetsidesoftware/cspell/pull/8574">#8574</a>)</summary>
+
+### fix: cspell-rpc - reduce the size of an RPC result. ([#8574](https://github.com/streetsidesoftware/cspell/pull/8574))
+
+## Pull request overview
+
+This PR updates the `cspell-lib` RPC spell-checking surface to reduce payload sizes by introducing RPC-specific result/issue types and returning a slimmer result from `spellCheckDocumentRPC`.
+
+**Changes:**
+
+- Switch `spellCheckDocumentRPC` to return a new `SpellCheckFileResultRPC` that omits large fields (notably document text and several result fields).
+- Introduce `ValidationResultRPC` / `ValidationIssueRPC` and a mapper (`toValidationIssueRPC`) to reduce issue payload.
+- Update the `cspell-rpc` client/server communication test expectations for the new RPC result shape.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Add convertToBtrie method to trie-lib (<a href="https://github.com/streetsidesoftware/cspell/pull/8562">#8562</a>)</summary>
+
+### fix: Add convertToBtrie method to trie-lib ([#8562](https://github.com/streetsidesoftware/cspell/pull/8562))
+
+## Pull request overview
+
+This PR adds utilities to decode dictionary/trie files (including `.gz`) and convert them into the binary `.btrie` format, then integrates that conversion into the dictionary bundler plugin so bundled dictionaries can be inlined as (optionally compressed) BTrie data for faster load times.
+
+**Changes:**
+
+- Add `decodeFile` / `convertToBTrie` APIs to `cspell-trie-lib` and export them from the public index.
+- Add `encodeITrieToBTrie` convenience encoder for converting an `ITrie` directly to BTrie bytes.
+- Extend `cspell-dictionary-bundler-plugin` to optionally convert/inline dictionaries as `.btrie` (and optionally gzip them), with updated snapshots/tests.
+
+---
+
+</details>
+
+<details>
+<summary>refactor: Use standard dispose (<a href="https://github.com/streetsidesoftware/cspell/pull/8559">#8559</a>)</summary>
+
+### refactor: Use standard dispose ([#8559](https://github.com/streetsidesoftware/cspell/pull/8559))
+
+---
+
+</details>
+
+<details>
+<summary>refactor: Experiment with bundling default dictionaries (<a href="https://github.com/streetsidesoftware/cspell/pull/8556">#8556</a>)</summary>
+
+### refactor: Experiment with bundling default dictionaries ([#8556](https://github.com/streetsidesoftware/cspell/pull/8556))
+
+## Pull request overview
+
+This PR experiments with bundling default dictionaries for CSpell, adding infrastructure to bundle dictionary configuration files into JavaScript modules using a custom plugin. The changes introduce a new build pipeline for the cspell-bundled-dicts package but intentionally leave the bundling functionality disabled through configuration.
+
+**Changes:**
+
+- Added dictionary bundler plugin integration to cspell-bundled-dicts with tsdown configuration (currently disabled via `/no-match/` pattern)
+- Enhanced CSpellDictionaryBundler class with debug logging support and module import resolution
+- Updated package.json exports to include new bundled output format while removing compatibility-related files
+
+---
+
+</details>
+
+<details>
+<summary>fix: Enable reading dictionaries from cspell-vfs (<a href="https://github.com/streetsidesoftware/cspell/pull/8553">#8553</a>)</summary>
+
+### fix: Enable reading dictionaries from cspell-vfs ([#8553](https://github.com/streetsidesoftware/cspell/pull/8553))
+
+## Pull request overview
+
+This PR enables dictionaries bundled into the `cspell-vfs:` virtual filesystem to be registered into the runtime VFS so dictionary loading can read them. It adds fixtures/tests to validate the behavior.
+
+**Changes:**
+
+- Register `settings.vfs` entries into the active `VirtualFS` during config load/merge.
+- Add a default in-memory `cspell-vfs:` provider to `cspell-io`’s `createVirtualFS`, and export `CSPELL_VFS_PROTOCOL`.
+- Add bundling/build + fixtures and a `docValidator` test that loads a bundled config using `cspell-vfs:` dictionary content.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Work on a bundler for CSpell Dictionaries (<a href="https://github.com/streetsidesoftware/cspell/pull/8532">#8532</a>)</summary>
+
+### fix: Work on a bundler for CSpell Dictionaries ([#8532](https://github.com/streetsidesoftware/cspell/pull/8532))
+
+## Pull request overview
+
+This PR introduces a new `@cspell/dictionary-bundler-plugin` package intended to inline/bundle CSpell dictionary/config assets for consumption across multiple bundlers (Rollup/Vite/Webpack/Rspack/Rolldown/Farm/esbuild), and updates workspace metadata and dependency lockfiles accordingly.
+
+**Changes:**
+
+- Added new `packages/cspell-dictionary-bundler-plugin` package with build config (tsdown), TypeScript config, plugin entrypoints, core bundling logic, and Vitest coverage (fixtures + snapshots).
+- Updated repo-level Node engine requirement and pnpm lockfile to reflect new dependencies and resolutions.
+- Updated workspace and repo dictionary wordlist to recognize new terms used by the package/dependencies.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Add support for MemVfs to cspell-io (<a href="https://github.com/streetsidesoftware/cspell/pull/8543">#8543</a>)</summary>
+
+### fix: Add support for MemVfs to cspell-io ([#8543](https://github.com/streetsidesoftware/cspell/pull/8543))
+
+## Pull request overview
+
+This PR refactors `cspell-io`’s VirtualFS internals (exports/import paths) and introduces foundational pieces for an in-memory VirtualFS provider (“MemVfs”), along with new shared error/capability utilities and updated tests.
+
+**Changes:**
+
+- Consolidates VirtualFS public exports under `src/VirtualFS/index.ts` and updates imports across VirtualFS code/tests.
+- Extracts shared VirtualFS concerns into new modules (`errors.ts`, `capabilities.ts`, `CFileType.ts`, `CVfsStat.ts`) and updates `WrappedProviderFs`.
+- Adds a new in-memory provider (`MemVfsProvider`) plus basic unit tests.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Add mergeConfig (<a href="https://github.com/streetsidesoftware/cspell/pull/8539">#8539</a>)</summary>
+
+### fix: Add mergeConfig ([#8539](https://github.com/streetsidesoftware/cspell/pull/8539))
+
+## Pull request overview
+
+Adds a `mergeConfig` helper to `cspell-types` for merging multiple `CSpellSettings` objects (including key-specific merge semantics like append/record-merge), and exposes it as part of the public package API.
+
+**Changes:**
+
+- Add `mergeConfig` implementation (plus supporting merge helpers) for combining settings objects.
+
+---
+
+</details>
+
+<details>
+<summary>fix: stemming rules part 1 (<a href="https://github.com/streetsidesoftware/cspell/pull/8527">#8527</a>)</summary>
+
+### fix: stemming rules part 1 ([#8527](https://github.com/streetsidesoftware/cspell/pull/8527))
+
+## Pull request overview
+
+This pull request introduces the first phase of stemming rules support for the CSpell trie library by implementing an affix (prefix/suffix) mutation system. The implementation is based on Hunspell-style affix rules, which allow for word transformations through prefix and suffix mutations.
+
+**Changes:**
+
+- Implemented a complete affix (afx) transformation system with type definitions, core logic, and Hunspell .aff file parser
+- Added comprehensive test coverage for both the utility and affix system
+- Included Danish and French Hunspell dictionary fixtures for integration testing
+- Added a new `unindent` utility for working with template strings in tests and code generation
+
+---
+
+</details>
+
+### Dictionary Updates
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8570">#8570</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#8570](https://github.com/streetsidesoftware/cspell/pull/8570))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ packages/cspell-bundled-dicts/package.json |  6 ++---
+ pnpm-lock.yaml                             | 36 +++++++++++++++---------------
+ 2 files changed, 21 insertions(+), 21 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8542">#8542</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#8542](https://github.com/streetsidesoftware/cspell/pull/8542))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/vitest-dev/vitest/report.yaml        |  6 ++--
+ .../snapshots/vitest-dev/vitest/snapshot.txt       |  3 +-
+ packages/cspell-bundled-dicts/package.json         |  6 ++--
+ pnpm-lock.yaml                                     | 33 +++++++++++++---------
+ 4 files changed, 25 insertions(+), 23 deletions(-)
+```
+
+---
+
+</details>
+
+## v9.6.4 (2026-02-04)
+
+### Fixes
+
+<details>
+<summary>fix: add --no-dictionary option to lint command (<a href="https://github.com/streetsidesoftware/cspell/pull/8514">#8514</a>)</summary>
+
+### fix: add --no-dictionary option to lint command ([#8514](https://github.com/streetsidesoftware/cspell/pull/8514))
+
+## Pull request overview
+
+This PR adds the `--no-dictionary` option to the lint command and refactors the `prefixCollect` helper function for reuse across commands.
+
+**Changes:**
+
+- Moved `prefixCollect` function from `commandTrace.ts` to `commandHelpers.ts` for reuse
+- Added `--no-dictionary` option to the lint command (hidden, as an alias for `--disable-dictionary`)
+- Added comprehensive tests for the new option including `--dictionary=!words` and `--no-dictionary=words` syntax
+
+---
+
+</details>
+
+<details>
+<summary>fix: Correctly report blocked dictionaries (<a href="https://github.com/streetsidesoftware/cspell/pull/8506">#8506</a>)</summary>
+
+### fix: Correctly report blocked dictionaries ([#8506](https://github.com/streetsidesoftware/cspell/pull/8506))
+
+---
+
+</details>
+
+## v9.6.3 (2026-02-02)
+
+### Fixes
+
+<details>
+<summary>fix: Add `engines` setting (<a href="https://github.com/streetsidesoftware/cspell/pull/8491">#8491</a>)</summary>
+
+### fix: Add `engines` setting ([#8491](https://github.com/streetsidesoftware/cspell/pull/8491))
+
+## Pull request overview
+
+This PR adds a new `engines` configuration field that allows dictionary authors and configuration authors to specify the minimum version of cspell (or other engines) required for compatibility. This is informational only and does not enforce versioning.
+
+**Changes:**
+
+- Added `CompatibleEngineVersions` interface and `SemVersionPredicate` type to define engine version requirements
+- Added `engines` field to `FileSettings` interface and all related configuration structures
+- Updated JSON schemas to include the new `engines` definitions
+- Updated snapshot tests to reflect the new configuration field
+
+---
+
+</details>
+
+<details>
+<summary>refactor: consolidate reporting to file. (<a href="https://github.com/streetsidesoftware/cspell/pull/8481">#8481</a>)</summary>
+
+### refactor: consolidate reporting to file. ([#8481](https://github.com/streetsidesoftware/cspell/pull/8481))
+
+---
+
+</details>
+
+<details>
+<summary>fix: Move cspell-lib/rpc into its own package (<a href="https://github.com/streetsidesoftware/cspell/pull/8468">#8468</a>)</summary>
+
+### fix: Move cspell-lib/rpc into its own package ([#8468](https://github.com/streetsidesoftware/cspell/pull/8468))
+
+## Pull request overview
+
+This PR refactors the RPC implementation by moving it from `packages/cspell-lib/src/rpc` into a standalone package `@cspell/rpc`. This improves modularity and allows the RPC library to be used independently of cspell-lib.
+
+**Changes:**
+
+- Created new `@cspell/rpc` package with complete RPC implementation (client, server, protocol, types, utilities)
+- Updated `cspell-lib` to import from `@cspell/rpc` instead of local `./rpc` directory
+- Updated workspace configuration and dependency management in pnpm-lock.yaml
+
+---
+
+</details>
+
+<details>
+<summary>fix: Add types for cspell-vfs (<a href="https://github.com/streetsidesoftware/cspell/pull/8451">#8451</a>)</summary>
+
+### fix: Add types for cspell-vfs ([#8451](https://github.com/streetsidesoftware/cspell/pull/8451))
+
+## Pull request overview
+
+This PR adds TypeScript type definitions for the CSpell Virtual File System (cspell-vfs) feature, enabling users to declare virtual files in their configuration that can be referenced via `cspell-vfs://` URLs.
+
+**Changes:**
+
+- Added comprehensive TypeScript type definitions for the CSpell VFS feature
+- Added `vfs` configuration field to CSpell settings
+- Updated JSON schemas to reflect the new types
+
+---
+
+</details>
+
+### Dictionary Updates
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8492">#8492</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#8492](https://github.com/streetsidesoftware/cspell/pull/8492))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ packages/cspell-bundled-dicts/package.json |  8 +++---
+ pnpm-lock.yaml                             | 44 ++++++++++++++++++------------
+ 2 files changed, 31 insertions(+), 21 deletions(-)
+```
+
+---
+
+</details>
+
+## v9.6.2 (2026-01-26)
+
+### Fixes
+
+<details>
+<summary>fix: Conditionally compress and build bTrie (<a href="https://github.com/streetsidesoftware/cspell/pull/8437">#8437</a>)</summary>
+
+### fix: Conditionally compress and build bTrie ([#8437](https://github.com/streetsidesoftware/cspell/pull/8437))
+
+## Pull request overview
+
+This PR refactors the compilation process to conditionally compress dictionary files and build bTrie files based on the compression settings. The main changes separate compression and bTrie generation into distinct steps and update dependency path handling to be relative to the checksum file location.
+
+**Changes:**
+
+- Separated dictionary compression into a dedicated step that runs after building the dictionary
+- Modified bTrie generation to use the appropriate source file (compressed or uncompressed) based on target configuration
+- Updated dependency path resolution to make paths relative to the checksum file directory instead of the root directory
+
+---
+
+</details>
+
+### Dictionary Updates
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8440">#8440</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#8440](https://github.com/streetsidesoftware/cspell/pull/8440))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ packages/cspell-bundled-dicts/package.json |  4 ++--
+ pnpm-lock.yaml                             | 24 ++++++++++++------------
+ 2 files changed, 14 insertions(+), 14 deletions(-)
+```
+
+---
+
+</details>
+
+## v9.6.1 (2026-01-25)
+
+### Fixes
+
+<details>
+<summary>fix: Move performance monitoring into its own package (<a href="https://github.com/streetsidesoftware/cspell/pull/8431">#8431</a>)</summary>
+
+### fix: Move performance monitoring into its own package ([#8431](https://github.com/streetsidesoftware/cspell/pull/8431))
+
+## Pull request overview
+
+This PR extracts performance monitoring functionality from multiple packages into a new dedicated package `@cspell/cspell-performance-monitor`. The new package provides a centralized, conditionally-enabled performance measurement system using the standard Performance API.
+
+**Changes:**
+
+- Created a new `@cspell/cspell-performance-monitor` package with improved performance measurement functions that can be conditionally enabled/disabled
+- Migrated and removed duplicate performance measurement code from `cspell-lib`, `cspell-dictionary`, and `cspell-trie-lib` packages
+- Updated performance measurement calls to use the new disposable pattern (`using _ = measurePerf()`) that leverages TypeScript's explicit resource management
+
+---
+
+</details>
+
+<details>
+<summary>fix: Add NotifyEmitter (<a href="https://github.com/streetsidesoftware/cspell/pull/8423">#8423</a>)</summary>
+
+### fix: Add NotifyEmitter ([#8423](https://github.com/streetsidesoftware/cspell/pull/8423))
+
+## Pull request overview
+
+This pull request adds a new `NotifyEmitter` class to provide a reusable event notification system based on the Disposable pattern. The PR refactors the RPC server test to use this new event emitter pattern instead of a custom `AsyncMessageQueue` implementation, resulting in cleaner and more maintainable code.
+
+**Changes:**
+
+- Introduces `NotifyEmitter` class with `NotifyEvent` pattern for event handling with automatic cleanup via `Symbol.dispose`
+- Adds helper functions `notifyEventToPromise` and `notifyEventOnce` for working with notify events
+- Creates `MessagePortEvents` wrapper class to adapt MessagePort events to the NotifyEmitter pattern
+- Refactors `server.test.ts` to use the new event system, removing the custom `AsyncMessageQueue` implementation
+- Adds `result?: unknown` field to `RPCResponse` interface for more consistent type handling
+- Exports new notify-related types and functions through the public API
+
+---
+
+</details>
+
+<details>
+<summary>refactor: Adjust RPC interface to use a config (<a href="https://github.com/streetsidesoftware/cspell/pull/8420">#8420</a>)</summary>
+
+### refactor: Adjust RPC interface to use a config ([#8420](https://github.com/streetsidesoftware/cspell/pull/8420))
+
+## Pull request overview
+
+Refactors the RPC client/server APIs (and cspell RPC wrappers) to accept a single configuration object, and updates worker integration and tests accordingly.
+
+**Changes:**
+
+- Update RPCClient/RPCServer (and CSpellRPCClient/CSpellRPCServer) constructors/factories to accept `{ port, ...options }` config objects.
+- Adjust RPC tests and worker usage to match the new config-based API.
+- Update `cspell-lib` package entrypoint to `dist/index.*` and add `src/index.ts` re-export.
+
+---
+
+</details>
+
+<details>
+<summary>refactor: Refactor CLI to make it easier to spell check files in parallel (<a href="https://github.com/streetsidesoftware/cspell/pull/8387">#8387</a>)</summary>
+
+### refactor: Refactor CLI to make it easier to spell check files in parallel ([#8387](https://github.com/streetsidesoftware/cspell/pull/8387))
+
+## Pull request overview
+
+This PR refactors the CLI file processing architecture to improve processing speed. The main improvements include extracting file processing logic into a dedicated module, adding sequence tracking for file processing, fixing regex `lastIndex` state sharing issues, and preparing infrastructure for optional worker pool parallelization (currently disabled).
+
+**Changes:**
+
+- Extracted file processing logic from `lint.ts` into a new `processFiles.ts` module with improved batch processing
+- Added sequence tracking interfaces (`FileToProcess`, `ProcessPrefetchFileResult`) to maintain file processing order
+- Fixed regex `lastIndex` state sharing bugs by creating new RegExp instances before use
+- Added worker pool and RPC infrastructure to `cspell-api.ts` (currently disabled via feature flags)
+- Updated performance reporting to track both accumulated processing time and total elapsed time
+
+---
+
+</details>
+
+<details>
+<summary>refactor: Refactor settings a bit (<a href="https://github.com/streetsidesoftware/cspell/pull/8385">#8385</a>)</summary>
+
+### refactor: Refactor settings a bit ([#8385](https://github.com/streetsidesoftware/cspell/pull/8385))
+
+## Pull request overview
+
+This pull request refactors settings handling in the CSpell codebase. The main focus is on improving the serialization of settings objects by adding circular reference detection and handling to `walkToJSONObj`, along with introducing new utility functions for working with settings that need to be serialized (e.g., for IPC via MessageChannel).
+
+**Changes:**
+
+- Enhanced `walkToJSONObj` to handle circular references using a WeakMap-based visited tracking system
+- Added `toCSpellSettingsWithSourceTrace` and `toCSpellSettingsWithOutSourceTrace` functions to convert settings to serializable formats
+- Refactored `processFile` to accept and use `userSettings` parameter instead of directly accessing `configInfo.config`
+
+---
+
+</details>
+
+<details>
+<summary>refactor: Refactor internal settings (<a href="https://github.com/streetsidesoftware/cspell/pull/8382">#8382</a>)</summary>
+
+### refactor: Refactor internal settings ([#8382](https://github.com/streetsidesoftware/cspell/pull/8382))
+
+## Pull request overview
+
+This pull request refactors the internal settings structure by reorganizing code from `Models/CSpellSettingsInternalDef.js` into a new `Settings/internal/` directory structure. This improves code organization by collocating internal settings definitions with other settings-related code.
+
+**Changes:**
+
+- Created new `Settings/internal/` directory with split files: `CSpellSettingsInternalDef.ts`, `InternalDictionaryDef.ts`, and `DictionarySettings.ts` (with improved private field syntax)
+- Updated all import paths across the codebase from `Models/CSpellSettingsInternalDef` to `Settings/internal/` or `Settings/index`
+- Added new utility function `walkToJSONObj` for JSON serialization (with comprehensive tests) and `__getOriginalDefinition()` method for accessing original dictionary definitions
+
+---
+
+</details>
+
+<details>
+<summary>fix: report errors in spelling result. (<a href="https://github.com/streetsidesoftware/cspell/pull/8381">#8381</a>)</summary>
+
+### fix: report errors in spelling result. ([#8381](https://github.com/streetsidesoftware/cspell/pull/8381))
+
+## Pull request overview
+
+This PR enhances error reporting in spell check results by including configuration and dictionary errors directly in the `SpellCheckFileResult` object. Previously, errors were only extracted from configuration during the lint process; now they're also captured from the spell checking itself.
+
+**Changes:**
+
+- Added `configErrors` and `dictionaryErrors` fields to `SpellCheckFileResult` interface
+- Refactored error reporting to extract errors from spell check results instead of re-computing them from configuration
+- Created a new `cspell-api` module to abstract spell checking implementation
+- Added comprehensive test coverage with fixture files demonstrating error scenarios
+
+---
+
+</details>
+
+<details>
+<summary>fix: Add CSpell Worker Pool (<a href="https://github.com/streetsidesoftware/cspell/pull/8379">#8379</a>)</summary>
+
+### fix: Add CSpell Worker Pool ([#8379](https://github.com/streetsidesoftware/cspell/pull/8379))
+
+## Pull request overview
+
+This pull request adds a CSpell Worker Pool implementation to manage multiple spell-checking workers efficiently, along with significant improvements to the RPC infrastructure for better readiness tracking.
+
+**Changes:**
+
+- Added `CSpellWorkerPool` class to manage a pool of spell-checking workers with configurable sizing based on CPU cores
+- Simplified the worker implementation by removing custom status tracking in favor of RPC-based readiness checks
+- Enhanced RPC client/server with ready request/response mechanism, allowing clients to wait for server initialization
+- Renamed `Resolver` utility class to `Future` with improved state tracking (added `isRejected` property)
+
+---
+
+</details>
+
+<details>
+<summary>refactor: Clean Up CSpell Worker (<a href="https://github.com/streetsidesoftware/cspell/pull/8372">#8372</a>)</summary>
+
+### refactor: Clean Up CSpell Worker ([#8372](https://github.com/streetsidesoftware/cspell/pull/8372))
+
+---
+
+</details>
+
+<details>
+<summary>fix: Add CSpellRPCServer and CSpellRPCClient classes (<a href="https://github.com/streetsidesoftware/cspell/pull/8366">#8366</a>)</summary>
+
+### fix: Add CSpellRPCServer and CSpellRPCClient classes ([#8366](https://github.com/streetsidesoftware/cspell/pull/8366))
+
+## Pull request overview
+
+This pull request adds RPC (Remote Procedure Call) infrastructure to enable remote spell checking through CSpell. The implementation includes a generic RPC client/server framework, CSpell-specific RPC adapters, and worker thread support for isolated spell checking operations.
+
+**Changes:**
+
+- Move the RPC framwork from cspell to cspell-lib
+- Adds complete RPC framework with message-based client/server communication over MessagePort
+- Implements CSpell-specific RPC server and client classes for remote spell checking
+- Introduces worker thread support for isolated spell checking operations
+- Adds utility functions for cloning and sanitizing settings for safe RPC transmission
+
+---
+
+</details>
+
+<details>
+<summary>fix: Work on adding support for Workers (<a href="https://github.com/streetsidesoftware/cspell/pull/8363">#8363</a>)</summary>
+
+### fix: Work on adding support for Workers ([#8363](https://github.com/streetsidesoftware/cspell/pull/8363))
+
+## Pull request overview
+
+This pull request adds RPC (Remote Procedure Call) infrastructure to support Workers in the cspell package. The implementation provides a client-server communication framework using MessagePort for inter-process or inter-worker communication.
+
+**Changes:**
+
+- Added RPC client and server implementations with support for request/response patterns, cancellation, and error handling
+- Implemented type-safe protocol definitions with automatic Promise wrapping for async operations
+- Created comprehensive test coverage for client, server, and integration scenarios
+
+---
+
+</details>
+
+### Dictionary Updates
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8433">#8433</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#8433](https://github.com/streetsidesoftware/cspell/pull/8433))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../MartinThoma/LaTeX-examples/report.yaml         |  9 +---
+ .../MartinThoma/LaTeX-examples/snapshot.txt        |  7 +--
+ packages/cspell-bundled-dicts/package.json         | 10 ++--
+ packages/cspell/src/__snapshots__/app.test.ts.snap |  6 +--
+ pnpm-lock.yaml                                     | 57 ++++++++++++----------
+ 5 files changed, 42 insertions(+), 47 deletions(-)
+```
+
+---
+
+</details>
+
+## v9.6.0 (2026-01-12)
+
+### Features
+
+<details>
+<summary>feat: ESLint-plugin -- Distinguish between Forbidden, Misspelled, and Unknown words. (<a href="https://github.com/streetsidesoftware/cspell/pull/8337">#8337</a>)</summary>
+
+### feat: ESLint-plugin -- Distinguish between Forbidden, Misspelled, and Unknown words. ([#8337](https://github.com/streetsidesoftware/cspell/pull/8337))
+
+## Pull request overview
+
+This PR updates the eslint-plugin to report different types of spelling issues with improved categorization and messaging. The changes include upgrading ESLint from v8 to v9, introducing new issue severity levels (Forbidden, Misspelled, Unknown, Hint), and adding a `report` option to control the level of reporting.
+
+**Changes:**
+
+- Upgraded ESLint dependency from v8.57.1 to v9.39.2 across all fixtures and packages
+- Introduced new severity level "Misspelled" to distinguish typos with suggestions from truly unknown words
+- Added `report` option ('all', 'simple', 'typos', 'flagged') to control which types of issues are reported
+- Enhanced error messages to include suggestions directly in the message text
+
+---
+
+</details>
+
+<details>
+<summary>feat: ESLint-plugin -- Add `report` option to be able to control the reporting level (matching the CLI): "all", "simple", "typos", "flagged". (<a href="https://github.com/streetsidesoftware/cspell/pull/8273">#8273</a>)</summary>
+
+### feat: ESLint-plugin -- Add `report` option to be able to control the reporting level (matching the CLI): "all", "simple", "typos", "flagged". ([#8273](https://github.com/streetsidesoftware/cspell/pull/8273))
+
+## Pull request overview
+
+This PR adds support for unknown word reporting options to the cspell ESLint plugin, allowing users to control which types of spelling issues are reported (all unknown words, simple typos, common typos, or only flagged words).
+
+**Changes:**
+
+- Added a new `report` option to the ESLint plugin configuration with values: 'all', 'simple', 'typos', and 'flagged'
+- Implemented mapping from the `report` option to CSpell's `unknownWords` setting
+- Added unit tests for the new report filtering functionality
+
+This `PR` contains the changes required to resolve `cspell ESLint plugin: support typos-only reporting (CLI --report typos / unknownWords report-common-typos) #8261`
+
+---
+
+</details>
+
+<details>
+<summary>feat: support storing suggestions in trie (<a href="https://github.com/streetsidesoftware/cspell/pull/8228">#8228</a>)</summary>
+
+### feat: support storing suggestions in trie ([#8228](https://github.com/streetsidesoftware/cspell/pull/8228))
+
+## Pull request overview
+
+This PR adds support for storing word suggestions directly in trie data structures, enabling dictionaries to provide preferred spelling suggestions for words. The implementation introduces a new `suggestionPrefix` field (default `:`) to `TrieInfo` and a `hasPreferredSuggestions` characteristic flag.
+
+**Key Changes:**
+
+- Adds suggestion storage capability to trie structures with a new `suggestionPrefix` field
+- Removes the `isCaseAware` field from `TrieInfo` (minor breaking change since it was no longer used)
+- Implements suggestion parsing logic in dictionary parsers to handle formats like `word:suggestion` and `word->suggestion`
+
+### Details
+
+Add support to have suggestion in normal word lists:
+
+Note: `:` or `->` separators can be used in the word list.
+
+Examples:
+
+```
+colour:color # colour is allowed, but color is preferred.
+:colour:color # this is just a suggestion to use `color` instead of `colour`.
+:colour->color # same as `:colour:color`
+!colour:color # `colour` will be flagged and `color` will be suggested as the fix.
+```
+
+You can add more than one suggestion, but auto-fix won't be possible since
+the spell checker cannot determine which one you want.
+
+```
+!incase:encase, in case # two suggestions
+```
+
+---
+
+</details>
+
+<details>
+<summary>feat: Add Support reading / writing bTrie files (<a href="https://github.com/streetsidesoftware/cspell/pull/8204">#8204</a>)</summary>
+
+### feat: Add Support reading / writing bTrie files ([#8204](https://github.com/streetsidesoftware/cspell/pull/8204))
+
+## Pull request overview
+
+This pull request adds support for reading and writing binary Trie (bTrie) files, which is a more efficient binary format for storing trie data structures. The changes make the cspell-trie-lib package more platform-neutral by replacing Node.js-specific APIs (like `Buffer` and `os.endianness()`) with Web standard APIs (`Uint8Array`, `TextEncoder`/`TextDecoder`, and a custom endianness detection function).
+
+**Changes:**
+
+- Implemented a new binary format specification system with encoder/decoder classes
+- Added bTrie file format support with proper endianness handling
+- Made cspell-trie-lib platform-neutral by removing Node.js dependencies from production code
+- Added new CLI command `btrie` to cspell-tools for generating bTrie files
+- Enhanced readers in cspell-tools to handle multiple file formats including bTrie
+
+---
+
+</details>
+
+### Fixes
+
+<details>
+<summary>refactor: extract processFile from lint.ts (<a href="https://github.com/streetsidesoftware/cspell/pull/8344">#8344</a>)</summary>
+
+### refactor: extract processFile from lint.ts ([#8344](https://github.com/streetsidesoftware/cspell/pull/8344))
+
+---
+
+</details>
+
+<details>
+<summary>fix: Improve word lookup performance when not found (<a href="https://github.com/streetsidesoftware/cspell/pull/8330">#8330</a>)</summary>
+
+### fix: Improve word lookup performance when not found ([#8330](https://github.com/streetsidesoftware/cspell/pull/8330))
+
+## Pull request overview
+
+This PR improves word lookup performance when words are not found by optimizing how the spell checker generates different word forms for dictionary lookups. The key optimization is to avoid expensive Unicode normalization and replacement mapping operations when they're not needed.
+
+**Changes:**
+
+- Converted `mapWord` from required to optional on SpellingDictionary interface, using `undefined` for dictionaries that don't need word mapping
+- Added early-exit optimization for ASCII words to skip Unicode normalization
+- Added test-before-apply optimization for replacement mappers to avoid expensive operations when the word won't match
+- Enhanced dictionary logging to track cache misses and improved the public API for logging functions
+- Added comprehensive tests including integration test with real German dictionary
+
+When a word is not found, the spell checker tries many different forms to find the word. This can be expensive if a lot of words are not found.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Improve loading time of dictionaries (<a href="https://github.com/streetsidesoftware/cspell/pull/8318">#8318</a>)</summary>
+
+### fix: Improve loading time of dictionaries ([#8318](https://github.com/streetsidesoftware/cspell/pull/8318))
+
+## Pull request overview
+
+This pull request aims to improve the loading time of dictionaries by optimizing the internal data structures and sorting algorithms used in the trie builder. The changes focus on:
+
+- Removing unused timer utility functions and tests
+- Simplifying performance measurement infrastructure
+- Optimizing node sorting by avoiding unnecessary Uint32Array conversions
+- Adding an optional batch sorting feature for dictionary parsing
+- Generalizing types to work with both regular arrays and Uint32Arrays
+
+---
+
+</details>
+
+<details>
+<summary>fix: Reduce loading time of dictionaries. (<a href="https://github.com/streetsidesoftware/cspell/pull/8316">#8316</a>)</summary>
+
+### fix: Reduce loading time of dictionaries. ([#8316](https://github.com/streetsidesoftware/cspell/pull/8316))
+
+---
+
+</details>
+
+<details>
+<summary>fix: Support loading btrie dictionaries in cspell-lib (<a href="https://github.com/streetsidesoftware/cspell/pull/8311">#8311</a>)</summary>
+
+### fix: Support loading btrie dictionaries in cspell-lib ([#8311](https://github.com/streetsidesoftware/cspell/pull/8311))
+
+## Pull request overview
+
+This PR adds support for loading btrie (binary trie) dictionaries in cspell-lib, enabling more efficient dictionary storage and loading. The changes also include enhancements to the table utility for better formatting and a refactoring of performance measurement tracking to use a hierarchical structure.
+
+- Added btrie path resolution and loading support in DictionarySettings and DictionaryLoader
+- Enhanced the table utility with column alignment, indentation, and title support
+- Refactored performance measurements to use a hierarchical tree structure instead of flat key-based tracking
+- Improved performance reporting with color coding and additional metrics
+
+---
+
+</details>
+
+<details>
+<summary>fix: Improve loading performance a bit. (<a href="https://github.com/streetsidesoftware/cspell/pull/8309">#8309</a>)</summary>
+
+### fix: Improve loading performance a bit. ([#8309](https://github.com/streetsidesoftware/cspell/pull/8309))
+
+---
+
+</details>
+
+<details>
+<summary>fix: Prepare tools to generate btrie files. (<a href="https://github.com/streetsidesoftware/cspell/pull/8298">#8298</a>)</summary>
+
+### fix: Prepare tools to generate btrie files. ([#8298](https://github.com/streetsidesoftware/cspell/pull/8298))
+
+---
+
+</details>
+
+<details>
+<summary>fix: Optimize btrie files when building (<a href="https://github.com/streetsidesoftware/cspell/pull/8285">#8285</a>)</summary>
+
+### fix: Optimize btrie files when building ([#8285](https://github.com/streetsidesoftware/cspell/pull/8285))
+
+Have CSpell Tools optimize the Trie while building. We are trying to reduce the size of the file.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Add `btrie` path to dictionary definition (<a href="https://github.com/streetsidesoftware/cspell/pull/8284">#8284</a>)</summary>
+
+### fix: Add `btrie` path to dictionary definition ([#8284](https://github.com/streetsidesoftware/cspell/pull/8284))
+
+Make it possible for a dictionary to specify a btrie path in addition to the normal `path`.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Work towards support prefixes when walking ITrie (<a href="https://github.com/streetsidesoftware/cspell/pull/8276">#8276</a>)</summary>
+
+### fix: Work towards support prefixes when walking ITrie ([#8276](https://github.com/streetsidesoftware/cspell/pull/8276))
+
+---
+
+</details>
+
+<details>
+<summary>fix: Fix CStyleHexValue to handle BigInt values. (<a href="https://github.com/streetsidesoftware/cspell/pull/8282">#8282</a>)</summary>
+
+### fix: Fix CStyleHexValue to handle BigInt values. ([#8282](https://github.com/streetsidesoftware/cspell/pull/8282))
+
+Example: `0xffff_ffff_ffffn`
+
+---
+
+</details>
+
+<details>
+<summary>refactor: Remove FastTrieBlob (<a href="https://github.com/streetsidesoftware/cspell/pull/8267">#8267</a>)</summary>
+
+### refactor: Remove FastTrieBlob ([#8267](https://github.com/streetsidesoftware/cspell/pull/8267))
+
+---
+
+</details>
+
+<details>
+<summary>fix: Make endian required when encoding a StringTable (<a href="https://github.com/streetsidesoftware/cspell/pull/8265">#8265</a>)</summary>
+
+### fix: Make endian required when encoding a StringTable ([#8265](https://github.com/streetsidesoftware/cspell/pull/8265))
+
+---
+
+</details>
+
+<details>
+<summary>refactor: Removed FastTrieBlob part 1 (<a href="https://github.com/streetsidesoftware/cspell/pull/8266">#8266</a>)</summary>
+
+### refactor: Removed FastTrieBlob part 1 ([#8266](https://github.com/streetsidesoftware/cspell/pull/8266))
+
+FastTrieBlob served it purpose. It is now time for it to be retired since it is too difficult to maintain in parallel with TrieBlob.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Support string prefixes when walking nodes (<a href="https://github.com/streetsidesoftware/cspell/pull/8259">#8259</a>)</summary>
+
+### fix: Support string prefixes when walking nodes ([#8259](https://github.com/streetsidesoftware/cspell/pull/8259))
+
+---
+
+</details>
+
+<details>
+<summary>refactor: Document TrieBlob format (<a href="https://github.com/streetsidesoftware/cspell/pull/8256">#8256</a>)</summary>
+
+### refactor: Document TrieBlob format ([#8256](https://github.com/streetsidesoftware/cspell/pull/8256))
+
+- Document TrieBlob format
+- Add TribBlob node optimizer to make DAWGs
+- Test out StringTables
+- Remove some dead code
+
+---
+
+</details>
+
+<details>
+<summary>fix: adjust error message (<a href="https://github.com/streetsidesoftware/cspell/pull/8249">#8249</a>)</summary>
+
+### fix: adjust error message ([#8249](https://github.com/streetsidesoftware/cspell/pull/8249))
+
+---
+
+</details>
+
+<details>
+<summary>fix: Add StringTable and refactor BinaryFormat (<a href="https://github.com/streetsidesoftware/cspell/pull/8243">#8243</a>)</summary>
+
+### fix: Add StringTable and refactor BinaryFormat ([#8243](https://github.com/streetsidesoftware/cspell/pull/8243))
+
+---
+
+</details>
+
+<details>
+<summary>refactor: Rename private methods in TrieBuilder (<a href="https://github.com/streetsidesoftware/cspell/pull/8240">#8240</a>)</summary>
+
+### refactor: Rename private methods in TrieBuilder ([#8240](https://github.com/streetsidesoftware/cspell/pull/8240))
+
+---
+
+</details>
+
+<details>
+<summary>refactor: A bit of refactoring of utf8 naming (<a href="https://github.com/streetsidesoftware/cspell/pull/8239">#8239</a>)</summary>
+
+### refactor: A bit of refactoring of utf8 naming ([#8239](https://github.com/streetsidesoftware/cspell/pull/8239))
+
+---
+
+</details>
+
+<details>
+<summary>refactor: Add GTrie class for later (<a href="https://github.com/streetsidesoftware/cspell/pull/8238">#8238</a>)</summary>
+
+### refactor: Add GTrie class for later ([#8238](https://github.com/streetsidesoftware/cspell/pull/8238))
+
+---
+
+</details>
+
+<details>
+<summary>refactor: import using .ts when the package is bundled. (<a href="https://github.com/streetsidesoftware/cspell/pull/8224">#8224</a>)</summary>
+
+### refactor: import using .ts when the package is bundled. ([#8224](https://github.com/streetsidesoftware/cspell/pull/8224))
+
+---
+
+</details>
+
+<details>
+<summary>fix: Add cspell-tools config option to gen btrie (<a href="https://github.com/streetsidesoftware/cspell/pull/8221">#8221</a>)</summary>
+
+### fix: Add cspell-tools config option to gen btrie ([#8221](https://github.com/streetsidesoftware/cspell/pull/8221))
+
+Add an option to tell the cspell-tools compiler to build btrie files.
+
+---
+
+</details>
+
+<details>
+<summary>feat: auto load btrie files if available (<a href="https://github.com/streetsidesoftware/cspell/pull/8218">#8218</a>)</summary>
+
+### feat: auto load btrie files if available ([#8218](https://github.com/streetsidesoftware/cspell/pull/8218))
+
+> \[!NOTE]
+> The automatic searching / loading of bTries has been removed. The intent is to have the btrie in the `path` or as a separate setting `btrie` instead of automatically searching.\
+> Loading of bTries is still supported.
+
+## Pull request overview
+
+This pull request adds automatic loading of btrie (binary trie) files as a performance optimization when loading dictionaries from node\_modules. The feature checks for .btrie or .btrie.gz files before falling back to .txt or .trie files, potentially improving dictionary loading performance with the more efficient binary format.
+
+**Changes:**
+
+- Added auto-detection and loading of btrie files for dictionaries in node\_modules
+- Updated type signatures from ArrayBufferLike to ArrayBufferView throughout cspell-io and cspell-trie-lib
+- Added support for async decompression via DecompressionStream API
+- Exported cspell-tools functions for programmatic btrie generation with compression options
+
+When loading dictionaries from `node_modules`, try to load `btrie` files before loading a `.txt` or `.trie` file.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Minor perf boost to TrieBlob.#findNode (<a href="https://github.com/streetsidesoftware/cspell/pull/8213">#8213</a>)</summary>
+
+### fix: Minor perf boost to TrieBlob.#findNode ([#8213](https://github.com/streetsidesoftware/cspell/pull/8213))
+
+---
+
+</details>
+
+<details>
+<summary>fix: deprecated legacy trie.has (<a href="https://github.com/streetsidesoftware/cspell/pull/8196">#8196</a>)</summary>
+
+### fix: deprecated legacy trie.has ([#8196](https://github.com/streetsidesoftware/cspell/pull/8196))
+
+---
+
+</details>
+
+<details>
+<summary>fix: Improve speed of dictionary lookup (<a href="https://github.com/streetsidesoftware/cspell/pull/8193">#8193</a>)</summary>
+
+### fix: Improve speed of dictionary lookup ([#8193](https://github.com/streetsidesoftware/cspell/pull/8193))
+
+---
+
+</details>
+
+<details>
+<summary>fix: Run perf tests on trie-lib (<a href="https://github.com/streetsidesoftware/cspell/pull/8188">#8188</a>)</summary>
+
+### fix: Run perf tests on trie-lib ([#8188](https://github.com/streetsidesoftware/cspell/pull/8188))
+
+---
+
+</details>
+
+<details>
+<summary>fix: Force consistent type imports (<a href="https://github.com/streetsidesoftware/cspell/pull/8187">#8187</a>)</summary>
+
+### fix: Force consistent type imports ([#8187](https://github.com/streetsidesoftware/cspell/pull/8187))
+
+---
+
+</details>
+
+<details>
+<summary>fix: Support adding separators when tracing compound words (<a href="https://github.com/streetsidesoftware/cspell/pull/8176">#8176</a>)</summary>
+
+### fix: Support adding separators when tracing compound words ([#8176](https://github.com/streetsidesoftware/cspell/pull/8176))
+
+## Pull request overview
+
+This pull request adds support for compound word separation when tracing words in cspell. When a compound word is found, it can now be displayed with a custom separator (e.g., "type•script•config" instead of "typescriptconfig").
+
+**Changes:**
+
+- Added `compoundSeparator` option to trace and find APIs across multiple layers
+- Updated compound word finding logic to return words with separators inserted between compound parts
+- Added comprehensive test coverage for the new functionality
+- Minor code quality improvements (type parameter cleanup, version test improvement, build configuration)
+
+---
+
+</details>
+
+### Dictionary Updates
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8326">#8326</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#8326](https://github.com/streetsidesoftware/cspell/pull/8326))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/slint-ui/slint/report.yaml           | 30 ++++---------------
+ .../snapshots/slint-ui/slint/snapshot.txt          | 22 +-------------
+ packages/cspell-bundled-dicts/package.json         |  6 ++--
+ pnpm-lock.yaml                                     | 35 ++++++++++++----------
+ 4 files changed, 29 insertions(+), 64 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8277">#8277</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#8277](https://github.com/streetsidesoftware/cspell/pull/8277))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../Azure/azure-rest-api-specs/report.yaml         |   6 +-
+ .../Azure/azure-rest-api-specs/snapshot.txt        |   6 +-
+ .../MartinThoma/LaTeX-examples/report.yaml         |   3 +-
+ .../MartinThoma/LaTeX-examples/snapshot.txt        |   3 +-
+ .../MicrosoftDocs/PowerShell-Docs/report.yaml      |   6 +-
+ .../MicrosoftDocs/PowerShell-Docs/snapshot.txt     |   4 +-
+ .../snapshots/TheAlgorithms/Python/report.yaml     |   4 +-
+ .../snapshots/TheAlgorithms/Python/snapshot.txt    |   4 +-
+ .../snapshots/alexiosc/megistos/report.yaml        |   3 +-
+ .../snapshots/alexiosc/megistos/snapshot.txt       |   3 +-
+ .../aspnetboilerplate/report.yaml                  |   4 +-
+ .../aspnetboilerplate/snapshot.txt                 |   4 +-
+ .../snapshots/caddyserver/caddy/report.yaml        |   5 +-
+ .../snapshots/caddyserver/caddy/snapshot.txt       |   5 +-
+ .../snapshots/dart-lang/sdk/report.yaml            |  32 +----
+ .../snapshots/dart-lang/sdk/snapshot.txt           |  12 +-
+ .../snapshots/django/django/report.yaml            |   6 +-
+ .../snapshots/django/django/snapshot.txt           |   3 +-
+ .../snapshots/eslint/eslint/report.yaml            |   4 +-
+ .../snapshots/eslint/eslint/snapshot.txt           |   3 +-
+ .../snapshots/flutter/samples/report.yaml          |   4 +-
+ .../snapshots/flutter/samples/snapshot.txt         |   3 +-
+ .../snapshots/gitbucket/gitbucket/report.yaml      |   3 +-
+ .../snapshots/gitbucket/gitbucket/snapshot.txt     |  57 ++++-----
+ .../googleapis/google-cloud-cpp/report.yaml        |  12 +-
+ .../googleapis/google-cloud-cpp/snapshot.txt       |  10 +-
+ .../iluwatar/java-design-patterns/report.yaml      |   9 +-
+ .../iluwatar/java-design-patterns/snapshot.txt     |   7 +-
+ .../snapshots/ktaranov/sqlserver-kit/report.yaml   |   6 +-
+ .../snapshots/ktaranov/sqlserver-kit/snapshot.txt  |   4 +-
+ .../snapshots/neovim/nvim-lspconfig/report.yaml    |   5 +-
+ .../snapshots/neovim/nvim-lspconfig/snapshot.txt   |   3 +-
+ .../snapshots/php/php-src/report.yaml              |   4 +-
+ .../snapshots/php/php-src/snapshot.txt             |   4 +-
+ .../snapshots/pycontribs/jira/report.yaml          |   3 +-
+ .../snapshots/pycontribs/jira/snapshot.txt         |   3 +-
+ .../snapshots/slint-ui/slint/report.yaml           |  13 +-
+ .../snapshots/slint-ui/slint/snapshot.txt          |   7 +-
+ .../snapshots/sveltejs/svelte/report.yaml          |   5 +-
+ .../snapshots/sveltejs/svelte/snapshot.txt         |   5 +-
+ .../typescript-cheatsheets/react/report.yaml       |   4 +-
+ .../typescript-cheatsheets/react/snapshot.txt      |   4 +-
+ .../snapshots/vitest-dev/vitest/report.yaml        |   4 +-
+ .../snapshots/vitest-dev/vitest/snapshot.txt       |   3 +-
+ packages/cspell-bundled-dicts/package.json         |  24 ++--
+ packages/cspell/src/__snapshots__/app.test.ts.snap |  32 +++--
+ pnpm-lock.yaml                                     | 142 +++++++++++----------
+ 47 files changed, 190 insertions(+), 310 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8192">#8192</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#8192](https://github.com/streetsidesoftware/cspell/pull/8192))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../MicrosoftDocs/PowerShell-Docs/report.yaml      |  7 +-
+ .../MicrosoftDocs/PowerShell-Docs/snapshot.txt     |  5 +-
+ .../snapshots/RustPython/RustPython/report.yaml    |  6 +-
+ .../snapshots/RustPython/RustPython/snapshot.txt   |  3 +-
+ .../snapshots/TheAlgorithms/Python/report.yaml     |  5 +-
+ .../snapshots/TheAlgorithms/Python/snapshot.txt    |  3 +-
+ .../snapshots/alexiosc/megistos/report.yaml        |  3 +-
+ .../snapshots/alexiosc/megistos/snapshot.txt       |  3 +-
+ .../aspnetboilerplate/report.yaml                  |  8 +-
+ .../aspnetboilerplate/snapshot.txt                 | 14 ++--
+ .../snapshots/dart-lang/sdk/report.yaml            | 14 +---
+ .../snapshots/dart-lang/sdk/snapshot.txt           | 11 +--
+ .../snapshots/django/django/report.yaml            |  5 +-
+ .../snapshots/django/django/snapshot.txt           |  4 +-
+ .../snapshots/eslint/eslint/report.yaml            |  6 +-
+ .../snapshots/eslint/eslint/snapshot.txt           |  4 +-
+ .../snapshots/flutter/samples/report.yaml          | 18 +---
+ .../snapshots/flutter/samples/snapshot.txt         | 10 +--
+ .../snapshots/gitbucket/gitbucket/report.yaml      | 10 +--
+ .../snapshots/gitbucket/gitbucket/snapshot.txt     |  6 +-
+ .../googleapis/google-cloud-cpp/report.yaml        |  8 +-
+ .../googleapis/google-cloud-cpp/snapshot.txt       |  6 +-
+ .../iluwatar/java-design-patterns/report.yaml      |  8 +-
+ .../iluwatar/java-design-patterns/snapshot.txt     |  8 +-
+ .../snapshots/ktaranov/sqlserver-kit/report.yaml   | 13 +--
+ .../snapshots/ktaranov/sqlserver-kit/snapshot.txt  | 19 ++---
+ .../snapshots/pagekit/pagekit/report.yaml          |  6 +-
+ .../snapshots/pagekit/pagekit/snapshot.txt         |  4 +-
+ .../snapshots/php/php-src/report.yaml              |  8 +-
+ .../snapshots/php/php-src/snapshot.txt             |  8 +-
+ .../snapshots/slint-ui/slint/report.yaml           | 97 +++++++++-------------
+ .../snapshots/slint-ui/slint/snapshot.txt          | 22 +----
+ .../snapshots/vitest-dev/vitest/report.yaml        |  4 +-
+ .../snapshots/vitest-dev/vitest/snapshot.txt       |  3 +-
+ packages/cspell-bundled-dicts/package.json         | 12 +--
+ packages/cspell/src/__snapshots__/app.test.ts.snap | 10 ++-
+ pnpm-lock.yaml                                     | 69 ++++++++-------
+ 37 files changed, 145 insertions(+), 305 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8186">#8186</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#8186](https://github.com/streetsidesoftware/cspell/pull/8186))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/alexiosc/megistos/report.yaml        |  6 +-----
+ .../snapshots/alexiosc/megistos/snapshot.txt       |  6 +-----
+ .../snapshots/php/php-src/report.yaml              | 24 +---------------------
+ .../snapshots/php/php-src/snapshot.txt             | 24 +---------------------
+ packages/cspell-bundled-dicts/package.json         |  2 +-
+ pnpm-lock.yaml                                     | 10 ++++-----
+ 6 files changed, 10 insertions(+), 62 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8182">#8182</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#8182](https://github.com/streetsidesoftware/cspell/pull/8182))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/RustPython/RustPython/report.yaml    | 843 ++++++++++++++++-----
+ .../snapshots/RustPython/RustPython/snapshot.txt   | 774 ++++++++++++++++---
+ .../snapshots/alexiosc/megistos/report.yaml        |  16 +-
+ .../snapshots/alexiosc/megistos/snapshot.txt       |  16 +-
+ .../snapshots/django/django/report.yaml            |   6 +-
+ .../snapshots/django/django/snapshot.txt           |   3 +-
+ .../googleapis/google-cloud-cpp/report.yaml        |   3 +-
+ .../googleapis/google-cloud-cpp/snapshot.txt       |   3 +-
+ .../snapshots/neovim/nvim-lspconfig/report.yaml    |   6 +-
+ .../snapshots/neovim/nvim-lspconfig/snapshot.txt   |   6 +-
+ .../snapshots/php/php-src/report.yaml              |  24 +-
+ .../snapshots/php/php-src/snapshot.txt             |  24 +-
+ packages/cspell-bundled-dicts/package.json         |  26 +-
+ pnpm-lock.yaml                                     | 161 ++--
+ 14 files changed, 1526 insertions(+), 385 deletions(-)
+```
+
+---
+
+</details>
+
+### Documentation
+
+<details>
+<summary>refactor: landing page update (<a href="https://github.com/streetsidesoftware/cspell/pull/8211">#8211</a>)</summary>
+
+### refactor: landing page update ([#8211](https://github.com/streetsidesoftware/cspell/pull/8211))
+
+## Description
+
+This PR introduces a new landing page for the `cspell` package, leveraging the ability to write custom `React` components in Docosaurus. The PR introduces new colour variants and a few new `md` pages for sections that were removed from the previous home page structure.
+
+### Video
+
+<https://github.com/user-attachments/assets/0773b4b5-2e4a-418e-aa6c-5a6e4209798c>
+
+<https://github.com/user-attachments/assets/7e846066-fdac-44ae-b731-c206eadd822e>
+
+Thank you!
+
+---
+
+</details>
+
+## v9.5.0 (2025-12-16)
+
+### Features
+
+<details>
+<summary>feat: Report errors with nested config files (<a href="https://github.com/streetsidesoftware/cspell/pull/8155">#8155</a>)</summary>
+
+### feat: Report errors with nested config files ([#8155](https://github.com/streetsidesoftware/cspell/pull/8155))
+
+fixes: #7837
+
+Errors in nested configuration files were ignored. This lead to unexpected behavior.
+
+Note: this is a fix, but since it can impact existing installs, it is marked as a feature change.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Enable cts config support (<a href="https://github.com/streetsidesoftware/cspell/pull/8152">#8152</a>)</summary>
+
+### fix: Enable cts config support ([#8152](https://github.com/streetsidesoftware/cspell/pull/8152))
+
+Add support for `.cts` config files.
+
+Update docs with `ts`, `mts`, and `cts` config.
+
+---
+
+</details>
+
+### Fixes
+
+<details>
+<summary>fix: Add cspell-tools option keepUncompressed (<a href="https://github.com/streetsidesoftware/cspell/pull/8163">#8163</a>)</summary>
+
+### fix: Add cspell-tools option keepUncompressed ([#8163](https://github.com/streetsidesoftware/cspell/pull/8163))
+
+---
+
+</details>
+
+<details>
+<summary>fix: Improve CSpell Tools (<a href="https://github.com/streetsidesoftware/cspell/pull/8160">#8160</a>)</summary>
+
+### fix: Improve CSpell Tools ([#8160](https://github.com/streetsidesoftware/cspell/pull/8160))
+
+Generate both compressed and non-compressed files when `compress: true`. This allows cspell-dicts to keep track of changes and have compressed files at the same time.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Make sure `cspell` exports `defineConfig ` for CommonJS (<a href="https://github.com/streetsidesoftware/cspell/pull/8156">#8156</a>)</summary>
+
+### fix: Make sure `cspell` exports `defineConfig ` for CommonJS ([#8156](https://github.com/streetsidesoftware/cspell/pull/8156))
+
+---
+
+</details>
+
+### Dictionary Updates
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8149">#8149</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#8149](https://github.com/streetsidesoftware/cspell/pull/8149))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/AdaDoom3/AdaDoom3/report.yaml        |   7 +-
+ .../snapshots/AdaDoom3/AdaDoom3/snapshot.txt       |   7 +-
+ .../snapshots/TheAlgorithms/Python/report.yaml     |   5 +-
+ .../snapshots/TheAlgorithms/Python/snapshot.txt    |   5 +-
+ .../snapshots/dart-lang/sdk/report.yaml            |   8 +-
+ .../snapshots/dart-lang/sdk/snapshot.txt           |   4 +-
+ .../snapshots/django/django/report.yaml            |  13 +--
+ .../snapshots/django/django/snapshot.txt           |  44 ++++----
+ .../iluwatar/java-design-patterns/report.yaml      |   3 +-
+ .../iluwatar/java-design-patterns/snapshot.txt     |   3 +-
+ .../snapshots/ktaranov/sqlserver-kit/report.yaml   |   4 +-
+ .../snapshots/ktaranov/sqlserver-kit/snapshot.txt  |   3 +-
+ .../snapshots/neovim/nvim-lspconfig/report.yaml    |   5 +-
+ .../snapshots/neovim/nvim-lspconfig/snapshot.txt   |   3 +-
+ .../snapshots/slint-ui/slint/report.yaml           |   8 +-
+ .../snapshots/slint-ui/slint/snapshot.txt          |   7 +-
+ .../snapshots/sveltejs/svelte/report.yaml          |   3 +-
+ .../snapshots/sveltejs/svelte/snapshot.txt         |   3 +-
+ packages/cspell-bundled-dicts/package.json         |  20 ++--
+ pnpm-lock.yaml                                     | 120 +++++++++++----------
+ 20 files changed, 115 insertions(+), 160 deletions(-)
+```
+
+---
+
+</details>
+
+## v9.4.0 (2025-12-01)
+
+### Features
+
+<details>
+<summary>feat: Add option to skip large files (<a href="https://github.com/streetsidesoftware/cspell/pull/8040">#8040</a>)</summary>
+
+### feat: Add option to skip large files ([#8040](https://github.com/streetsidesoftware/cspell/pull/8040))
+
+New command line option: `--max-file-size <value>`
+The value can be `<number>[units]`, number with optional units.
+Supported units:
+
+- `K`, `KB` - value \* 1024
+- `M`, `MB` - value \* 2^20
+- `G`, `GB` - value \* 2^30
+
+There is also a new setting called `maxFileSize`. At the moment, it only takes numbers in bytes.
+
+This allows for setting a global value and overrides based upon glob settings.
+
+Note: the command line value will override any value found in the configuration files.
+
+---
+
+</details>
+
+### Fixes
+
+<details>
+<summary>fix: turn off gpg when publishing for now (<a href="https://github.com/streetsidesoftware/cspell/pull/8104">#8104</a>)</summary>
+
+### fix: turn off gpg when publishing for now ([#8104](https://github.com/streetsidesoftware/cspell/pull/8104))
+
+---
+
+</details>
+
+<details>
+<summary>fix: Turnoff signing for now (<a href="https://github.com/streetsidesoftware/cspell/pull/8102">#8102</a>)</summary>
+
+### fix: Turnoff signing for now ([#8102](https://github.com/streetsidesoftware/cspell/pull/8102))
+
+---
+
+</details>
+
+<details>
+<summary>fix: Sign tags and commits when publishing (<a href="https://github.com/streetsidesoftware/cspell/pull/8096">#8096</a>)</summary>
+
+### fix: Sign tags and commits when publishing ([#8096](https://github.com/streetsidesoftware/cspell/pull/8096))
+
+---
+
+</details>
+
+<details>
+<summary>fix: Clean up verbose output (<a href="https://github.com/streetsidesoftware/cspell/pull/8053">#8053</a>)</summary>
+
+### fix: Clean up verbose output ([#8053](https://github.com/streetsidesoftware/cspell/pull/8053))
+
+---
+
+</details>
+
+<details>
+<summary>fix: allow string based maxFileSize (<a href="https://github.com/streetsidesoftware/cspell/pull/8047">#8047</a>)</summary>
+
+### fix: allow string based maxFileSize ([#8047](https://github.com/streetsidesoftware/cspell/pull/8047))
+
+- Support allowing string based maxFileSize in config files.
+- Report the number of skipped files.
+
+---
+
+</details>
+
+### Dictionary Updates
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8091">#8091</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#8091](https://github.com/streetsidesoftware/cspell/pull/8091))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ packages/cspell-bundled-dicts/package.json |  2 +-
+ pnpm-lock.yaml                             | 11 ++++++++---
+ 2 files changed, 9 insertions(+), 4 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8080">#8080</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#8080](https://github.com/streetsidesoftware/cspell/pull/8080))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/django/django/report.yaml            |  25 +--
+ .../snapshots/django/django/snapshot.txt           |  20 +-
+ .../snapshots/php/php-src/report.yaml              | 237 ++++++++++-----------
+ .../snapshots/php/php-src/snapshot.txt             |   7 +-
+ packages/cspell-bundled-dicts/package.json         |  10 +-
+ pnpm-lock.yaml                                     |  64 +++---
+ 6 files changed, 163 insertions(+), 200 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8058">#8058</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#8058](https://github.com/streetsidesoftware/cspell/pull/8058))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ integration-tests/snapshots/slint-ui/slint/report.yaml  | 11 +++--------
+ integration-tests/snapshots/slint-ui/slint/snapshot.txt |  7 +------
+ packages/cspell-bundled-dicts/package.json              |  2 +-
+ pnpm-lock.yaml                                          | 12 ++++++------
+ 4 files changed, 11 insertions(+), 21 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8036">#8036</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#8036](https://github.com/streetsidesoftware/cspell/pull/8036))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/TheAlgorithms/Python/report.yaml     |  7 +--
+ .../snapshots/TheAlgorithms/Python/snapshot.txt    |  5 +--
+ .../snapshots/eslint/eslint/report.yaml            |  6 +--
+ .../snapshots/eslint/eslint/snapshot.txt           |  3 +-
+ .../microsoft/TypeScript-Website/report.yaml       |  5 +--
+ .../microsoft/TypeScript-Website/snapshot.txt      |  3 +-
+ .../snapshots/slint-ui/slint/report.yaml           |  7 ++-
+ .../snapshots/slint-ui/slint/snapshot.txt          |  3 +-
+ packages/cspell-bundled-dicts/package.json         |  8 ++--
+ pnpm-lock.yaml                                     | 51 ++++++++++++----------
+ 10 files changed, 46 insertions(+), 52 deletions(-)
+```
+
+---
+
+</details>
+
+## v9.3.2 (2025-11-15)
+
+### Fixes
+
+<details>
+<summary>fix: Add Zig programming language dictionary (<a href="https://github.com/streetsidesoftware/cspell/pull/7998">#7998</a>)</summary>
+
+### fix: Add Zig programming language dictionary ([#7998](https://github.com/streetsidesoftware/cspell/pull/7998))
+
+---
+
+</details>
+
+<details>
+<summary>fix: Search for TypeScript config files. (<a href="https://github.com/streetsidesoftware/cspell/pull/7997">#7997</a>)</summary>
+
+### fix: Search for TypeScript config files. ([#7997](https://github.com/streetsidesoftware/cspell/pull/7997))
+
+TypeScript files were allowed, but would not be automatically found.
+
+---
+
+</details>
+
+### Dictionary Updates
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8004">#8004</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#8004](https://github.com/streetsidesoftware/cspell/pull/8004))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/ktaranov/sqlserver-kit/report.yaml   |  4 +--
+ .../snapshots/ktaranov/sqlserver-kit/snapshot.txt  |  5 ++-
+ packages/cspell-bundled-dicts/package.json         |  6 ++--
+ pnpm-lock.yaml                                     | 36 +++++++++++-----------
+ 4 files changed, 24 insertions(+), 27 deletions(-)
+```
+
+---
+
+</details>
+
+## v9.3.1 (2025-11-12)
+
+### Fixes
+
+<details>
+<summary>fix: Support Deno (<a href="https://github.com/streetsidesoftware/cspell/pull/7966">#7966</a>)</summary>
+
+### fix: Support Deno ([#7966](https://github.com/streetsidesoftware/cspell/pull/7966))
+
+## Deno
+
+This should enable running:
+
+```
+deno run -A cspell lint -c ./cspell.config.mts src
+```
+
+## Bun
+
+I tried bun, but it failed with:
+
+<img width="704" height="283" alt="image" src="https://github.com/user-attachments/assets/c47a5bfb-4410-4f8c-b40d-08868749e332" />
+
+## WIP
+
+Note: this is a work in progress. Deno does not support NodeJS's Buffer for decoding compressed binary data. I'll investigate a workaround.
+
+Current issue: <img width="958" height="172" alt="image" src="https://github.com/user-attachments/assets/517e5392-93c1-472b-878d-42566f7a8f38" />
+
+It also blows up with encountering `yarn` blobs, but that is to be expected.
+
+---
+
+</details>
+
+## v9.3.0 (2025-11-05)
+
+### Features
+
+<details>
+<summary>feat: Support loading `.ts` and `.mts` config files. (<a href="https://github.com/streetsidesoftware/cspell/pull/7961">#7961</a>)</summary>
+
+### feat: Support loading `.ts` and `.mts` config files. ([#7961](https://github.com/streetsidesoftware/cspell/pull/7961))
+
+This PR add support to read TypeScript cspell config files.
+
+Note: TypeScript config files will fail to load when NodeJS version is less than `v22.18.0`.
+
+See: [Node.js — Running TypeScript Natively](https://nodejs.org/en/learn/typescript/run-natively)
+
+---
+
+</details>
+
+### Dictionary Updates
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7950">#7950</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#7950](https://github.com/streetsidesoftware/cspell/pull/7950))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/sveltejs/svelte/report.yaml          |  3 +-
+ .../snapshots/sveltejs/svelte/snapshot.txt         |  7 +--
+ packages/cspell-bundled-dicts/package.json         | 12 ++--
+ pnpm-lock.yaml                                     | 68 +++++++++++++---------
+ 4 files changed, 49 insertions(+), 41 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7940">#7940</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#7940](https://github.com/streetsidesoftware/cspell/pull/7940))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/AdaDoom3/AdaDoom3/report.yaml        |   3 +-
+ .../snapshots/AdaDoom3/AdaDoom3/snapshot.txt       |  17 ++-
+ .../Azure/azure-rest-api-specs/report.yaml         |   6 +-
+ .../Azure/azure-rest-api-specs/snapshot.txt        |  14 +--
+ .../MartinThoma/LaTeX-examples/report.yaml         |   5 +-
+ .../MartinThoma/LaTeX-examples/snapshot.txt        |   5 +-
+ .../MicrosoftDocs/PowerShell-Docs/report.yaml      |  55 +++------
+ .../MicrosoftDocs/PowerShell-Docs/snapshot.txt     |  21 +---
+ .../snapshots/TheAlgorithms/Python/report.yaml     |   9 +-
+ .../snapshots/TheAlgorithms/Python/snapshot.txt    |   7 +-
+ .../snapshots/caddyserver/caddy/report.yaml        |   4 +-
+ .../snapshots/caddyserver/caddy/snapshot.txt       |   4 +-
+ .../snapshots/dart-lang/sdk/report.yaml            |  20 +---
+ .../snapshots/dart-lang/sdk/snapshot.txt           |   9 +-
+ .../snapshots/django/django/report.yaml            |   6 +-
+ .../snapshots/django/django/snapshot.txt           |   5 +-
+ .../snapshots/eslint/eslint/report.yaml            |   4 +-
+ .../snapshots/eslint/eslint/snapshot.txt           |   3 +-
+ .../snapshots/flutter/samples/report.yaml          |  31 +----
+ .../snapshots/flutter/samples/snapshot.txt         |  29 +----
+ .../googleapis/google-cloud-cpp/report.yaml        |  17 +--
+ .../googleapis/google-cloud-cpp/snapshot.txt       |  15 +--
+ .../snapshots/ktaranov/sqlserver-kit/report.yaml   |  12 +-
+ .../snapshots/ktaranov/sqlserver-kit/snapshot.txt  |  25 ++--
+ .../snapshots/neovim/nvim-lspconfig/report.yaml    |   7 +-
+ .../snapshots/neovim/nvim-lspconfig/snapshot.txt   |   9 +-
+ .../snapshots/php/php-src/report.yaml              |  31 +----
+ .../snapshots/php/php-src/snapshot.txt             |  31 +----
+ .../snapshots/pycontribs/jira/report.yaml          |   3 +-
+ .../snapshots/pycontribs/jira/snapshot.txt         |   3 +-
+ .../snapshots/slint-ui/slint/report.yaml           |  51 +-------
+ .../snapshots/slint-ui/slint/snapshot.txt          |  36 +-----
+ .../snapshots/wireapp/wire-webapp/report.yaml      |  35 +++---
+ .../snapshots/wireapp/wire-webapp/snapshot.txt     |  19 ++-
+ packages/cspell-bundled-dicts/package.json         |  22 ++--
+ pnpm-lock.yaml                                     | 133 ++++++++++++---------
+ 36 files changed, 184 insertions(+), 522 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7933">#7933</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#7933](https://github.com/streetsidesoftware/cspell/pull/7933))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/ktaranov/sqlserver-kit/report.yaml   |  8 +++-
+ .../snapshots/ktaranov/sqlserver-kit/snapshot.txt  |  7 +++-
+ .../snapshots/slint-ui/slint/report.yaml           |  4 +-
+ .../snapshots/slint-ui/slint/snapshot.txt          |  3 +-
+ packages/cspell-bundled-dicts/package.json         |  8 ++--
+ pnpm-lock.yaml                                     | 45 ++++++++++++----------
+ 6 files changed, 44 insertions(+), 31 deletions(-)
+```
+
+---
+
+</details>
+
+## v9.2.2 (2025-10-22)
+
+### Fixes
+
+<details>
+<summary>fix: Wait for the cache to save (<a href="https://github.com/streetsidesoftware/cspell/pull/7926">#7926</a>)</summary>
+
+### fix: Wait for the cache to save ([#7926](https://github.com/streetsidesoftware/cspell/pull/7926))
+
+This fixes a flaky cache situation caused by not waiting for the cache to save before moving on.
+
+---
+
+</details>
+
+### Dictionary Updates
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7915">#7915</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#7915](https://github.com/streetsidesoftware/cspell/pull/7915))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../MicrosoftDocs/PowerShell-Docs/report.yaml      |   3 +-
+ .../MicrosoftDocs/PowerShell-Docs/snapshot.txt     |   3 +-
+ .../snapshots/TheAlgorithms/Python/report.yaml     |   3 +-
+ .../snapshots/TheAlgorithms/Python/snapshot.txt    |   3 +-
+ .../snapshots/flutter/samples/report.yaml          |   4 +-
+ .../snapshots/flutter/samples/snapshot.txt         |   3 +-
+ .../snapshots/gitbucket/gitbucket/report.yaml      |   4 +-
+ .../snapshots/gitbucket/gitbucket/snapshot.txt     |   4 +-
+ .../snapshots/neovim/nvim-lspconfig/report.yaml    |   6 +-
+ .../snapshots/neovim/nvim-lspconfig/snapshot.txt   |   6 +-
+ .../snapshots/php/php-src/report.yaml              |  92 +------------------
+ .../snapshots/php/php-src/snapshot.txt             | 102 ++-------------------
+ .../snapshots/slint-ui/slint/report.yaml           |  33 ++-----
+ .../snapshots/slint-ui/slint/snapshot.txt          |  11 +--
+ .../snapshots/sveltejs/svelte/report.yaml          |   3 +-
+ .../snapshots/sveltejs/svelte/snapshot.txt         |   3 +-
+ packages/cspell-bundled-dicts/package.json         |  16 ++--
+ pnpm-lock.yaml                                     |  96 ++++++++++---------
+ 18 files changed, 96 insertions(+), 299 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7835">#7835</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#7835](https://github.com/streetsidesoftware/cspell/pull/7835))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ packages/cspell-bundled-dicts/package.json |   4 +-
+ packages/cspell-lib/api/api.d.ts           |   9 --
+ pnpm-lock.yaml                             | 207 ++++++++++++++++-------------
+ 3 files changed, 118 insertions(+), 102 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7822">#7822</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#7822](https://github.com/streetsidesoftware/cspell/pull/7822))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/vitest-dev/vitest/report.yaml        |  4 +-
+ .../snapshots/vitest-dev/vitest/snapshot.txt       |  3 +-
+ packages/cspell-bundled-dicts/package.json         |  8 ++--
+ pnpm-lock.yaml                                     | 45 ++++++++++++----------
+ 4 files changed, 31 insertions(+), 29 deletions(-)
+```
+
+---
+
+</details>
+
+## v9.2.1 (2025-08-31)
+
+### Dictionary Updates
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7795">#7795</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#7795](https://github.com/streetsidesoftware/cspell/pull/7795))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/graphql/graphql-spec/report.yaml     | 108 ++++++++++-----------
+ .../snapshots/wireapp/wire-desktop/report.yaml     |   2 +-
+ packages/cspell-bundled-dicts/package.json         |   8 +-
+ packages/cspell/src/__snapshots__/app.test.ts.snap |  15 +--
+ pnpm-lock.yaml                                     |  44 +++++----
+ 5 files changed, 95 insertions(+), 82 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7791">#7791</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#7791](https://github.com/streetsidesoftware/cspell/pull/7791))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ packages/cspell-bundled-dicts/package.json         |  8 ++--
+ packages/cspell/src/__snapshots__/app.test.ts.snap | 22 +++++-----
+ pnpm-lock.yaml                                     | 47 ++++++++++++----------
+ 3 files changed, 41 insertions(+), 36 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7768">#7768</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#7768](https://github.com/streetsidesoftware/cspell/pull/7768))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ packages/cspell-bundled-dicts/package.json |  2 +-
+ pnpm-lock.yaml                             | 11 ++++++++---
+ 2 files changed, 9 insertions(+), 4 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7764">#7764</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#7764](https://github.com/streetsidesoftware/cspell/pull/7764))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/django/django/report.yaml            |  4 +-
+ .../snapshots/django/django/snapshot.txt           |  3 +-
+ .../snapshots/php/php-src/report.yaml              |  3 +-
+ .../snapshots/php/php-src/snapshot.txt             |  3 +-
+ packages/cspell-bundled-dicts/package.json         | 10 ++--
+ pnpm-lock.yaml                                     | 57 ++++++++++++----------
+ 6 files changed, 40 insertions(+), 40 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7745">#7745</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#7745](https://github.com/streetsidesoftware/cspell/pull/7745))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/TheAlgorithms/Python/report.yaml     |   3 +-
+ .../snapshots/TheAlgorithms/Python/snapshot.txt    |   3 +-
+ packages/cspell-bundled-dicts/package.json         |   2 +-
+ pnpm-lock.yaml                                     | 162 ++++++++++-----------
+ 4 files changed, 84 insertions(+), 86 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7728">#7728</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#7728](https://github.com/streetsidesoftware/cspell/pull/7728))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ integration-tests/snapshots/mdx-js/mdx/report.yaml |  3 +--
+ .../snapshots/mdx-js/mdx/snapshot.txt              |  3 +--
+ .../snapshots/vitest-dev/vitest/report.yaml        |  6 +-----
+ .../snapshots/vitest-dev/vitest/snapshot.txt       |  4 +---
+ packages/cspell-bundled-dicts/package.json         |  4 ++--
+ pnpm-lock.yaml                                     | 24 +++++++++++-----------
+ 6 files changed, 18 insertions(+), 26 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7672">#7672</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#7672](https://github.com/streetsidesoftware/cspell/pull/7672))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ packages/cspell-bundled-dicts/package.json |  6 ++---
+ pnpm-lock.yaml                             | 36 +++++++++++++++---------------
+ 2 files changed, 21 insertions(+), 21 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7662">#7662</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#7662](https://github.com/streetsidesoftware/cspell/pull/7662))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ packages/cspell-bundled-dicts/package.json |  6 ++---
+ pnpm-lock.yaml                             | 36 +++++++++++++++---------------
+ 2 files changed, 21 insertions(+), 21 deletions(-)
+```
+
+---
+
+</details>
+
+## v9.2.0 (2025-07-19)
+
+<details>
+<summary>refactor: Support url based cache entries (<a href="https://github.com/streetsidesoftware/cspell/pull/7639">#7639</a>)</summary>
+
+### refactor: Support url based cache entries ([#7639](https://github.com/streetsidesoftware/cspell/pull/7639))
+
+---
+
+</details>
+
+### Features
+
+<details>
+<summary>fix: Support remote dependencies in cache (<a href="https://github.com/streetsidesoftware/cspell/pull/7642">#7642</a>)</summary>
+
+### fix: Support remote dependencies in cache ([#7642](https://github.com/streetsidesoftware/cspell/pull/7642))
+
+---
+
+</details>
+
+### Fixes
+
+<details>
+<summary>fix: Remove `flat-cache` dependency (<a href="https://github.com/streetsidesoftware/cspell/pull/7636">#7636</a>)</summary>
+
+### fix: Remove `flat-cache` dependency ([#7636](https://github.com/streetsidesoftware/cspell/pull/7636))
+
+`flat-cache` v6 is not compatible with the cspell cache. Since `flat-cache` was mostly a pass through to `flatted`, it was better to just replace it.
+
+---
+
+</details>
+
+<details>
+<summary>refactor: move towards caching URLs (<a href="https://github.com/streetsidesoftware/cspell/pull/7634">#7634</a>)</summary>
+
+### refactor: move towards caching URLs ([#7634](https://github.com/streetsidesoftware/cspell/pull/7634))
+
+---
+
+</details>
+
+<details>
+<summary>fix: Support async cache (<a href="https://github.com/streetsidesoftware/cspell/pull/7631">#7631</a>)</summary>
+
+### fix: Support async cache ([#7631](https://github.com/streetsidesoftware/cspell/pull/7631))
+
+---
+
+</details>
+
+<details>
+<summary>fix: Replace file-entry-cache (<a href="https://github.com/streetsidesoftware/cspell/pull/6579">#6579</a>)</summary>
+
+### fix: Replace file-entry-cache ([#6579](https://github.com/streetsidesoftware/cspell/pull/6579))
+
+Deprecating the use of file-entry-cache.
+
+v10 of `file-entry-cache` breaks the spell checker and bloats the cache size.
+
+This PR is the first step in reducing the dependency upon file-entry-cache and its dependencies.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Clean cspell-lib type exports (<a href="https://github.com/streetsidesoftware/cspell/pull/7615">#7615</a>)</summary>
+
+### fix: Clean cspell-lib type exports ([#7615](https://github.com/streetsidesoftware/cspell/pull/7615))
+
+---
+
+</details>
+
+### Dictionary Updates
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7618">#7618</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#7618](https://github.com/streetsidesoftware/cspell/pull/7618))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ integration-tests/snapshots/vitest-dev/vitest/report.yaml  | 10 ++--------
+ integration-tests/snapshots/vitest-dev/vitest/snapshot.txt |  5 +----
+ packages/cspell-bundled-dicts/package.json                 |  2 +-
+ pnpm-lock.yaml                                             | 12 ++++++------
+ 4 files changed, 10 insertions(+), 19 deletions(-)
+```
+
+---
+
+</details>
+
+## v9.1.5 (2025-07-13)
+
+### Fixes
+
+<details>
+<summary>fix: Compile before publish (<a href="https://github.com/streetsidesoftware/cspell/pull/7610">#7610</a>)</summary>
+
+### fix: Compile before publish ([#7610](https://github.com/streetsidesoftware/cspell/pull/7610))
+
+---
+
+</details>
+
+## v9.1.4 (2025-07-13)
+
+### Fixes
+
+<details>
+<summary>fix: show simple typos reporting (<a href="https://github.com/streetsidesoftware/cspell/pull/7606">#7606</a>)</summary>
+
+### fix: show simple typos reporting ([#7606](https://github.com/streetsidesoftware/cspell/pull/7606))
+
+Fix the logic to show an issue when the reporting level is set to `simple`. The code worked because of the assumption that  `hasSimpleSuggestions` would be true if `hasPreferredSuggestions` was true.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Reduce CSpell package size (<a href="https://github.com/streetsidesoftware/cspell/pull/7602">#7602</a>)</summary>
+
+### fix: Reduce CSpell package size ([#7602](https://github.com/streetsidesoftware/cspell/pull/7602))
+
+---
+
+</details>
+
+<details>
+<summary>fix: Make it easier to create config files. (<a href="https://github.com/streetsidesoftware/cspell/pull/7598">#7598</a>)</summary>
+
+### fix: Make it easier to create config files. ([#7598](https://github.com/streetsidesoftware/cspell/pull/7598))
+
+---
+
+</details>
+
+<details>
+<summary>fix: store reportIssueOptions in the cache (<a href="https://github.com/streetsidesoftware/cspell/pull/7597">#7597</a>)</summary>
+
+### fix: store reportIssueOptions in the cache ([#7597](https://github.com/streetsidesoftware/cspell/pull/7597))
+
+This fixes and issue with reporting cached issues when they should have been ignored.
+
+---
+
+</details>
+
+### Dictionary Updates
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7591">#7591</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#7591](https://github.com/streetsidesoftware/cspell/pull/7591))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ packages/cspell-bundled-dicts/package.json | 116 ++---
+ pnpm-lock.yaml                             | 706 +++++++++++++++--------------
+ 2 files changed, 432 insertions(+), 390 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7574">#7574</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#7574](https://github.com/streetsidesoftware/cspell/pull/7574))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ packages/cspell-bundled-dicts/package.json |  4 ++--
+ pnpm-lock.yaml                             | 24 ++++++++++++------------
+ 2 files changed, 14 insertions(+), 14 deletions(-)
+```
+
+---
+
+</details>
+
+## v9.1.3 (2025-07-05)
+
+### Fixes
+
+<details>
+<summary>fix: Add toml config reader/writer (<a href="https://github.com/streetsidesoftware/cspell/pull/7565">#7565</a>)</summary>
+
+### fix: Add toml config reader/writer ([#7565](https://github.com/streetsidesoftware/cspell/pull/7565))
+
+fixes #7563
+
+---
+
+</details>
+
+### Dictionary Updates
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7569">#7569</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#7569](https://github.com/streetsidesoftware/cspell/pull/7569))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ packages/cspell-bundled-dicts/package.json |  2 +-
+ pnpm-lock.yaml                             | 12 ++++++------
+ 2 files changed, 7 insertions(+), 7 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7564">#7564</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#7564](https://github.com/streetsidesoftware/cspell/pull/7564))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ packages/cspell-bundled-dicts/package.json |  2 +-
+ pnpm-lock.yaml                             | 12 ++++++------
+ 2 files changed, 7 insertions(+), 7 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7560">#7560</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#7560](https://github.com/streetsidesoftware/cspell/pull/7560))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/flutter/samples/report.yaml          |  4 +--
+ .../snapshots/flutter/samples/snapshot.txt         |  7 ++---
+ packages/cspell-bundled-dicts/package.json         |  6 ++--
+ pnpm-lock.yaml                                     | 33 +++++++++++++---------
+ 4 files changed, 26 insertions(+), 24 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7549">#7549</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#7549](https://github.com/streetsidesoftware/cspell/pull/7549))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ integration-tests/snapshots/mdx-js/mdx/report.yaml | 46 ++--------------------
+ .../snapshots/mdx-js/mdx/snapshot.txt              | 43 +-------------------
+ packages/cspell-bundled-dicts/package.json         |  8 ++--
+ pnpm-lock.yaml                                     | 45 +++++++++++----------
+ 4 files changed, 33 insertions(+), 109 deletions(-)
+```
+
+---
+
+</details>
+
+### Documentation
+
+<details>
+<summary>fix: Add toml config reader/writer (<a href="https://github.com/streetsidesoftware/cspell/pull/7565">#7565</a>)</summary>
+
+### fix: Add toml config reader/writer ([#7565](https://github.com/streetsidesoftware/cspell/pull/7565))
+
+fixes #7563
+
+---
+
+</details>
+
+## v9.1.2 (2025-06-24)
+
+### Fixes
+
+<details>
+<summary>fix: Do not double encode stdin urls (<a href="https://github.com/streetsidesoftware/cspell/pull/7536">#7536</a>)</summary>
+
+### fix: Do not double encode stdin urls ([#7536](https://github.com/streetsidesoftware/cspell/pull/7536))
+
+fixes #7517
+
+---
+
+</details>
+
+<details>
+<summary>fix: cspell trace output (<a href="https://github.com/streetsidesoftware/cspell/pull/7528">#7528</a>)</summary>
+
+### fix: cspell trace output ([#7528](https://github.com/streetsidesoftware/cspell/pull/7528))
+
+It was incorrectly trimming ansi strings.
+
+---
+
+</details>
+
+### Dictionary Updates
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7526">#7526</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#7526](https://github.com/streetsidesoftware/cspell/pull/7526))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ packages/cspell-bundled-dicts/package.json |  4 ++--
+ pnpm-lock.yaml                             | 24 ++++++++++++------------
+ 2 files changed, 14 insertions(+), 14 deletions(-)
+```
+
+---
+
+</details>
+
+## v9.1.1 (2025-06-14)
+
+### Changes
+
+### Fixes
+
+<details>
+<summary>fix: Use the native JSON parser if possible (<a href="https://github.com/streetsidesoftware/cspell/pull/7502">#7502</a>)</summary>
+
+### fix: Use the native JSON parser if possible ([#7502](https://github.com/streetsidesoftware/cspell/pull/7502))
+
+Some of the cspell settings have grow large. The fix is to use the native JSON parser instead of one that accepts comments.
+
+---
+
+</details>
+
+## v9.1.0 (2025-06-14)
+
+### Changes
+
+### Features
+
+<details>
+<summary>feat: Add command `dictionaries` (<a href="https://github.com/streetsidesoftware/cspell/pull/7445">#7445</a>)</summary>
+
+### feat: Add command `dictionaries` ([#7445](https://github.com/streetsidesoftware/cspell/pull/7445))
+
+Add new `dictionaries` command to the cli
+
+```
+Usage: cspell dictionaries [options]
+
+List dictionaries
+
+Options:
+  -c, --config <cspell.json>  Configuration file to use.  By default cspell
+                              looks for cspell.json in the current directory.
+  --path-format <format>      Configure how to display the dictionary path.
+                              (choices: "hide", "short", "long", "full",
+                              default: Display most of the path.)
+  --color                     Force color.
+  --no-color                  Turn off color.
+  --no-default-configuration  Do not load the default configuration and
+                              dictionaries.
+  -h, --help                  display help for command
+```
+
+---
+
+</details>
+
+<details>
+<summary>feat: Add lint option `--dictionary` (<a href="https://github.com/streetsidesoftware/cspell/pull/7441">#7441</a>)</summary>
+
+### feat: Add lint option `--dictionary` ([#7441](https://github.com/streetsidesoftware/cspell/pull/7441))
+
+Add lint options:
+
+- `--dictionary` - enable a dictionary by name
+- `--disable-dictionary` - disable a dictionary by name
+
+---
+
+</details>
+
+<details>
+<summary>feat: Add init command to command-line. (<a href="https://github.com/streetsidesoftware/cspell/pull/7414">#7414</a>)</summary>
+
+### feat: Add init command to command-line. ([#7414](https://github.com/streetsidesoftware/cspell/pull/7414))
+
+New command:
+
+```
+Usage: cspell init [options]
+
+Initialize a CSpell configuration file.
+
+Options:
+  -o, --output <path>        Define where to write file.
+  --format <format>          Define the format of the file. (choices: "yaml",
+                             "yml", "json", "jsonc", default: "yaml")
+  --import <path|package>    Import a configuration file or dictionary package.
+  --locale <locale>          Define the locale to use when spell checking (e.g.,
+                             en, en-US, de).
+  --dictionary <dictionary>  Enable a dictionary.
+  --no-comments              Do not add comments to the config file.
+  --no-schema                Do not add the schema reference to the config file.
+  -h, --help                 display help for command
+```
+
+---
+
+</details>
+
+<details>
+<summary>feat: Add command line option to set reporting level (<a href="https://github.com/streetsidesoftware/cspell/pull/7380">#7380</a>)</summary>
+
+### feat: Add command line option to set reporting level ([#7380](https://github.com/streetsidesoftware/cspell/pull/7380))
+
+## Command Line Option: `--report`
+
+Option: `--report`
+Choices:
+
+- `all` - report everything (default)
+- `simple` - only report issues with simple fixes.
+- `typos` - only report issues with common typos.
+- `flagged` - only report flagged issues.
+
+## Reporters - add opt-in feature flag
+
+To support legacy reporters, it is necessary to check if they support new features.
+
+Features:
+
+```ts
+/**
+ * Allows the reporter to advertise which features it supports.
+ */
+interface FeaturesSupportedByReporter {
+    /**
+     * The reporter supports the {@link ReportingConfiguration.unknownWords} option and understands
+     * how to filter issues based upon {@link Issue.isFlagged}, {@link Issue.hasSimpleSuggestions} and {@link Issue.hasPreferredSuggestions}.
+     * - `true` - The `reporter.issue` method will be called for all spelling issues and it is expected to handle .
+     * - `false | undefined` - the unknown words will be filtered out based upon the `unknownWords` setting before being passed to the reporter.
+     */
+    unknownWords?: boolean | undefined;
+
+    /**
+     * The reporter supports the {@link Issue.issueType} option.
+     * - `true` - the reporter will be called with all issues types.
+     * - `false | undefined` - only {@link IssueType.spelling} issues will be passed to the reporter.
+     */
+    issueType?: boolean | undefined;
+}
+```
+
+---
+
+</details>
+
+### Fixes
+
+<details>
+<summary>fix: Fix perf issue related to searching for the config. (<a href="https://github.com/streetsidesoftware/cspell/pull/7483">#7483</a>)</summary>
+
+### fix: Fix perf issue related to searching for the config. ([#7483](https://github.com/streetsidesoftware/cspell/pull/7483))
+
+---
+
+</details>
+
+<details>
+<summary>fix: Hide `--config-search` option (<a href="https://github.com/streetsidesoftware/cspell/pull/7479">#7479</a>)</summary>
+
+### fix: Hide `--config-search` option ([#7479](https://github.com/streetsidesoftware/cspell/pull/7479))
+
+---
+
+</details>
+
+<details>
+<summary>refactor: `isolatedDeclarations: true` (<a href="https://github.com/streetsidesoftware/cspell/pull/7459">#7459</a>)</summary>
+
+### refactor: `isolatedDeclarations: true` ([#7459](https://github.com/streetsidesoftware/cspell/pull/7459))
+
+---
+
+</details>
+
+<details>
+<summary>refactor: enable isolatedDeclarations (<a href="https://github.com/streetsidesoftware/cspell/pull/7456">#7456</a>)</summary>
+
+### refactor: enable isolatedDeclarations ([#7456](https://github.com/streetsidesoftware/cspell/pull/7456))
+
+---
+
+</details>
+
+<details>
+<summary>refactor: enable isolatedDeclarations (<a href="https://github.com/streetsidesoftware/cspell/pull/7452">#7452</a>)</summary>
+
+### refactor: enable isolatedDeclarations ([#7452](https://github.com/streetsidesoftware/cspell/pull/7452))
+
+---
+
+</details>
+
+<details>
+<summary>fix: Add option to continue on error (<a href="https://github.com/streetsidesoftware/cspell/pull/7451">#7451</a>)</summary>
+
+### fix: Add option to continue on error ([#7451](https://github.com/streetsidesoftware/cspell/pull/7451))
+
+Add lint option:
+
+```
+  --continue-on-error          Continue processing files even if there is a configuration error.
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Improve dictionaries command (<a href="https://github.com/streetsidesoftware/cspell/pull/7449">#7449</a>)</summary>
+
+### fix: Improve dictionaries command ([#7449](https://github.com/streetsidesoftware/cspell/pull/7449))
+
+Add options:
+
+```
+  --enabled                   Show only enabled dictionaries.
+  --no-enabled                Do not show enabled dictionaries.
+  --locale <locale>           Set language locales. i.e. "en,fr" for English and
+                              French, or "en-GB" for British English.
+  --file-type <fileType>      File type to use. i.e. "html", "golang", or
+                              "javascript".
+  --no-show-location          Do not show the location of the dictionary.
+  --show-file-types           Show the file types supported by the dictionary.
+                              (default: false)
+  --show-locales              Show the language locales supported by the
+                              dictionary. (default: false)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Add trace option `--dictionary` (<a href="https://github.com/streetsidesoftware/cspell/pull/7443">#7443</a>)</summary>
+
+### fix: Add trace option `--dictionary` ([#7443](https://github.com/streetsidesoftware/cspell/pull/7443))
+
+```
+Usage: cspell trace [options] [words...]
+
+Options:
+  --dictionary <name>         Enable a dictionary by name. Can be used multiple
+                              times.
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Add init options (<a href="https://github.com/streetsidesoftware/cspell/pull/7436">#7436</a>)</summary>
+
+### fix: Add init options ([#7436](https://github.com/streetsidesoftware/cspell/pull/7436))
+
+New options:
+
+```
+  -c, --config <path>        Path to the CSpell configuration file. Conflicts
+                             with --output and --format.
+  --remove-comments          Remove all comments from the config file.
+  --stdout                   Write the configuration to stdout instead of a
+                             file.
+```
+
+Help:
+
+```
+Usage: cspell init [options]
+
+Initialize a CSpell configuration file.
+
+Options:
+  -c, --config <path>        Path to the CSpell configuration file. Conflicts
+                             with --output and --format.
+  -o, --output <path>        Define where to write file.
+  --format <format>          Define the format of the file. (choices: "yaml",
+                             "yml", "json", "jsonc", default: "yaml")
+  --import <path|package>    Import a configuration file or dictionary package.
+  --locale <locale>          Define the locale to use when spell checking (e.g.,
+                             en, en-US, de).
+  --dictionary <dictionary>  Enable a dictionary. Can be used multiple times.
+  --no-comments              Do not add comments to the config file.
+  --remove-comments          Remove all comments from the config file.
+  --no-schema                Do not add the schema reference to the config file.
+  --stdout                   Write the configuration to stdout instead of a
+                             file.
+  -h, --help                 display help for command
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Allow init of `cspell.config.yml` files (<a href="https://github.com/streetsidesoftware/cspell/pull/7432">#7432</a>)</summary>
+
+### fix: Allow init of `cspell.config.yml` files ([#7432](https://github.com/streetsidesoftware/cspell/pull/7432))
+
+Add `yml` to the init command format list.
+
+```
+cspell init --format=yml
+```
+
+It will create a `cspell.config.yml` file.
+
+---
+
+</details>
+
+<details>
+<summary>fix: Only generate the context if necessary (<a href="https://github.com/streetsidesoftware/cspell/pull/7388">#7388</a>)</summary>
+
+### fix: Only generate the context if necessary ([#7388](https://github.com/streetsidesoftware/cspell/pull/7388))
+
+---
+
+</details>
+
+<details>
+<summary>fix: Correct the schema generator (<a href="https://github.com/streetsidesoftware/cspell/pull/7395">#7395</a>)</summary>
+
+### fix: Correct the schema generator ([#7395](https://github.com/streetsidesoftware/cspell/pull/7395))
+
+---
+
+</details>
+
+### Dictionary Updates
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7499">#7499</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#7499](https://github.com/streetsidesoftware/cspell/pull/7499))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ packages/cspell-bundled-dicts/package.json         |  2 +-
+ .../cspell/src/app/__snapshots__/app.test.ts.snap  | 30 +++++++++++-----------
+ pnpm-lock.yaml                                     | 12 ++++-----
+ 3 files changed, 22 insertions(+), 22 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7485">#7485</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#7485](https://github.com/streetsidesoftware/cspell/pull/7485))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/AdaDoom3/AdaDoom3/report.yaml        |  1994 ++--
+ .../Azure/azure-rest-api-specs/report.yaml         |    18 +-
+ .../MartinThoma/LaTeX-examples/report.yaml         |   616 +-
+ .../MicrosoftDocs/PowerShell-Docs/report.yaml      |   236 +-
+ .../snapshots/RustPython/RustPython/report.yaml    |   442 +-
+ .../SoftwareBrothers/admin-bro/report.yaml         |     2 +-
+ .../snapshots/TheAlgorithms/Python/report.yaml     |   178 +-
+ .../snapshots/alexiosc/megistos/report.yaml        |  1292 +--
+ .../aspnetboilerplate/report.yaml                  |   244 +-
+ .../snapshots/aws-amplify/docs/report.yaml         |    14 +-
+ .../snapshots/caddyserver/caddy/report.yaml        |    36 +-
+ .../snapshots/dart-lang/sdk/report.yaml            |   498 +-
+ .../snapshots/django/django/report.yaml            |  1318 +--
+ .../snapshots/eslint/eslint/report.yaml            |    76 +-
+ .../snapshots/flutter/samples/report.yaml          | 10744 +++++++++----------
+ .../snapshots/gitbucket/gitbucket/report.yaml      |     8 +-
+ .../googleapis/google-cloud-cpp/report.yaml        |   114 +-
+ .../iluwatar/java-design-patterns/report.yaml      |    52 +-
+ .../snapshots/ktaranov/sqlserver-kit/report.yaml   |  7542 ++++++-------
+ .../snapshots/liriliri/licia/report.yaml           |   148 +-
+ integration-tests/snapshots/mdx-js/mdx/report.yaml |    58 +-
+ .../microsoft/TypeScript-Website/report.yaml       |    98 +-
+ .../snapshots/neovim/nvim-lspconfig/report.yaml    |   844 +-
+ .../snapshots/pagekit/pagekit/report.yaml          |    17 +-
+ .../snapshots/pagekit/pagekit/snapshot.txt         |     3 +-
+ .../snapshots/php/php-src/report.yaml              |  4260 ++++----
+ .../snapshots/pycontribs/jira/report.yaml          |     4 +-
+ .../snapshots/slint-ui/slint/report.yaml           |   518 +-
+ .../snapshots/sveltejs/svelte/report.yaml          |  2548 ++---
+ .../typescript-cheatsheets/react/report.yaml       |     6 +-
+ .../snapshots/vitest-dev/vitest/report.yaml        |    62 +-
+ .../snapshots/wireapp/wire-webapp/report.yaml      |   994 +-
+ packages/cspell-bundled-dicts/package.json         |     8 +-
+ .../__snapshots__/validator.test.ts.snap           |     4 +-
+ .../cspell/src/app/__snapshots__/app.test.ts.snap  |    96 +-
+ pnpm-lock.yaml                                     |    52 +-
+ 36 files changed, 17573 insertions(+), 17571 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7474">#7474</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#7474](https://github.com/streetsidesoftware/cspell/pull/7474))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../MicrosoftDocs/PowerShell-Docs/report.yaml      |  3 +-
+ .../MicrosoftDocs/PowerShell-Docs/snapshot.txt     |  3 +-
+ .../snapshots/ktaranov/sqlserver-kit/report.yaml   | 10 +--
+ .../snapshots/ktaranov/sqlserver-kit/snapshot.txt  |  9 +--
+ .../microsoft/TypeScript-Website/report.yaml       |  6 +-
+ .../microsoft/TypeScript-Website/snapshot.txt      |  4 +-
+ .../snapshots/neovim/nvim-lspconfig/report.yaml    |  5 +-
+ .../snapshots/neovim/nvim-lspconfig/snapshot.txt   |  3 +-
+ .../webdeveric/webpack-assets-manifest/report.yaml |  7 +-
+ .../webpack-assets-manifest/snapshot.txt           |  5 +-
+ packages/cspell-bundled-dicts/package.json         | 16 ++--
+ .../cspell/src/app/__snapshots__/app.test.ts.snap  | 30 +++----
+ pnpm-lock.yaml                                     | 93 ++++++++++++----------
+ 13 files changed, 95 insertions(+), 99 deletions(-)
+```
+
+---
+
+</details>
+
+### Documentation
+
+<details>
+<summary>fix: Correct the schema generator (<a href="https://github.com/streetsidesoftware/cspell/pull/7395">#7395</a>)</summary>
+
+### fix: Correct the schema generator ([#7395](https://github.com/streetsidesoftware/cspell/pull/7395))
+
+---
+
+</details>
+
+## v9.0.2 (2025-05-20)
+
+### Changes
+
+### Fixes
+
+<details>
+<summary>fix: Add eslint plugin helpers (<a href="https://github.com/streetsidesoftware/cspell/pull/7352">#7352</a>)</summary>
+
+### fix: Add eslint plugin helpers ([#7352](https://github.com/streetsidesoftware/cspell/pull/7352))
+
+Add helper methods:
+
+- `defineCSpellPluginOptions`
+- `defineCSpellConfig`
+
+Add some examples for `supportNonStrictSearches`
+
+---
+
+</details>
+
+<details>
+<summary>fix: Make it possible to define a strict dictionary. (<a href="https://github.com/streetsidesoftware/cspell/pull/7351">#7351</a>)</summary>
+
+### fix: Make it possible to define a strict dictionary. ([#7351](https://github.com/streetsidesoftware/cspell/pull/7351))
+
+---
+
+</details>
+
+<details>
+<summary>fix: Correct the Hunspell Reader usage. (<a href="https://github.com/streetsidesoftware/cspell/pull/7325">#7325</a>)</summary>
+
+### fix: Correct the Hunspell Reader usage. ([#7325](https://github.com/streetsidesoftware/cspell/pull/7325))
+
+Add an example.
+
+---
+
+</details>
+
+### Dictionary Updates
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7346">#7346</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#7346](https://github.com/streetsidesoftware/cspell/pull/7346))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ packages/cspell-bundled-dicts/package.json |  4 ++--
+ pnpm-lock.yaml                             | 24 ++++++++++++------------
+ 2 files changed, 14 insertions(+), 14 deletions(-)
+```
+
+---
+
+</details>
+
+## v9.0.1 (2025-05-08)
+
+### Changes
+
+### Fixes
+
+<details>
+<summary>fix: Add support to add words to config and keep comments. (<a href="https://github.com/streetsidesoftware/cspell/pull/7295">#7295</a>)</summary>
+
+### fix: Add support to add words to config and keep comments. ([#7295](https://github.com/streetsidesoftware/cspell/pull/7295))
+
+---
+
+</details>
+
+### Dictionary Updates
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7306">#7306</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#7306](https://github.com/streetsidesoftware/cspell/pull/7306))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/dart-lang/sdk/report.yaml            | 10 ++-----
+ .../snapshots/dart-lang/sdk/snapshot.txt           |  4 +--
+ .../snapshots/ktaranov/sqlserver-kit/report.yaml   |  2 +-
+ .../snapshots/vitest-dev/vitest/report.yaml        |  4 +--
+ .../snapshots/vitest-dev/vitest/snapshot.txt       |  3 +-
+ packages/cspell-bundled-dicts/package.json         |  6 ++--
+ pnpm-lock.yaml                                     | 33 +++++++++++++---------
+ 7 files changed, 29 insertions(+), 33 deletions(-)
+```
+
+---
+
+</details>
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7302">#7302</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#7302](https://github.com/streetsidesoftware/cspell/pull/7302))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/AdaDoom3/AdaDoom3/report.yaml        |  3 +-
+ .../snapshots/AdaDoom3/AdaDoom3/snapshot.txt       |  3 +-
+ .../MicrosoftDocs/PowerShell-Docs/report.yaml      | 12 +++---
+ .../MicrosoftDocs/PowerShell-Docs/snapshot.txt     |  4 +-
+ .../snapshots/eslint/eslint/report.yaml            |  6 +--
+ .../snapshots/eslint/eslint/snapshot.txt           |  3 +-
+ packages/cspell-bundled-dicts/package.json         |  8 ++--
+ pnpm-lock.yaml                                     | 45 ++++++++++++----------
+ 8 files changed, 40 insertions(+), 44 deletions(-)
+```
+
+---
+
+</details>
+
+## v9.0.0 (2025-05-05)
+
+### Changes
+
+### **BREAKING**
+
+<details>
+<summary>feat!: End support for Node 18 (<a href="https://github.com/streetsidesoftware/cspell/pull/7275">#7275</a>)</summary>
+
+### feat!: End support for Node 18 ([#7275](https://github.com/streetsidesoftware/cspell/pull/7275))
+
+---
+
+</details>
+
+### Fixes
+
+<details>
+<summary>fix: Update en-gb dictionary to en-gb-mit (<a href="https://github.com/streetsidesoftware/cspell/pull/7278">#7278</a>)</summary>
+
+### fix: Update en-gb dictionary to en-gb-mit ([#7278](https://github.com/streetsidesoftware/cspell/pull/7278))
+
+---
+
+</details>
+
+### Dictionary Updates
+
+<details>
+<summary>fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/7279">#7279</a>)</summary>
+
+### fix: Workflow Bot -- Update Dictionaries (main) ([#7279](https://github.com/streetsidesoftware/cspell/pull/7279))
+
+# Update Dictionaries (main)
+
+## Summary
+
+```
+ .../snapshots/dart-lang/sdk/report.yaml            |  6 +--
+ .../snapshots/dart-lang/sdk/snapshot.txt           |  3 +-
+ .../snapshots/liriliri/licia/report.yaml           |  3 +-
+ .../snapshots/liriliri/licia/snapshot.txt          |  3 +-
+ .../microsoft/TypeScript-Website/report.yaml       |  5 +-
+ .../microsoft/TypeScript-Website/snapshot.txt      |  3 +-
+ .../snapshots/neovim/nvim-lspconfig/report.yaml    |  5 +-
+ .../snapshots/neovim/nvim-lspconfig/snapshot.txt   |  3 +-
+ .../snapshots/pycontribs/jira/report.yaml          |  3 +-
+ .../snapshots/pycontribs/jira/snapshot.txt         |  3 +-
+ .../snapshots/wireapp/wire-webapp/report.yaml      |  5 +-
+ .../snapshots/wireapp/wire-webapp/snapshot.txt     |  3 +-
+ packages/cspell-bundled-dicts/package.json         | 10 ++--
+ pnpm-lock.yaml                                     | 60 +++++++++++++---------
+ 14 files changed, 57 insertions(+), 58 deletions(-)
+```
+
+---
+
+</details>
+
+## 8.19.4 (2025-05-03)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 8.19.3 (2025-04-27)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 8.19.2 (2025-04-20)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 8.19.1 (2025-04-18)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 8.19.0 (2025-04-16)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## <small>8.18.1 (2025-03-29)</small>
+
+* ci: Workflow Bot -- Update ALL Dependencies (main) (#7087) ([b570457](https://github.com/streetsidesoftware/cspell/commit/b570457)), closes [#7087](https://github.com/streetsidesoftware/cspell/issues/7087)
+
+## 8.18.0 (2025-03-26)
+
+* ci: Workflow Bot -- Update ALL Dependencies (main) (#7080) ([b9d57a1](https://github.com/streetsidesoftware/cspell/commit/b9d57a1)), closes [#7080](https://github.com/streetsidesoftware/cspell/issues/7080)
+
+## <small>8.17.5 (2025-02-22)</small>
+
+* fix: Workflow Bot -- Update Dictionaries (main) (#6937) ([2bfee05](https://github.com/streetsidesoftware/cspell/commit/2bfee05)), closes [#6937](https://github.com/streetsidesoftware/cspell/issues/6937)
+
+## <small>8.17.4 (2025-02-19)</small>
+
+* ci: Workflow Bot -- Update ALL Dependencies (main) (#6920) ([e92597c](https://github.com/streetsidesoftware/cspell/commit/e92597c)), closes [#6920](https://github.com/streetsidesoftware/cspell/issues/6920)
+
+## <small>8.17.3 (2025-01-28)</small>
+
+* chore: fix labeler ([ea51ed4](https://github.com/streetsidesoftware/cspell/commit/ea51ed4))
+
+## <small>8.17.2 (2025-01-13)</small>
+
+* fix: Dump stack on error when verbose (#6782) ([df0026c](https://github.com/streetsidesoftware/cspell/commit/df0026c)), closes [#6782](https://github.com/streetsidesoftware/cspell/issues/6782)
+
+## <small>8.17.1 (2024-12-16)</small>
+
+* chore: Update Integration Test Performance Data (#6681) ([4b19439](https://github.com/streetsidesoftware/cspell/commit/4b19439)), closes [#6681](https://github.com/streetsidesoftware/cspell/issues/6681)
+
+## 8.17.0 (2024-12-15)
+
+* chore: Update Integration Test Performance Data (#6676) ([f9cb45f](https://github.com/streetsidesoftware/cspell/commit/f9cb45f)), closes [#6676](https://github.com/streetsidesoftware/cspell/issues/6676)
+
+## <small>8.16.1 (2024-11-26)</small>
+
+* chore: Update Integration Test Performance Data (#6602) ([5d667a7](https://github.com/streetsidesoftware/cspell/commit/5d667a7)), closes [#6602](https://github.com/streetsidesoftware/cspell/issues/6602)
+
+## 8.16.0 (2024-11-07)
+
+* chore: Update Integration Test Performance Data (#6505) ([fb78a40](https://github.com/streetsidesoftware/cspell/commit/fb78a40)), closes [#6505](https://github.com/streetsidesoftware/cspell/issues/6505)
+
+## <small>8.15.7 (2024-11-03)</small>
+
+* ci: Workflow Bot -- Update ALL Dependencies (main) (#6456) ([d4bd0dd](https://github.com/streetsidesoftware/cspell/commit/d4bd0dd)), closes [#6456](https://github.com/streetsidesoftware/cspell/issues/6456)
+
+## <small>8.15.6 (2024-11-02)</small>
+
+* chore: Update Integration Test Performance Data (#6455) ([be8b15a](https://github.com/streetsidesoftware/cspell/commit/be8b15a)), closes [#6455](https://github.com/streetsidesoftware/cspell/issues/6455)
+
+## <small>8.15.5 (2024-10-30)</small>
+
+* ci: Workflow Bot -- Update ALL Dependencies (main) (#6442) ([70f43cc](https://github.com/streetsidesoftware/cspell/commit/70f43cc)), closes [#6442](https://github.com/streetsidesoftware/cspell/issues/6442)
+
+## <small>8.15.4 (2024-10-18)</small>
+
+* chore: Update Integration Test Performance Data (#6389) ([7ece6a7](https://github.com/streetsidesoftware/cspell/commit/7ece6a7)), closes [#6389](https://github.com/streetsidesoftware/cspell/issues/6389)
+
+## <small>8.15.3 (2024-10-16)</small>
+
+* chore: Update Integration Test Performance Data (#6377) ([7ff6781](https://github.com/streetsidesoftware/cspell/commit/7ff6781)), closes [#6377](https://github.com/streetsidesoftware/cspell/issues/6377)
+
+## <small>8.15.2 (2024-10-14)</small>
+
+* chore: Update Integration Test Performance Data (#6361) ([d639368](https://github.com/streetsidesoftware/cspell/commit/d639368)), closes [#6361](https://github.com/streetsidesoftware/cspell/issues/6361)
+
+## <small>8.15.1 (2024-10-11)</small>
+
+* fix: Sign Published Packages (#6350) ([633b060](https://github.com/streetsidesoftware/cspell/commit/633b060)), closes [#6350](https://github.com/streetsidesoftware/cspell/issues/6350)
+
+## 8.15.0 (2024-10-11)
+
+* chore: bump eslint-plugin-unicorn from 55.0.0 to 56.0.0 (#6332) ([67d1e92](https://github.com/streetsidesoftware/cspell/commit/67d1e92)), closes [#6332](https://github.com/streetsidesoftware/cspell/issues/6332)
+
+## <small>8.14.4 (2024-09-18)</small>
+
+* fix: Remove object from cache (#6257) ([ea24297](https://github.com/streetsidesoftware/cspell/commit/ea24297)), closes [#6257](https://github.com/streetsidesoftware/cspell/issues/6257)
+
+## <small>8.14.3 (2024-09-17)</small>
+
+* chore: Update Integration Test Performance Data (#6254) ([189ac16](https://github.com/streetsidesoftware/cspell/commit/189ac16)), closes [#6254](https://github.com/streetsidesoftware/cspell/issues/6254)
+
+## <small>8.14.2 (2024-08-20)</small>
+
+* chore: Update Integration Test Performance Data (#6126) ([012c897](https://github.com/streetsidesoftware/cspell/commit/012c897)), closes [#6126](https://github.com/streetsidesoftware/cspell/issues/6126)
+
+## <small>8.14.1 (2024-08-17)</small>
+
+* fix: Fix publishing ([8a56148](https://github.com/streetsidesoftware/cspell/commit/8a56148))
+
+## 8.14.0 (2024-08-17)
+
+* chore: Update Integration Test Performance Data (#6113) ([c3eb155](https://github.com/streetsidesoftware/cspell/commit/c3eb155)), closes [#6113](https://github.com/streetsidesoftware/cspell/issues/6113)
+
+## <small>8.13.3 (2024-08-12)</small>
+
+* chore: Update Integration Test Performance Data (#6079) ([dd28ef5](https://github.com/streetsidesoftware/cspell/commit/dd28ef5)), closes [#6079](https://github.com/streetsidesoftware/cspell/issues/6079)
+
+## <small>8.13.2 (2024-08-08)</small>
+
+* chore: Update Integration Test Performance Data (#6060) ([c766d18](https://github.com/streetsidesoftware/cspell/commit/c766d18)), closes [#6060](https://github.com/streetsidesoftware/cspell/issues/6060)
+
+## <small>8.13.1 (2024-08-02)</small>
+
+* chore: Update Integration Test Performance Data (#6028) ([738d2a9](https://github.com/streetsidesoftware/cspell/commit/738d2a9)), closes [#6028](https://github.com/streetsidesoftware/cspell/issues/6028)
+
+## 8.13.0 (2024-07-30)
+
+* chore: Update Integration Test Performance Data (#6011) ([135838a](https://github.com/streetsidesoftware/cspell/commit/135838a)), closes [#6011](https://github.com/streetsidesoftware/cspell/issues/6011)
+
+## <small>8.12.1 (2024-07-22)</small>
+
+* fix: make sure the version is up to date ([f6ab018](https://github.com/streetsidesoftware/cspell/commit/f6ab018))
+
+## 8.12.0 (2024-07-22)
+
+* chore: Update Integration Test Performance Data (#5959) ([ea71b8a](https://github.com/streetsidesoftware/cspell/commit/ea71b8a)), closes [#5959](https://github.com/streetsidesoftware/cspell/issues/5959)
+
+## 8.11.0 (2024-07-16)
+
+* refactor: char index (#5926) ([077b3ba](https://github.com/streetsidesoftware/cspell/commit/077b3ba)), closes [#5926](https://github.com/streetsidesoftware/cspell/issues/5926)
+
+## <small>8.10.4 (2024-07-05)</small>
+
+* chore: force 8.10.3 ([f18b8c7](https://github.com/streetsidesoftware/cspell/commit/f18b8c7))
+
+## <small>8.10.2 (2024-07-05)</small>
+
+* ci: Workflow Bot -- Update ALL Dependencies (main) (#5862) ([814e15c](https://github.com/streetsidesoftware/cspell/commit/814e15c)), closes [#5862](https://github.com/streetsidesoftware/cspell/issues/5862)
+
+## <small>8.10.1 (2024-07-05)</small>
+
+* fix(cspell-tools): support adding directives (#5860) ([b2e014f](https://github.com/streetsidesoftware/cspell/commit/b2e014f)), closes [#5860](https://github.com/streetsidesoftware/cspell/issues/5860)
+
+## 8.10.0 (2024-07-02)
+
+* chore: Update Integration Test Performance Data (#5859) ([898e806](https://github.com/streetsidesoftware/cspell/commit/898e806)), closes [#5859](https://github.com/streetsidesoftware/cspell/issues/5859)
+
+## <small>8.9.1 (2024-06-20)</small>
+
+* docs: format tables in generated docs (#5776) ([02e0359](https://github.com/streetsidesoftware/cspell/commit/02e0359)), closes [#5776](https://github.com/streetsidesoftware/cspell/issues/5776)
+
+## 8.9.0 (2024-06-18)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 8.9.0-alpha.0 (2024-06-18)
+
+* ci: Fix Lint -- Workflow Bot (#5770) ([b21032f](https://github.com/streetsidesoftware/cspell/commit/b21032f)), closes [#5770](https://github.com/streetsidesoftware/cspell/issues/5770)
+
+## <small>8.8.4 (2024-06-03)</small>
+
+* ci: Fix Lint -- Workflow Bot (#5699) ([211113a](https://github.com/streetsidesoftware/cspell/commit/211113a)), closes [#5699](https://github.com/streetsidesoftware/cspell/issues/5699)
+
+## <small>8.8.3 (2024-05-23)</small>
+
+* chore: Update Integration Test Performance Data (#5663) ([b605dd3](https://github.com/streetsidesoftware/cspell/commit/b605dd3)), closes [#5663](https://github.com/streetsidesoftware/cspell/issues/5663)
+
+## <small>8.8.2 (2024-05-22)</small>
+
+* ci: Workflow Bot -- Update ALL Dependencies (main) (#5659) ([5d93673](https://github.com/streetsidesoftware/cspell/commit/5d93673)), closes [#5659](https://github.com/streetsidesoftware/cspell/issues/5659)
+
+## <small>8.8.1 (2024-05-10)</small>
+
+* chore: Do not stop update if it fails to lint. ([64ba085](https://github.com/streetsidesoftware/cspell/commit/64ba085))
+
+## 8.8.0 (2024-05-03)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 8.7.0 (2024-04-10)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 8.6.1 (2024-03-25)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 8.6.0 (2024-03-05)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 8.5.0 (2024-03-01)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 8.4.1 (2024-02-20)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 8.4.0 (2024-02-19)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 8.3.2 (2024-01-02)
+
+### Bug Fixes
+
+* cspell-tools - support excluding words ([#5140](https://github.com/streetsidesoftware/cspell/issues/5140)) ([3fcdd89](https://github.com/streetsidesoftware/cspell/commit/3fcdd89fb319b659d218067c5366e02d036be59f))
+
+## 8.3.1 (2024-01-01)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 8.3.0 (2023-12-30)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 8.2.4 (2023-12-28)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 8.2.3 (2023-12-21)
+
+### Bug Fixes
+
+* Improve performance by reducing FS requests ([#5103](https://github.com/streetsidesoftware/cspell/issues/5103)) ([3f31569](https://github.com/streetsidesoftware/cspell/commit/3f31569a43b9ae0f21e90d84db57f87a2cb4f6dd))
+
+## 8.2.2 (2023-12-21)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 8.2.1 (2023-12-20)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 8.2.0 (2023-12-20)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 8.1.3 (2023-12-06)
+
+### Bug Fixes
+
+* Resolve relative imports without a leading `./` or `../`.  ([#5035](https://github.com/streetsidesoftware/cspell/issues/5035)) ([a28393b](https://github.com/streetsidesoftware/cspell/commit/a28393b30733b68e8b726c352e277ac4b5a0659d))
+
+## 8.1.2 (2023-12-04)
+
+### Bug Fixes
+
+* expose ConfigLoader API ([#5032](https://github.com/streetsidesoftware/cspell/issues/5032)) ([e839990](https://github.com/streetsidesoftware/cspell/commit/e839990e94f639000bc926ae87187840fb17dee9))
+
+## 8.1.1 (2023-12-04)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 8.1.0 (2023-12-01)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 8.0.0 (2023-11-07)
+
+* ci: Workflow Bot -- Update ALL Dependencies (main) (#4959) ([096066d](https://github.com/streetsidesoftware/cspell/commit/096066d)), closes [#4959](https://github.com/streetsidesoftware/cspell/issues/4959)
+
+## <small>7.3.9 (2023-11-07)</small>
+
+* refactor: remove debug code (#4951) ([4972a77](https://github.com/streetsidesoftware/cspell/commit/4972a77)), closes [#4951](https://github.com/streetsidesoftware/cspell/issues/4951)
+
+## <small>7.3.8 (2023-10-13)</small>
+
+* ci: Workflow Bot -- Update ALL Dependencies (main) (#4894) ([2a4e1d8](https://github.com/streetsidesoftware/cspell/commit/2a4e1d8)), closes [#4894](https://github.com/streetsidesoftware/cspell/issues/4894)
+
+## <small>7.3.7 (2023-09-28)</small>
+
+* test: Add sample package to test dictionaries in eslint (#4875) ([06c9e18](https://github.com/streetsidesoftware/cspell/commit/06c9e18)), closes [#4875](https://github.com/streetsidesoftware/cspell/issues/4875)
+
+## 7.3.6 (2023-09-13)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 7.3.5 (2023-09-10)
+
+### Bug Fixes
+
+* Remove `[@markdown](https://github.com/markdown)Description` from types ([#4818](https://github.com/streetsidesoftware/cspell/issues/4818)) ([3ba8eed](https://github.com/streetsidesoftware/cspell/commit/3ba8eed8588aafa3dcb401acb96e4fdc82811d24))
+
+## 7.3.4 (2023-09-10)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 7.3.3 (2023-09-09)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 7.3.2 (2023-09-01)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 7.3.1 (2023-09-01)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 7.3.0 (2023-08-31)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 7.2.0 (2023-08-29)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## [7.1.1](https://github.com/streetsidesoftware/cspell/compare/v7.1.0...v7.1.1) (2023-08-28)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 7.0.2 (2023-08-28)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 7.0.1 (2023-08-21)
+
+### Bug Fixes
+
+* Workflow Bot -- Update Dictionaries (main) ([#4733](https://github.com/streetsidesoftware/cspell/issues/4733)) ([221b59b](https://github.com/streetsidesoftware/cspell/commit/221b59bfe726a3b1fe5f9dcbdef6632983ebebeb))
+
+## [7.0.0](https://github.com/streetsidesoftware/cspell/compare/v7.0.1-alpha.9...v7.0.0) (2023-08-10)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 7.0.1-alpha.9 (2023-08-10)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 7.0.1-alpha.8 (2023-07-21)
+
+### Bug Fixes
+
+* **cspell-tools:** support conditional builds. ([#4668](https://github.com/streetsidesoftware/cspell/issues/4668)) ([de4d897](https://github.com/streetsidesoftware/cspell/commit/de4d897139fe5c98a83af926be23727f42be98d6))
+
+## 7.0.1-alpha.7 (2023-07-19)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 7.0.1-alpha.6 (2023-07-14)
+
+### Bug Fixes
+
+* cspell-tools: be able to update shasum checksum files. ([#4634](https://github.com/streetsidesoftware/cspell/issues/4634)) ([a67ea47](https://github.com/streetsidesoftware/cspell/commit/a67ea4715bee40b4105139ca4fbfdb1da4800dce))
+
+## 7.0.1-alpha.5 (2023-07-13)
+
+### Bug Fixes
+
+* support automatic creation of `cspell-tools.config.yaml` ([#4631](https://github.com/streetsidesoftware/cspell/issues/4631)) ([f9fea67](https://github.com/streetsidesoftware/cspell/commit/f9fea67fc5aa8b6e4dcdc8b1bd9af8db2e22e62b))
+
+## 7.0.1-alpha.4 (2023-07-12)
+
+### Bug Fixes
+
+* Fix empty build target ([#4627](https://github.com/streetsidesoftware/cspell/issues/4627)) ([1fcbf98](https://github.com/streetsidesoftware/cspell/commit/1fcbf9897b70691eb9947e43b966a5069fe37feb))
+
+## 7.0.1-alpha.3 (2023-07-11)
+
+### Bug Fixes
+
+* support globs with `gzip` command. ([#4625](https://github.com/streetsidesoftware/cspell/issues/4625)) ([17fbc11](https://github.com/streetsidesoftware/cspell/commit/17fbc119d199ceac309df0d22fb4b1f9734b7015))
+
+## [7.0.1-alpha.2](https://github.com/streetsidesoftware/cspell/compare/v7.0.1-alpha.1...v7.0.1-alpha.2) (2023-07-09)
+
+### Features
+
+* Add `gzip` and `shasum` command to cspell-tools ([#4614](https://github.com/streetsidesoftware/cspell/issues/4614)) ([cc28a8a](https://github.com/streetsidesoftware/cspell/commit/cc28a8adcde27921fb961ac44df3d45d1de6f462))
+
+### Bug Fixes
+
+* Workflow Bot -- Update Dictionaries (main) ([#4603](https://github.com/streetsidesoftware/cspell/issues/4603)) ([51cca40](https://github.com/streetsidesoftware/cspell/commit/51cca405504edbefd5a3eaa6aa629a2cfb078660))
+* Workflow Bot -- Update Dictionaries (main) ([#4606](https://github.com/streetsidesoftware/cspell/issues/4606)) ([f5601ce](https://github.com/streetsidesoftware/cspell/commit/f5601cec5e6cd3c15e576f45d424a8f28ccb497c))
+* Workflow Bot -- Update Dictionaries (main) ([#4607](https://github.com/streetsidesoftware/cspell/issues/4607)) ([841ffdc](https://github.com/streetsidesoftware/cspell/commit/841ffdc98a9edf2914dd49a019a4540e2a6a0071))
+
+### Reverts
+
+* Revert "v7.1.0-alpha.0" ([4835da6](https://github.com/streetsidesoftware/cspell/commit/4835da606a5710b6a0630bd7d0e57bddb2ecc2ba))
+
+## 7.0.1-alpha.1 (2023-07-03)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 7.0.1-alpha.0 (2023-06-09)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 7.0.0-alpha.2 (2023-05-07)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 7.0.0-alpha.1 (2023-04-14)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 6.31.2 (2023-04-14)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 6.31.1 (2023-03-24)
+
+**Note:** Version bump only for package cspell-monorepo
+
+# 6.31.0 (2023-03-24)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 6.30.2 (2023-03-18)
+
+### Bug Fixes
+
+* lock cosmiconfig to 8.0.0 ([#4335](https://github.com/streetsidesoftware/cspell/issues/4335)) ([0f37e2c](https://github.com/streetsidesoftware/cspell/commit/0f37e2cfa4b854c49f82b01bce57abb3c2c7f9ab))
+
+## 6.30.1 (2023-03-17)
+
+### Bug Fixes
+
+* Update cosmiconfig to fix config loading issue. ([#4330](https://github.com/streetsidesoftware/cspell/issues/4330)) ([4a0bae5](https://github.com/streetsidesoftware/cspell/commit/4a0bae53074de54b748ce6b7124f585e28d2175e))
+
+# 6.30.0 (2023-03-16)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 6.29.3 (2023-03-14)
+
+### Bug Fixes
+
+* Add option to not auto stem during split ([#4310](https://github.com/streetsidesoftware/cspell/issues/4310)) ([23059da](https://github.com/streetsidesoftware/cspell/commit/23059dafd9ead91ef67cadf78a368e924b3436f6))
+
+## 6.29.2 (2023-03-13)
+
+### Bug Fixes
+
+* (cspell-tools) Delay splitting _ till later ([#4309](https://github.com/streetsidesoftware/cspell/issues/4309)) ([0e517d1](https://github.com/streetsidesoftware/cspell/commit/0e517d13a6611e4d8a4f826a7d8d75352f5be4df))
+
+## 6.29.1 (2023-03-13)
+
+**Note:** Version bump only for package cspell-monorepo
+
+# 6.29.0 (2023-03-11)
+
+**Note:** Version bump only for package cspell-monorepo
+
+# 6.28.0 (2023-03-03)
+
+### Features
+
+* Support multiple `repMap` combinations ([#4270](https://github.com/streetsidesoftware/cspell/issues/4270)) ([bbc3ed4](https://github.com/streetsidesoftware/cspell/commit/bbc3ed4a1edb704401f40cf8913a5a9f522562fc))
+
+# 6.27.0 (2023-02-26)
+
+### Features
+
+* Support spell checking utf16 files with BOM ([#4232](https://github.com/streetsidesoftware/cspell/issues/4232)) ([8062f62](https://github.com/streetsidesoftware/cspell/commit/8062f621dff0432cd53ae17b1a22aaffd61f1b3b))
+
+## 6.26.3 (2023-02-16)
+
+### Bug Fixes
+
+* Be able to read cache format from config ([#4190](https://github.com/streetsidesoftware/cspell/issues/4190)) ([6029893](https://github.com/streetsidesoftware/cspell/commit/60298938cd39669982ad1ca4293571242918761d))
+
+## 6.26.2 (2023-02-16)
+
+### Bug Fixes
+
+* `node:worker_threads` breaks on node 14 ([#4185](https://github.com/streetsidesoftware/cspell/issues/4185)) ([8654ac7](https://github.com/streetsidesoftware/cspell/commit/8654ac7161b0ac558e864cfc116a9ad9ce6dc32e))
+
+## 6.26.1 (2023-02-15)
+
+### Bug Fixes
+
+* improve Dynamic Import README.md ([#4178](https://github.com/streetsidesoftware/cspell/issues/4178)) ([4ad1133](https://github.com/streetsidesoftware/cspell/commit/4ad1133e6230969e9486d7e7a158cba5c3d75d7f))
+
+# 6.26.0 (2023-02-15)
+
+### Features
+
+* All `flagWords` and `suggestWords` suggestions are preferred. ([#4176](https://github.com/streetsidesoftware/cspell/issues/4176)) ([abfb09c](https://github.com/streetsidesoftware/cspell/commit/abfb09c1fefe0b17aae332a23bb79017496c416a))
+
+# 6.25.0 (2023-02-14)
+
+### Bug Fixes
+
+* Add `.webm` to know file types ([#4171](https://github.com/streetsidesoftware/cspell/issues/4171)) ([eeb9497](https://github.com/streetsidesoftware/cspell/commit/eeb9497143aa2215d857c8a872b94362c1ffe19e))
+
+# 6.24.0 (2023-02-13)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 6.23.1 (2023-02-12)
+
+**Note:** Version bump only for package cspell-monorepo
+
+# 6.23.0 (2023-02-11)
+
+**Note:** Version bump only for package cspell-monorepo
+
+# 6.22.0 (2023-02-05)
+
+**Note:** Version bump only for package cspell-monorepo
+
+# 6.21.0 (2023-02-03)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 6.20.1 (2023-02-01)
+
+### Bug Fixes
+
+* Correct .gitignore comment detection ([#4083](https://github.com/streetsidesoftware/cspell/issues/4083)) ([cadfbc4](https://github.com/streetsidesoftware/cspell/commit/cadfbc489f17db348459a09e7bd49514d07152a2))
+
+# 6.20.0 (2023-02-01)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 6.19.2 (2023-01-17)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 6.19.1 (2023-01-17)
+
+### Bug Fixes
+
+* Remove `vitest` as a dependency ([#4031](https://github.com/streetsidesoftware/cspell/issues/4031)) ([2784b75](https://github.com/streetsidesoftware/cspell/commit/2784b75feefc81aa95806ac748fafb140c72b5fa))
+
+# 6.19.0 (2023-01-16)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 6.18.1 (2022-12-29)
+
+**Note:** Version bump only for package cspell-monorepo
+
+# 6.18.0 (2022-12-21)
+
+**Note:** Version bump only for package cspell-monorepo
+
+# 6.17.0 (2022-12-05)
+
+**Note:** Version bump only for package cspell-monorepo
+
+# 6.16.0 (2022-12-02)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 6.15.1 (2022-11-30)
+
+**Note:** Version bump only for package cspell-monorepo
+
+# 6.15.0 (2022-11-25)
+
+### Features
+
+* Preferred suggestions are listed first ([#3869](https://github.com/streetsidesoftware/cspell/issues/3869)) ([1b7a65d](https://github.com/streetsidesoftware/cspell/commit/1b7a65d6ec851b78e1cc27c56f32b77adfba36e5))
+
+## 6.14.3 (2022-11-17)
+
+### Bug Fixes
+
+* trie-lib - fix issue with reference radix. ([#3849](https://github.com/streetsidesoftware/cspell/issues/3849)) ([73af697](https://github.com/streetsidesoftware/cspell/commit/73af6978c53f2fd1f4cd528fd84e9d52a4149d5b))
+
+## 6.14.2 (2022-11-11)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 6.14.1 (2022-11-07)
+
+**Note:** Version bump only for package cspell-monorepo
+
+# 6.14.0 (2022-11-03)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 6.13.3 (2022-10-31)
+
+### Bug Fixes
+
+* Update dictionaries ([#3795](https://github.com/streetsidesoftware/cspell/issues/3795)) ([ae8de27](https://github.com/streetsidesoftware/cspell/commit/ae8de2754daafcdeb7e187a80e27b6f6c09dc1d7))
+
+## 6.13.2 (2022-10-31)
+
+### Bug Fixes
+
+* Do not generate duplicate entries by default ([#3793](https://github.com/streetsidesoftware/cspell/issues/3793)) ([f27d3c6](https://github.com/streetsidesoftware/cspell/commit/f27d3c68ad454719d71724f92693db57270827b9))
+
+## 6.13.1 (2022-10-28)
+
+**Note:** Version bump only for package cspell-monorepo
+
+# 6.13.0 (2022-10-28)
+
+### Bug Fixes
+
+* make sure all forms are generated. ([#3783](https://github.com/streetsidesoftware/cspell/issues/3783)) ([70949a5](https://github.com/streetsidesoftware/cspell/commit/70949a5823f7c58052f9627c9455dcaa3496e8fb))
+
+# 6.12.0 (2022-09-30)
+
+### Features
+
+* Use cspell-dictionary Module ([#3686](https://github.com/streetsidesoftware/cspell/issues/3686)) ([6441f4b](https://github.com/streetsidesoftware/cspell/commit/6441f4b41fe0e8b8188fa4c08999450c8958b6f0))
+
+## 6.11.1 (2022-09-30)
+
+### Bug Fixes
+
+* Fix export of SpellingDictionaryCollection ([#3683](https://github.com/streetsidesoftware/cspell/issues/3683)) ([7665cdb](https://github.com/streetsidesoftware/cspell/commit/7665cdba702ebf9517a3c1c1008193e239a829d4))
+
+# 6.11.0 (2022-09-30)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 6.10.1 (2022-09-20)
+
+**Note:** Version bump only for package cspell-monorepo
+
+# 6.10.0 (2022-09-19)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 6.9.1 (2022-09-18)
+
+**Note:** Version bump only for package cspell-monorepo
+
+# 6.9.0 (2022-09-15)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 6.8.2 (2022-09-12)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 6.8.1 (2022-08-26)
+
+**Note:** Version bump only for package cspell-monorepo
+
+# 6.8.0 (2022-08-21)
+
+### Bug Fixes
+
+* Enable cli option `--validate-directives` ([#3461](https://github.com/streetsidesoftware/cspell/issues/3461)) ([52a5337](https://github.com/streetsidesoftware/cspell/commit/52a5337fb4090394342b45e31423752cda268559))
+
+# 6.7.0 (2022-08-18)
+
+### Features
+
+* Adjust `.trie` formatting ([e2643c0](https://github.com/streetsidesoftware/cspell/commit/e2643c0bf508aa566823d2c697e5b94c77e6b874)), closes [#3443](https://github.com/streetsidesoftware/cspell/issues/3443) [#3430](https://github.com/streetsidesoftware/cspell/issues/3430)
+
+## 6.6.1 (2022-08-10)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 6.6.1-alpha.9 (2022-08-10)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 6.6.1-alpha.8 (2022-08-10)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 6.6.1-alpha.7 (2022-08-10)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 6.6.1-alpha.6 (2022-08-10)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 6.6.1-alpha.5 (2022-08-10)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 6.6.1-alpha.4 (2022-08-10)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 6.6.1-alpha.3 (2022-08-10)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## 6.6.1-alpha.2 (2022-08-10)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## [6.6.1-alpha.1](https://github.com/streetsidesoftware/cspell/compare/v6.6.1-alpha.0...v6.6.1-alpha.1) (2022-08-10)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## [6.6.1-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v6.6.0...v6.6.1-alpha.0) (2022-08-10)
+
+### Bug Fixes
+
+* Workflow Bot -- Update Dictionaries ([#3378](https://github.com/streetsidesoftware/cspell/issues/3378)) ([f672cf4](https://github.com/streetsidesoftware/cspell/commit/f672cf4894f5b88abb5c86a737785e87608f1470))
+
+# [6.6.0](https://github.com/streetsidesoftware/cspell/compare/v6.5.0...v6.6.0) (2022-08-08)
+
+### Bug Fixes
+
+* add tests for yarn3 ([#3324](https://github.com/streetsidesoftware/cspell/issues/3324)) ([3a86e26](https://github.com/streetsidesoftware/cspell/commit/3a86e265c0758b8e919f3cb69af74d2ac6d3918f))
+* Workflow Bot -- Update Dictionaries ([#3337](https://github.com/streetsidesoftware/cspell/issues/3337)) ([cf0b465](https://github.com/streetsidesoftware/cspell/commit/cf0b4651cc6f9ddcdda3c770b14493312fbb0169))
+
+### Features
+
+* Support spell checking of JSX/TSX Text ([#3346](https://github.com/streetsidesoftware/cspell/issues/3346)) ([943932e](https://github.com/streetsidesoftware/cspell/commit/943932e5b0b592fc69f156115612d4ea367bbb97)), closes [#3342](https://github.com/streetsidesoftware/cspell/issues/3342)
+* Use CSpellIO as the default file read layer. ([#3323](https://github.com/streetsidesoftware/cspell/issues/3323)) ([c1ebd70](https://github.com/streetsidesoftware/cspell/commit/c1ebd70d17055706db0ad806ccea064dc5e272b9))
+
+# [6.5.0](https://github.com/streetsidesoftware/cspell/compare/v6.4.2...v6.5.0) (2022-07-29)
+
+### Bug Fixes
+
+* Workflow Bot -- Update Dictionaries ([#3307](https://github.com/streetsidesoftware/cspell/issues/3307)) ([252c738](https://github.com/streetsidesoftware/cspell/commit/252c7384e6b8aa68d4f75c24b95fe4bbde2edb0c))
+
+### Features
+
+* Support Ignoring characters before checking ([#3311](https://github.com/streetsidesoftware/cspell/issues/3311)) ([d3fbe6c](https://github.com/streetsidesoftware/cspell/commit/d3fbe6cea5307c72dd9b2b94564b5f93e5560b1e))
+
+## [6.4.2](https://github.com/streetsidesoftware/cspell/compare/v6.4.1...v6.4.2) (2022-07-26)
+
+### Bug Fixes
+
+* Add SQL dictionary ([#3277](https://github.com/streetsidesoftware/cspell/issues/3277)) ([ee716b8](https://github.com/streetsidesoftware/cspell/commit/ee716b867d583c58f5f31aeb867fc3ace25a1062))
+* Add SQL integration test ([#3279](https://github.com/streetsidesoftware/cspell/issues/3279)) ([da7d1ba](https://github.com/streetsidesoftware/cspell/commit/da7d1baf2a0f666061069c40b6236ddc0bb235db))
+* Workflow Bot -- Update Dictionaries ([#3276](https://github.com/streetsidesoftware/cspell/issues/3276)) ([e5fdc72](https://github.com/streetsidesoftware/cspell/commit/e5fdc725a497c91a9374e88bb7e52d2e243528dd))
+* Workflow Bot -- Update Dictionaries ([#3278](https://github.com/streetsidesoftware/cspell/issues/3278)) ([47afb2b](https://github.com/streetsidesoftware/cspell/commit/47afb2b1ad5a85758755639c0093364baeb7afa5))
+* Workflow Bot -- Update Dictionaries ([#3282](https://github.com/streetsidesoftware/cspell/issues/3282)) ([4ade361](https://github.com/streetsidesoftware/cspell/commit/4ade36169efad728dcb7dc411c431619f9ca4e2f))
+
+## [6.4.1](https://github.com/streetsidesoftware/cspell/compare/v6.4.0...v6.4.1) (2022-07-23)
+
+### Bug Fixes
+
+* Fix ESLint schema ([#3272](https://github.com/streetsidesoftware/cspell/issues/3272)) ([05bb8ed](https://github.com/streetsidesoftware/cspell/commit/05bb8edd73b7423d3a7f8ae19862b1c658329b63)), closes [#3269](https://github.com/streetsidesoftware/cspell/issues/3269)
+
+# [6.4.0](https://github.com/streetsidesoftware/cspell/compare/v6.4.0-alpha.0...v6.4.0) (2022-07-19)
+
+### Bug Fixes
+
+* Mark adding words to custom dictionary experimental ([#3266](https://github.com/streetsidesoftware/cspell/issues/3266)) ([ec0dcd8](https://github.com/streetsidesoftware/cspell/commit/ec0dcd8c5df01ff3a038df0df11041902306555a))
+
+# [6.4.0-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v6.3.0...v6.4.0-alpha.0) (2022-07-18)
+
+### Bug Fixes
+
+* Workflow Bot -- Update Dictionaries ([#3239](https://github.com/streetsidesoftware/cspell/issues/3239)) ([384e4c9](https://github.com/streetsidesoftware/cspell/commit/384e4c93ef833568dc550d7eee78c849d384b372))
+
+### Features
+
+* **cspell-eslint-plugin:** Experimental Add word to dictionary ([#3247](https://github.com/streetsidesoftware/cspell/issues/3247)) ([22a514b](https://github.com/streetsidesoftware/cspell/commit/22a514b67291cbcfcb1a2917c099f0c4c606a9ef))
+
+# [6.3.0](https://github.com/streetsidesoftware/cspell/compare/v6.2.4-alpha.0...v6.3.0) (2022-07-17)
+
+### Bug Fixes
+
+* Add SystemServiceBus ([#3234](https://github.com/streetsidesoftware/cspell/issues/3234)) ([ebf666d](https://github.com/streetsidesoftware/cspell/commit/ebf666d45ae1bc4331d6ff3e9a86e641a693326a))
+
+### Features
+
+* Support a default reporter when linting. ([#3236](https://github.com/streetsidesoftware/cspell/issues/3236)) ([ffcaeff](https://github.com/streetsidesoftware/cspell/commit/ffcaeffc2e7395c99bff7a59e6b2a54ac31de384))
+
+## [6.2.4-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v6.2.3...v6.2.4-alpha.0) (2022-07-13)
+
+### Bug Fixes
+
+* Workflow Bot -- Update Dictionaries ([#3206](https://github.com/streetsidesoftware/cspell/issues/3206)) ([a99525b](https://github.com/streetsidesoftware/cspell/commit/a99525b848312d0b7cb4b97432c7fff32c1790af))
+
+## [6.2.3](https://github.com/streetsidesoftware/cspell/compare/v6.2.2...v6.2.3) (2022-07-07)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## [6.2.2](https://github.com/streetsidesoftware/cspell/compare/v6.2.1...v6.2.2) (2022-07-01)
+
+### Bug Fixes
+
+* Do not late bind parsers ([#3175](https://github.com/streetsidesoftware/cspell/issues/3175)) ([d71607c](https://github.com/streetsidesoftware/cspell/commit/d71607caf7b12c813b01eb80b11376c465f03369))
+
+## [6.2.1](https://github.com/streetsidesoftware/cspell/compare/v6.2.0...v6.2.1) (2022-07-01)
+
+### Bug Fixes
+
+* [#3172](https://github.com/streetsidesoftware/cspell/issues/3172) ([#3173](https://github.com/streetsidesoftware/cspell/issues/3173)) ([82227a5](https://github.com/streetsidesoftware/cspell/commit/82227a5de759d787b76afcdc32a0fe8f82bd29c7))
+
+# [6.2.0](https://github.com/streetsidesoftware/cspell/compare/v6.2.0-alpha.1...v6.2.0) (2022-06-30)
+
+### Bug Fixes
+
+* Pull out `plugins` to avoid conflict ([#3169](https://github.com/streetsidesoftware/cspell/issues/3169)) ([e5b7f09](https://github.com/streetsidesoftware/cspell/commit/e5b7f09a47ebcfb0a56df497644307cb6504acfc))
+
+# [6.2.0-alpha.1](https://github.com/streetsidesoftware/cspell/compare/v6.2.0-alpha.0...v6.2.0-alpha.1) (2022-06-29)
+
+### Bug Fixes
+
+* Do not allow nested Parser functions. ([#3155](https://github.com/streetsidesoftware/cspell/issues/3155)) ([8083c95](https://github.com/streetsidesoftware/cspell/commit/8083c95ce4b01aa887b9521f088ec8e537a929b6))
+
+### Features
+
+* Support global globs ([#3157](https://github.com/streetsidesoftware/cspell/issues/3157)) ([7c0ee59](https://github.com/streetsidesoftware/cspell/commit/7c0ee59056426729affca59353922b40e2b98e9a))
+
+# [6.2.0-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v6.1.3...v6.2.0-alpha.0) (2022-06-28)
+
+### Features
+
+* Support reading dictionary files over http. ([#3150](https://github.com/streetsidesoftware/cspell/issues/3150)) ([7ba81e6](https://github.com/streetsidesoftware/cspell/commit/7ba81e6fd5224bc76c6d7701e1664093d6ecf3c1))
+
+## [6.1.3](https://github.com/streetsidesoftware/cspell/compare/v6.1.3-alpha.1...v6.1.3) (2022-06-28)
+
+### Bug Fixes
+
+* Update reporter README ([#3113](https://github.com/streetsidesoftware/cspell/issues/3113)) ([bdaf3a8](https://github.com/streetsidesoftware/cspell/commit/bdaf3a80078a582a494d88e1f591400a555ba4f5)), closes [#3111](https://github.com/streetsidesoftware/cspell/issues/3111)
+
+## [6.1.3-alpha.1](https://github.com/streetsidesoftware/cspell/compare/v6.1.3-alpha.0...v6.1.3-alpha.1) (2022-06-15)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## [6.1.3-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v6.1.2...v6.1.3-alpha.0) (2022-06-15)
+
+### Bug Fixes
+
+* fix cspell-types ([#3067](https://github.com/streetsidesoftware/cspell/issues/3067)) ([71a9fc7](https://github.com/streetsidesoftware/cspell/commit/71a9fc71bfca26b4f65b5019fd055987cba36609))
+* Update grammar app ([#3070](https://github.com/streetsidesoftware/cspell/issues/3070)) ([9e0860f](https://github.com/streetsidesoftware/cspell/commit/9e0860f45c9a47d7e068384978ad83379776863a))
+
+## [6.1.2](https://github.com/streetsidesoftware/cspell/compare/v6.1.1...v6.1.2) (2022-06-09)
+
+### Bug Fixes
+
+* Remove `.txt` restriction from dictionary files. ([#3033](https://github.com/streetsidesoftware/cspell/issues/3033)) ([ee706be](https://github.com/streetsidesoftware/cspell/commit/ee706be7c2f02b2dfc33457a995b9b2390d8fd34)), closes [#2001](https://github.com/streetsidesoftware/cspell/issues/2001)
+
+## [6.1.1](https://github.com/streetsidesoftware/cspell/compare/v6.1.0...v6.1.1) (2022-06-02)
+
+### Bug Fixes
+
+* missing language-id ([#2999](https://github.com/streetsidesoftware/cspell/issues/2999)) ([0e6b241](https://github.com/streetsidesoftware/cspell/commit/0e6b24195f2ad4b44907318fbafcf55c1727d415)), closes [#2998](https://github.com/streetsidesoftware/cspell/issues/2998)
+
+# [6.1.0](https://github.com/streetsidesoftware/cspell/compare/v6.1.0-alpha.0...v6.1.0) (2022-05-31)
+
+### Bug Fixes
+
+* integration tests cspell version ([#2957](https://github.com/streetsidesoftware/cspell/issues/2957)) ([3786ae2](https://github.com/streetsidesoftware/cspell/commit/3786ae2b3cdae3a1b61cc89687728558df12dff8))
+
+### Features
+
+* Upgrade Java Dictionary ([#2992](https://github.com/streetsidesoftware/cspell/issues/2992)) ([e3059aa](https://github.com/streetsidesoftware/cspell/commit/e3059aaf440bd41b1613c4516397cd7a6411c9dd))
+
+# [6.1.0-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v6.0.0...v6.1.0-alpha.0) (2022-05-28)
+
+### Bug Fixes
+
+* add docker by default ([#2931](https://github.com/streetsidesoftware/cspell/issues/2931)) ([15e8e17](https://github.com/streetsidesoftware/cspell/commit/15e8e17d9c78ed356f3f2eb7baa4ebb87beb6e38))
+* be able to identify Docker files ([#2924](https://github.com/streetsidesoftware/cspell/issues/2924)) ([6561c3e](https://github.com/streetsidesoftware/cspell/commit/6561c3ec1a9b6052f5db9a8fe842ec68b834ee5c))
+* integrations list - add json format ([#2908](https://github.com/streetsidesoftware/cspell/issues/2908)) ([d98f9e2](https://github.com/streetsidesoftware/cspell/commit/d98f9e2f6078d8f272fd96f82aa27a3fe7e94404))
+
+### Features
+
+* Upgrade npm and node dictionaries ([#2949](https://github.com/streetsidesoftware/cspell/issues/2949)) ([bedc60c](https://github.com/streetsidesoftware/cspell/commit/bedc60cfe0c8665f296592c196156c22032c59c9))
+
+### Reverts
+
+* Revert "ci: Move reusable workflows to `reusable`" ([55a7121](https://github.com/streetsidesoftware/cspell/commit/55a7121a63fd77af721f5c4b73de8da8b4b97468))
+
+# [6.0.0](https://github.com/streetsidesoftware/cspell/compare/v6.0.0-alpha.0...v6.0.0) (2022-05-21)
+
+**Note:** Version bump only for package cspell-monorepo
+
+# [6.0.0-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v5.21.1...v6.0.0-alpha.0) (2022-05-20)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## [5.21.1](https://github.com/streetsidesoftware/cspell/compare/v5.21.0...v5.21.1) (2022-05-20)
+
+**Note:** Version bump only for package cspell-monorepo
+
+# [5.21.0](https://github.com/streetsidesoftware/cspell/compare/v5.20.0...v5.21.0) (2022-05-17)
+
+### Bug Fixes
+
+* comments in CSpellSettingsDef.ts ([#2821](https://github.com/streetsidesoftware/cspell/issues/2821)) ([b1f296d](https://github.com/streetsidesoftware/cspell/commit/b1f296d82a71dda1bd4cb6ed6f7b20829d4b3383))
+
+### Features
+
+* Upgrade `cpp` dictionary ([#2794](https://github.com/streetsidesoftware/cspell/issues/2794)) ([e51f7f4](https://github.com/streetsidesoftware/cspell/commit/e51f7f49fd70399ff13d9703bde772302b0782a3))
+* Upgrade `go` dictionary ([#2792](https://github.com/streetsidesoftware/cspell/issues/2792)) ([778b8fe](https://github.com/streetsidesoftware/cspell/commit/778b8fe7dd1cecf0546a6affadef78435e88a1aa))
+* Upgrade C# dictionary ([#2791](https://github.com/streetsidesoftware/cspell/issues/2791)) ([64c11da](https://github.com/streetsidesoftware/cspell/commit/64c11da76e1b7eabf834dbbd661128e9e8e5b4d1))
+
+# [5.20.0](https://github.com/streetsidesoftware/cspell/compare/v5.19.7...v5.20.0) (2022-05-02)
+
+### Bug Fixes
+
+* Roll back glob to 7.2.0 to fix Windows ([#2706](https://github.com/streetsidesoftware/cspell/issues/2706)) ([b42bbdd](https://github.com/streetsidesoftware/cspell/commit/b42bbdd28cbd8aefa28ce363b335fad781c37acf))
+* Update to glob 8 ([#2707](https://github.com/streetsidesoftware/cspell/issues/2707)) ([07567cd](https://github.com/streetsidesoftware/cspell/commit/07567cd709e084b585255db8689e0758e504a4fc)), closes [#2706](https://github.com/streetsidesoftware/cspell/issues/2706)
+
+### Features
+
+* Upgrade python dictionary ([#2763](https://github.com/streetsidesoftware/cspell/issues/2763)) ([2a86f54](https://github.com/streetsidesoftware/cspell/commit/2a86f549cb4baed97b39e35b1a78eeedcd948c32))
+
+## [5.19.7](https://github.com/streetsidesoftware/cspell/compare/v5.19.6...v5.19.7) (2022-04-09)
+
+### Bug Fixes
+
+* Ignore directories when checking files ([#2680](https://github.com/streetsidesoftware/cspell/issues/2680)) ([fa777f0](https://github.com/streetsidesoftware/cspell/commit/fa777f04981b8814b827721eaa8b9278ae95effb))
+
+## [5.19.6](https://github.com/streetsidesoftware/cspell/compare/v5.19.5...v5.19.6) (2022-04-08)
+
+### Bug Fixes
+
+* add --cache-reset option ([#2677](https://github.com/streetsidesoftware/cspell/issues/2677)) ([631073b](https://github.com/streetsidesoftware/cspell/commit/631073b42f24dec00eed9740cb8ee2e5bce4b07f))
+* add configuration for git commit messages ([#2674](https://github.com/streetsidesoftware/cspell/issues/2674)) ([42740a9](https://github.com/streetsidesoftware/cspell/commit/42740a98d0b33dc762baafc6d08ad8264524b305))
+* fix issue with stale cache entries ([#2673](https://github.com/streetsidesoftware/cspell/issues/2673)) ([15995a8](https://github.com/streetsidesoftware/cspell/commit/15995a898cf4284e33e5a48fd4cfa9ef0d329d6e))
+* fix minor typo. ([#2647](https://github.com/streetsidesoftware/cspell/issues/2647)) ([a151ccc](https://github.com/streetsidesoftware/cspell/commit/a151ccc3e89ec4b1dd2f88a6bbdfbd43070aa058))
+* relative path name ([#2675](https://github.com/streetsidesoftware/cspell/issues/2675)) ([51fc55b](https://github.com/streetsidesoftware/cspell/commit/51fc55b72374b46d5fdf165d5ed1ac3b6bf9f1d6))
+
+## [5.19.5](https://github.com/streetsidesoftware/cspell/compare/v5.19.4...v5.19.5) (2022-04-01)
+
+### Bug Fixes
+
+* Be able to disable the default configuration ([#2643](https://github.com/streetsidesoftware/cspell/issues/2643)) ([46c1e4f](https://github.com/streetsidesoftware/cspell/commit/46c1e4f6047477cc35e6c154431e8e2cdaacb3b5))
+
+## [5.19.4](https://github.com/streetsidesoftware/cspell/compare/v5.19.3...v5.19.4) (2022-04-01)
+
+### Bug Fixes
+
+* Performance - only serialize config if in debug mode ([#2640](https://github.com/streetsidesoftware/cspell/issues/2640)) ([d16c4f9](https://github.com/streetsidesoftware/cspell/commit/d16c4f975a612f6906399e8801a7e1d49074a8f0))
+
+## [5.19.3](https://github.com/streetsidesoftware/cspell/compare/v5.19.2...v5.19.3) (2022-03-24)
+
+### Bug Fixes
+
+* eslint-plugin improve performance ([#2616](https://github.com/streetsidesoftware/cspell/issues/2616)) ([b1a9bed](https://github.com/streetsidesoftware/cspell/commit/b1a9bede6ccb7dd9b381cd11ea3889577fb1bb45))
+* Invalidate the cache if cspell version has changed. ([#2580](https://github.com/streetsidesoftware/cspell/issues/2580)) ([2174928](https://github.com/streetsidesoftware/cspell/commit/21749287a169d41db0d4c63d5069561f33259f26))
+* prepare to publish eslint-plugin ([#2620](https://github.com/streetsidesoftware/cspell/issues/2620)) ([e5495c4](https://github.com/streetsidesoftware/cspell/commit/e5495c4be9734461f37d31155c10fc2075de888c))
+* Update English dictionary to remove British words ([#2612](https://github.com/streetsidesoftware/cspell/issues/2612)) ([5a6f143](https://github.com/streetsidesoftware/cspell/commit/5a6f143565b78b2062f6304c4c35499be35c71a4))
+
+## [5.19.2](https://github.com/streetsidesoftware/cspell/compare/v5.19.1...v5.19.2) (2022-03-14)
+
+### Bug Fixes
+
+* eslint-plugin - fix issue with document directives ([#2576](https://github.com/streetsidesoftware/cspell/issues/2576)) ([54cb12c](https://github.com/streetsidesoftware/cspell/commit/54cb12ca2cc103738900e7d422d5740f1e17d020))
+
+## [5.19.1](https://github.com/streetsidesoftware/cspell/compare/v5.19.0...v5.19.1) (2022-03-13)
+
+### Bug Fixes
+
+* ESLint Plugin to support ignoring imported properties ([#2573](https://github.com/streetsidesoftware/cspell/issues/2573)) ([ee4cc20](https://github.com/streetsidesoftware/cspell/commit/ee4cc208b420ed7738a6efb911e0cb9e4b99b67c))
+
+# [5.19.0](https://github.com/streetsidesoftware/cspell/compare/v5.18.5...v5.19.0) (2022-03-12)
+
+### Bug Fixes
+
+* integration-tests/package.json & integration-tests/package-lock.json to reduce vulnerabilities ([#2567](https://github.com/streetsidesoftware/cspell/issues/2567)) ([19f5c37](https://github.com/streetsidesoftware/cspell/commit/19f5c371fec18e4de2e3ffc7bc4a3fca22a161bb))
+* Use `exactOptionalPropertyTypes` ([#2493](https://github.com/streetsidesoftware/cspell/issues/2493)) ([ffde5ac](https://github.com/streetsidesoftware/cspell/commit/ffde5ac27e5354fa660c3e3d1cf5d6b48c53f22b))
+
+### Features
+
+* Use pipe instead of GenSequence ([#2491](https://github.com/streetsidesoftware/cspell/issues/2491)) ([65cb6f0](https://github.com/streetsidesoftware/cspell/commit/65cb6f0da255f68ab1858b2b4a9c108670103ca5))
+
+## [5.18.5](https://github.com/streetsidesoftware/cspell/compare/v5.18.4...v5.18.5) (2022-02-15)
+
+### Bug Fixes
+
+* Add dart language support ([#2444](https://github.com/streetsidesoftware/cspell/issues/2444)) ([bbcf793](https://github.com/streetsidesoftware/cspell/commit/bbcf7938eb5c6cfab3893bd967e43f368472ac27))
+* Add to Case Sensitive docs ([#2432](https://github.com/streetsidesoftware/cspell/issues/2432)) ([5891600](https://github.com/streetsidesoftware/cspell/commit/589160003446b1eddbad83b4e562b76cbbb73c29))
+* Improve suggestions ([#2426](https://github.com/streetsidesoftware/cspell/issues/2426)) ([51d5a71](https://github.com/streetsidesoftware/cspell/commit/51d5a71894674f5a6986bda3d951ee987908e944))
+* Make it easier to work with RTL languages. ([#2410](https://github.com/streetsidesoftware/cspell/issues/2410)) ([91b035f](https://github.com/streetsidesoftware/cspell/commit/91b035f719baf3c21d3a8b9d92419234ec37b500))
+* Make sure ext `.R` is detected as an R file. ([#2425](https://github.com/streetsidesoftware/cspell/issues/2425)) ([e9ae045](https://github.com/streetsidesoftware/cspell/commit/e9ae0450a2f7651ecdf8a0ef71a20e58ed61280d)), closes [#2424](https://github.com/streetsidesoftware/cspell/issues/2424)
+* Make sure suggestions are within limits ([#2428](https://github.com/streetsidesoftware/cspell/issues/2428)) ([d9f7943](https://github.com/streetsidesoftware/cspell/commit/d9f79430805e796add1c27315eb99fa3251d66e5))
+* Upgrade bundled dictionaries ([#2431](https://github.com/streetsidesoftware/cspell/issues/2431)) ([de1d68f](https://github.com/streetsidesoftware/cspell/commit/de1d68f0a35eebeac565e0dde9700afba1e0ad5a))
+
+## [5.18.4](https://github.com/streetsidesoftware/cspell/compare/v5.18.3...v5.18.4) (2022-02-07)
+
+### Bug Fixes
+
+* Add simple repl feature to suggestions. ([#2403](https://github.com/streetsidesoftware/cspell/issues/2403)) ([f9835b7](https://github.com/streetsidesoftware/cspell/commit/f9835b7d38a288793b789f4858c06d8812be4906))
+* Improve speed of suggestions for long words. ([#2406](https://github.com/streetsidesoftware/cspell/issues/2406)) ([6c76907](https://github.com/streetsidesoftware/cspell/commit/6c769079257e45877c4ee5ba5139351878037ab0))
+
+## [5.18.3](https://github.com/streetsidesoftware/cspell/compare/v5.18.2...v5.18.3) (2022-02-04)
+
+### Bug Fixes
+
+* Add support for R ([#2394](https://github.com/streetsidesoftware/cspell/issues/2394)) ([6888d48](https://github.com/streetsidesoftware/cspell/commit/6888d482748051a795418116e09ae27ce41c474c))
+* Improve cli summary and progress ([#2396](https://github.com/streetsidesoftware/cspell/issues/2396)) ([d52d68a](https://github.com/streetsidesoftware/cspell/commit/d52d68aeaf9ef301bcc1b1862867efb639ba061d))
+* Upgrade to commend-json 4.2.2 ([#2399](https://github.com/streetsidesoftware/cspell/issues/2399)) ([e5f643e](https://github.com/streetsidesoftware/cspell/commit/e5f643ef026ed4175132b012ab26035638d650e9))
+
+## [5.18.2](https://github.com/streetsidesoftware/cspell/compare/v5.18.1...v5.18.2) (2022-02-03)
+
+### Bug Fixes
+
+* fix suggestion output ([#2390](https://github.com/streetsidesoftware/cspell/issues/2390)) ([bda442d](https://github.com/streetsidesoftware/cspell/commit/bda442de1e529df15f0890c03d11907d4b0b86a1))
+
+### Reverts
+
+* Revert "ci: Workflow Bot -- Update ALL Dependencies (#2388)" (#2391) ([7f093f9](https://github.com/streetsidesoftware/cspell/commit/7f093f9429cb7b755392996d54449f29f46f138a)), closes [#2388](https://github.com/streetsidesoftware/cspell/issues/2388) [#2391](https://github.com/streetsidesoftware/cspell/issues/2391)
+
+## [5.18.1](https://github.com/streetsidesoftware/cspell/compare/v5.18.0...v5.18.1) (2022-02-03)
+
+### Bug Fixes
+
+* Ensure Weighted Suggestions are generated ([#2384](https://github.com/streetsidesoftware/cspell/issues/2384)) ([7e72b91](https://github.com/streetsidesoftware/cspell/commit/7e72b918584148afe0e0fd917aa38f99f606898c))
+* Fix first letter insert costs on suggestions. ([#2385](https://github.com/streetsidesoftware/cspell/issues/2385)) ([e5b7ed5](https://github.com/streetsidesoftware/cspell/commit/e5b7ed5fdb9cc6ddbc51e342dbf01970e6af2101))
+* Improve suggestions when using weights. ([#2387](https://github.com/streetsidesoftware/cspell/issues/2387)) ([c9d070d](https://github.com/streetsidesoftware/cspell/commit/c9d070d86a7f021f22428b2da56a98f185c3a128))
+* Make sure cspell-tool-cli keeps accents ([#2381](https://github.com/streetsidesoftware/cspell/issues/2381)) ([f6f17d0](https://github.com/streetsidesoftware/cspell/commit/f6f17d0ddd382e339c64817d499dd5ba1ed72a41))
+* Update publish script to clean first ([60811f0](https://github.com/streetsidesoftware/cspell/commit/60811f010d8fc511b10098d44d5085b9793c7a49))
+* Upgrade to commander 9.0.0 ([#2367](https://github.com/streetsidesoftware/cspell/issues/2367)) ([f255b70](https://github.com/streetsidesoftware/cspell/commit/f255b70b30da3002aaba477df3fa6f5ca2b90752))
+
+# [5.18.0](https://github.com/streetsidesoftware/cspell/compare/v5.18.0-alpha.0...v5.18.0) (2022-01-31)
+
+**Note:** Version bump only for package cspell-monorepo
+
+# [5.18.0-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v5.17.0...v5.18.0-alpha.0) (2022-01-30)
+
+### Bug Fixes
+
+* Show an error if a glob starts/ends with a single quote ([#2357](https://github.com/streetsidesoftware/cspell/issues/2357)) ([924200e](https://github.com/streetsidesoftware/cspell/commit/924200e9329503cebdbac5e2b8aafffec815d978)), closes [#2350](https://github.com/streetsidesoftware/cspell/issues/2350)
+* Speed up dictionaries from ([#2363](https://github.com/streetsidesoftware/cspell/issues/2363)) ([76c41ad](https://github.com/streetsidesoftware/cspell/commit/76c41ad0de3db4d695427f3e84016113532c2b3b))
+* Speed up spell checking with large config files. ([#2362](https://github.com/streetsidesoftware/cspell/issues/2362)) ([41c061c](https://github.com/streetsidesoftware/cspell/commit/41c061c7b703a1483e84beb80d0e098a52676a47))
+
+### Features
+
+* Enable support to dictionary alphabet and accents. ([#2355](https://github.com/streetsidesoftware/cspell/issues/2355)) ([b33453b](https://github.com/streetsidesoftware/cspell/commit/b33453b2c49b1753a2fcd593d8415c92d37a02f9))
+
+# [5.17.0](https://github.com/streetsidesoftware/cspell/compare/v5.17.0-alpha.0...v5.17.0) (2022-01-26)
+
+### Bug Fixes
+
+* do not depend upon @types/glob in exports. ([#2346](https://github.com/streetsidesoftware/cspell/issues/2346)) ([7740f55](https://github.com/streetsidesoftware/cspell/commit/7740f5554bf756687bb708585fd1b6c6b7b85211))
+
+# [5.17.0-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v5.16.0...v5.17.0-alpha.0) (2022-01-26)
+
+### Bug Fixes
+
+* (cspell-glob) Make sure `cwd` can be set. ([#2316](https://github.com/streetsidesoftware/cspell/issues/2316)) ([80087ac](https://github.com/streetsidesoftware/cspell/commit/80087ac1028d5c34d20274f6d4d2889e485664be))
+* (cspell) Mark forbidden and no suggest words ([#2302](https://github.com/streetsidesoftware/cspell/issues/2302)) ([c474cec](https://github.com/streetsidesoftware/cspell/commit/c474cec8e2983979c36b13ee1d33c334f027667f))
+* add `--fail-fast` to cspell README.md ([#2340](https://github.com/streetsidesoftware/cspell/issues/2340)) ([5554ecb](https://github.com/streetsidesoftware/cspell/commit/5554ecbcdee4c25998b327918f9461c266558ce0))
+* Explicitly import `types` ([#2343](https://github.com/streetsidesoftware/cspell/issues/2343)) ([7131001](https://github.com/streetsidesoftware/cspell/commit/71310012c63b7f77e8276e96f0885e8f7eec7e39)), closes [#2341](https://github.com/streetsidesoftware/cspell/issues/2341)
+* Make sure `${cwd}/` works in globs. ([#2315](https://github.com/streetsidesoftware/cspell/issues/2315)) ([2dbe93e](https://github.com/streetsidesoftware/cspell/commit/2dbe93e32119425b0190e388b4a6017f6b71702f))
+* Move `suggestionEditCosts` into `dictionaryInformation` ([#2296](https://github.com/streetsidesoftware/cspell/issues/2296)) ([021e781](https://github.com/streetsidesoftware/cspell/commit/021e7819c8b53e6f6b91b92723f581e4641eb224))
+
+### Features
+
+* add `--fail-fast` cli option ([#2338](https://github.com/streetsidesoftware/cspell/issues/2338)) ([7c17c22](https://github.com/streetsidesoftware/cspell/commit/7c17c226f8037f7d90cf64277f1ff8e1815e1750)), closes [#2294](https://github.com/streetsidesoftware/cspell/issues/2294)
+* Add `failFast` config option to exit as soon as an issue encountered ([#2307](https://github.com/streetsidesoftware/cspell/issues/2307)) ([26dd25a](https://github.com/streetsidesoftware/cspell/commit/26dd25af41ea6a15e98f82b1853e942e333085c0))
+* Add cli command to show suggestions. ([#2299](https://github.com/streetsidesoftware/cspell/issues/2299)) ([1db4777](https://github.com/streetsidesoftware/cspell/commit/1db47775e7903a9b5838bdc5b49229258f5e683b))
+* Support REPL style reading from stdin  ([#2342](https://github.com/streetsidesoftware/cspell/issues/2342)) ([78bf751](https://github.com/streetsidesoftware/cspell/commit/78bf751930dff94320326e97b91fea2a39edc6e1)), closes [#2294](https://github.com/streetsidesoftware/cspell/issues/2294)
+* Support using `stdin` for trace. ([#2300](https://github.com/streetsidesoftware/cspell/issues/2300)) ([7967ffe](https://github.com/streetsidesoftware/cspell/commit/7967ffec9f2dbbed0bf73eb8f2e648e9f67a7f95))
+
+# [5.16.0](https://github.com/streetsidesoftware/cspell/compare/v5.15.3...v5.16.0) (2022-01-20)
+
+### Bug Fixes
+
+* Add ability to discourage certain types of suggestions. ([#2291](https://github.com/streetsidesoftware/cspell/issues/2291)) ([a6e1bf6](https://github.com/streetsidesoftware/cspell/commit/a6e1bf6b903ff4ff6f5f9dfaaf50f1f9505bb5a0))
+
+## [5.15.3](https://github.com/streetsidesoftware/cspell/compare/v5.15.2...v5.15.3) (2022-01-20)
+
+### Bug Fixes
+
+* Handle missing files when spell checking from a file list. ([#2286](https://github.com/streetsidesoftware/cspell/issues/2286)) ([fd1e7e2](https://github.com/streetsidesoftware/cspell/commit/fd1e7e24492864318cc19229f44e18f6beff668f)), closes [#2285](https://github.com/streetsidesoftware/cspell/issues/2285)
+* Implement Weighted Distance Algorithm ([#2255](https://github.com/streetsidesoftware/cspell/issues/2255)) ([3a4f9db](https://github.com/streetsidesoftware/cspell/commit/3a4f9db8d0137a606cc350f0278b93d7d8c35e36))
+* Lock in `typedoc` till it is fixed. ([#2277](https://github.com/streetsidesoftware/cspell/issues/2277)) ([417fe32](https://github.com/streetsidesoftware/cspell/commit/417fe320234baf3ee6939f35830a47b62c15f6d3))
+
+## [5.15.2](https://github.com/streetsidesoftware/cspell/compare/v5.15.1...v5.15.2) (2022-01-11)
+
+### Bug Fixes
+
+* Fix backwards compatibility for Reporters ([#2229](https://github.com/streetsidesoftware/cspell/issues/2229)) ([38d17b2](https://github.com/streetsidesoftware/cspell/commit/38d17b299a974d4a93e505d42987f1fb1d62fcf8))
+* Fix issue with `maxDuplicateProblems` setting ([#2237](https://github.com/streetsidesoftware/cspell/issues/2237)) ([fbb3593](https://github.com/streetsidesoftware/cspell/commit/fbb35933af895e9d61a4dfd9e231f8276bd5442c))
+
+## [5.15.1](https://github.com/streetsidesoftware/cspell/compare/v5.15.0...v5.15.1) (2022-01-07)
+
+### Bug Fixes
+
+* Fix type for some older TypeScript parsers. ([#2191](https://github.com/streetsidesoftware/cspell/issues/2191)) ([b195499](https://github.com/streetsidesoftware/cspell/commit/b195499d9511eb5b513f7f13d3e850f32b7e27a6))
+
+# [5.15.0](https://github.com/streetsidesoftware/cspell/compare/v5.14.0...v5.15.0) (2022-01-07)
+
+### Bug Fixes
+
+* Invalidate cache when config has changed ([#2160](https://github.com/streetsidesoftware/cspell/issues/2160)) ([705c638](https://github.com/streetsidesoftware/cspell/commit/705c638bb305ab448e04d231d03a4310561eb6d1))
+* make config file version `0.2` by default. ([#2186](https://github.com/streetsidesoftware/cspell/issues/2186)) ([ed8af60](https://github.com/streetsidesoftware/cspell/commit/ed8af604a6a71de5707fbb324e2c248d2f08ccf0))
+* Update dictionaries ([#2173](https://github.com/streetsidesoftware/cspell/issues/2173)) ([d82aeb6](https://github.com/streetsidesoftware/cspell/commit/d82aeb62d3b486621222970bc606ae885694000f))
+
+### Features
+
+* Add support for cache options in config files. ([#2184](https://github.com/streetsidesoftware/cspell/issues/2184)) ([7256919](https://github.com/streetsidesoftware/cspell/commit/7256919ea4c4d8a924e21906f602fb160e2f96c9))
+* Remove 40 character limit on spell checking words ([#2175](https://github.com/streetsidesoftware/cspell/issues/2175)) ([5769a0e](https://github.com/streetsidesoftware/cspell/commit/5769a0e9dbab5f68633e57345271c741cd611dad))
+
+# [5.14.0](https://github.com/streetsidesoftware/cspell/compare/v5.14.0-alpha.0...v5.14.0) (2021-12-29)
+
+**Note:** Version bump only for package cspell-monorepo
+
+# [5.14.0-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v5.13.4...v5.14.0-alpha.0) (2021-12-29)
+
+### Bug Fixes
+
+* [#2077](https://github.com/streetsidesoftware/cspell/issues/2077) ([#2114](https://github.com/streetsidesoftware/cspell/issues/2114)) ([a3336b4](https://github.com/streetsidesoftware/cspell/commit/a3336b44a494d89a2708b172c6b9a8ec7ff73841))
+* Make sure help is not shown if the file list is empty. ([#2150](https://github.com/streetsidesoftware/cspell/issues/2150)) ([67c975a](https://github.com/streetsidesoftware/cspell/commit/67c975a8c87bb5265edb73cda194de057f4d3aef))
+* Upgrade HTML dictionary ([#2131](https://github.com/streetsidesoftware/cspell/issues/2131)) ([874ac37](https://github.com/streetsidesoftware/cspell/commit/874ac37ba84d8637d203de4faf77f4496d313b6a))
+
+### Features
+
+* Support `--file-list` cli option ([#2130](https://github.com/streetsidesoftware/cspell/issues/2130)) ([eef7b92](https://github.com/streetsidesoftware/cspell/commit/eef7b92a36750cdb1d22c4e44fe900f1f81f0a81)), closes [#1850](https://github.com/streetsidesoftware/cspell/issues/1850)
+
+## [5.13.4](https://github.com/streetsidesoftware/cspell/compare/v5.13.3...v5.13.4) (2021-12-18)
+
+### Bug Fixes
+
+* hunspell - honor minimum compound word length ([#2091](https://github.com/streetsidesoftware/cspell/issues/2091)) ([c67f7b8](https://github.com/streetsidesoftware/cspell/commit/c67f7b8bdac872eee544a7f1787ba09e79d59de2))
+
+### Features
+
+* report error and fail for unsupported NodeJS versions ([#1984](https://github.com/streetsidesoftware/cspell/issues/1984)) ([#2111](https://github.com/streetsidesoftware/cspell/issues/2111)) ([52bb33e](https://github.com/streetsidesoftware/cspell/commit/52bb33ea7114a179e931203423a328e5508fd037))
+
+## [5.13.3](https://github.com/streetsidesoftware/cspell/compare/v5.13.2...v5.13.3) (2021-12-11)
+
+### Bug Fixes
+
+* cspell-tools - limit memory usage when build dictionaries ([#2087](https://github.com/streetsidesoftware/cspell/issues/2087)) ([591860e](https://github.com/streetsidesoftware/cspell/commit/591860ec93737f943a0f76d615cdce4b25344457))
+* Hunspell make sure COMPOUNDFLAG is supported ([#2088](https://github.com/streetsidesoftware/cspell/issues/2088)) ([3bd772e](https://github.com/streetsidesoftware/cspell/commit/3bd772e827edfd0aa1bdabc5d7f21e2ec29f84b7))
+
+## [5.13.2](https://github.com/streetsidesoftware/cspell/compare/v5.13.1...v5.13.2) (2021-12-07)
+
+### Bug Fixes
+
+* jest/expect-expect warning ([#2062](https://github.com/streetsidesoftware/cspell/issues/2062)) ([7366b54](https://github.com/streetsidesoftware/cspell/commit/7366b54b83ecfe3f8bdb60fddd14c5b04bbf7fad))
+* make cspell aware of PureScript and Dhall ([#2067](https://github.com/streetsidesoftware/cspell/issues/2067)) ([53c8457](https://github.com/streetsidesoftware/cspell/commit/53c8457627963afd52b90ee021f17d2c4b9b7d05))
+* Update TypeScript extensions ([#2051](https://github.com/streetsidesoftware/cspell/issues/2051)) ([6a97177](https://github.com/streetsidesoftware/cspell/commit/6a9717702005e2790686d7884d78a3447544846b))
+
+## [5.13.1](https://github.com/streetsidesoftware/cspell/compare/v5.13.0...v5.13.1) (2021-11-24)
+
+### Bug Fixes
+
+* fix [#2011](https://github.com/streetsidesoftware/cspell/issues/2011) ([#2013](https://github.com/streetsidesoftware/cspell/issues/2013)) ([15abecb](https://github.com/streetsidesoftware/cspell/commit/15abecba58bf940f6fe49852363649dde6f86beb))
+
+# [5.13.0](https://github.com/streetsidesoftware/cspell/compare/v5.12.6...v5.13.0) (2021-11-17)
+
+### Bug Fixes
+
+* Add `enableCaseSensitive`/`disableCaseSensitive` ([#1951](https://github.com/streetsidesoftware/cspell/issues/1951)) ([93387b7](https://github.com/streetsidesoftware/cspell/commit/93387b7df3e83ac9d7b05df8e35167a0c0c35065))
+* integration - turn off case sensitivity for German ([#1952](https://github.com/streetsidesoftware/cspell/issues/1952)) ([2465964](https://github.com/streetsidesoftware/cspell/commit/2465964ec0241984dfbab9705c58c1bea2263d10))
+
+### Features
+
+* Support `--dot` command line option. ([#1985](https://github.com/streetsidesoftware/cspell/issues/1985)) ([fa1aa11](https://github.com/streetsidesoftware/cspell/commit/fa1aa116f0cc7468cbcf38320deba3bd0b62cc9c))
+
+## [5.12.6](https://github.com/streetsidesoftware/cspell/compare/v5.12.5...v5.12.6) (2021-11-04)
+
+### Bug Fixes
+
+* Include configuration for VUE and Swift by default. ([#1946](https://github.com/streetsidesoftware/cspell/issues/1946)) ([b57e86d](https://github.com/streetsidesoftware/cspell/commit/b57e86dfa620eab5f488b7dad9106865e1a4bcf2))
+
+## [5.12.5](https://github.com/streetsidesoftware/cspell/compare/v5.12.4...v5.12.5) (2021-11-02)
+
+### Bug Fixes
+
+* Add trace options ([#1939](https://github.com/streetsidesoftware/cspell/issues/1939)) ([191fc52](https://github.com/streetsidesoftware/cspell/commit/191fc52361d3f68d10be169b86d76359c848bf90))
+* Fix reading dictionary test to use `path` ([#1938](https://github.com/streetsidesoftware/cspell/issues/1938)) ([fa4ea3f](https://github.com/streetsidesoftware/cspell/commit/fa4ea3f0a379c5175fe3e930e1915f4521295583))
+* Make sure flaggedWords are always checked. ([#1935](https://github.com/streetsidesoftware/cspell/issues/1935)) ([dfbfddd](https://github.com/streetsidesoftware/cspell/commit/dfbfddd04337854425320a2a25836dacdb7ecc99)), closes [#1895](https://github.com/streetsidesoftware/cspell/issues/1895)
+* prevent suggesting word break characters ([#1933](https://github.com/streetsidesoftware/cspell/issues/1933)) ([42ffb98](https://github.com/streetsidesoftware/cspell/commit/42ffb984b593e7d1651db7999474749e00028e48))
+
+## [5.12.4](https://github.com/streetsidesoftware/cspell/compare/v5.12.3...v5.12.4) (2021-10-31)
+
+### Bug Fixes
+
+* adjust the AWS integration test to match repo changes. ([#1912](https://github.com/streetsidesoftware/cspell/issues/1912)) ([5918f32](https://github.com/streetsidesoftware/cspell/commit/5918f324999cceef6f935a0a7b994a3a9f216147))
+* Change `--wordsOnly` option to `--words-only` ([#1928](https://github.com/streetsidesoftware/cspell/issues/1928)) ([aac621f](https://github.com/streetsidesoftware/cspell/commit/aac621f46b6f1f60185e33cd06d9aab06438bf8f))
+* In Document settings. ([#1925](https://github.com/streetsidesoftware/cspell/issues/1925)) ([01c12ce](https://github.com/streetsidesoftware/cspell/commit/01c12ce4113516527abfa0ef9b7fa7a883c18520)), closes [#1628](https://github.com/streetsidesoftware/cspell/issues/1628) [#1629](https://github.com/streetsidesoftware/cspell/issues/1629)
+* Remove unnecessary dependency ([#1929](https://github.com/streetsidesoftware/cspell/issues/1929)) ([8bc7b1c](https://github.com/streetsidesoftware/cspell/commit/8bc7b1cc801afe50cbe765af183d187fe2bb6dd9))
+* Update software terms ([#1909](https://github.com/streetsidesoftware/cspell/issues/1909)) ([b9c8263](https://github.com/streetsidesoftware/cspell/commit/b9c8263f90afd1a4d961ac7227b0699c64b54333))
+* Update software terms and integration snapshots. ([#1916](https://github.com/streetsidesoftware/cspell/issues/1916)) ([0248330](https://github.com/streetsidesoftware/cspell/commit/0248330d0bf25e563bebba64333942bc04ca0275))
+
+## [5.12.3](https://github.com/streetsidesoftware/cspell/compare/v5.12.2...v5.12.3) (2021-10-08)
+
+### Bug Fixes
+
+* Fix `.gitignore` glob matching ([#1847](https://github.com/streetsidesoftware/cspell/issues/1847)) ([d36449b](https://github.com/streetsidesoftware/cspell/commit/d36449b125c9f02556f2306164dd32d32392bed8)), closes [#1846](https://github.com/streetsidesoftware/cspell/issues/1846)
+* Use the repository root by default when no root is specified. ([#1851](https://github.com/streetsidesoftware/cspell/issues/1851)) ([81d005e](https://github.com/streetsidesoftware/cspell/commit/81d005e17774ea0163b1fc3ff83afe253624fce6)), closes [#1846](https://github.com/streetsidesoftware/cspell/issues/1846)
+
+## [5.12.2](https://github.com/streetsidesoftware/cspell/compare/v5.12.1...v5.12.2) (2021-10-06)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## [5.12.1](https://github.com/streetsidesoftware/cspell/compare/v5.12.0...v5.12.1) (2021-10-06)
+
+### Bug Fixes
+
+* fix [#1807](https://github.com/streetsidesoftware/cspell/issues/1807) ([#1837](https://github.com/streetsidesoftware/cspell/issues/1837)) ([9608b77](https://github.com/streetsidesoftware/cspell/commit/9608b772f0ee09e55de66b8dc4dcb868ab4d7d32))
+
+# [5.12.0](https://github.com/streetsidesoftware/cspell/compare/v5.12.0-alpha.0...v5.12.0) (2021-10-05)
+
+**Note:** Version bump only for package cspell-monorepo
+
+# [5.12.0-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v5.11.1...v5.12.0-alpha.0) (2021-10-05)
+
+### Bug Fixes
+
+* fix home page reference. ([#1817](https://github.com/streetsidesoftware/cspell/issues/1817)) ([b074603](https://github.com/streetsidesoftware/cspell/commit/b07460342e8b8821e458285255d19272de0f6bf9))
+* support `--no-gitignore` option ([#1833](https://github.com/streetsidesoftware/cspell/issues/1833)) ([0b89fed](https://github.com/streetsidesoftware/cspell/commit/0b89fedc515c4ee237ea5404db791f6663332716))
+* Update gitignore README and normalize roots ([#1832](https://github.com/streetsidesoftware/cspell/issues/1832)) ([b9df331](https://github.com/streetsidesoftware/cspell/commit/b9df33148ce016b7003a784945ed5f83023b5903))
+
+### Features
+
+* Add support for `.gitignore` ([#1823](https://github.com/streetsidesoftware/cspell/issues/1823)) ([9b0dfe4](https://github.com/streetsidesoftware/cspell/commit/9b0dfe4e50f6b8210d16f9a63ae47949c706c462))
+
+## [5.11.1](https://github.com/streetsidesoftware/cspell/compare/v5.11.0...v5.11.1) (2021-09-29)
+
+### Bug Fixes
+
+* Move `[@types](https://github.com/types)` dependencies to dev ([#1811](https://github.com/streetsidesoftware/cspell/issues/1811)) ([c29fdcb](https://github.com/streetsidesoftware/cspell/commit/c29fdcb8dc5f5d2766a9dd139bd428e532739b3c))
+
+# [5.11.0](https://github.com/streetsidesoftware/cspell/compare/v5.11.0-alpha.0...v5.11.0) (2021-09-28)
+
+**Note:** Version bump only for package cspell-monorepo
+
+# [5.11.0-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v5.10.1...v5.11.0-alpha.0) (2021-09-28)
+
+### Bug Fixes
+
+* Allow config file version to be a number. ([#1730](https://github.com/streetsidesoftware/cspell/issues/1730)) ([9fa2eee](https://github.com/streetsidesoftware/cspell/commit/9fa2eeeb8fcd206b26a75a24fdfcf9014d79be52)), closes [#1729](https://github.com/streetsidesoftware/cspell/issues/1729)
+* Display filenames instead of URI's ([#1773](https://github.com/streetsidesoftware/cspell/issues/1773)) ([5a9542e](https://github.com/streetsidesoftware/cspell/commit/5a9542e1818ff68e89edc9a5c968741ad1b8751f))
+* Ensure cli-reporter displays the correct message. ([#1774](https://github.com/streetsidesoftware/cspell/issues/1774)) ([c0aaf45](https://github.com/streetsidesoftware/cspell/commit/c0aaf45ea1f147fda3514149a85d2c2bd70a749f))
+* Improve Patterns and RegExp handling ([#1743](https://github.com/streetsidesoftware/cspell/issues/1743)) ([100866e](https://github.com/streetsidesoftware/cspell/commit/100866e9afbd0c7f5200b44f11f74dc50edfae44)), closes [#1699](https://github.com/streetsidesoftware/cspell/issues/1699)
+* make sure `issue.uri` is actually a URI. ([#1746](https://github.com/streetsidesoftware/cspell/issues/1746)) ([4268057](https://github.com/streetsidesoftware/cspell/commit/4268057c772db4242dde033c69a4448c26739863))
+* Patterns - only add `u` if no flags are given ([#1745](https://github.com/streetsidesoftware/cspell/issues/1745)) ([a75c370](https://github.com/streetsidesoftware/cspell/commit/a75c370a2ffa5a166f856a915e4dcae625df271e)), closes [#1699](https://github.com/streetsidesoftware/cspell/issues/1699)
+* Reduce the cost of regexp exclusions ([#1800](https://github.com/streetsidesoftware/cspell/issues/1800)) ([4544c25](https://github.com/streetsidesoftware/cspell/commit/4544c2529faf76945d2d030ae15475573dcf41a6)), closes [#1775](https://github.com/streetsidesoftware/cspell/issues/1775)
+* Update Python dictionary ([#1778](https://github.com/streetsidesoftware/cspell/issues/1778)) ([6359145](https://github.com/streetsidesoftware/cspell/commit/6359145a7e5776bc4698ed447cb2d07aee20f1de))
+
+### Features
+
+* add --cache option to lint only changed files ([#1763](https://github.com/streetsidesoftware/cspell/issues/1763)) ([4bdfd09](https://github.com/streetsidesoftware/cspell/commit/4bdfd09677e7b744f79f4e35675760e7083d68e7))
+
+### Reverts
+
+* Revert "ci: Disable Coveralls - their API has been down for a couple of days. (#1731)" (#1732) ([102ef73](https://github.com/streetsidesoftware/cspell/commit/102ef730a8061dadc7d5d54463c6dd0b416a4ca9)), closes [#1731](https://github.com/streetsidesoftware/cspell/issues/1731) [#1732](https://github.com/streetsidesoftware/cspell/issues/1732)
+
+## [5.10.1](https://github.com/streetsidesoftware/cspell/compare/v5.10.0...v5.10.1) (2021-09-17)
+
+### Bug Fixes
+
+* Use process directly instead of importing it. ([#1714](https://github.com/streetsidesoftware/cspell/issues/1714)) ([db18a52](https://github.com/streetsidesoftware/cspell/commit/db18a52fbd290077ccb1a5c002bf85be891a13fc)), closes [#1704](https://github.com/streetsidesoftware/cspell/issues/1704)
+
+# [5.10.0](https://github.com/streetsidesoftware/cspell/compare/v5.10.0-alpha.6...v5.10.0) (2021-09-17)
+
+### Bug Fixes
+
+* Roll back update to `@cspell/dict-en-gb@2` ([#1712](https://github.com/streetsidesoftware/cspell/issues/1712)) ([edb1814](https://github.com/streetsidesoftware/cspell/commit/edb18141b5aea8c5fc09221b79340c8e8ab46a74))
+
+# [5.10.0-alpha.6](https://github.com/streetsidesoftware/cspell/compare/v5.10.0-alpha.5...v5.10.0-alpha.6) (2021-09-17)
+
+### Bug Fixes
+
+* Make dict-en-gb version 2 optional because of license. ([#1710](https://github.com/streetsidesoftware/cspell/issues/1710)) ([046a704](https://github.com/streetsidesoftware/cspell/commit/046a704e7c5f4a45c065d33d815faa2e464e08c9))
+
+# [5.10.0-alpha.5](https://github.com/streetsidesoftware/cspell/compare/v5.10.0-alpha.4...v5.10.0-alpha.5) (2021-09-16)
+
+**Note:** Version bump only for package cspell-monorepo
+
+# [5.10.0-alpha.4](https://github.com/streetsidesoftware/cspell/compare/v5.10.0-alpha.3...v5.10.0-alpha.4) (2021-09-16)
+
+**Note:** Version bump only for package cspell-monorepo
+
+# [5.10.0-alpha.3](https://github.com/streetsidesoftware/cspell/compare/v5.10.0-alpha.2...v5.10.0-alpha.3) (2021-09-16)
+
+### Bug Fixes
+
+* Fix accidental promise returned by reporters. ([#1702](https://github.com/streetsidesoftware/cspell/issues/1702)) ([8c125c2](https://github.com/streetsidesoftware/cspell/commit/8c125c2b2f671bfb6c97b06ecc138a7f7dc8bb84))
+* Fix strange spelling of Custom ([4a93456](https://github.com/streetsidesoftware/cspell/commit/4a934568584036fa77461adf575946d1e1366d89))
+
+# [5.10.0-alpha.2](https://github.com/streetsidesoftware/cspell/compare/v5.10.0-alpha.0...v5.10.0-alpha.2) (2021-09-13)
+
+**Note:** Version bump only for package cspell-monorepo
+
+# [5.10.0-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v5.9.1...v5.10.0-alpha.0) (2021-09-13)
+
+### Bug Fixes
+
+* Delete .pre-commit-hooks.yaml ([#1686](https://github.com/streetsidesoftware/cspell/issues/1686)) ([cc58b45](https://github.com/streetsidesoftware/cspell/commit/cc58b455961e83fc4c286c66731f697708385eb8))
+
+### Features
+
+* Custom reporters support ([#1643](https://github.com/streetsidesoftware/cspell/issues/1643)) ([3b9ac1b](https://github.com/streetsidesoftware/cspell/commit/3b9ac1b50972527288aa076970f657546a3ad551))
+
+## [5.9.1](https://github.com/streetsidesoftware/cspell/compare/v5.9.1-alpha.1...v5.9.1) (2021-09-12)
+
+### Reverts
+
+* Revert "test: fix github-actions (#1665)" (#1666) ([baaeab6](https://github.com/streetsidesoftware/cspell/commit/baaeab6a50f4f6973231e4ae61aa8bc6b2f59b15)), closes [#1665](https://github.com/streetsidesoftware/cspell/issues/1665) [#1666](https://github.com/streetsidesoftware/cspell/issues/1666)
+
+## [5.9.1-alpha.1](https://github.com/streetsidesoftware/cspell/compare/v5.9.1-alpha.0...v5.9.1-alpha.1) (2021-09-12)
+
+### Reverts
+
+* Revert "enable incremental typescript builds (#1671)" ([65664b2](https://github.com/streetsidesoftware/cspell/commit/65664b213e67a4108a2d38692f8fbd471b00afb7)), closes [#1671](https://github.com/streetsidesoftware/cspell/issues/1671)
+
+## [5.9.1-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v5.9.0...v5.9.1-alpha.0) (2021-09-11)
+
+### Bug Fixes
+
+* Change the suggestions to not include ties by default. ([#1678](https://github.com/streetsidesoftware/cspell/issues/1678)) ([0efbd58](https://github.com/streetsidesoftware/cspell/commit/0efbd5847ca433799c81b8cc4a227da4925d4dbf))
+* drop need for iconv-lite and iterable-to-stream ([#1677](https://github.com/streetsidesoftware/cspell/issues/1677)) ([c7ffcc7](https://github.com/streetsidesoftware/cspell/commit/c7ffcc786ed360fc1a59f84915ea7d204d51d3a5))
+* Fix suggestions when working with case aware dictionaries. ([#1674](https://github.com/streetsidesoftware/cspell/issues/1674)) ([0ba056d](https://github.com/streetsidesoftware/cspell/commit/0ba056d55f778e0b732137d56a9b7c555e9ae966))
+* Fix version number reference ([#1640](https://github.com/streetsidesoftware/cspell/issues/1640)) ([1c18b36](https://github.com/streetsidesoftware/cspell/commit/1c18b366382d6044e633e41bda99f3d180e36d3c)), closes [#1638](https://github.com/streetsidesoftware/cspell/issues/1638)
+* Perf - Try improving suggestion performance. ([#1639](https://github.com/streetsidesoftware/cspell/issues/1639)) ([aad4352](https://github.com/streetsidesoftware/cspell/commit/aad43524f502507f87fb6687d30d9684f2253c32))
+* sample more often to make sure the suggest stops on time. ([#1669](https://github.com/streetsidesoftware/cspell/issues/1669)) ([2bb6c82](https://github.com/streetsidesoftware/cspell/commit/2bb6c82abed296313fe551fc9767ea12f0f0f359))
+* Support Suggestion timeouts ([#1668](https://github.com/streetsidesoftware/cspell/issues/1668)) ([1698aaf](https://github.com/streetsidesoftware/cspell/commit/1698aaf25a07a5f4fb1eb0de46b56a8cae49e2c0))
+* Upgrade British English dictionary to v2. ([#1633](https://github.com/streetsidesoftware/cspell/issues/1633)) ([907d3eb](https://github.com/streetsidesoftware/cspell/commit/907d3eb76bf9b065a56565141d07f03970d6dda4))
+
+# [5.9.0](https://github.com/streetsidesoftware/cspell/compare/v5.9.0-alpha.0...v5.9.0) (2021-08-31)
+
+**Note:** Version bump only for package cspell-monorepo
+
+# [5.9.0-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v5.8.2...v5.9.0-alpha.0) (2021-08-31)
+
+### Bug Fixes
+
+* Update packages and fix schema lint issue. ([#1591](https://github.com/streetsidesoftware/cspell/issues/1591)) ([f849ecb](https://github.com/streetsidesoftware/cspell/commit/f849ecb26eee1daa77b12c79a0af2d71eadff241))
+
+### Features
+
+* Upgrade to the newest, (case sensitive), English dictionary ([#1545](https://github.com/streetsidesoftware/cspell/issues/1545)) ([581fc4d](https://github.com/streetsidesoftware/cspell/commit/581fc4d8ce0c18df779670cb6a41899d3b9c4e48))
+
+## [5.8.2](https://github.com/streetsidesoftware/cspell/compare/v5.8.1...v5.8.2) (2021-08-25)
+
+### Bug Fixes
+
+* fix issue where some dictionaries (nl-nl) could cause slow suggestions ([#1583](https://github.com/streetsidesoftware/cspell/issues/1583)) ([8c8d0ee](https://github.com/streetsidesoftware/cspell/commit/8c8d0eeea3e2003792f67c234b5d562be7f3f5c7))
+
+## [5.8.1](https://github.com/streetsidesoftware/cspell/compare/v5.8.0...v5.8.1) (2021-08-24)
+
+### Bug Fixes
+
+* Fix some minor issues ([#1562](https://github.com/streetsidesoftware/cspell/issues/1562)) ([8512920](https://github.com/streetsidesoftware/cspell/commit/851292088a6681d72165f6a498c854abcaef5d3e))
+* fix wrapping issue in `trace` command with compound words. ([#1574](https://github.com/streetsidesoftware/cspell/issues/1574)) ([e6ebda8](https://github.com/streetsidesoftware/cspell/commit/e6ebda86a11aaea06b3d04611426579ac0e87c41))
+
+# [5.8.0](https://github.com/streetsidesoftware/cspell/compare/v5.7.2...v5.8.0) (2021-08-21)
+
+### Bug Fixes
+
+* clean up find results ([#1550](https://github.com/streetsidesoftware/cspell/issues/1550)) ([80cb6a3](https://github.com/streetsidesoftware/cspell/commit/80cb6a32122b2395d06814a9dead6f95d2ab057b))
+* fix allowCompoundWords find in case aware dictionaries. ([#1549](https://github.com/streetsidesoftware/cspell/issues/1549)) ([769de0b](https://github.com/streetsidesoftware/cspell/commit/769de0ba3f256018612f7539523e0f1cbd28d726))
+
+### Features
+
+* Add support for `noSuggest` dictionaries. ([#1554](https://github.com/streetsidesoftware/cspell/issues/1554)) ([f0ccda5](https://github.com/streetsidesoftware/cspell/commit/f0ccda5abec9c236eb5387bcf6a6349f31cb81b7))
+* Improve `trace` words command results. ([#1558](https://github.com/streetsidesoftware/cspell/issues/1558)) ([ed8a5dc](https://github.com/streetsidesoftware/cspell/commit/ed8a5dc17ffa6de901887d3bd5b6bacf67217866))
+
+## [5.7.2](https://github.com/streetsidesoftware/cspell/compare/v5.7.1...v5.7.2) (2021-08-16)
+
+### Bug Fixes
+
+* Add software licenses dictionary ([#1523](https://github.com/streetsidesoftware/cspell/issues/1523)) ([43910d5](https://github.com/streetsidesoftware/cspell/commit/43910d526b97402239b0ad38aef74cd8add1b749))
+* Detect when module default is used with `cspell.config.js` files. ([#1529](https://github.com/streetsidesoftware/cspell/issues/1529)) ([e05aeff](https://github.com/streetsidesoftware/cspell/commit/e05aeffaa398366f4b6ce4c10728df8d2fa1860f))
+* Update `cspell` README.md ([#1530](https://github.com/streetsidesoftware/cspell/issues/1530)) ([9c0dfd6](https://github.com/streetsidesoftware/cspell/commit/9c0dfd61ba3236f5fee9b113c36a089d2ca11000))
+
+## [5.7.1](https://github.com/streetsidesoftware/cspell/compare/v5.7.0...v5.7.1) (2021-08-14)
+
+### Bug Fixes
+
+* do not return forbidden words in suggestions ([#1519](https://github.com/streetsidesoftware/cspell/issues/1519)) ([a9936d6](https://github.com/streetsidesoftware/cspell/commit/a9936d6b473a6e198fd58a2e3f38c4de52321b45))
+* Make sure hyphenated words work in ignoreWords ([#1520](https://github.com/streetsidesoftware/cspell/issues/1520)) ([81a86c7](https://github.com/streetsidesoftware/cspell/commit/81a86c7e9e34c5196114d2ba127059734b6fb53f)), closes [#1497](https://github.com/streetsidesoftware/cspell/issues/1497)
+
+# [5.7.0](https://github.com/streetsidesoftware/cspell/compare/v5.7.0-alpha.0...v5.7.0) (2021-08-14)
+
+**Note:** Version bump only for package cspell-monorepo
+
+# [5.7.0-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v5.6.7...v5.7.0-alpha.0) (2021-08-14)
+
+## Features
+
+* Support forbidden words in dictionaries ([#1516](https://github.com/streetsidesoftware/cspell/issues/1516)) ([8d7596b](https://github.com/streetsidesoftware/cspell/commit/8d7596b004100dd296e1058659e39eefc56c6f56))
+
+## Making Words Forbidden
+
+There are several ways to mark a word as forbidden:
+
+1. In a custom word list with words beginning with `!`.
+    ```
+    !forbiddenWord
+    ```
+2. In `words` section of `cspell` configuration:
+    ```
+    "words": [
+        "!forbiddenWord",
+        "configstore"
+    ],
+    ```
+3. In `flagWords` section of `cspell` configuration:
+    ```
+    "flagWords": ["forbiddenWord"]
+    ```
+
+### Overriding Forbidden words
+Sometimes it is necessary to allow a word even if it is forbidden.
+
+#### In a comment
+
+```js
+/**
+ * Do not mark `forbiddenWord` as incorrect.
+ * cspell:ignore forbiddenWord
+ */
+```
+
+#### In the `cspell` configuration
+
+```jsonc
+{
+    "ignoreWords": ["forbiddenWord"]
+}
+```
+
+## [5.6.7](https://github.com/streetsidesoftware/cspell/compare/v5.6.6...v5.6.7) (2021-08-13)
+
+### Bug Fixes
+
+* error output when configstore dir not accessible. ([#1512](https://github.com/streetsidesoftware/cspell/issues/1512)) ([68a63d1](https://github.com/streetsidesoftware/cspell/commit/68a63d16215b551a9fa32ac5ef1cd8e12cb26ec5)), closes [#1510](https://github.com/streetsidesoftware/cspell/issues/1510)
+* Fix issue with suggestions. ([#1507](https://github.com/streetsidesoftware/cspell/issues/1507)) ([6a44e26](https://github.com/streetsidesoftware/cspell/commit/6a44e26ba37af882f6330d054df9c05ec8f9b0d9))
+* ignore TrueTypeFont files ([#1445](https://github.com/streetsidesoftware/cspell/issues/1445)) ([336c77f](https://github.com/streetsidesoftware/cspell/commit/336c77fbc4eab882cc8d1720ffc5ef514a05d2e6))
+
+### Reverts
+
+* Revert "build(deps): bump codecov/codecov-action from 1.5.2 to 2.0.1 (#1438)" (#1446) ([cbffbb8](https://github.com/streetsidesoftware/cspell/commit/cbffbb827b4d47e4ba9ca8bbe5d5ac2c2af75f45)), closes [#1438](https://github.com/streetsidesoftware/cspell/issues/1438) [#1446](https://github.com/streetsidesoftware/cspell/issues/1446)
+
+## [5.6.6](https://github.com/streetsidesoftware/cspell/compare/v5.6.5...v5.6.6) (2021-06-18)
+
+### Bug Fixes
+
+* publishing issue with cspell-bundled-dicts ([8a43bc5](https://github.com/streetsidesoftware/cspell/commit/8a43bc5fa494b27d3ed2e4ab4f1d516b80225961))
+
+## [5.6.5](https://github.com/streetsidesoftware/cspell/compare/v5.6.4...v5.6.5) (2021-06-18)
+
+### Bug Fixes
+
+* fix regression related to trailing accents missing in legacy dicts ([#1345](https://github.com/streetsidesoftware/cspell/issues/1345)) ([b8d8810](https://github.com/streetsidesoftware/cspell/commit/b8d8810fafb585a4ffc77f3cb350888d9a6a52ed))
+
+## [5.6.4](https://github.com/streetsidesoftware/cspell/compare/v5.6.3...v5.6.4) (2021-06-15)
+
+### Bug Fixes
+
+* [#1336](https://github.com/streetsidesoftware/cspell/issues/1336) ([#1342](https://github.com/streetsidesoftware/cspell/issues/1342)) ([7a0b278](https://github.com/streetsidesoftware/cspell/commit/7a0b278f5d96c163b901afeb3ef08f55af609dda))
+* early out on checking binary files. ([#1337](https://github.com/streetsidesoftware/cspell/issues/1337)) ([a948808](https://github.com/streetsidesoftware/cspell/commit/a9488080daf99ed992ac55e450d522a78e5708d7))
+* Fix issue with missing suggestions ([#1339](https://github.com/streetsidesoftware/cspell/issues/1339)) ([cfecde8](https://github.com/streetsidesoftware/cspell/commit/cfecde85b80d70063aa647d0f6837c879a938ce1))
+
+## [5.6.3](https://github.com/streetsidesoftware/cspell/compare/v5.6.2...v5.6.3) (2021-06-11)
+
+### Bug Fixes
+
+* fix issue with legacy dictionaries that do not have some accents ([5a9aa27](https://github.com/streetsidesoftware/cspell/commit/5a9aa27decba013299111a66a89da18c7123b321))
+* make sure cspell-tools does not collide with old version. ([00e360c](https://github.com/streetsidesoftware/cspell/commit/00e360c03fe81d398944dd13a36e1fffac57250e))
+* support case sensitive document checking. ([527de4a](https://github.com/streetsidesoftware/cspell/commit/527de4a80dd281526783404127d23a0b7a51ec52))
+
+## [5.6.2](https://github.com/streetsidesoftware/cspell/compare/v5.6.1...v5.6.2) (2021-06-10)
+
+### Bug Fixes
+
+* *minor breaking* fix issues with accents and the word splitter ([#1330](https://github.com/streetsidesoftware/cspell/issues/1330)) ([845c314](https://github.com/streetsidesoftware/cspell/commit/845c3146efa8d4cce7bfdfbf76627ced298ac8b7))
+
+## [5.6.1](https://github.com/streetsidesoftware/cspell/compare/v5.6.0...v5.6.1) (2021-06-09)
+
+### Bug Fixes
+
+* Fix issues with accent characters ([#1322](https://github.com/streetsidesoftware/cspell/issues/1322)) ([4d65dfb](https://github.com/streetsidesoftware/cspell/commit/4d65dfbc3c0091450de2d6023b41c623faf763f0)), closes [#1321](https://github.com/streetsidesoftware/cspell/issues/1321)
+* Use a dictionary for ignoreWords to be consistent with `words` ([#1326](https://github.com/streetsidesoftware/cspell/issues/1326)) ([ee3897d](https://github.com/streetsidesoftware/cspell/commit/ee3897d62dcc5f5af177141734015ad9a9dcddff))
+
+# [5.6.0](https://github.com/streetsidesoftware/cspell/compare/v5.5.2...v5.6.0) (2021-06-05)
+
+### Features
+
+* support `.pnp.js` when loading configurations. ([#1307](https://github.com/streetsidesoftware/cspell/issues/1307)) ([76da68c](https://github.com/streetsidesoftware/cspell/commit/76da68cf6a13586598689d01bce3a24bc255530a))
+
+## [5.5.2](https://github.com/streetsidesoftware/cspell/compare/v5.5.1...v5.5.2) (2021-05-30)
+
+### Bug Fixes
+
+* Ignore hash links like `[abcdefa]` ([#1293](https://github.com/streetsidesoftware/cspell/issues/1293)) ([888e25d](https://github.com/streetsidesoftware/cspell/commit/888e25d48254cc57c9fb4f3c5a65d57dfffacff0))
+
+## [5.5.1](https://github.com/streetsidesoftware/cspell/compare/v5.5.0...v5.5.1) (2021-05-29)
+
+### Bug Fixes
+
+* Update CHANGELOG.md ([#1291](https://github.com/streetsidesoftware/cspell/issues/1291)) ([7129c1b](https://github.com/streetsidesoftware/cspell/commit/7129c1bdaa107ae8990ecf8ca2120e82031f2c05))
+
+# [5.5.0](https://github.com/streetsidesoftware/cspell/compare/v5.4.1...v5.5.0) (2021-05-29)
+
+### Bug Fixes
+
+* Fix Performance issue when checking long strings of non-words ([#1285](https://github.com/streetsidesoftware/cspell/issues/1285)) ([bdb43d6](https://github.com/streetsidesoftware/cspell/commit/bdb43d6947acb7c41fc04d73f3b9e1ba29097511))
+
+### Features
+
+* Remove incorrect Ignore Hex Digits Regexp ([#1277](https://github.com/streetsidesoftware/cspell/issues/1277)) ([2621eb0](https://github.com/streetsidesoftware/cspell/commit/2621eb02f487d9e466b4936bde8650c338b320b8)), closes [#1276](https://github.com/streetsidesoftware/cspell/issues/1276) [#1276](https://github.com/streetsidesoftware/cspell/issues/1276)
+
+## [5.4.1](https://github.com/streetsidesoftware/cspell/compare/v5.4.0...v5.4.1) (2021-05-11)
+
+### Bug Fixes
+
+* correct how dictionaries are disabled ([#1229](https://github.com/streetsidesoftware/cspell/issues/1229)) ([60975ea](https://github.com/streetsidesoftware/cspell/commit/60975ea03ad11cc92d2841ca0baf0d60e3d39907)), closes [#1215](https://github.com/streetsidesoftware/cspell/issues/1215)
+
+# [5.4.0](https://github.com/streetsidesoftware/cspell/compare/v5.3.12...v5.4.0) (2021-05-05)
+
+### Features
+
+* Support `package.json` as a configuration location. ([#1178](https://github.com/streetsidesoftware/cspell/issues/1178)) ([2ce2410](https://github.com/streetsidesoftware/cspell/commit/2ce241052a5addc2240326f42abcfc909e618707))
+
+### Reverts
+
+* Revert "Revert "fix: Correctly handle leading and trailing single quote"" (#1203) ([1738993](https://github.com/streetsidesoftware/cspell/commit/17389939659ccc2148aef3779844e4f58ba7b966)), closes [#1203](https://github.com/streetsidesoftware/cspell/issues/1203)
+
+## [5.3.12](https://github.com/streetsidesoftware/cspell/compare/v5.3.11...v5.3.12) (2021-04-06)
+
+### Bug Fixes
+
+* Update dictionaries ([#1136](https://github.com/streetsidesoftware/cspell/issues/1136)) ([64eba51](https://github.com/streetsidesoftware/cspell/commit/64eba51b75e0e2dde0568f46b4312c949b884a73))
+
+## [5.3.11](https://github.com/streetsidesoftware/cspell/compare/v5.3.10...v5.3.11) (2021-04-03)
+
+### Bug Fixes
+
+* Fix command line exclusions ([#1119](https://github.com/streetsidesoftware/cspell/issues/1119)) ([c191fc5](https://github.com/streetsidesoftware/cspell/commit/c191fc5c4901059cddf1ea70479563bbf054c395))
+
+## [5.3.10](https://github.com/streetsidesoftware/cspell/compare/v5.3.9...v5.3.10) (2021-04-02)
+
+### Bug Fixes
+
+* file globs listed on the command line override files in the config. ([#1117](https://github.com/streetsidesoftware/cspell/issues/1117)) ([25c501d](https://github.com/streetsidesoftware/cspell/commit/25c501d2267b8aca93624e0c4e036df5fdef7d20)), closes [#1115](https://github.com/streetsidesoftware/cspell/issues/1115)
+* issue [#1114](https://github.com/streetsidesoftware/cspell/issues/1114) ([#1116](https://github.com/streetsidesoftware/cspell/issues/1116)) ([77ae68a](https://github.com/streetsidesoftware/cspell/commit/77ae68ae346dcf27f780d4139be57a234b7a1485))
+
+## [5.3.9](https://github.com/streetsidesoftware/cspell/compare/v5.3.8...v5.3.9) (2021-03-19)
+
+### Bug Fixes
+
+* If the global config is not found, do not pretend it was. ([#1079](https://github.com/streetsidesoftware/cspell/issues/1079)) ([fb07679](https://github.com/streetsidesoftware/cspell/commit/fb07679c34e3f5669b54e91b53b4a3d5b5b50bab))
+
+## [5.3.8](https://github.com/streetsidesoftware/cspell/compare/v5.3.7...v5.3.8) (2021-03-17)
+
+### Bug Fixes
+
+* export default configuration filenames ([#1070](https://github.com/streetsidesoftware/cspell/issues/1070)) ([8c3b65e](https://github.com/streetsidesoftware/cspell/commit/8c3b65e59a4156573cdf9bf8106d92689a9fa9bc))
+* update schema generator ([#1074](https://github.com/streetsidesoftware/cspell/issues/1074)) ([528b7d0](https://github.com/streetsidesoftware/cspell/commit/528b7d0b67e1f947832de24e7b66c3d7dfd5fb7f))
+
+## [5.3.7](https://github.com/streetsidesoftware/cspell/compare/v5.3.7-alpha.3...v5.3.7) (2021-03-05)
+
+### Bug Fixes
+
+* build issue due to spelling ([#1041](https://github.com/streetsidesoftware/cspell/issues/1041)) ([11cb0c0](https://github.com/streetsidesoftware/cspell/commit/11cb0c0edfa5fcfdf2d07b1031d4c604d4960841))
+
+## [5.3.7-alpha.3](https://github.com/streetsidesoftware/cspell/compare/v5.3.7-alpha.2...v5.3.7-alpha.3) (2021-03-05)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## [5.3.7-alpha.2](https://github.com/streetsidesoftware/cspell/compare/v5.3.7-alpha.1...v5.3.7-alpha.2) (2021-03-05)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## [5.3.7-alpha.1](https://github.com/streetsidesoftware/cspell/compare/v5.3.7-alpha.0...v5.3.7-alpha.1) (2021-03-05)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## [5.3.7-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v5.3.6...v5.3.7-alpha.0) (2021-03-05)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## [5.3.6](https://github.com/streetsidesoftware/cspell/compare/v5.3.5...v5.3.6) (2021-03-05)
+
+### Bug Fixes
+
+* issue cause by commit d1a7fa7 ([#1040](https://github.com/streetsidesoftware/cspell/issues/1040)) ([da9ca51](https://github.com/streetsidesoftware/cspell/commit/da9ca512265a6f068d26a6b240e1a4699fca2ba7)), closes [/github.com/streetsidesoftware/cspell/commit/d1a7fa78759257d692598bf712254201ed0dd126#commitcomment-47719278](https://github.com//github.com/streetsidesoftware/cspell/commit/d1a7fa78759257d692598bf712254201ed0dd126/issues/commitcomment-47719278)
+
+## [5.3.5](https://github.com/streetsidesoftware/cspell/compare/v5.3.4...v5.3.5) (2021-03-05)
+
+### Bug Fixes
+
+* adjust order in which files are loaded. ([#1037](https://github.com/streetsidesoftware/cspell/issues/1037)) ([84c7aa1](https://github.com/streetsidesoftware/cspell/commit/84c7aa11323f0453dedb3659550ef7976fb6c4f6))
+* fix schema pattern for language IDs. ([#1034](https://github.com/streetsidesoftware/cspell/issues/1034)) ([591dde2](https://github.com/streetsidesoftware/cspell/commit/591dde2532a7698f41c5bf824ead226a7ae78cfe))
+* make sure glob patterns match on windows ([#1039](https://github.com/streetsidesoftware/cspell/issues/1039)) ([1e58e4c](https://github.com/streetsidesoftware/cspell/commit/1e58e4c0c1fb706fc61fb82512d6fe92ad0b58fc))
+
+## [5.3.4](https://github.com/streetsidesoftware/cspell/compare/v5.3.3...v5.3.4) (2021-03-01)
+
+### Bug Fixes
+
+* Adjust the way glob roots are calculated ([d1a7fa7](https://github.com/streetsidesoftware/cspell/commit/d1a7fa78759257d692598bf712254201ed0dd126))
+
+## [5.3.3](https://github.com/streetsidesoftware/cspell/compare/v5.3.2...v5.3.3) (2021-02-26)
+
+### Bug Fixes
+
+* Report the root cause of a dictionary error. ([#1014](https://github.com/streetsidesoftware/cspell/issues/1014)) ([8c1debd](https://github.com/streetsidesoftware/cspell/commit/8c1debde5de8c040b0110644e9b45f60d42bafc3))
+
+## [5.3.2](https://github.com/streetsidesoftware/cspell/compare/v5.3.1...v5.3.2) (2021-02-26)
+
+### Bug Fixes
+
+* do not check binary files and add Ada dictionary ([#1011](https://github.com/streetsidesoftware/cspell/issues/1011)) ([af04ead](https://github.com/streetsidesoftware/cspell/commit/af04ead1dcd517b5de813a24d4d17424971a5606))
+
+## [5.3.1](https://github.com/streetsidesoftware/cspell/compare/v5.3.0...v5.3.1) (2021-02-25)
+
+### Bug Fixes
+
+* Make sure relative globRoot is resolved correctly. ([#1004](https://github.com/streetsidesoftware/cspell/issues/1004)) ([29977c4](https://github.com/streetsidesoftware/cspell/commit/29977c466935948f092527e0300bb0a310394cdc))
+* make sure to export all needed cspell types. ([#1006](https://github.com/streetsidesoftware/cspell/issues/1006)) ([c625479](https://github.com/streetsidesoftware/cspell/commit/c625479be185f287e297a1dcddbcfa2aa24b0d0d))
+
+# [5.3.0](https://github.com/streetsidesoftware/cspell/compare/v5.3.0-alpha.4...v5.3.0) (2021-02-25)
+
+**Note:** Version bump only for package cspell-monorepo
+
+# [5.3.0-alpha.4](https://github.com/streetsidesoftware/cspell/compare/v5.3.0-alpha.3...v5.3.0-alpha.4) (2021-02-25)
+
+### Bug Fixes
+
+* [#1000](https://github.com/streetsidesoftware/cspell/issues/1000) ([#1002](https://github.com/streetsidesoftware/cspell/issues/1002)) ([d82a4a2](https://github.com/streetsidesoftware/cspell/commit/d82a4a2921fd70a790d8b0839e6be6f342501c26))
+* be able to report on glob source. ([#1001](https://github.com/streetsidesoftware/cspell/issues/1001)) ([1020d56](https://github.com/streetsidesoftware/cspell/commit/1020d56ba04e8418d162d4bde8e4948546a8f7d2))
+
+# [5.3.0-alpha.3](https://github.com/streetsidesoftware/cspell/compare/v5.3.0-alpha.2...v5.3.0-alpha.3) (2021-02-23)
+
+### Bug Fixes
+
+* Improve reporting on files matching glob patterns. ([#994](https://github.com/streetsidesoftware/cspell/issues/994)) ([da991f9](https://github.com/streetsidesoftware/cspell/commit/da991f93a061c5b64ce437332c7107ef2ef89472))
+
+# [5.3.0-alpha.2](https://github.com/streetsidesoftware/cspell/compare/v5.3.0-alpha.1...v5.3.0-alpha.2) (2021-02-22)
+
+### Bug Fixes
+
+* Add schema support for `enableFiletypes`. ([#979](https://github.com/streetsidesoftware/cspell/issues/979)) ([d18706e](https://github.com/streetsidesoftware/cspell/commit/d18706e3ffd7a6446396d339b85a753b4ae451e0))
+* Add support for custom dictionaries ([#982](https://github.com/streetsidesoftware/cspell/issues/982)) ([196921d](https://github.com/streetsidesoftware/cspell/commit/196921dc635dce7cfdd5b6c300af54beeebde91a))
+
+# [5.3.0-alpha.1](https://github.com/streetsidesoftware/cspell/compare/v5.3.0-alpha.0...v5.3.0-alpha.1) (2021-02-19)
+
+### Bug Fixes
+
+* Display suggestions -- regression ([#976](https://github.com/streetsidesoftware/cspell/issues/976)) ([e3970c7](https://github.com/streetsidesoftware/cspell/commit/e3970c7fa4932ab0a610fcb9c0907b45ffa7f0df))
+* Fix schema generation to use `deprecatedMessage` ([#972](https://github.com/streetsidesoftware/cspell/issues/972)) ([492dca9](https://github.com/streetsidesoftware/cspell/commit/492dca91466773bdf247fdb87f93d64914d5e3e1))
+
+# [5.3.0-alpha.0](https://github.com/streetsidesoftware/cspell/compare/v5.2.4...v5.3.0-alpha.0) (2021-02-18)
+
+### Bug Fixes
+
+* Working towards a standard way to spell check files. ([#900](https://github.com/streetsidesoftware/cspell/issues/900)) ([5d38b2a](https://github.com/streetsidesoftware/cspell/commit/5d38b2a6c918fc9c8cfb2040cc49c9675c4c4b8a))
+
+### Features
+
+* Be able to specify files to spell check within the config. ([#948](https://github.com/streetsidesoftware/cspell/issues/948)) ([23f7a48](https://github.com/streetsidesoftware/cspell/commit/23f7a488ef500fb1df5cd234c7d3c2ab4ec02961)), closes [#571](https://github.com/streetsidesoftware/cspell/issues/571)
+* cspell-glob matches only files under the root ([#913](https://github.com/streetsidesoftware/cspell/issues/913)) ([a2d700d](https://github.com/streetsidesoftware/cspell/commit/a2d700dfaf3f762aad5d13d56c3918afca7be458))
+* Part 1 - glob patterns are relative to the config file. ([#921](https://github.com/streetsidesoftware/cspell/issues/921)) ([a250448](https://github.com/streetsidesoftware/cspell/commit/a2504484ec38f15804cc0a203317266f83566b7c))
+* Support local configuration files ([#966](https://github.com/streetsidesoftware/cspell/issues/966)) ([0ccc5fe](https://github.com/streetsidesoftware/cspell/commit/0ccc5fe9eb70ca3a4c6e5a3fc0b653465e76983c))
+* Support negation matches in languageSettings for languageIds ([#967](https://github.com/streetsidesoftware/cspell/issues/967)) ([cea9114](https://github.com/streetsidesoftware/cspell/commit/cea9114249feb718e4497681c520e1de2c985dc2))
+
+## [5.2.4](https://github.com/streetsidesoftware/cspell/compare/v5.2.3...v5.2.4) (2021-01-28)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## [5.2.3](https://github.com/streetsidesoftware/cspell/compare/v5.2.2...v5.2.3) (2021-01-27)
+
+### Bug Fixes
+
+* support `cspell.config.js` and remove support for `cspell.js` ([#895](https://github.com/streetsidesoftware/cspell/issues/895)) ([6fbb4b2](https://github.com/streetsidesoftware/cspell/commit/6fbb4b29e7b0f84258b33e90788df9c9fb298fd3))
+
+## [5.2.2](https://github.com/streetsidesoftware/cspell/compare/v5.2.1...v5.2.2) (2021-01-26)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## [5.2.1](https://github.com/streetsidesoftware/cspell/compare/v5.2.0...v5.2.1) (2021-01-23)
+
+### Bug Fixes
+
+* make sure version and help do not exit with non-zero code. ([#883](https://github.com/streetsidesoftware/cspell/issues/883)) ([b8e91f3](https://github.com/streetsidesoftware/cspell/commit/b8e91f35e2cdebc14dda9b73de1dd31183f5d91d)), closes [#880](https://github.com/streetsidesoftware/cspell/issues/880)
+
+# [5.2.0](https://github.com/streetsidesoftware/cspell/compare/v5.1.3...v5.2.0) (2021-01-23)
+
+### Bug Fixes
+
+* Improve suggestions for short words ([#872](https://github.com/streetsidesoftware/cspell/issues/872)) ([9c62d04](https://github.com/streetsidesoftware/cspell/commit/9c62d04fd987f807e9a20ba5326b578bce854d16)), closes [#753](https://github.com/streetsidesoftware/cspell/issues/753)
+
+### Features
+
+* Add options --show-context and --relative ([#878](https://github.com/streetsidesoftware/cspell/issues/878)) ([1fddaac](https://github.com/streetsidesoftware/cspell/commit/1fddaac4d80f8a28e12677e0953e8443116c24c2))
+* improve word splitting options ([#846](https://github.com/streetsidesoftware/cspell/issues/846)) ([b4dc108](https://github.com/streetsidesoftware/cspell/commit/b4dc108a7409c72f7862fe8f08b9f6f7458db9d3))
+* support .yaml and .js configuration files ([#875](https://github.com/streetsidesoftware/cspell/issues/875)) ([4a07acc](https://github.com/streetsidesoftware/cspell/commit/4a07acc507f3106e1f09805b8ee019ea200ae08f))
+* support displaying suggestions ([#881](https://github.com/streetsidesoftware/cspell/issues/881)) ([e3f207f](https://github.com/streetsidesoftware/cspell/commit/e3f207f802231cc7915015d2c2924e08745e4f8e))
+
+## [5.1.3](https://github.com/streetsidesoftware/cspell/compare/v5.1.2...v5.1.3) (2021-01-05)
+
+### Bug Fixes
+
+* Support dictionaries having words with numbers. ([#828](https://github.com/streetsidesoftware/cspell/issues/828)) ([856f04a](https://github.com/streetsidesoftware/cspell/commit/856f04a3bec45088ec7d79dd089fe0c80e517d5e))
+
+## [5.1.2](https://github.com/streetsidesoftware/cspell/compare/v5.1.1...v5.1.2) (2020-12-31)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## [5.1.1](https://github.com/streetsidesoftware/cspell/compare/v5.1.0...v5.1.1) (2020-12-28)
+
+### Bug Fixes
+
+* remove dependency upon `@types/glob` ([#810](https://github.com/streetsidesoftware/cspell/issues/810)) ([03fab52](https://github.com/streetsidesoftware/cspell/commit/03fab5288d971ced4c49da6765194653d8f73f96))
+
+# [5.1.0](https://github.com/streetsidesoftware/cspell/compare/v5.0.8...v5.1.0) (2020-12-27)
+
+### Bug Fixes
+
+* Improve speed of testing for email ([#779](https://github.com/streetsidesoftware/cspell/issues/779)) ([be1329d](https://github.com/streetsidesoftware/cspell/commit/be1329da818ff9658399a1765cc40cda5ddd927d))
+
+### Features
+
+* improve spell checking speed and allow multiple exclude arguments ([#806](https://github.com/streetsidesoftware/cspell/issues/806)) ([7a4c8f8](https://github.com/streetsidesoftware/cspell/commit/7a4c8f8d968aba520122ad94feb21096e8190898))
+
+## [5.0.8](https://github.com/streetsidesoftware/cspell/compare/v5.0.7...v5.0.8) (2020-12-17)
+
+### Bug Fixes
+
+* Docs and minor edits ([#757](https://github.com/streetsidesoftware/cspell/issues/757)) ([e5f4567](https://github.com/streetsidesoftware/cspell/commit/e5f4567f25a90ee52105e50c99c7ad90cfb9fdb0))
+* issue with importing cspell ([ff32d0c](https://github.com/streetsidesoftware/cspell/commit/ff32d0cab987026e13d131961667e10b6cd83831))
+
+## [5.0.7](https://github.com/streetsidesoftware/cspell/compare/v5.0.6...v5.0.7) (2020-12-16)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## [5.0.6](https://github.com/streetsidesoftware/cspell/compare/v5.0.5...v5.0.6) (2020-12-15)
+
+### Bug Fixes
+
+* missing cspell-default.json file ([#752](https://github.com/streetsidesoftware/cspell/issues/752)) ([e13b2e0](https://github.com/streetsidesoftware/cspell/commit/e13b2e0212b50e9278710c67a044a56c368f4f42))
+
+## [5.0.5](https://github.com/streetsidesoftware/cspell/compare/v5.0.4...v5.0.5) (2020-12-15)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## [5.0.4](https://github.com/streetsidesoftware/cspell/compare/v5.0.3...v5.0.4) (2020-12-15)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## [5.0.3](https://github.com/streetsidesoftware/cspell/compare/v5.0.2...v5.0.3) (2020-12-04)
+
+### Bug Fixes
+
+* cleanup folder for cspell-glob ([#698](https://github.com/streetsidesoftware/cspell/issues/698)) ([7081eb5](https://github.com/streetsidesoftware/cspell/commit/7081eb5e68f27b4596ae1423ff67888c315daa3e))
+* Expose Emitter types ([#718](https://github.com/streetsidesoftware/cspell/issues/718)) ([3ef9030](https://github.com/streetsidesoftware/cspell/commit/3ef903097de0819025ba74eb9bf978eb1f57fc12))
+* improve resolve search logic ([#697](https://github.com/streetsidesoftware/cspell/issues/697)) ([75be89b](https://github.com/streetsidesoftware/cspell/commit/75be89b17bb0f5515db1eafbda04c3a35f70aadd))
+* use node resolver by default ([#695](https://github.com/streetsidesoftware/cspell/issues/695)) ([0d95869](https://github.com/streetsidesoftware/cspell/commit/0d958692741d5d06f888bfe2d400f399b32988f4))
+
+## [5.0.2](https://github.com/streetsidesoftware/cspell/compare/v5.0.2-alpha.1...v5.0.2) (2020-11-26)
+
+**Note:** Version bump only for package cspell-monorepo
+
+## [5.0.1](https://github.com/streetsidesoftware/cspell/compare/v5.0.1-alpha.15...v5.0.1) (2020-11-20)
+
+### Bug Fixes
+
+* make sure the error code is correctly set ([#619](https://github.com/streetsidesoftware/cspell/issues/619)) ([09e358c](https://github.com/streetsidesoftware/cspell/commit/09e358c3b7d3c485df92d7d9c5a652cf6a85f635))
+
+## [5.0.1-alpha.15](https://github.com/streetsidesoftware/cspell/compare/v5.0.1-alpha.14...v5.0.1-alpha.15) (2020-11-18)
+
+### Bug Fixes
+
+* force new version ([3ab08ab](https://github.com/streetsidesoftware/cspell/commit/3ab08ab5ae1939d934b2f0fb23d33defc60c1a7f))
+
+## 5.0.1-alpha.14 (2020-11-17)
+
+**Note:** Version bump only for package cspell-monorepo
+
+<!---
+cspell: ignore abcdefa Dhall deps
+--->

@@ -1,0 +1,23 @@
+import type { ITrie } from 'cspell-trie-lib';
+import { parseDictionary } from 'cspell-trie-lib';
+
+import type { Reader } from './ReaderOptions.ts';
+import { readTextFile } from './readTextFile.ts';
+
+export async function textFileReader(filename: string): Promise<Reader> {
+    const content = await readTextFile(filename);
+    const words = content.split('\n').map((s) => s.trim());
+    let trie: ITrie | undefined;
+
+    return {
+        filename,
+        type: 'TextFile',
+        size: words.length,
+        lines: words,
+        toTrie: () => {
+            if (trie) return trie;
+            trie = parseDictionary(words, { stripCaseAndAccents: false, optimize: true });
+            return trie;
+        },
+    };
+}

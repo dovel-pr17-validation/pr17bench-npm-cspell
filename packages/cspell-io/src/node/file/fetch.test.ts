@@ -1,0 +1,256 @@
+// eslint-disable-next-line simple-import-sort/imports
+import createFetchMock from 'vitest-fetch-mock';
+
+import { afterEach, describe, expect, test, vi } from 'vitest';
+
+import { _fetch } from './_fetch.js';
+import { fetchHead, fetchURL } from './fetch.js';
+import { toFetchUrlError } from './FetchError.js';
+
+// cspell:ignore dontMock
+
+vi.mock('./_fetch.js', async (_importOriginal) => {
+    return {
+        _fetch: vi.fn(globalThis.fetch),
+    };
+});
+
+const mockFetch = createFetchMock(vi);
+
+const useMockFetch = true;
+
+const timeout = 20_000;
+
+describe('fetch', () => {
+    afterEach(() => {
+        mockFetch.dontMock();
+        vi.resetAllMocks();
+    });
+
+    // test.only(
+    //     'fetchURL',
+    //     async () => {
+    //         const url = new URL('https://example.com/');
+    //         const response = await doFetchUrl(url);
+    //         expect(response).toBeInstanceOf(Uint8Array);
+    //     },
+    //     timeout,
+    // );
+
+    /*
+    test.each`
+        url
+        ${'https://example.com/'}
+        ${'https://raw.githubusercontent.com/streetsidesoftware/cspell/main/packages/cspell-io/samples/cities.txt'}
+        ${'https://raw.githubusercontent.com/streetsidesoftware/cspell/main/packages/cspell-io/samples/cities.txt.gz'}
+        ${'https://raw.githubusercontent.com/streetsidesoftware/cspell/main/tsconfig.base.json'}
+    `('fetchHead $url', async ({ url }) => {
+        const response = await fetchHead(url);
+        // console.log('%o', toObj(response));
+        expect(response.get('etag')).toEqual(expect.any(String));
+        expect(Number.parseInt(response.get('content-length') || '', 10)).toBeGreaterThan(0);
+    }, testOptions);
+    */
+
+    test.each`
+        url
+        ${'https://www.jsdelivr.com/icons/favicon.svg'}
+    `(
+        'fetchHead $url',
+        async ({ url }) => {
+            const mockFetch = vi.mocked(_fetch);
+            mockFetch.mockResolvedValue(getResponse(url as keyof typeof responseTable));
+
+            const response = await fetchHead(url);
+            // console.log('%o', toObj(response));
+            expect(response.get('etag')).toEqual(expect.any(String));
+        },
+        timeout,
+    );
+
+    test.each`
+        url                                   | expected
+        ${'https://x.example.com/'}           | ${'getaddrinfo ENOTFOUND x.example.com'}
+        ${'https://www.google.com/404'}       | ${/URL not found|getaddrinfo EAI_AGAIN/}
+        ${'https://httpbingo.org/status/503'} | ${'Fatal Error'}
+    `(
+        'fetchURL with error',
+        async ({ url, expected }) => {
+            url = new URL(url);
+            await expect(doFetchUrl(url)).rejects.toThrowError(expected);
+        },
+        timeout,
+    );
+
+    test('abort', async () => {
+        const url = new URL('https://example.com/');
+        const controller = new AbortController();
+        const signal = controller.signal;
+        controller.abort();
+        await expect(fetchURL(url, signal)).rejects.toThrowError('This operation was aborted');
+    });
+});
+
+// function toObj(m: Iterable<[string, string]>): Record<string, string> {
+//     const r: Record<string, string> = {};
+//     for (const entry of m) {
+//         r[entry[0]] = entry[1];
+//     }
+//     return r;
+// }
+
+async function doFetchUrl(url: URL, signal?: AbortSignal): Promise<Uint8Array<ArrayBuffer>> {
+    const mockResponse = getMockResponse(url);
+    if (!mockResponse) {
+        try {
+            const req = signal ? new Request(url, { signal }) : url;
+            const response = await fetch(req);
+            const ok = response.ok;
+            const status = response.status;
+            const statusText = response.statusText;
+            const body = await response.text();
+            console.error('Response %o', { ok, status, body, statusText, url: response.url });
+        } catch (e) {
+            console.error('Response %o', { url: url.href, error: e });
+        }
+    }
+
+    if (mockResponse && useMockFetch) {
+        if (mockResponse instanceof Error) {
+            mockFetch.mockReject(toFetchUrlError(mockResponse, url));
+        } else {
+            mockFetch.mockResponse(mockResponse);
+        }
+    }
+
+    return fetchURL(url, signal);
+}
+
+const responseTable = {
+    'https://httpbingo.org/status/503': {
+        ok: false,
+        status: 503,
+        body: '',
+        statusText: 'Service Unavailable',
+        url: 'https://httpbingo.org/status/503',
+        headers: new Headers({ 'Retry-After': '120' }),
+    },
+    'https://www.google.com/404': {
+        ok: false,
+        status: 404,
+        body:
+            '<!DOCTYPE html>\n' +
+            '<html lang=en>\n' +
+            '  <meta charset=utf-8>\n' +
+            '  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">\n' +
+            '  <title>Error 404 (Not Found)!!1</title>\n' +
+            '  <style>\n' +
+            '  </style>\n' +
+            '  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\n' +
+            '  <p><b>404.</b> <ins>That’s an error.</ins>\n' +
+            '  <p>The requested URL <code>/404</code> was not found on this server.  <ins>That’s all we know.</ins>\n',
+        statusText: 'Not Found',
+        url: 'https://www.google.com/404',
+        headers: new Headers({}),
+    },
+    'https://example.com/': {
+        ok: true,
+        status: 200,
+        body:
+            '<!doctype html>\n' +
+            '<html>\n' +
+            '<head>\n' +
+            '    <title>Example Domain</title>\n' +
+            '\n' +
+            '    <meta charset="utf-8" />\n' +
+            '    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />\n' +
+            '    <meta name="viewport" content="width=device-width, initial-scale=1" />\n' +
+            '    <style type="text/css">\n' +
+            '    body {\n' +
+            '        background-color: #f0f0f2;\n' +
+            '        margin: 0;\n' +
+            '        padding: 0;\n' +
+            '        \n' +
+            '    }\n' +
+            '    div {\n' +
+            '        width: 600px;\n' +
+            '        margin: 5em auto;\n' +
+            '        padding: 2em;\n' +
+            '        background-color: #fdfdff;\n' +
+            '        border-radius: 0.5em;\n' +
+            '        box-shadow: 2px 3px 7px 2px rgba(0,0,0,0.02);\n' +
+            '    }\n' +
+            '    a:link, a:visited {\n' +
+            '        color: #38488f;\n' +
+            '        text-decoration: none;\n' +
+            '    }\n' +
+            '    @media (max-width: 700px) {\n' +
+            '        div {\n' +
+            '            margin: 0 auto;\n' +
+            '            width: auto;\n' +
+            '        }\n' +
+            '    }\n' +
+            '    </style>    \n' +
+            '</head>\n' +
+            '\n' +
+            '<body>\n' +
+            '<div>\n' +
+            '    <h1>Example Domain</h1>\n' +
+            '    <p>This domain is for use in illustrative examples in documents. You may use this\n' +
+            '    domain in literature without prior coordination or asking for permission.</p>\n' +
+            '    <p><a href="https://www.iana.org/domains/example">More information...</a></p>\n' +
+            '</div>\n' +
+            '</body>\n' +
+            '</html>\n',
+        statusText: 'OK',
+        url: 'https://example.com/',
+        headers: new Headers({}),
+    },
+    'https://www.jsdelivr.com/icons/favicon.svg': {
+        status: 200,
+        statusText: 'OK',
+        headers: new Headers({
+            date: 'Mon, 02 Feb 2026 17:36:39 GMT',
+            'content-type': 'image/svg+xml',
+            connection: 'close',
+            nel: '{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}',
+            server: 'cloudflare',
+            'cache-control': 'public, max-age=3600',
+            'content-encoding': 'br',
+            etag: 'W/"bde-19be6429590"',
+            'last-modified': 'Thu, 22 Jan 2026 15:11:22 GMT',
+            'rndr-id': '5a245d2d-18e3-491f',
+            'strict-transport-security': 'max-age=31536000; includeSubDomains; preload',
+            vary: 'Accept-Encoding',
+            'x-render-origin-server': 'Render',
+            'x-response-time': '1ms',
+            'cf-cache-status': 'HIT',
+            age: '2156',
+            'cf-ray': '9c7b73b5ae6819f7-AMS',
+        }),
+        body: '',
+        bodyUsed: false,
+        ok: true,
+        redirected: false,
+        type: 'basic',
+        url: 'https://www.jsdelivr.com/icons/favicon.svg',
+    },
+};
+
+function getResponse(href: keyof typeof responseTable): Response {
+    return responseTable[href] as unknown as Response;
+}
+
+function getMockResponse(url: URL) {
+    const href = url.href;
+
+    if (href in responseTable) {
+        return (responseTable as Record<string, unknown>)[href];
+    }
+    switch (href) {
+        case 'https://x.example.com/': {
+            return new Error('getaddrinfo ENOTFOUND x.example.com');
+        }
+    }
+    return undefined;
+}

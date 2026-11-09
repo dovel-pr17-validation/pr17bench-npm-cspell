@@ -1,0 +1,95 @@
+name: ' 🔗 Update Dependencies'
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**/package.json'
+      - '*-lock.yaml'
+  schedule:
+    - cron: '0 12 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NEW_BRANCH: 'update-dependencies-main'
+  REF_BRANCH: main
+
+jobs:
+  update-dependencies:
+    if: github.repository_owner == 'streetsidesoftware'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ env.REF_BRANCH }}
+
+      - name: Setup Node and Pnpm
+        uses: ./.github/actions/setup-node
+
+      - name: Update Root
+        run: |
+          pnpm up
+          pnpm -r up
+
+      - name: Install
+        run: |
+          pnpm i
+          pnpm build
+
+      - name: Apply and new Lint rules
+        continue-on-error: true
+        run: pnpm run lint
+
+      - name: PR
+        uses: ./.github/actions/pr
+        with:
+          commit-message: 'ci: Workflow Bot -- Update ALL Dependencies'
+          branch: ${{ env.NEW_BRANCH }}
+          app_id: ${{ secrets.AUTOMATION_APP_ID }}
+          app_private_key: ${{ secrets.AUTOMATION_PRIVATE_KEY }}
+          base: ${{ env.REF_BRANCH }}
+          body: |
+            ## Update ALL Dependencies (${{ env.REF_BRANCH }})
+          title: 'ci: Workflow Bot -- Update ALL Dependencies (${{ env.REF_BRANCH }})'
+
+  update-yarn:
+    if: github.repository_owner == 'streetsidesoftware'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ env.REF_BRANCH }}
+
+      - name: Setup Node and Pnpm
+        uses: ./.github/actions/setup-node
+
+      - name: Install
+        run: pnpm install
+
+      - name: Update Yarn
+        run: |
+          pnpm run update-yarn
+
+      - name: PR
+        uses: ./.github/actions/pr
+        with:
+          commit-message: 'ci: Workflow Bot -- Update Yarn'
+          branch: 'update-yarn-main'
+          app_id: ${{ secrets.AUTOMATION_APP_ID }}
+          app_private_key: ${{ secrets.AUTOMATION_PRIVATE_KEY }}
+          base: ${{ env.REF_BRANCH }}
+          body: |
+            ## Update Yarn (${{ env.REF_BRANCH }})
+          title: 'ci: Workflow Bot -- Update Yarn (${{ env.REF_BRANCH }})'

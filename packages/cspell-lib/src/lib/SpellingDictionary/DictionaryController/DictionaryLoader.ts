@@ -1,0 +1,385 @@
+import { opConcatMap, opFilter, opMap, pipe } from '@cspell/cspell-pipe/sync';
+import type { DictionaryFileTypes } from '@cspell/cspell-types';
+import { StrongWeakMap } from '@cspell/strong-weak-map';
+import type { SpellingDictionary, SpellingDictionaryOptions } from 'cspell-dictionary';
+import {
+    createFailedToLoadDictionary,
+    createFlagWordsDictionary,
+    createFlagWordsDictionaryFromTrieFile,
+    createInlineSpellingDictionary,
+    createSpellingDictionary,
+    createSpellingDictionaryFromTrieFile,
+    createSuggestDictionary,
+    createSuggestDictionaryFromTrieFile,
+} from 'cspell-dictionary';
+import type { Stats, TextFileResource, VFileSystem } from 'cspell-io';
+import { compareStats, toFileURL, urlBasename } from 'cspell-io';
+
+import { measurePerf } from '../../perf/index.js';
+import type {
+    DictionaryDefinitionInlineInternal,
+    DictionaryDefinitionInternal,
+    DictionaryDefinitionSimpleInternal,
+    DictionaryFileDefinitionInternal,
+} from '../../Settings/index.js';
+import { isDictionaryDefinitionInlineInternal, isDictionaryFileDefinitionInternal } from '../../Settings/index.js';
+import { normalizeLocaleForIntl } from '../../Settings/LanguageSettings.js';
+import { AutoResolveWeakCache, AutoResolveWeakWeakCache } from '../../util/AutoResolve.js';
+import { toError } from '../../util/errors.js';
+import { SimpleCache } from '../../util/simpleCache.js';
+import { SpellingDictionaryLoadError } from '../SpellingDictionaryError.js';
+
+const MAX_AGE = 10_000;
+
+const loaders: Loaders = {
+    S: loadSimpleWordList,
+    C: legacyWordList,
+    W: wordsPerLineWordList,
+    T: loadTrie,
+    default: loadSimpleWordList,
+};
+
+export type LoadOptions = DictionaryDefinitionInternal;
+
+type LoadFileOptions = DictionaryFileDefinitionInternal;
+
+enum LoadingState {
+    Loaded = 0,
+    Loading = 1,
+}
+
+interface CacheEntry {
+    uri: string;
+    options: LoadFileOptions;
+    ts: number;
+    stat: Stats | Error | undefined;
+    dictionary: SpellingDictionary | undefined;
+    pending: Promise<readonly [SpellingDictionary, Stats | Error]>;
+    loadingState: LoadingState;
+    sig: number;
+}
+
+interface Reader {
+    read(filename: URL): Promise<Uint8Array<ArrayBuffer>>;
+    readText(filename: URL): Promise<string>;
+    readLines(filename: URL): Promise<string[]>;
+}
+
+type LoaderType = keyof Loaders;
+type Loader = (reader: Reader, filename: URL, options: LoadOptions) => Promise<SpellingDictionary>;
+
+interface Loaders {
+    S: Loader;
+    C: Loader;
+    T: Loader;
+    W: Loader;
+    default: Loader;
+}
+
+type KvPair = { key: string; entry: CacheEntry };
+
+export class DictionaryLoader {
+    private dictionaryCache = new StrongWeakMap<string, CacheEntry>();
+    private inlineDictionaryCache = new AutoResolveWeakCache<DictionaryDefinitionInlineInternal, SpellingDictionary>();
+    private dictionaryCacheByDef = new AutoResolveWeakWeakCache<DictionaryDefinitionInternal, KvPair>();
+    private reader: Reader;
+    /** The keepAliveCache is to hold onto the most recently loaded dictionaries. */
+    private keepAliveCache: SimpleCache<DictionaryDefinitionInternal, CacheEntry>;
+
+    constructor(
+        private fs: VFileSystem,
+        keepAliveSize = 10,
+    ) {
+        this.reader = toReader(fs);
+        this.keepAliveCache = new SimpleCache<DictionaryDefinitionInternal, CacheEntry>(keepAliveSize);
+    }
+
+    public loadDictionary(def: DictionaryDefinitionInternal): Promise<SpellingDictionary> {
+        if (isDictionaryDefinitionInlineInternal(def)) {
+            return Promise.resolve(this.loadInlineDict(def));
+        }
+        if (isDictionaryFileDefinitionInternal(def)) {
+            const { key, entry } = this.getCacheEntry(def);
+            if (entry) {
+                return entry.pending.then(([dictionary]) => dictionary);
+            }
+            const loadedEntry = this.loadEntry(def.btrie || def.path, def);
+            this.setCacheEntry(key, loadedEntry, def);
+            this.keepAliveCache.set(def, loadedEntry);
+            return loadedEntry.pending.then(([dictionary]) => dictionary);
+        }
+        return Promise.resolve(this.loadSimpleDict(def));
+    }
+
+    /**
+     * Check to see if any of the cached dictionaries have changed. If one has changed, reload it.
+     * @param maxAge - Only check the dictionary if it has been at least `maxAge` ms since the last check.
+     * @param now - optional timestamp representing now. (Mostly used in testing)
+     */
+    public async refreshCacheEntries(maxAge: number = MAX_AGE, now: number = Date.now()): Promise<void> {
+        await Promise.all([...this.dictionaryCache.values()].map((entry) => this.refreshEntry(entry, maxAge, now)));
+    }
+
+    private getCacheEntry(def: DictionaryFileDefinitionInternal): { key: string; entry: CacheEntry | undefined } {
+        const defEntry = this.dictionaryCacheByDef.get(def);
+        if (defEntry) {
+            this.keepAliveCache.get(def);
+            return defEntry;
+        }
+        const key = this.calcKey(def);
+        const entry = this.dictionaryCache.get(key);
+        if (entry) {
+            // replace old entry so it can be released.
+            entry.options = def;
+            this.keepAliveCache.set(def, entry);
+        }
+        return { key, entry };
+    }
+
+    private setCacheEntry(key: string, entry: CacheEntry, def: DictionaryDefinitionInternal) {
+        this.dictionaryCache.set(key, entry);
+        this.dictionaryCacheByDef.set(def, { key, entry });
+    }
+
+    private async refreshEntry(entry: CacheEntry, maxAge: number, now: number): Promise<void> {
+        if (now - entry.ts >= maxAge) {
+            const sig = now + Math.random();
+            // Write to the ts, so the next one will not do it.
+            entry.sig = sig;
+            entry.ts = now;
+            const pStat = this.getStat(entry.uri);
+            const [newStat] = await Promise.all([pStat, entry.pending]);
+            const hasChanged = !this.isEqual(newStat, entry.stat);
+            const sigMatches = entry.sig === sig;
+            if (sigMatches && hasChanged) {
+                entry.loadingState = LoadingState.Loading;
+                const key = this.calcKey(entry.options);
+                const newEntry = this.loadEntry(entry.uri, entry.options);
+                this.dictionaryCache.set(key, newEntry);
+                this.dictionaryCacheByDef.set(entry.options, { key, entry: newEntry });
+            }
+        }
+    }
+
+    private loadEntry(fileOrUri: string | URL, options: LoadFileOptions, now = Date.now()): CacheEntry {
+        const url = toFileURL(fileOrUri);
+        options = this.normalizeOptions(url, options);
+        const pDictionary = load(this.reader, url, options).catch((e) =>
+            createFailedToLoadDictionary(
+                options.name,
+                fileOrUri,
+                new SpellingDictionaryLoadError(url.href, options, e, 'failed to load'),
+                options,
+            ),
+        );
+        const pStat = this.getStat(url);
+        const pending = Promise.all([pDictionary, pStat]);
+        const sig = now + Math.random();
+        const entry: CacheEntry = {
+            uri: url.href,
+            options,
+            ts: now,
+            stat: undefined,
+            dictionary: undefined,
+            pending,
+            loadingState: LoadingState.Loading,
+            sig,
+        };
+        pending
+            .then(([dictionary, stat]) => {
+                entry.stat = stat;
+                entry.dictionary = dictionary;
+                entry.loadingState = LoadingState.Loaded;
+                return;
+            })
+            .catch(() => undefined);
+        return entry;
+    }
+
+    private getStat(uri: URL | string): Promise<StatsOrError> {
+        return this.fs.stat(toFileURL(uri)).catch(toError);
+    }
+
+    private isEqual(a: StatsOrError, b: StatsOrError | undefined): boolean {
+        if (!b) return false;
+        if (isError(a)) {
+            return isError(b) && a.message === b.message && a.name === b.name;
+        }
+        return !isError(b) && !compareStats(a, b);
+    }
+
+    private normalizeOptions(uri: URL, options: LoadFileOptions): LoadFileOptions {
+        if (options.name) return options;
+        return { ...options, name: urlBasename(uri) };
+    }
+
+    private loadInlineDict(def: DictionaryDefinitionInlineInternal): SpellingDictionary {
+        return this.inlineDictionaryCache.get(def, (def) =>
+            createInlineSpellingDictionary(def, def.__source || 'memory'),
+        );
+    }
+
+    private loadSimpleDict(def: DictionaryDefinitionSimpleInternal): SpellingDictionary {
+        return createInlineSpellingDictionary({ name: def.name, words: [] }, def.__source || 'memory');
+    }
+
+    private calcKey(def: DictionaryFileDefinitionInternal) {
+        const path = def.path;
+        const loaderType = determineType(toFileURL(path), def);
+        const optValues = importantOptionKeys.map((k) => def[k]?.toString() || '');
+        const parts = [path, loaderType, ...optValues];
+
+        return parts.join('|');
+    }
+}
+
+function toReader(fs: VFileSystem): Reader {
+    function readResource(url: URL): Promise<TextFileResource> {
+        return fs.readFile(url);
+    }
+
+    async function readText(url: URL): Promise<string> {
+        return (await readResource(url)).getText();
+    }
+
+    async function read(url: URL): Promise<Uint8Array<ArrayBuffer>> {
+        return (await readResource(url)).getBytes();
+    }
+
+    return {
+        read,
+        readText,
+        readLines: async (filename) => toLines(await readText(filename)),
+    };
+}
+
+const importantOptionKeys: (keyof DictionaryDefinitionInternal)[] = [
+    'name',
+    'noSuggest',
+    'kind',
+    'useCompounds',
+    'type',
+];
+
+type StatsOrError = Stats | Error;
+
+function isError(e: StatsOrError): e is Error {
+    const err = e as Partial<Error>;
+    return !!err.message;
+}
+
+function determineType(uri: URL, opts: Pick<LoadOptions, 'type'>): LoaderType {
+    const t: DictionaryFileTypes = (opts.type && opts.type in loaders && opts.type) || 'S';
+    const defLoaderType: LoaderType = t;
+    const defType = uri.pathname.endsWith('.trie.gz') ? 'T' : defLoaderType;
+    const regTrieTest = /\.b?trie\b/i;
+    return regTrieTest.test(uri.pathname) ? 'T' : defType;
+}
+
+async function load(reader: Reader, uri: URL, options: LoadOptions): Promise<SpellingDictionary> {
+    const type = determineType(uri, options);
+    const loader = loaders[type] || loaders.default;
+    return loader(reader, uri, options);
+}
+
+async function legacyWordList(reader: Reader, filename: URL, options: LoadOptions) {
+    const lines = await reader.readLines(filename);
+    using _ = measurePerf('legacyWords');
+    const words = pipe(
+        lines,
+        // Remove comments
+        opMap((line) => line.replaceAll(/#.*/g, '')),
+        // Split on everything else
+        opConcatMap((line) => line.split(/[^\w\p{L}\p{M}'’]+/gu)),
+        opFilter((word) => !!word),
+    );
+    if (options.kind === 'flag-words') {
+        return createFlagWordsDictionary([...words], options.name, filename.toString());
+    }
+    if (options.kind === 'suggest-words') {
+        return createSuggestDictionary([...words], options.name, filename.toString());
+    }
+    return createSpellingDictionary(
+        words,
+        options.name,
+        filename.toString(),
+        toSpellingDictionaryOptions(options),
+        true,
+    );
+}
+
+async function wordsPerLineWordList(reader: Reader, filename: URL, options: LoadOptions) {
+    const lines = await reader.readLines(filename);
+
+    const words = pipe(
+        lines,
+        // Remove comments
+        opMap((line) => line.replaceAll(/#.*/g, '')),
+        // Split on everything else
+        opConcatMap((line) => line.split(/\s+/gu)),
+        opFilter((word) => !!word),
+    );
+    if (options.kind === 'flag-words') {
+        return createFlagWordsDictionary([...words], options.name, filename.href);
+    }
+    if (options.kind === 'suggest-words') {
+        return createSuggestDictionary([...words], options.name, filename.href);
+    }
+    return createSpellingDictionary(words, options.name, filename.href, toSpellingDictionaryOptions(options), true);
+}
+
+async function loadSimpleWordList(reader: Reader, filename: URL, options: LoadOptions) {
+    const lines = await reader.readLines(filename);
+    using _ = measurePerf('loadSimpleWordList');
+    if (options.kind === 'flag-words') {
+        return createFlagWordsDictionary(lines, options.name, filename.href);
+    }
+    if (options.kind === 'suggest-words') {
+        return createSuggestDictionary(lines, options.name, filename.href);
+    }
+    return createSpellingDictionary(lines, options.name, filename.href, toSpellingDictionaryOptions(options));
+}
+
+async function loadTrie(reader: Reader, filename: URL, options: LoadOptions) {
+    const content = await reader.read(filename);
+    using _ = measurePerf('loadTrie');
+    if (options.kind === 'flag-words') {
+        return createFlagWordsDictionaryFromTrieFile(content, options.name, filename.href);
+    }
+    if (options.kind === 'suggest-words') {
+        return createSuggestDictionaryFromTrieFile(content, options.name, filename.href);
+    }
+    return createSpellingDictionaryFromTrieFile(
+        content,
+        options.name,
+        filename.href,
+        toSpellingDictionaryOptions(options),
+    );
+}
+
+/**
+ * The options for a spelling dictionary: the effect of `kind`, and the dictionary's locale, normalized once here so
+ * lookups don't have to. A locale that isn't valid is dropped.
+ */
+function toSpellingDictionaryOptions(options: LoadOptions): SpellingDictionaryOptions {
+    const opts = applyKind(options);
+    if (!isDictionaryFileDefinitionInternal(opts)) return opts;
+    const locales = normalizeLocaleForIntl(opts.dictionaryInformation?.locale);
+    const locale = Array.isArray(locales) ? locales[0] : locales;
+    if (!locale) return opts;
+    // `weightMap` is a getter on some definitions, so copy it explicitly.
+    return { ...opts, weightMap: opts.weightMap, locale };
+}
+
+/**
+ * Apply the effect of `kind` on the options passed to a normal `words` dictionary loader.
+ * `flag-words` and `suggest-words` are handled by the callers directly since they use a different
+ * dictionary implementation.
+ */
+function applyKind(options: LoadOptions): LoadOptions {
+    return options.kind === 'ignore-words' && !options.noSuggest ? { ...options, noSuggest: true } : options;
+}
+
+function toLines(content: string): string[] {
+    return content.split(/\n|\r\n|\r/);
+}

@@ -1,0 +1,70 @@
+import fs from 'node:fs/promises';
+
+import { afterEach, describe, expect, test, vi } from 'vitest';
+
+import { defaultConfigFileName, GlobalConfigStore } from './cfgStore.js';
+
+const fsData = new Map<string, string>();
+
+vi.mock('node:fs/promises', async (_importOriginal) => ({
+    // default: (await _importOriginal<{ default: object }>()).default,
+    default: {
+        readFile: vi.fn(async (filename) => fsData.get(filename)),
+        writeFile: vi.fn(async (filename, data) => {
+            console.log('%o', filename);
+            fsData.set(filename, data);
+        }),
+        mkdir: vi.fn(async () => undefined),
+    },
+}));
+
+const sc = (s: string) => expect.stringContaining(s);
+const oc = (...params: Parameters<typeof expect.objectContaining>) => expect.objectContaining(...params);
+
+describe('GlobalConfigStore', () => {
+    afterEach(() => {
+        fsData.clear();
+        vi.resetAllMocks();
+    });
+
+    test('GlobalConfigStore', () => {
+        expect(GlobalConfigStore.defaultLocation).toEqual(sc('cspell.json'));
+    });
+
+    test('readConfigFile found', async () => {
+        fsData.set(GlobalConfigStore.defaultLocation, JSON.stringify({ imports: [] }));
+
+        const cfgStore = GlobalConfigStore.create();
+        const cfg = await cfgStore.readConfigFile();
+        expect(cfg).toEqual(oc({ filename: sc(defaultConfigFileName), config: { imports: [] } }));
+    });
+
+    test('readConfigFile not found', async () => {
+        const mockedFsReadFile = vi.mocked(fs.readFile);
+        mockedFsReadFile.mockImplementation(async () => {
+            throw new Error();
+        });
+
+        const cfgStore = GlobalConfigStore.create();
+        const cfg = await cfgStore.readConfigFile();
+        expect(cfg).toEqual(undefined);
+    });
+
+    test('writeConfigFile', async () => {
+        const mockedFsWriteFile = vi.mocked(fs.writeFile);
+        const mockedFsMkdir = vi.mocked(fs.mkdir);
+
+        const cfgStore = GlobalConfigStore.create();
+        const data = { name: 'cfg' };
+        await cfgStore.writeConfigFile(data);
+        expect(mockedFsMkdir).toHaveBeenCalled();
+        expect(mockedFsWriteFile).toHaveBeenCalledWith(
+            sc(defaultConfigFileName),
+            JSON.stringify(data, undefined, 2) + '\n',
+        );
+
+        const cfg = await cfgStore.readConfigFile();
+        expect(mockedFsMkdir).toHaveBeenCalled();
+        expect(cfg).toEqual(oc({ filename: cfgStore.location, config: data }));
+    });
+});

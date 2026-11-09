@@ -1,0 +1,22 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`index > verify api 1`] = `
+[
+  "createCachingDictionary",
+  "createCollection",
+  "createFailedToLoadDictionary",
+  "createFlagWordsDictionary",
+  "createFlagWordsDictionaryFromTrieFile",
+  "createForbiddenWordsDictionary",
+  "createIgnoreWordsDictionary",
+  "createInlineSpellingDictionary",
+  "createSpellingDictionary",
+  "createSpellingDictionaryFromTrieFile",
+  "createSuggestDictionary",
+  "createSuggestDictionaryFromTrieFile",
+  "createSuggestOptions",
+  "dictionaryCacheClearLog",
+  "dictionaryCacheEnableLogging",
+  "dictionaryCacheGetLog",
+]
+`;

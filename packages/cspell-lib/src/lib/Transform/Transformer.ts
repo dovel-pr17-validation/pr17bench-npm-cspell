@@ -1,0 +1,54 @@
+import type { MappedText } from '@cspell/cspell-types';
+import type { Range } from '@cspell/cspell-types/Parser';
+
+export const softHyphen = '\u00AD';
+
+export interface TextTransformer {
+    transform(text: string | MappedText): MappedText;
+    transformAll(src: Iterable<string | MappedText>): Iterable<MappedText>;
+}
+
+export interface Edit {
+    /**
+     * The replacement text for the edit. This is the text that will replace the original text in the string.
+     */
+    text: string;
+    /**
+     * The range of the text to be replaced. This is a tuple of the form `[start, end]`,
+     * where start is the index of the first character to be replaced,
+     * and end is the index of the first character after the last character to be replaced.
+     */
+    range: Range;
+}
+
+export function toMappedText(text: string | MappedText): MappedText {
+    if (typeof text === 'string') {
+        return { text, range: [0, text.length], rawText: text };
+    }
+    return text;
+}
+
+export function chainTransformers(...transformers: TextTransformer[]): TextTransformer {
+    return {
+        transform(text: string | MappedText): MappedText {
+            return transformers.reduce((acc, transformer) => transformer.transform(acc), toMappedText(text));
+        },
+        transformAll(src: Iterable<string | MappedText>): Iterable<MappedText> {
+            return Array.from(src, (text) =>
+                transformers.reduce((acc, transformer) => transformer.transform(acc), toMappedText(text)),
+            );
+        },
+    };
+}
+
+export class IdentityTextTransformer implements TextTransformer {
+    transform(text: string | MappedText): MappedText {
+        return toMappedText(text);
+    }
+
+    *transformAll(src: Iterable<string | MappedText>): Iterable<MappedText> {
+        for (const item of src) {
+            yield this.transform(item);
+        }
+    }
+}

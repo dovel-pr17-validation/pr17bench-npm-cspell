@@ -1,0 +1,67 @@
+{
+  "name": "@cspell/dictionary-bundler-plugin",
+  "version": "9.6.4",
+  "private": true,
+  "description": "A plugin for bundling cspell dictionaries.",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "homepage": "https://github.com/streetsidesoftware/cspell/tree/main/packages/cspell-dictionary-bundler-plugin#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/streetsidesoftware/cspell.git",
+    "directory": "packages/cspell-dictionary-bundler-plugin"
+  },
+  "keywords": [
+    "cspell",
+    "dictionary",
+    "bundler",
+    "plugin"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.mjs",
+    "./api": "./dist/api.mjs",
+    "./esbuild": "./dist/esbuild.mjs",
+    "./farm": "./dist/farm.mjs",
+    "./rolldown": "./dist/rolldown.mjs",
+    "./rollup": "./dist/rollup.mjs",
+    "./rspack": "./dist/rspack.mjs",
+    "./vite": "./dist/vite.mjs",
+    "./webpack": "./dist/webpack.mjs",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/*.mjs",
+    "dist/*.d.ts"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "build:tsc": "tsc",
+    "coverage": "vitest run --coverage",
+    "lint": "eslint --cache .",
+    "lint:fix": "pnpm run lint --fix",
+    "prepublishOnly": "pnpm run build",
+    "test": "pnpm build:tsc && vitest run",
+    "test:watch": "vitest",
+    "watch": "tsdown --watch"
+  },
+  "dependencies": {
+    "@rollup/pluginutils": "^5.5.1",
+    "cspell-config-lib": "workspace:*",
+    "cspell-trie-lib": "workspace:*",
+    "unplugin": "^3.7.0"
+  },
+  "devDependencies": {
+    "@cspell/cspell-types": "workspace:*",
+    "@cspell/dict-html-symbol-entities": "^4.0.5",
+    "@sxzz/test-utils": "^0.5.20",
+    "rollup": "^4.67.5",
+    "vitest": "~4.1.12"
+  },
+  "engines": {
+    "node": ">=22.18.0"
+  }
+}

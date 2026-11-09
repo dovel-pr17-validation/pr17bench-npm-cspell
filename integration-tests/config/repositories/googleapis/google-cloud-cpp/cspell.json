@@ -1,0 +1,3 @@
+{
+    "import": ["../../../../repositories/cspell-reporter.json", "./cspell.config.yaml"]
+}

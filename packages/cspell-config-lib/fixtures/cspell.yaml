@@ -1,0 +1,20 @@
+---
+# file version
+version: '0.2'
+words:
+  # First Group
+  - red
+  - green
+  - blue
+  - yellow
+  - orange
+
+  - claw
+  # Before "before"
+  - before
+  - angle # angle comment
+  - cache # cache comment
+  - zebra # zebra comment
+
+
+# Last Comment

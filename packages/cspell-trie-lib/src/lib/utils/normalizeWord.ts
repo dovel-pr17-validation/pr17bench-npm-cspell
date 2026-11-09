@@ -1,0 +1,33 @@
+/**
+ * Normalize word unicode.
+ * @param text - text to normalize
+ * @returns returns a word normalized to `NFC`
+ */
+export function normalizeWord(text: string): string {
+    return text.normalize();
+}
+
+/**
+ * converts text to lower case and removes any accents.
+ * @param text - text to convert
+ * @returns lowercase word without accents
+ */
+export function normalizeWordToLowercaseAndRemoveAccents(text: string): string {
+    return text.toLowerCase().normalize('NFD').replaceAll(/\p{M}/gu, '');
+}
+
+/**
+ * @deprecated Use {@link normalizeWordToLowercaseAndRemoveAccents}.
+ */
+export const normalizeWordToLowercase: (text: string) => string = normalizeWordToLowercaseAndRemoveAccents;
+
+/**
+ * generate case insensitive forms of a word
+ * @param text - text to convert
+ * @param locale - the locale whose case rules are used to lower-case the text. Default rules are used if not given.
+ * @returns the forms of the word.
+ */
+export function normalizeWordForCaseInsensitive(text: string, locale?: string): string[] {
+    const t = locale ? text.toLocaleLowerCase(locale) : text.toLowerCase();
+    return [t, t.normalize('NFD').replaceAll(/\p{M}/gu, '')];
+}

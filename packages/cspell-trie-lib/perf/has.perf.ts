@@ -1,0 +1,72 @@
+import assert from 'node:assert';
+
+import { suite } from 'perf-insight';
+
+import { ITrieImpl } from '../src/lib/ITrie.ts';
+import { readTrieBlobFromConfig, readTrieFromConfig } from '../src/test/dictionaries.test.helper.ts';
+
+// const measureTimeout = 100;
+
+const getTrie = memorize(_getTrie);
+const getTrieBlob = memorize(_getTrieBlob);
+const getWords = memorize(async () => [...(await getTrie()).words()]);
+
+suite('trie has', async (test) => {
+    const trie = await getTrie();
+    const words = await getWords();
+    const trieBlob = await getTrieBlob();
+    const iTrieBlob = new ITrieImpl(trieBlob);
+    const setOfWords = new Set(words);
+    console.log(`Number of words: ${words.length}`);
+
+    test('set has words', () => {
+        trieHasWords(setOfWords, words);
+    });
+
+    test('trie has words', () => {
+        trieHasWords(trie, words);
+    });
+
+    test('trieBlob has words', () => {
+        trieHasWords(trieBlob, words);
+    });
+
+    test('iTrieBlob has words', () => {
+        trieHasWords(iTrieBlob, words);
+    });
+});
+
+function _getTrie() {
+    return readTrieFromConfig('@cspell/dict-en_us/cspell-ext.json');
+}
+
+function _getTrieBlob() {
+    return readTrieBlobFromConfig('@cspell/dict-en_us/cspell-ext.json');
+}
+
+function trieHasWords(trie: { has: (word: string) => boolean }, words: string[]): boolean {
+    const has = trie.has.bind(trie);
+    const len = words.length;
+    let success = true;
+    for (let i = 0; i < len; ++i) {
+        success = has(words[i]) && success;
+    }
+    assert(success);
+    return success;
+}
+
+function memorize<T, P extends []>(fn: (...p: P) => T): (...p: P) => T {
+    let p: P | undefined = undefined;
+    let r: { v: T } | undefined = undefined;
+    return (...pp: P) => {
+        if (r && p && p.length === pp.length && p.every((v, i) => v === pp[i])) {
+            return r?.v;
+        }
+        p = pp;
+        const v = fn(...pp);
+        r = { v };
+        return v;
+    };
+}
+
+// cspell:ignore tion aeiou

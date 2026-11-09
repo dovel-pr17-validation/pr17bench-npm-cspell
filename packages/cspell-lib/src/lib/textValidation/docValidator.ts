@@ -1,0 +1,773 @@
+import assert from 'node:assert';
+
+import { opConcatMap, opMap, pipeSync } from '@cspell/cspell-pipe/sync';
+import type {
+    CSpellSettingsWithSourceTrace,
+    CSpellUserSettings,
+    DocumentParser,
+    MappedText,
+    ParsedText,
+    Parser,
+    ParseResult,
+    PnPSettings,
+} from '@cspell/cspell-types';
+import { IssueType } from '@cspell/cspell-types';
+import { toFilePathOrHref, toFileURL } from '@cspell/url';
+import type { ICSpellConfigFile } from 'cspell-config-lib';
+import { satisfiesCSpellConfigFile } from 'cspell-config-lib';
+
+import { getGlobMatcherForExcluding } from '../globs/getGlobMatcher.js';
+import type { ExtendedSuggestion } from '../Models/Suggestion.js';
+import type { TextDocument, TextDocumentLine, TextDocumentRef } from '../Models/TextDocument.js';
+import { documentUriToURL, updateTextDocument } from '../Models/TextDocument.js';
+import type { ValidationIssue } from '../Models/ValidationIssue.js';
+import { createPerfTimer, measurePerf } from '../perf/index.js';
+import type {
+    CSpellSettingsInternal,
+    CSpellSettingsInternalFinalized,
+    ImportFileRefWithError,
+} from '../Settings/index.js';
+import {
+    extractImportErrors,
+    finalizeSettings,
+    loadConfig,
+    mergeSettings,
+    resolveConfigFileImports,
+    resolveSettingsImports,
+    searchForConfig,
+} from '../Settings/index.js';
+import type { DirectiveIssue } from '../Settings/InDocSettings.js';
+import { validateInDocumentSettings } from '../Settings/InDocSettings.js';
+import type { SpellingDictionaryCollection, SuggestionResult } from '../SpellingDictionary/index.js';
+import { getDictionaryInternal } from '../SpellingDictionary/index.js';
+import type { WordSuggestion } from '../suggestions.js';
+import { calcSuggestionAdjustedToToMatchCase } from '../suggestions.js';
+import type { MatchRange, SimpleRange, TextTransformer } from '../Transform/index.js';
+import {
+    chainTransformers,
+    createIntlSegmentTextTransformer,
+    createSoftWordBreakTextTransformer,
+    createSubstitutionTransformer,
+} from '../Transform/index.js';
+import { catchPromiseError, toError } from '../util/errors.js';
+import { AutoCache } from '../util/simpleCache.js';
+import { uriToFilePath } from '../util/Uri.js';
+import { cleanValidationIssue } from './cleanValidationIssue.js';
+import { defaultMaxDuplicateProblems, defaultMaxNumberOfProblems } from './defaultConstants.js';
+import { determineTextDocumentSettings } from './determineTextDocumentSettings.js';
+import type { Preparations } from './docValidatorPreparations.js';
+import { DocumentValidatorPreparations } from './docValidatorPreparations.js';
+import { textValidatorFactory } from './lineValidatorFactory.js';
+import { settingsToValidateOptions } from './settingsToValidateOptions.js';
+import { calcTextInclusionRanges } from './textValidator.js';
+import type { TraceResult } from './traceWord.js';
+import { traceWord } from './traceWord.js';
+import type { ValidateTextOptions } from './ValidateTextOptions.js';
+import type { MappedTextValidationResult } from './ValidationTypes.js';
+
+export interface DocumentValidatorOptions extends ValidateTextOptions {
+    /**
+     * Optional path to a configuration file.
+     * If given, it will be used instead of searching for a configuration file.
+     */
+    configFile?: string;
+    /**
+     * Prevents searching for local configuration files
+     * By default the spell checker looks for configuration files
+     * starting at the location of given filename.
+     * If `configFile` is defined it will still be loaded instead of searching.
+     * `false` will override the value in `settings.noConfigSearch`.
+     * @defaultValue undefined
+     */
+    noConfigSearch?: boolean;
+
+    /**
+     * If `settings: CSpellUserSettings` contains imports, they will be resolved using this path.
+     * If not set, the current working directory will be used.
+     */
+    resolveImportsRelativeTo?: string | URL;
+
+    /**
+     * If true, the document will be checked even if it would normally be excluded.
+     */
+    forceCheck?: boolean;
+
+    /**
+     * If true, the ranges of text that have been checked will be recorded and available for later using the `getCheckedRanges` method.
+     */
+    recordCheckedRanges?: boolean;
+}
+
+const ERROR_NOT_PREPARED = 'Validator Must be prepared before calling this function.';
+
+type PerfTimings = Record<string, number>;
+
+/**
+ * Represents a list of ranges in a flattened format, where each pair of numbers corresponds to the start and end of a range.
+ */
+type FlattenedRanges = number[];
+
+export class DocumentValidator {
+    private _document: TextDocument;
+    private _ready = false;
+    readonly errors: Error[] = [];
+    private _prepared: Promise<void> | undefined;
+    private _preparations: DocumentValidatorPreparations | undefined;
+    private _preparationTime = -1;
+    private _suggestions = new AutoCache((text: string) => this.genSuggestions(text), 1000);
+    readonly options: DocumentValidatorOptions;
+    readonly perfTiming: PerfTimings = {};
+    public skipValidation: boolean;
+    private rangesChecked: FlattenedRanges = [];
+    /**
+     * If true, the ranges of text that have been checked will be recorded and available for later using the `getCheckedRanges` method.
+     */
+    #recordCheckedRanges: boolean;
+
+    static async create(
+        doc: TextDocument,
+        options: DocumentValidatorOptions,
+        settingsOrConfigFile: CSpellUserSettings | ICSpellConfigFile,
+    ): Promise<DocumentValidator> {
+        const settings = satisfiesCSpellConfigFile(settingsOrConfigFile)
+            ? await resolveConfigFileImports(settingsOrConfigFile)
+            : settingsOrConfigFile;
+        const validator = new DocumentValidator(doc, options, settings);
+        await validator.prepare();
+        return validator;
+    }
+
+    /**
+     * @param doc - Document to validate
+     * @param options - options controlling how the document is validated.
+     * @param settings - configuration to use (not finalized).
+     */
+    constructor(
+        doc: TextDocument,
+        options: DocumentValidatorOptions,
+        readonly settings: CSpellUserSettings,
+    ) {
+        this._document = doc;
+        this.options = { ...options };
+        const numSuggestions = this.options.numSuggestions ?? settings.numSuggestions;
+        if (numSuggestions !== undefined) {
+            this.options.numSuggestions = numSuggestions;
+        }
+        this.skipValidation = !!options.skipValidation;
+        this.#recordCheckedRanges = !!options.recordCheckedRanges;
+        // console.error(`DocumentValidator: ${doc.uri}`);
+    }
+
+    get ready(): boolean {
+        return this._ready;
+    }
+
+    prepare(): Promise<void> {
+        if (this._ready) return Promise.resolve();
+        if (this._prepared) return this._prepared;
+        this._prepared = this._prepareAsync();
+        return this._prepared;
+    }
+
+    private async _prepareAsync(): Promise<void> {
+        assert(!this._ready);
+
+        const timer = createPerfTimer('_prepareAsync');
+
+        const { options, settings: rawSettings } = this;
+
+        const resolveImportsRelativeTo = toFileURL(
+            options.resolveImportsRelativeTo || toFileURL('./virtual.settings.json'),
+        );
+
+        const settings = rawSettings.import?.length
+            ? await resolveSettingsImports(rawSettings, resolveImportsRelativeTo)
+            : rawSettings;
+
+        const useSearchForConfig =
+            (!options.noConfigSearch && !settings.noConfigSearch) || options.noConfigSearch === false;
+        const pLocalConfig = options.configFile
+            ? loadConfig(options.configFile, settings)
+            : useSearchForConfig
+              ? timePromise(
+                    this.perfTiming,
+                    '__searchForDocumentConfig',
+                    searchForDocumentConfig(this._document, settings, settings),
+                )
+              : undefined;
+        if (pLocalConfig) {
+            timePromise(this.perfTiming, '_loadConfig', pLocalConfig).catch(() => undefined);
+        }
+        const localConfig = (await catchPromiseError(pLocalConfig, (e) => this.addPossibleError(e))) || {};
+
+        extractImportErrors(localConfig).forEach((e) => this.addPossibleError(e.error));
+
+        const config = mergeSettings(settings, localConfig);
+        const docSettings = await timePromise(
+            this.perfTiming,
+            '_determineTextDocumentSettings',
+            determineTextDocumentSettings(this._document, config),
+        );
+        const dict = await timePromise(this.perfTiming, '_getDictionaryInternal', getDictionaryInternal(docSettings));
+
+        const stopMeasure = measurePerf('DocumentValidator._prepareAsync');
+
+        const recGlobMatcherTime = recordPerfTime(this.perfTiming, '_GlobMatcher');
+        const matcher = getGlobMatcherForExcluding(localConfig?.ignorePaths);
+        const uri = this._document.uri;
+        recGlobMatcherTime();
+        const recShouldCheckTime = recordPerfTime(this.perfTiming, '_shouldCheck');
+
+        // eslint-disable-next-line unicorn/prefer-regexp-test
+        const shouldCheck = options.forceCheck || (!matcher.match(uriToFilePath(uri)) && (docSettings.enabled ?? true));
+
+        recShouldCheckTime();
+
+        const recFinalizeTime = recordPerfTime(this.perfTiming, '_finalizeSettings');
+
+        const finalSettings = finalizeSettings(docSettings);
+        const { transformer, validateOptions, calcIncludeRanges, textValidator } = this.#calcSharedPrep(
+            finalSettings,
+            dict,
+        );
+
+        recFinalizeTime();
+
+        this._preparations = new DocumentValidatorPreparations(
+            config,
+            localConfig,
+            localConfig?.__importRef?.filename,
+            {
+                dictionary: dict,
+                docSettings,
+                finalSettings,
+                shouldCheck,
+                validateOptions,
+                textValidator,
+                transformer,
+                calcIncludeRanges,
+            },
+        );
+
+        this._ready = true;
+        this._preparationTime = timer.elapsed;
+        this.perfTiming.prepTime = this._preparationTime;
+
+        stopMeasure();
+    }
+
+    private async _updatePrep() {
+        assert(this._preparations, ERROR_NOT_PREPARED);
+        const timer = createPerfTimer('_updatePrep');
+        const prep = this._preparations;
+        const docSettings = await determineTextDocumentSettings(this._document, prep.config);
+        const dict = await getDictionaryInternal(docSettings);
+        const stopMeasure = measurePerf('DocumentValidator._updatePrep');
+        const shouldCheck = docSettings.enabled ?? true;
+        const finalSettings = finalizeSettings(docSettings);
+        const { transformer, validateOptions, calcIncludeRanges, textValidator } = this.#calcSharedPrep(
+            finalSettings,
+            dict,
+        );
+
+        prep.update({
+            dictionary: dict,
+            docSettings,
+            finalSettings,
+            shouldCheck,
+            validateOptions,
+            textValidator,
+            transformer,
+            calcIncludeRanges,
+        });
+        this._preparationTime = timer.elapsed;
+        stopMeasure();
+    }
+
+    #calcSharedPrep(finalSettings: CSpellSettingsInternalFinalized, dict: SpellingDictionaryCollection) {
+        const sub = createSubstitutionTransformer(finalSettings);
+        if (sub.missing) {
+            this.addPossibleError(`Missing substitutions: ${sub.missing.join(', ')}`);
+        }
+        let transformer: TextTransformer = sub.transformer;
+        if (finalSettings.useIntlWordSegmentation) {
+            transformer = chainTransformers(
+                transformer,
+                createIntlSegmentTextTransformer(finalSettings.language || ''),
+            );
+        }
+        if (finalSettings.softWordBreaks) {
+            transformer = chainTransformers(transformer, createSoftWordBreakTextTransformer(finalSettings));
+        }
+        const validateOptions = { ...settingsToValidateOptions(finalSettings), transformer };
+        // Avoid excluding text ranges that have a full substitution applied.
+        const rangeTransformer = finalSettings.substitutions?.length ? sub.transformer : undefined;
+        const text = this._document.text;
+        const calcIncludeRanges = () => calcTextInclusionRanges(text, validateOptions, rangeTransformer);
+        const textValidator = textValidatorFactory(dict, validateOptions);
+
+        return { textValidator, calcIncludeRanges, validateOptions, transformer };
+    }
+
+    /**
+     * The amount of time in ms to prepare for validation.
+     */
+    get prepTime(): number {
+        return this._preparationTime;
+    }
+
+    get validateDirectives(): boolean {
+        return this.options.validateDirectives ?? this._preparations?.config.validateDirectives ?? false;
+    }
+
+    /**
+     * Check a range of text for validation issues.
+     * @param range - the range of text to check.
+     * @param _text - the text to check. If not given, the text will be taken from the document.
+     * @param scope - the scope to use for validation. If not given, the default scope will be used.
+     * @returns the validation issues.
+     */
+    public checkText(range: SimpleRange, _text: string | undefined, scope?: string[] | string): ValidationIssue[] {
+        const text = this._document.text.slice(range[0], range[1]);
+        scope = (Array.isArray(scope) ? scope.join(' ') : scope) || '';
+        return this.check({ text, range, scope });
+    }
+
+    public check(parsedText: ParsedText): ValidationIssue[] {
+        assert(this._ready);
+        assert(this._preparations, ERROR_NOT_PREPARED);
+        const { segmenter, textValidator } = this._preparations;
+        // Determine settings for text range
+        // Slice text based upon include ranges
+        // Check text against dictionaries.
+        const document = this._document;
+        let line: TextDocumentLine | undefined = undefined;
+        function mapToIssue(issue: MappedTextValidationResult): ValidationIssue {
+            const { range, text, isFlagged, isFound, suggestionsEx, hasPreferredSuggestions, hasSimpleSuggestions } =
+                issue;
+            const offset = range[0];
+            const length = range[1] - range[0];
+            assert(!line || line.offset <= offset);
+            if (!line || line.offset + line.text.length <= offset) {
+                line = document.lineAt(offset);
+            }
+            return {
+                text,
+                offset,
+                line,
+                length,
+                isFlagged,
+                isFound,
+                suggestionsEx,
+                hasPreferredSuggestions,
+                hasSimpleSuggestions,
+            };
+        }
+
+        const skipRecordRanges = (iter: Iterable<MappedText>) => iter;
+        const recordRanges = opMap<MappedText, MappedText>((m) => {
+            this.rangesChecked.push(m.range[0], m.range[1]);
+            return m;
+        });
+        const recordRangesIfNeeded = this.recordCheckedRanges ? recordRanges : skipRecordRanges;
+
+        const issues = [
+            ...pipeSync(
+                segmenter(parsedText),
+                recordRangesIfNeeded,
+                opConcatMap(textValidator.validate),
+                opMap(mapToIssue),
+            ),
+        ];
+
+        if (!this.options.generateSuggestions) {
+            return issues.map((issue) => {
+                if (!issue.suggestionsEx) return issue;
+                const suggestionsEx = this.adjustSuggestions(issue.text, issue.suggestionsEx);
+                const suggestions = suggestionsEx.map((s) => s.word);
+                return { ...issue, suggestionsEx, suggestions };
+            });
+        }
+        const withSugs = issues.map((t) => {
+            // lazy suggestion calculation.
+            const text = t.text;
+            const suggestionsEx = this.getSuggestions(text);
+            t.suggestionsEx = suggestionsEx;
+            t.suggestions = suggestionsEx.map((s) => s.word);
+            return t;
+        });
+
+        return withSugs;
+    }
+
+    /**
+     * Check a Document for Validation Issues.
+     * @param forceCheck - force a check even if the document would normally be excluded.
+     * @returns the validation issues.
+     */
+    public async checkDocumentAsync(forceCheck?: boolean): Promise<ValidationIssue[]> {
+        await this.prepare();
+        return this.checkDocument(forceCheck);
+    }
+
+    /**
+     * Check a Document for Validation Issues.
+     *
+     * Note: The validator must be prepared before calling this method.
+     * @param forceCheck - force a check even if the document would normally be excluded.
+     * @returns the validation issues.
+     */
+    public checkDocument(forceCheck = false): ValidationIssue[] {
+        const timerDone = recordPerfTime(this.perfTiming, 'checkDocument');
+        try {
+            if (this.skipValidation) return [];
+            assert(this._ready);
+            assert(this._preparations, ERROR_NOT_PREPARED);
+
+            const spellingIssues =
+                forceCheck || this.shouldCheckDocument() ? [...this._checkParsedText(this._parse())] : [];
+            const directiveIssues = this.checkDocumentDirectives();
+            // console.log('Stats: %o', this._preparations.textValidator.lineValidator.dict.stats());
+            const allIssues = [...spellingIssues, ...directiveIssues]
+                .map(cleanValidationIssue)
+                .sort((a, b) => a.offset - b.offset);
+            return allIssues;
+        } finally {
+            timerDone();
+        }
+    }
+
+    public checkDocumentDirectives(forceCheck = false): ValidationIssue[] {
+        assert(this._ready);
+        assert(this._preparations, ERROR_NOT_PREPARED);
+
+        const validateDirectives = forceCheck || this.validateDirectives;
+        if (!validateDirectives) return [];
+
+        const document = this.document;
+        const issueType = IssueType.directive;
+
+        function toValidationIssue(dirIssue: DirectiveIssue): ValidationIssue {
+            const { text, range, suggestions, suggestionsEx, message } = dirIssue;
+            const offset = range[0];
+            const pos = document.positionAt(offset);
+            const line = document.getLine(pos.line);
+            const issue: ValidationIssue = { text, offset, line, suggestions, suggestionsEx, message, issueType };
+            return issue;
+        }
+
+        return [...validateInDocumentSettings(this.document.text, this._preparations.config)].map(toValidationIssue);
+    }
+
+    get document(): TextDocument {
+        return this._document;
+    }
+
+    public async updateDocumentText(text: string): Promise<void> {
+        this.rangesChecked.length = 0;
+        updateTextDocument(this._document, [{ text }]);
+        await this._updatePrep();
+    }
+
+    public traceWord(word: string): TraceResult {
+        assert(this._preparations, ERROR_NOT_PREPARED);
+        return traceWord(word, this._preparations.dictionary, this._preparations.config);
+    }
+
+    private defaultParser(): Iterable<ParsedText> {
+        return pipeSync(
+            this.document.getLines(),
+            opMap((line) => {
+                const { text, offset } = line;
+                const range = [offset, offset + text.length] as const;
+                return { text, range };
+            }),
+        );
+    }
+
+    private *_checkParsedText(parsedTexts: Iterable<ParsedText>): Iterable<ValidationIssue> {
+        assert(this._preparations, ERROR_NOT_PREPARED);
+        const { maxNumberOfProblems = defaultMaxNumberOfProblems, maxDuplicateProblems = defaultMaxDuplicateProblems } =
+            this._preparations.validateOptions;
+
+        let numProblems = 0;
+        const mapOfProblems = new Map<string, number>();
+
+        const stopMeasure = measurePerf('DocumentValidator._checkParsedText');
+
+        for (const pText of parsedTexts) {
+            for (const issue of this.check(pText)) {
+                const { text } = issue;
+                const n = (mapOfProblems.get(text) || 0) + 1;
+                mapOfProblems.set(text, n);
+                if (n > maxDuplicateProblems) continue;
+                yield issue;
+                if (++numProblems >= maxNumberOfProblems) return;
+            }
+        }
+
+        stopMeasure();
+    }
+
+    private addPossibleError(error: Error | undefined | unknown): undefined {
+        if (!error) return;
+        this.errors.push(toError(error));
+    }
+
+    private _parse(): Iterable<ParsedText> {
+        assert(this._preparations, ERROR_NOT_PREPARED);
+        const parser = this._preparations.finalSettings.parserFn;
+        if (typeof parser !== 'object') return this.defaultParser();
+        return parseDocumentWithParser(parser, this.document).parsedTexts;
+    }
+
+    private getSuggestions(text: string): ExtendedSuggestion[] {
+        return this._suggestions.get(text);
+    }
+
+    private genSuggestions(text: string): ExtendedSuggestion[] {
+        assert(this._preparations, ERROR_NOT_PREPARED);
+        const settings = this._preparations.docSettings;
+        const dict = this._preparations.dictionary;
+        const sugOptions = {
+            compoundMethod: 0,
+            numSuggestions: this.options.numSuggestions,
+            includeTies: false,
+            ignoreCase: !(settings.caseSensitive ?? false),
+            timeout: settings.suggestionsTimeout,
+            numChanges: settings.suggestionNumChanges,
+        } as const;
+
+        const rawSuggestions = dict.suggest(text, sugOptions);
+        return this.adjustSuggestions(text, rawSuggestions);
+    }
+
+    private adjustSuggestions(
+        text: string,
+        rawSuggestions: (ExtendedSuggestion | SuggestionResult)[],
+    ): ExtendedSuggestion[] {
+        assert(this._preparations, ERROR_NOT_PREPARED);
+        const settings = this._preparations.docSettings;
+        const ignoreCase = !(settings.caseSensitive ?? false);
+        const locale = this._preparations.config.language;
+        const dict = this._preparations.dictionary;
+        const sugsWithAlt = calcSuggestionAdjustedToToMatchCase(
+            text,
+            rawSuggestions.map(mapSug),
+            locale,
+            ignoreCase,
+            dict,
+        );
+
+        return sugsWithAlt.map(sanitizeSuggestion);
+    }
+
+    public getFinalizedDocSettings(): CSpellSettingsInternal {
+        assert(this._ready);
+        assert(this._preparations, ERROR_NOT_PREPARED);
+        return this._preparations.docSettings;
+    }
+
+    public getConfigErrors(): ImportFileRefWithError[] | undefined {
+        const settings = this.getFinalizedDocSettings();
+        const errors = extractImportErrors(settings);
+        return errors.length ? errors : undefined;
+    }
+
+    public getDictionaryErrors(): Map<string, Error[]> | undefined {
+        assert(this._ready);
+        assert(this._preparations, ERROR_NOT_PREPARED);
+        const { dictionary } = this._preparations;
+        const errors = dictionary.dictionaries
+            .map((dict) => [dict.name, dict.getErrors?.()] as const)
+            .filter((entry): entry is [string, Error[]] => (entry[1] && entry[1].length > 0) || false);
+        return errors.length ? new Map(errors) : undefined;
+    }
+
+    /**
+     * Returns true if the final result of the configuration calculation results
+     * in the document being enabled. Note: in some cases, checking the document
+     * might still make sense, for example, the `@cspell/eslint-plugin` relies on
+     * `eslint` configuration to make that determination.
+     * @returns true if the document settings have resolved to be `enabled`
+     */
+    public shouldCheckDocument(): boolean {
+        assert(this._preparations, ERROR_NOT_PREPARED);
+        return this._preparations.shouldCheck;
+    }
+
+    /**
+     * Internal `cspell-lib` use.
+     * @deprecated Will be removed in a future major version. Use {@link _getLocalConfig} and
+     * {@link _getLocalConfigFilepath} instead.
+     */
+    public _getPreparations(): Preparations | undefined {
+        return this._preparations;
+    }
+
+    /**
+     * Internal `cspell-lib` use.
+     * @returns the config file found for the document, if any.
+     */
+    public _getLocalConfig(): CSpellUserSettings | undefined {
+        return this._preparations?.localConfig;
+    }
+
+    /**
+     * Internal `cspell-lib` use.
+     * @returns the path of the config file found for the document, if any.
+     */
+    public _getLocalConfigFilepath(): string | undefined {
+        return this._preparations?.localConfigFilepath;
+    }
+
+    /**
+     * Get the calculated ranges of text that should be included in the spell checking.
+     *
+     * Use {@link getRangesChecked} to retrieve the ranges of text that have been checked.
+     *
+     * @returns MatchRanges of text to include.
+     */
+    public getCheckedTextRanges(): MatchRange[] {
+        assert(this._preparations, ERROR_NOT_PREPARED);
+        return this._preparations.includeRanges;
+    }
+
+    public *getRangesChecked(): Iterable<SimpleRange> {
+        const ranges = this.rangesChecked;
+        for (let i = 0; i < ranges.length - 1; i += 2) {
+            const start = ranges[i];
+            const end = ranges[i + 1];
+            yield [start, end];
+        }
+    }
+
+    public get recordCheckedRanges(): boolean {
+        return this.#recordCheckedRanges;
+    }
+
+    public set recordCheckedRanges(value: boolean) {
+        this.rangesChecked.length = 0;
+        this.#recordCheckedRanges = value;
+    }
+}
+
+function sanitizeSuggestion(sug: WordSuggestion): ExtendedSuggestion {
+    const { word, isPreferred, wordAdjustedToMatchCase } = sug;
+    if (isPreferred && wordAdjustedToMatchCase) return { word, wordAdjustedToMatchCase, isPreferred };
+    if (isPreferred) return { word, isPreferred };
+    if (wordAdjustedToMatchCase) return { word, wordAdjustedToMatchCase };
+    return { word };
+}
+
+async function searchForDocumentConfig(
+    document: TextDocumentRef,
+    defaultConfig: CSpellSettingsWithSourceTrace,
+    pnpSettings: PnPSettings,
+): Promise<CSpellSettingsWithSourceTrace> {
+    const url = documentUriToURL(document.uri);
+    try {
+        return await searchForConfig(url, pnpSettings).then((s) => s || defaultConfig);
+    } catch (e) {
+        if (url.protocol !== 'file:') return defaultConfig;
+        throw e;
+    }
+}
+
+function parseDocumentWithParser(parser: DocumentParser | Parser, document: TextDocument): ParseResult {
+    if (isDocumentParser(parser)) {
+        return parser.parseDocument({ text: document.text, url: documentUriToURL(document.uri) });
+    }
+    return parser.parse(document.text, toFilePathOrHref(documentUriToURL(document.uri)));
+}
+
+function isDocumentParser(parser: DocumentParser | Parser): parser is DocumentParser {
+    return typeof (parser as DocumentParser).parseDocument === 'function';
+}
+
+function mapSug(sug: ExtendedSuggestion | SuggestionResult): SuggestionResult {
+    return { cost: 999, ...sug };
+}
+
+interface ShouldCheckDocumentResult {
+    /** possible errors found while loading configuration. */
+    errors: Error[];
+    /**
+     * The calculated result:
+     * - `false` if the document should not be checked. Based upon the settings.
+     * - `true` if the document should be checked.
+     */
+    shouldCheck: boolean;
+    /** final settings used to determine the result. */
+    settings: CSpellUserSettings;
+    /**
+     * The reason the document should not be checked.
+     */
+    reason?: string | undefined;
+}
+
+/**
+ * Check if a document should be checked based upon the ignorePaths and override settings.
+ *
+ * This function will search and fetch settings based upon the location of the document if `noConfigSearch` is not true.
+ *
+ * @param doc - document to check
+ * @param options - options to override some of the settings.
+ * @param settings - current settings
+ * @returns ShouldCheckDocumentResult
+ */
+export async function shouldCheckDocument(
+    doc: TextDocumentRef,
+    options: DocumentValidatorOptions,
+    settings: CSpellUserSettings,
+): Promise<ShouldCheckDocumentResult> {
+    const errors: Error[] = [];
+
+    function addPossibleError(error: Error | undefined | unknown): undefined {
+        if (!error) return undefined;
+        errors.push(toError(error));
+        return undefined;
+    }
+
+    async function shouldCheck(): Promise<ShouldCheckDocumentResult> {
+        const useSearchForConfig =
+            (!options.noConfigSearch && !settings.noConfigSearch) || options.noConfigSearch === false;
+        const pLocalConfig = options.configFile
+            ? loadConfig(options.configFile, settings)
+            : useSearchForConfig
+              ? searchForDocumentConfig(doc, settings, settings)
+              : undefined;
+
+        const localConfig = (await catchPromiseError(pLocalConfig, addPossibleError)) || {};
+
+        extractImportErrors(localConfig).forEach((e) => addPossibleError(e.error));
+
+        const config = mergeSettings(settings, localConfig);
+        const matcher = getGlobMatcherForExcluding(localConfig?.ignorePaths);
+        // eslint-disable-next-line unicorn/prefer-regexp-test
+        if (!options.forceCheck && matcher.match(uriToFilePath(doc.uri))) {
+            return { errors, shouldCheck: false, settings: localConfig, reason: 'Excluded by ignorePaths.' };
+        }
+        const docSettings = await determineTextDocumentSettings(doc, config);
+        const shouldCheck = options.forceCheck || (docSettings.enabled ?? true);
+        const reason = shouldCheck ? undefined : 'Excluded by overrides or languageSettings.';
+        return { errors, shouldCheck, settings: docSettings, reason };
+    }
+
+    return await shouldCheck();
+}
+
+export const __testing__: {
+    sanitizeSuggestion: typeof sanitizeSuggestion;
+} = {
+    sanitizeSuggestion,
+};
+
+function recordPerfTime(timings: PerfTimings, name: string): () => void {
+    const timer = createPerfTimer(name, (elapsed) => (timings[name] = elapsed));
+    return () => timer.end();
+}
+
+function timePromise<T>(timings: PerfTimings, name: string, p: Promise<T>): Promise<T> {
+    return p.finally(recordPerfTime(timings, name));
+}

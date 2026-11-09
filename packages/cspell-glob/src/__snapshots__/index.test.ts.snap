@@ -1,0 +1,13 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Validate index loads > API 1`] = `
+{
+  "GlobMatcher": [Function],
+  "fileOrGlobToGlob": [Function],
+  "isGlobPatternNormalized": [Function],
+  "isGlobPatternWithOptionalRoot": [Function],
+  "isGlobPatternWithRoot": [Function],
+  "normalizeGlobPatterns": [Function],
+  "workaroundPicomatchBug": [Function],
+}
+`;

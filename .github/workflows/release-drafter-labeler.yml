@@ -1,0 +1,21 @@
+name: ' 🛝 Release Drafter Labeler'
+
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize]
+
+permissions:
+  contents: read
+
+jobs:
+  update_pr_labels:
+    if: github.repository_owner == 'streetsidesoftware'
+    permissions:
+      pull-requests: write # for release-drafter/release-drafter to add label to PR
+    runs-on: ubuntu-latest
+    steps:
+      - id: release-drafter-labeler
+        uses: release-drafter/release-drafter/autolabeler@978bb0b30c5ee8cdd332ced253758157150d43f0 # v7.10.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+# cspell:ignore auto* *labeler

@@ -1,0 +1,206 @@
+// cspell:ignore TSESTree
+
+import type { ESLint, Rule } from 'eslint';
+import type { Program } from 'estree';
+
+import { getDefaultLogger } from '../common/logger.cjs';
+import type { Options } from '../common/options.cjs';
+import { optionsSchema as schema } from '../generated/schema.cjs';
+import type { Issue } from '../spellCheckAST/index.cjs';
+import { spellCheckAST } from '../spellCheckAST/index.cjs';
+import { normalizeOptions } from './defaultCheckOptions.cjs';
+
+type ESlintPlugin = ESLint.Plugin;
+
+interface ExtendedSuggestion {
+    /**
+     * The suggestion.
+     */
+    word: string;
+    /**
+     * The word is preferred above others, except other "preferred" words.
+     */
+    isPreferred?: boolean;
+    /**
+     * The suggested word adjusted to match the original case.
+     */
+    wordAdjustedToMatchCase?: string;
+}
+
+const messages = {
+    wordForbidden: 'Forbidden word: "{{word}}"',
+    wordForbiddenWithSuggestions: 'Forbidden word: "{{word}}" ({{suggestions}})',
+    wordMisspelled: 'Misspelled word: "{{word}}" ({{suggestions}})',
+    wordUnknown: 'Unknown word: "{{word}}"',
+    wordUnknownWithSuggestions: 'Unknown word: "{{word}}" ({{suggestions}})',
+    suggestWord: '{{word}}{{preferred}}',
+} as const;
+
+type Messages = typeof messages;
+type MessageIds = keyof Messages;
+
+type RuleMeta = Exclude<Rule.RuleModule['meta'], undefined>;
+
+const ruleMeta: RuleMeta = {
+    docs: {
+        description: 'CSpell spellchecker',
+        recommended: false,
+    },
+    messages,
+    hasSuggestions: true,
+    fixable: 'code',
+    schema: [schema],
+};
+
+let isDebugMode = false;
+
+function nullFix(): null {
+    // eslint-disable-next-line unicorn/no-null
+    return null;
+}
+
+type LegacyESLintContext = {
+    getCwd(): string;
+    getFilename(): string;
+    getSourceCode(): Rule.RuleContext['sourceCode'];
+};
+
+function create(context: Rule.RuleContext & LegacyESLintContext): Rule.RuleListener {
+    const logger = getDefaultLogger();
+    const log = logger.log;
+    const options = normalizeOptions(context.options[0] as Options, context.cwd || context.getCwd());
+    const autoFix = options.autoFix;
+    isDebugMode = options.debugMode ?? isDebugMode;
+    logger.enabled = options.debugMode ?? (logger.enabled || isDebugMode);
+    logContext(log, context);
+
+    function reportIssue(issue: Issue) {
+        const allowNonPreferred = options.report === 'simple' && issue.hasSimpleSuggestions;
+        const sugs = issue.suggestions
+            ?.filter((sug) => sug.isPreferred || allowNonPreferred)
+            .map((sug) => sug.wordAdjustedToMatchCase || sug.word);
+        let messageId: MessageIds = 'wordUnknown';
+        messageId = issue.hasSimpleSuggestions && sugs?.length ? 'wordUnknownWithSuggestions' : messageId;
+        messageId = issue.severity === 'Misspelled' ? 'wordMisspelled' : messageId;
+        messageId =
+            issue.severity === 'Forbidden'
+                ? issue.hasPreferredFixes
+                    ? 'wordForbiddenWithSuggestions'
+                    : 'wordForbidden'
+                : messageId;
+        const corrections = sugs?.join(', ') || 'no suggestions';
+        const { word, start, end } = issue;
+        const data = {
+            word,
+            suggestions: corrections,
+        };
+        const code = contextSourceCode(context);
+        const startPos = code.getLocFromIndex(start);
+        const endPos = code.getLocFromIndex(end);
+        const loc = { start: startPos, end: endPos };
+
+        function fixFactory(word: string): Rule.ReportFixer {
+            return (fixer) => fixer.replaceTextRange([start, end], word);
+        }
+
+        function createSug(sug: ExtendedSuggestion): Rule.SuggestionReportDescriptor {
+            const word = sug.wordAdjustedToMatchCase || sug.word;
+            const preferred = sug.isPreferred ? '*' : '';
+            const data = { word, preferred };
+            const messageId: MessageIds = 'suggestWord';
+
+            return {
+                messageId,
+                data,
+                fix: fixFactory(word),
+            };
+        }
+
+        // log('Suggestions: %o', issue.suggestions);
+
+        const issueSuggestions = issue.suggestions;
+        const fixable = issueSuggestions?.filter((sug) => !!sug.isPreferred);
+        const canFix = fixable?.length === 1;
+        const preferredSuggestion = autoFix && canFix && fixable[0];
+        const fix = preferredSuggestion
+            ? fixFactory(preferredSuggestion.wordAdjustedToMatchCase || preferredSuggestion.word)
+            : nullFix;
+        const suggestions: Rule.ReportDescriptorOptions['suggest'] = issueSuggestions?.map((sug) => createSug(sug));
+        const suggest = suggestions;
+
+        const des: Rule.ReportDescriptor = {
+            messageId,
+            data,
+            loc,
+            suggest,
+            fix,
+        };
+        context.report(des);
+    }
+
+    function checkProgram(_node: Program) {
+        const filename = context.filename || context.getFilename();
+        const sc = context.sourceCode || context.getSourceCode();
+        if (!sc) return;
+        const { issues, errors } = spellCheckAST(filename, sc.text, sc.ast, options);
+        if (errors && errors.length) {
+            log(
+                'errors: %o',
+                errors.map((e) => e.message),
+            );
+            errors.forEach((error) => context.report({ message: error.message, loc: { line: 1, column: 1 } }));
+        }
+        issues.forEach((issue) => reportIssue(issue));
+    }
+
+    return { Program: checkProgram };
+}
+
+const spellchecker: Rule.RuleModule = {
+    meta: ruleMeta,
+    create,
+};
+
+export const rules: { spellchecker: Rule.RuleModule } = {
+    spellchecker,
+} satisfies ESlintPlugin['rules'];
+
+function logContext(log: typeof console.log, context: Rule.RuleContext) {
+    log('context: %o', {
+        id: context.id,
+        cwd: context.cwd,
+        filename: context.filename,
+        physicalFilename: context.physicalFilename,
+        // scope: context.getScope().type,
+        options: context.options.length === 1 ? context.options[0] : context.options,
+    });
+}
+
+function contextSourceCode(context: Rule.RuleContext & LegacyESLintContext): Rule.RuleContext['sourceCode'] {
+    return context.sourceCode || context.getSourceCode();
+}
+
+export const meta = { name: '@cspell' } as const;
+
+const recommended: ESLint.ConfigData = {
+    plugins: ['@cspell'],
+    rules: {
+        '@cspell/spellchecker': ['warn', {}],
+    },
+};
+
+const debugConfig: ESLint.ConfigData = {
+    plugins: ['@cspell'],
+    rules: {
+        '@cspell/spellchecker': ['warn', { debugMode: true }],
+    },
+};
+
+export const configs: ESlintPlugin['configs'] = {
+    debug: debugConfig,
+    'debug-legacy': debugConfig,
+    recommended,
+    'recommended-legacy': recommended,
+};
+
+export const plugin: ESlintPlugin = { rules, configs, meta } satisfies ESlintPlugin;

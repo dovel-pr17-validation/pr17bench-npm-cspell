@@ -1,0 +1,51 @@
+---
+Repository: wireapp/wire-desktop
+Url: https://github.com/wireapp/wire-desktop.git
+Args: '["*.md","electron/renderer/**/*.jsx","electron/src/**/*.ts","electron/html/*.html"]'
+Summary:
+  files: 86
+  filesWithIssues: 14
+  issues: 72
+  errors: 0
+Errors: []
+
+issues:
+  - "electron/src/auth/WebAuthn.ts:35:22         webauthn    U       session.on('select-webauthn-account', async (_event"
+  - "electron/src/lib/desktopAppConfig.ts:25:27          Popout      U       readonly supportsCallingPopoutWindow?: boolean;"
+  - "electron/src/locale/index.ts:121:8          Čeština         U       cs: 'Čeština',"
+  - "electron/src/locale/index.ts:122:8          Dansk           U       da: 'Dansk',"
+  - "electron/src/locale/index.ts:123:8          Deutsch         U       de: 'Deutsch',"
+  - "electron/src/locale/index.ts:124:8          Ελληνικά        U       el: 'Ελληνικά',"
+  - "electron/src/locale/index.ts:125:8          Eesti           U       et: 'Eesti',"
+  - "electron/src/locale/index.ts:126:8          Español         U       es: 'Español',"
+  - "electron/src/locale/index.ts:127:8          Français        U       fr: 'Français',"
+  - "electron/src/locale/index.ts:128:8          Hrvatski        U       hr: 'Hrvatski',"
+  - "electron/src/locale/index.ts:129:8          Italiano        U       it: 'Italiano',"
+  - "electron/src/locale/index.ts:130:8          Lietuvos        U       lt: 'Lietuvos',"
+  - "electron/src/locale/index.ts:132:8          Nederlands      U       nl: 'Nederlands',"
+  - "electron/src/locale/index.ts:133:8          Polski          U       pl: 'Polski',"
+  - "electron/src/locale/index.ts:134:8          Português       U       pt: 'Português do Brasil',"
+  - "electron/src/locale/index.ts:135:8          Română          U       ro: 'Română',"
+  - "electron/src/locale/index.ts:136:8          Русский         U       ru: 'Русский',"
+  - "electron/src/locale/index.ts:138:8          Slovenčina      U       sk: 'Slovenčina',"
+  - "electron/src/locale/index.ts:139:8          Slovenščina     U       sl: 'Slovenščina',"
+  - "electron/src/locale/index.ts:141:8          Türkçe          U       tr: 'Türkçe',"
+  - "electron/src/locale/index.ts:142:8          Українська      U       uk: 'Українська',"
+  - "electron/src/logging/logCleanupScheduler.ts:20:13       Unrefable       U       export type UnrefableInterval = {"
+  - "electron/src/logging/rendererDiagnostics.spec.ts:161:8          Subframe    U       'Subframe failure',"
+  - "electron/src/mainProcess.ts:481:51      webrtc      U       disable-features', 'webrtc-hide-local-ips-with"
+  - "electron/src/mainProcess.ts:481:78      mdns        U       hide-local-ips-with-mdns');"
+  - "electron/src/managed/backends/macos.ts:33:45        APPLOCK     U       temPreferences.getUserDefault(APPLOCK_OVERRIDE_KEY, 'boolean"
+  - "electron/src/managed/backends/windows.ts:37:33          subkey      U       enumerateKeys: (hive: number, subkey: string) => string["
+  - "electron/src/managed/ManagedConfig.ts:34:3          applock     U       applockOverride: boolean;"
+  - "electron/src/managed/ManagedConfig.ts:39:16         Applock     U       function detectApplockOverride(): boolean"
+  - "electron/src/preload/preload-webview.ts:289:37      polyfilling     U       This can be improved by polyfilling getDisplayMedia function"
+  - "electron/src/preload/preload-webview.ts:347:8       SQSERVICES      U       // see SQSERVICES-1882 and SQSERVICES"
+  - "electron/src/sso/MacWebAuthentication.ts:22:6           Nobjc       U       type NobjcObject = {[selector:"
+  - "electron/src/sso/MacWebAuthentication.ts:51:84          objc        U       typedBlock} = require('objc-js');"
+  - "electron/src/sso/MacWebAuthentication.ts:78:59          TSFN        U       always dispatch through a TSFN in Electron,"
+  - "README.md:58:50         HKLM        U       SOFTWARE\\Policies\\Wire` (HKLM, HKCU fallback) | `applockOve"
+  - "README.md:58:56         HKCU        U       Policies\\Wire` (HKLM, HKCU fallback) | `applockOverride"
+  - "README.md:73:44         Intune      U       automatically on an Intune/MDM-enrolled or Azure"
+  - "README.md:75:77         zclient     U       production is `com.wearezeta.zclient.mac`; dev/internal differ"
+  - "README.md:115:211       PKCE        U       not a single-use-code/PKCE exchange."

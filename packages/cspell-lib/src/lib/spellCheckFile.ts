@@ -1,0 +1,314 @@
+import type { CSpellSettingsWithSourceTrace, CSpellUserSettings } from '@cspell/cspell-types';
+import type { ICSpellConfigFile } from 'cspell-config-lib';
+import { satisfiesCSpellConfigFile } from 'cspell-config-lib';
+
+import type { Document, DocumentWithText } from './Document/index.js';
+import { isBinaryDoc } from './Document/isBinaryDoc.js';
+import { documentToTextDocument, resolveDocument } from './Document/resolveDocument.js';
+import type { BufferEncoding } from './Models/BufferEncoding.js';
+import { createTextDocument } from './Models/TextDocument.js';
+import type { ValidationIssueRPC } from './Models/ValidationIssue.js';
+import { toValidationIssueRPC } from './Models/ValidationIssue.js';
+import { createPerfTimer } from './perf/index.js';
+import type { ImportFileRefWithError } from './Settings/index.js';
+import { determineTextDocumentSettings } from './textValidation/determineTextDocumentSettings.js';
+import type { DocumentValidatorOptions } from './textValidation/index.js';
+import { DocumentValidator } from './textValidation/index.js';
+import { isError } from './util/errors.js';
+import type { Uri } from './util/IUri.js';
+import { toUri } from './util/Uri.js';
+import type { ValidateTextOptions, ValidationIssue } from './validator.js';
+
+export interface SpellCheckFileOptions extends ValidateTextOptions, Pick<CSpellUserSettings, 'unknownWords'> {
+    /**
+     * Optional path to a configuration file.
+     * If given, it will be used instead of searching for a configuration file.
+     */
+    configFile?: string;
+    /**
+     * File encoding
+     * @defaultValue 'utf-8'
+     */
+    encoding?: BufferEncoding;
+    /**
+     * Prevents searching for local configuration files
+     * By default the spell checker looks for configuration files
+     * starting at the location of given filename.
+     * If `configFile` is defined it will still be loaded instead of searching.
+     * `false` will override the value in `settings.noConfigSearch`.
+     * @defaultValue undefined
+     */
+    noConfigSearch?: boolean;
+    /**
+     * If true, the document will be checked even if it would normally be excluded.
+     */
+    forceCheck?: boolean;
+}
+
+export interface SpellCheckFileOptionsRPC extends SpellCheckFileOptions {
+    measurePerf?: boolean;
+}
+
+export interface SpellCheckFilePerf extends Record<string, number | undefined> {
+    loadTimeMs?: number;
+    prepareTimeMs?: number;
+    checkTimeMs?: number;
+    totalTimeMs?: number;
+}
+
+export interface SpellCheckFileResult {
+    document: Document | DocumentWithText;
+    settingsUsed: CSpellSettingsWithSourceTrace;
+    localConfigFilepath: string | undefined;
+    options: SpellCheckFileOptions;
+    issues: ValidationIssue[];
+    checked: boolean;
+    errors: Error[] | undefined;
+    configErrors?: ImportFileRefWithError[] | undefined;
+    dictionaryErrors?: Map<string, Error[]> | undefined;
+    perf?: SpellCheckFilePerf;
+}
+
+interface DocumentReferenceRPC extends Pick<Document, 'uri'> {
+    text?: undefined;
+    languageId?: undefined;
+    locale?: undefined;
+}
+
+export interface SpellCheckFileResultRPC {
+    /**
+     * The document that was checked.
+     *
+     * **Note:** the text will be missing to avoid sending large amounts of text over the RPC channel.
+     * If the text is needed, the document should be reloaded using the URI.
+     */
+    document: DocumentReferenceRPC;
+    issues?: ValidationIssueRPC[] | undefined;
+    checked: boolean;
+    errors?: Error[] | undefined;
+    configErrors?: ImportFileRefWithError[] | undefined;
+    dictionaryErrors?: Map<string, Error[]> | undefined;
+    perf?: SpellCheckFilePerf | undefined;
+}
+
+/**
+ * Spell Check a file
+ * @param file - absolute path to file to read and check.
+ * @param options - options to control checking
+ * @param settingsOrConfigFile - default settings to use.
+ */
+export function spellCheckFile(
+    file: string | Uri | URL,
+    options: SpellCheckFileOptions,
+    settingsOrConfigFile: CSpellUserSettings | ICSpellConfigFile,
+): Promise<SpellCheckFileResult> {
+    const doc: Document = {
+        uri: toUri(file).toString(),
+    };
+    return spellCheckDocument(doc, options, settingsOrConfigFile);
+}
+
+/**
+ * Spell Check a Document.
+ * @param document - document to be checked. If `document.text` is `undefined` the file will be loaded
+ * @param options - options to control checking
+ * @param settingsOrConfigFile - default settings to use.
+ */
+export async function spellCheckDocument(
+    document: Document | DocumentWithText,
+    options: SpellCheckFileOptions,
+    settingsOrConfigFile: CSpellUserSettings | ICSpellConfigFile,
+): Promise<SpellCheckFileResult> {
+    const settingsUsed = satisfiesCSpellConfigFile(settingsOrConfigFile)
+        ? settingsOrConfigFile.settings
+        : settingsOrConfigFile;
+    if (isBinaryDoc(document)) {
+        return {
+            document,
+            options,
+            settingsUsed,
+            localConfigFilepath: undefined,
+            issues: [],
+            checked: false,
+            errors: undefined,
+        };
+    }
+    try {
+        const timer = createPerfTimer('loadFile');
+        const doc = await resolveDocument(document).finally(() => timer.end());
+        if (isBinaryDoc(doc)) {
+            return {
+                document,
+                options,
+                settingsUsed,
+                localConfigFilepath: undefined,
+                issues: [],
+                checked: false,
+                errors: undefined,
+            };
+        }
+        const result = await spellCheckFullDocument(doc, options, settingsOrConfigFile);
+        const perf = result.perf || {};
+        perf.loadTimeMs = timer.elapsed;
+        result.perf = perf;
+        return result;
+    } catch (e) {
+        const errors = isError(e) ? [e] : [];
+        return {
+            document,
+            options,
+            settingsUsed,
+            localConfigFilepath: undefined,
+            issues: [],
+            checked: false,
+            errors,
+        };
+    }
+}
+
+/**
+ * Spell Check a Document.
+ * @param document - document to be checked. If `document.text` is `undefined` the file will be loaded
+ * @param options - options to control checking
+ * @param settingsOrConfigFile - default settings to use.
+ */
+export async function spellCheckDocumentRPC(
+    document: Document | DocumentWithText,
+    options: SpellCheckFileOptionsRPC,
+    settingsOrConfigFile: CSpellUserSettings | ICSpellConfigFile,
+): Promise<SpellCheckFileResultRPC> {
+    const { issues, checked, errors, configErrors, dictionaryErrors, perf } = await spellCheckDocument(
+        document,
+        options,
+        settingsOrConfigFile,
+    );
+
+    const result: SpellCheckFileResultRPC = {
+        document: { uri: document.uri },
+        checked,
+    };
+
+    if (issues.length) {
+        result.issues = issues.map(toValidationIssueRPC);
+    }
+
+    if (errors?.length) {
+        result.errors = errors;
+    }
+
+    if (configErrors?.length) {
+        result.configErrors = configErrors;
+    }
+    if (dictionaryErrors?.size) {
+        result.dictionaryErrors = dictionaryErrors;
+    }
+
+    if (perf && options.measurePerf) {
+        result.perf = perf;
+    }
+
+    return result;
+}
+
+async function spellCheckFullDocument(
+    document: DocumentWithText,
+    options: SpellCheckFileOptions,
+    settingsOrConfigFile: CSpellUserSettings | ICSpellConfigFile,
+): Promise<SpellCheckFileResult> {
+    // if (options.skipValidation) {
+    //     return {
+    //         document,
+    //         options,
+    //         settingsUsed: settings,
+    //         localConfigFilepath: undefined,
+    //         issues: [],
+    //         checked: true,
+    //         errors: undefined,
+    //     };
+    // }
+
+    const perf: SpellCheckFilePerf = {};
+    const timer = createPerfTimer('spellCheckFullDocument', (elapsed) => (perf.totalTimeMs = elapsed));
+    const timerCheck = createPerfTimer('check', (elapsed) => (perf.checkTimeMs = elapsed));
+    const timerPrepare = createPerfTimer('prepare', (elapsed) => (perf.prepareTimeMs = elapsed));
+
+    const doc = documentToTextDocument(document);
+    const docValOptions: DocumentValidatorOptions = options;
+    const docValidator = await DocumentValidator.create(doc, docValOptions, settingsOrConfigFile).finally(() =>
+        timerPrepare.end(),
+    );
+    Object.assign(perf, Object.fromEntries(Object.entries(docValidator.perfTiming).map(([k, v]) => ['_' + k, v])));
+
+    if (docValidator.errors.length) {
+        const settingsUsed =
+            docValidator._getLocalConfig() ||
+            (satisfiesCSpellConfigFile(settingsOrConfigFile) ? settingsOrConfigFile.settings : settingsOrConfigFile);
+
+        return {
+            document,
+            options,
+            settingsUsed,
+            localConfigFilepath: docValidator._getLocalConfigFilepath(),
+            issues: [],
+            checked: false,
+            errors: docValidator.errors,
+            configErrors: docValidator.getConfigErrors(),
+            dictionaryErrors: docValidator.getDictionaryErrors(),
+            perf,
+        };
+    }
+
+    timerCheck.start();
+    const issues = docValidator.checkDocument();
+    timerCheck.end();
+
+    Object.assign(perf, Object.fromEntries(Object.entries(docValidator.perfTiming).map(([k, v]) => ['_' + k, v])));
+
+    const result: SpellCheckFileResult = {
+        document,
+        options,
+        settingsUsed: docValidator.getFinalizedDocSettings(),
+        localConfigFilepath: docValidator._getLocalConfigFilepath(),
+        issues,
+        checked: docValidator.shouldCheckDocument(),
+        errors: undefined,
+        configErrors: docValidator.getConfigErrors(),
+        dictionaryErrors: docValidator.getDictionaryErrors(),
+        perf,
+    };
+    timer.end();
+    return result;
+}
+
+export interface DetermineFinalDocumentSettingsResult {
+    document: DocumentWithText;
+    settings: CSpellSettingsWithSourceTrace;
+}
+
+/**
+ * Combines all relevant setting values into a final configuration to be used for spell checking.
+ * It applies any overrides and appropriate language settings by taking into account the document type (languageId)
+ * the locale (natural language) and any in document settings.
+ *
+ * Note: this method will not search for configuration files. Configuration files should already be merged into `settings`.
+ * It is NOT necessary to include the cspell defaultSettings or globalSettings. They will be applied within this function.
+ * @param document - The document to be spell checked. Note: if the URI doesn't have a path, overrides cannot be applied.
+ *   `locale` - if defined will be used unless it is overridden by an in-document setting.
+ *   `languageId` - if defined will be used to select appropriate file type dictionaries.
+ * @param settings - The near final settings. Should already be the combination of all configuration files.
+ */
+export async function determineFinalDocumentSettings(
+    document: DocumentWithText,
+    settings: CSpellUserSettings,
+): Promise<DetermineFinalDocumentSettingsResult> {
+    const doc = createTextDocument({
+        uri: document.uri,
+        content: document.text,
+        languageId: document.languageId,
+        locale: document.locale,
+    });
+    return {
+        document,
+        settings: await determineTextDocumentSettings(doc, settings),
+    };
+}

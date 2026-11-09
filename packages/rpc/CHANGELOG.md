@@ -1,0 +1,552 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## v10.2.0-alpha.0 (2026-08-28)
+
+### Features
+
+- feat: Add `--force-check` cli option (<a href="https://github.com/streetsidesoftware/cspell/pull/9080">#9080</a>)
+
+### Fixes
+
+- fix: Updated package.json exports (<a href="https://github.com/streetsidesoftware/cspell/pull/8965">#8965</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9067">#9067</a>)
+
+## v10.2.0-alpha.1 (2026-08-28)
+
+- No changes
+
+## v10.2.0-alpha.2 (2026-08-28)
+
+### Fixes
+
+- fix(ci): push release tag with GitHub App token so publish.yml triggers (<a href="https://github.com/streetsidesoftware/cspell/pull/9097">#9097</a>)
+
+## v10.2.0-alpha.3 (2026-08-29)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9102">#9102</a>)
+
+## v10.2.0-alpha.4 (2026-08-30)
+
+- No changes
+
+## v10.2.0-alpha.5 (2026-08-30)
+
+- No changes
+
+## v10.2.0-alpha.6 (2026-08-30)
+
+### Fixes
+
+- fix: Reduce the size of cspell types when bundled (<a href="https://github.com/streetsidesoftware/cspell/pull/9119">#9119</a>)
+
+## v10.2.0-alpha.7 (2026-08-30)
+
+- No changes
+
+## v10.3.0-alpha.0 (2026-09-04)
+
+### Features
+
+- feat: Add an option to set the kind of dictionary file (<a href="https://github.com/streetsidesoftware/cspell/pull/9178">#9178</a>)
+
+### Fixes
+
+- fix: Only hide code-like partial words (<a href="https://github.com/streetsidesoftware/cspell/pull/9163">#9163</a>)
+
+### Documentation
+
+- feat: Add an option to set the kind of dictionary file (<a href="https://github.com/streetsidesoftware/cspell/pull/9178">#9178</a>)
+
+## v10.3.1-alpha.0 (2026-09-12)
+
+### Fixes
+
+- fix: CSpell-Tools support replacements (<a href="https://github.com/streetsidesoftware/cspell/pull/9205">#9205</a>)
+- fix: Revert #9198 (<a href="https://github.com/streetsidesoftware/cspell/pull/9202">#9202</a>)
+
+- fix: Add definitions for custom word breaks (<a href="https://github.com/streetsidesoftware/cspell/pull/9199">#9199</a>)
+- fix: Split words on soft hyphens (<a href="https://github.com/streetsidesoftware/cspell/pull/9196">#9196</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9208">#9208</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9198">#9198</a>)
+
+## v10.3.1-alpha.1 (2026-09-12)
+
+### Fixes
+
+- fix(cspell-tools): Support multiple replacements in a single entry (<a href="https://github.com/streetsidesoftware/cspell/pull/9212">#9212</a>)
+
+## v10.3.2-alpha.0 (2026-09-13)
+
+### Fixes
+
+- fix: Add tags to ParsedText (<a href="https://github.com/streetsidesoftware/cspell/pull/9237">#9237</a>)
+
+## v10.3.4-alpha.0 (2026-09-17)
+
+### Fixes
+
+- fix: Fix Sponsor cards on npmjs (<a href="https://github.com/streetsidesoftware/cspell/pull/9260">#9260</a>)
+
+## v10.4.0-alpha.0 (2026-09-30)
+
+### Features
+
+- feat: Add `--glob-symlinks` to follow symbolic links when matching globs (<a href="https://github.com/streetsidesoftware/cspell/pull/9342">#9342</a>)
+
+---
+
+</details>
+
+- feat: Respect `COLUMNS` for help and table width (<a href="https://github.com/streetsidesoftware/cspell/pull/9358">#9358</a>)
+- feat: Add `--follow-symlinks` and skip files referenced by symbolic links (<a href="https://github.com/streetsidesoftware/cspell/pull/9340">#9340</a>)
+
+---
+
+</details>
+
+- feat: `--must-find-files` fails when every file was skipped (<a href="https://github.com/streetsidesoftware/cspell/pull/9327">#9327</a>)
+
+---
+
+</details>
+
+### Fixes
+
+- fix: `@cspell/strong-weak-map` types compile with the `esnext` lib (<a href="https://github.com/streetsidesoftware/cspell/pull/9371">#9371</a>)
+- fix: Published types no longer need `@types/node` (<a href="https://github.com/streetsidesoftware/cspell/pull/9359">#9359</a>)
+
+---
+
+</details>
+
+- fix: Show the lint options in cspell --help (<a href="https://github.com/streetsidesoftware/cspell/pull/9362">#9362</a>)
+- fix: Honor `--language-id` and `--locale` when deciding whether to check a file (<a href="https://github.com/streetsidesoftware/cspell/pull/9316">#9316</a>)
+
+---
+
+</details>
+
+- fix(cspell-lib): Check remote documents by URI without passing their text (<a href="https://github.com/streetsidesoftware/cspell/pull/9343">#9343</a>)
+- fix: Don't apply a repository's .gitignore to worktrees and submodules inside it (<a href="https://github.com/streetsidesoftware/cspell/pull/9341">#9341</a>)
+
+---
+
+</details>
+
+## v10.4.0-alpha.1 (2026-09-30)
+
+### Fixes
+
+- fix: Deprecate `cspell-lib/rpc`; import from `@cspell/rpc` (<a href="https://github.com/streetsidesoftware/cspell/pull/9376">#9376</a>)
+
+---
+
+</details>
+
+## v10.4.1 (2026-11-06)
+
+### Fixes
+
+- fix: `cspell init` updates the config in the current directory (<a href="https://github.com/streetsidesoftware/cspell/pull/9552">#9552</a>)
+- fix: `cspell init` only changes what you ask for and handles new JSON paths (<a href="https://github.com/streetsidesoftware/cspell/pull/9551">#9551</a>)
+
+- fix: `cspell init` no longer adds the schema to existing config files (<a href="https://github.com/streetsidesoftware/cspell/pull/9550">#9550</a>)
+- fix: cspell-tools no longer depends on the glob package (<a href="https://github.com/streetsidesoftware/cspell/pull/9540">#9540</a>)
+
+- fix: Stop storing the file paths of issues in the cache (<a href="https://github.com/streetsidesoftware/cspell/pull/9522">#9522</a>)
+
+---
+
+</details>
+
+- fix: Report cached issues at the file's current location (<a href="https://github.com/streetsidesoftware/cspell/pull/9519">#9519</a>)
+
+---
+
+</details>
+
+- fix: cspell-tools: apply top-level target options and remove options that have no effect (<a href="https://github.com/streetsidesoftware/cspell/pull/9470">#9470</a>)
+- fix: A locale that isn't valid no longer stops a file from being checked (<a href="https://github.com/streetsidesoftware/cspell/pull/9501">#9501</a>)
+
+---
+
+</details>
+
+- fix: Ignore the comment closing marker in a locale directive (<a href="https://github.com/streetsidesoftware/cspell/pull/9496">#9496</a>)
+- fix: Show "stdin" as the file name when checking stdin (<a href="https://github.com/streetsidesoftware/cspell/pull/9487">#9487</a>)
+
+- fix: Recognize Fortran source files (<a href="https://github.com/streetsidesoftware/cspell/pull/9490">#9490</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9548">#9548</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9494">#9494</a>)
+
+## v10.4.0 (2026-10-14)
+
+### Features
+
+- feat: Add `--glob-symlinks` to follow symbolic links when matching globs (<a href="https://github.com/streetsidesoftware/cspell/pull/9342">#9342</a>)
+
+---
+
+</details>
+
+- feat: Respect `COLUMNS` for help and table width (<a href="https://github.com/streetsidesoftware/cspell/pull/9358">#9358</a>)
+- feat: Add `--follow-symlinks` and skip files referenced by symbolic links (<a href="https://github.com/streetsidesoftware/cspell/pull/9340">#9340</a>)
+
+---
+
+</details>
+
+- feat: `--must-find-files` fails when every file was skipped (<a href="https://github.com/streetsidesoftware/cspell/pull/9327">#9327</a>)
+
+---
+
+</details>
+
+### Fixes
+
+- fix: Apply `.gitignore` and `ignorePaths` rules in order (<a href="https://github.com/streetsidesoftware/cspell/pull/9408">#9408</a>)
+- fix: cspell-tools: build case-insensitive forms with the dictionary's locale (<a href="https://github.com/streetsidesoftware/cspell/pull/9458">#9458</a>)
+
+---
+
+</details>
+
+- fix: Search dictionaries using the dictionary's locale case rules, to support Turkish `İ` and `I` (<a href="https://github.com/streetsidesoftware/cspell/pull/9449">#9449</a>)
+
+---
+
+</details>
+
+- fix: Recognize MATLAB files (<a href="https://github.com/streetsidesoftware/cspell/pull/9402">#9402</a>)
+- fix: Show hidden lint options and issue template help in `cspell --help` (<a href="https://github.com/streetsidesoftware/cspell/pull/9387">#9387</a>)
+
+- fix: Deprecate `cspell-lib/rpc`; import from `@cspell/rpc` (<a href="https://github.com/streetsidesoftware/cspell/pull/9376">#9376</a>)
+
+---
+
+</details>
+
+- fix: `@cspell/strong-weak-map` types compile with the `esnext` lib (<a href="https://github.com/streetsidesoftware/cspell/pull/9371">#9371</a>)
+- fix: Published types no longer need `@types/node` (<a href="https://github.com/streetsidesoftware/cspell/pull/9359">#9359</a>)
+
+---
+
+</details>
+
+- fix: Show the lint options in cspell --help (<a href="https://github.com/streetsidesoftware/cspell/pull/9362">#9362</a>)
+- fix: Honor `--language-id` and `--locale` when deciding whether to check a file (<a href="https://github.com/streetsidesoftware/cspell/pull/9316">#9316</a>)
+
+---
+
+</details>
+
+- fix(cspell-lib): Check remote documents by URI without passing their text (<a href="https://github.com/streetsidesoftware/cspell/pull/9343">#9343</a>)
+- fix: Don't apply a repository's .gitignore to worktrees and submodules inside it (<a href="https://github.com/streetsidesoftware/cspell/pull/9341">#9341</a>)
+
+---
+
+</details>
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9446">#9446</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9405">#9405</a>)
+
+## v10.3.6 (2026-09-29)
+
+### Fixes
+
+- fix: Report unknown CSpell directives again (<a href="https://github.com/streetsidesoftware/cspell/pull/9319">#9319</a>)
+
+---
+
+</details>
+
+- fix(cspell-io): Keep redirected requests under the private root (<a href="https://github.com/streetsidesoftware/cspell/pull/9329">#9329</a>)
+
+---
+
+</details>
+
+- fix: Don't reuse cached results made with different command-line options (<a href="https://github.com/streetsidesoftware/cspell/pull/9318">#9318</a>)
+
+---
+
+</details>
+
+- fix(cspell-lib): Don't scan the text of documents that won't be checked (<a href="https://github.com/streetsidesoftware/cspell/pull/9311">#9311</a>)
+
+---
+
+</details>
+
+- fix: `--show-perf-summary` shows where all of the run's time goes (<a href="https://github.com/streetsidesoftware/cspell/pull/9307">#9307</a>)
+
+## v10.3.5 (2026-09-27)
+
+### Fixes
+
+- fix(cspell-lib): `shouldCheckDocument` honors the `forceCheck` option (<a href="https://github.com/streetsidesoftware/cspell/pull/9303">#9303</a>)
+- fix: `--force-check` checks the listed files even when `ignorePaths` or `files` would skip them (<a href="https://github.com/streetsidesoftware/cspell/pull/9300">#9300</a>)
+
+- fix: `files` globs starting with `**` no longer skip `--file` and `--file-list` files in a project under a dot folder (<a href="https://github.com/streetsidesoftware/cspell/pull/9299">#9299</a>)
+- fix: Thai text and substitutions are checked and reported correctly (<a href="https://github.com/streetsidesoftware/cspell/pull/9289">#9289</a>)
+
+## v10.3.4 (2026-09-24)
+
+### Fixes
+
+- fix: Report errors (<a href="https://github.com/streetsidesoftware/cspell/pull/9267">#9267</a>)
+- fix: ParsedTag can only be boolean values for now. (<a href="https://github.com/streetsidesoftware/cspell/pull/9268">#9268</a>)
+
+- fix: Fix Sponsor cards on npmjs (<a href="https://github.com/streetsidesoftware/cspell/pull/9260">#9260</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9266">#9266</a>)
+
+## v10.3.3 (2026-09-16)
+
+### Fixes
+
+- fix: Add `--json` option to check text for use with AI (<a href="https://github.com/streetsidesoftware/cspell/pull/9254">#9254</a>)
+- fix: Mark ParsedTags as read only. (<a href="https://github.com/streetsidesoftware/cspell/pull/9253">#9253</a>)
+
+- fix: Make sure Parser and DocumentParser can be used together. (<a href="https://github.com/streetsidesoftware/cspell/pull/9252">#9252</a>)
+
+## v10.3.2 (2026-09-15)
+
+### Fixes
+
+- fix: Add Experimental Validation setting. (<a href="https://github.com/streetsidesoftware/cspell/pull/9250">#9250</a>)
+- fix: Plugin (<a href="https://github.com/streetsidesoftware/cspell/pull/9244">#9244</a>)
+
+- fix: remove unused dependency `fast-json-stable-stringify` (<a href="https://github.com/streetsidesoftware/cspell/pull/9243">#9243</a>)
+- fix: Adjust check text to show only the text that was actually checked. (<a href="https://github.com/streetsidesoftware/cspell/pull/9241">#9241</a>)
+
+- fix: Add tags to ParsedText (<a href="https://github.com/streetsidesoftware/cspell/pull/9237">#9237</a>)
+
+## v10.3.1 (2026-09-13)
+
+### Fixes
+
+- fix: Update documentation and schema for recent improvements (<a href="https://github.com/streetsidesoftware/cspell/pull/9222">#9222</a>)
+- fix: Add support for soft word breaks (<a href="https://github.com/streetsidesoftware/cspell/pull/9215">#9215</a>)
+
+- fix(cspell-tools): Support multiple replacements in a single entry (<a href="https://github.com/streetsidesoftware/cspell/pull/9212">#9212</a>)
+- fix: CSpell-Tools support replacements (<a href="https://github.com/streetsidesoftware/cspell/pull/9205">#9205</a>)
+
+- fix: Revert #9198 (<a href="https://github.com/streetsidesoftware/cspell/pull/9202">#9202</a>)
+- fix: Add definitions for custom word breaks (<a href="https://github.com/streetsidesoftware/cspell/pull/9199">#9199</a>)
+
+- fix: Split words on soft hyphens (<a href="https://github.com/streetsidesoftware/cspell/pull/9196">#9196</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9218">#9218</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9208">#9208</a>)
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9198">#9198</a>)
+
+## v10.3.0 (2026-09-08)
+
+### Features
+
+- feat: Add an option to set the kind of dictionary file (<a href="https://github.com/streetsidesoftware/cspell/pull/9178">#9178</a>)
+
+### Fixes
+
+- fix: Add dictionary kind: suggest-words (<a href="https://github.com/streetsidesoftware/cspell/pull/9189">#9189</a>)
+- fix: Only hide code-like partial words (<a href="https://github.com/streetsidesoftware/cspell/pull/9163">#9163</a>)
+
+### Documentation
+
+- fix: Add dictionary kind: suggest-words (<a href="https://github.com/streetsidesoftware/cspell/pull/9189">#9189</a>)
+- feat: Add an option to set the kind of dictionary file (<a href="https://github.com/streetsidesoftware/cspell/pull/9178">#9178</a>)
+
+## v10.2.2 (2026-09-04)
+
+### Fixes
+
+- fix: Workaround for #9164 (<a href="https://github.com/streetsidesoftware/cspell/pull/9168">#9168</a>)
+
+## v10.2.1 (2026-09-03)
+
+### Fixes
+
+- fix: support soft hyphens in the word splitter (<a href="https://github.com/streetsidesoftware/cspell/pull/9144">#9144</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9143">#9143</a>)
+
+## v10.2.0 (2026-08-31)
+
+### Features
+
+- feat: Support languages without word breaks (Part 2) (<a href="https://github.com/streetsidesoftware/cspell/pull/9133">#9133</a>)
+- feat: Support languages without word breaks (Part 1) (<a href="https://github.com/streetsidesoftware/cspell/pull/9131">#9131</a>)
+
+- feat: Add `--force-check` cli option (<a href="https://github.com/streetsidesoftware/cspell/pull/9080">#9080</a>)
+
+### Fixes
+
+- fix: Reduce the size of cspell types when bundled (<a href="https://github.com/streetsidesoftware/cspell/pull/9119">#9119</a>)
+- fix(ci): push release tag with GitHub App token so publish.yml triggers (<a href="https://github.com/streetsidesoftware/cspell/pull/9097">#9097</a>)
+
+- fix: Updated package.json exports (<a href="https://github.com/streetsidesoftware/cspell/pull/8965">#8965</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9102">#9102</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9067">#9067</a>)
+
+## v10.1.1 (2026-08-25)
+
+### Fixes
+
+- fix: Do not load .pnp.js files when untrusted (<a href="https://github.com/streetsidesoftware/cspell/pull/9064">#9064</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9055">#9055</a>)
+
+## v10.1.0 (2026-08-22)
+
+### Features
+
+- feat(cspell-junit-reporter): add JUnit XML reporter package (<a href="https://github.com/streetsidesoftware/cspell/pull/8945">#8945</a>)
+
+### Fixes
+
+- fix: allow substitutions across ignored ranges (<a href="https://github.com/streetsidesoftware/cspell/pull/9017">#9017</a>)
+- fix: Find the nearest `.git` when a worktree is inside a clone (<a href="https://github.com/streetsidesoftware/cspell/pull/8976">#8976</a>)
+
+- fix: Add .typ extension for Typst (<a href="https://github.com/streetsidesoftware/cspell/pull/8961">#8961</a>)
+- fix: Handle Windows UNC Long Path Names (<a href="https://github.com/streetsidesoftware/cspell/pull/8914">#8914</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/9024">#9024</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8995">#8995</a>)
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8990">#8990</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8956">#8956</a>)
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8881">#8881</a>)
+
+## v10.0.1 (2026-05-31)
+
+### Fixes
+
+- fix(cli): ignore closed readline after stdin (<a href="https://github.com/streetsidesoftware/cspell/pull/8862">#8862</a>)
+- fix(docs): replace `.json` with `package.json` in configuration docs (<a href="https://github.com/streetsidesoftware/cspell/pull/8861">#8861</a>)
+
+- fix: substitution display and ranges for output checking (<a href="https://github.com/streetsidesoftware/cspell/pull/8838">#8838</a>)
+- fix: use env vars for GitHub context expressions in run steps to prevent injection (<a href="https://github.com/streetsidesoftware/cspell/pull/8852">#8852</a>)
+
+## v10.0.0 (2026-04-06)
+
+### Features
+
+- fix: upgrade import-fresh from v3 to v4 (<a href="https://github.com/streetsidesoftware/cspell/pull/8786">#8786</a>)
+- feat!: Drop support for Node 20 (<a href="https://github.com/streetsidesoftware/cspell/pull/8779">#8779</a>)
+
+### **BREAKING**
+
+- feat!: Drop support for Node 20 (<a href="https://github.com/streetsidesoftware/cspell/pull/8779">#8779</a>)
+
+### Documentation
+
+- feat!: Drop support for Node 20 (<a href="https://github.com/streetsidesoftware/cspell/pull/8779">#8779</a>)
+
+## v9.8.0 (2026-03-30)
+
+### Features
+
+- feat: make flatpack diff friendly (<a href="https://github.com/streetsidesoftware/cspell/pull/8680">#8680</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8739">#8739</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8688">#8688</a>)
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8670">#8670</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8647">#8647</a>)
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8637">#8637</a>)
+
+## v9.7.0 (2026-02-23)
+
+### Features
+
+- feat: Substitution Part 4 - enable substitutions during document check (<a href="https://github.com/streetsidesoftware/cspell/pull/8630">#8630</a>)
+- feat: Substitution Part 3 (<a href="https://github.com/streetsidesoftware/cspell/pull/8616">#8616</a>)
+
+- feat: Substitution Part 2 (<a href="https://github.com/streetsidesoftware/cspell/pull/8599">#8599</a>)
+- feat: Support text substitutions prior to spell checking - part 1 (<a href="https://github.com/streetsidesoftware/cspell/pull/8592">#8592</a>)
+
+### Fixes
+
+- fix: Publish 9.7 (<a href="https://github.com/streetsidesoftware/cspell/pull/8634">#8634</a>)
+- fix: Support ESLint 10 (<a href="https://github.com/streetsidesoftware/cspell/pull/8620">#8620</a>)
+
+- fix: Prepare to support substitutions (<a href="https://github.com/streetsidesoftware/cspell/pull/8584">#8584</a>)
+- fix: cspell-rpc - reduce the size of an RPC result. (<a href="https://github.com/streetsidesoftware/cspell/pull/8574">#8574</a>)
+
+- fix: Add convertToBtrie method to trie-lib (<a href="https://github.com/streetsidesoftware/cspell/pull/8562">#8562</a>)
+- refactor: Use standard dispose (<a href="https://github.com/streetsidesoftware/cspell/pull/8559">#8559</a>)
+
+- refactor: Experiment with bundling default dictionaries (<a href="https://github.com/streetsidesoftware/cspell/pull/8556">#8556</a>)
+- fix: Enable reading dictionaries from cspell-vfs (<a href="https://github.com/streetsidesoftware/cspell/pull/8553">#8553</a>)
+
+- fix: Work on a bundler for CSpell Dictionaries (<a href="https://github.com/streetsidesoftware/cspell/pull/8532">#8532</a>)
+- fix: Add support for MemVfs to cspell-io (<a href="https://github.com/streetsidesoftware/cspell/pull/8543">#8543</a>)
+
+- fix: Add mergeConfig (<a href="https://github.com/streetsidesoftware/cspell/pull/8539">#8539</a>)
+- fix: stemming rules part 1 (<a href="https://github.com/streetsidesoftware/cspell/pull/8527">#8527</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8570">#8570</a>)
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8542">#8542</a>)
+
+## v9.6.4 (2026-02-04)
+
+### Fixes
+
+- fix: add --no-dictionary option to lint command (<a href="https://github.com/streetsidesoftware/cspell/pull/8514">#8514</a>)
+- fix: Correctly report blocked dictionaries (<a href="https://github.com/streetsidesoftware/cspell/pull/8506">#8506</a>)
+
+## v9.6.3 (2026-02-02)
+
+### Fixes
+
+- fix: Add `engines` setting (<a href="https://github.com/streetsidesoftware/cspell/pull/8491">#8491</a>)
+- refactor: consolidate reporting to file. (<a href="https://github.com/streetsidesoftware/cspell/pull/8481">#8481</a>)
+
+- fix: Move cspell-lib/rpc into its own package (<a href="https://github.com/streetsidesoftware/cspell/pull/8468">#8468</a>)
+- fix: Add types for cspell-vfs (<a href="https://github.com/streetsidesoftware/cspell/pull/8451">#8451</a>)
+
+### Dictionary Updates
+
+- fix: Workflow Bot -- Update Dictionaries (main) (<a href="https://github.com/streetsidesoftware/cspell/pull/8492">#8492</a>)
+
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.

@@ -1,0 +1,16 @@
+{
+  "name": "@internal/json-support-fixture",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "eslint ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@cspell/eslint-plugin": "workspace:*",
+    "eslint-plugin-jsonc": "^2.20.1",
+    "eslint": "^9.39.2"
+  }
+}

@@ -1,0 +1,1134 @@
+import { FSCapabilityFlags, VFileSystem, VFileSystem as VFileSystem$1, VFileSystemProvider, VirtualFS, VirtualFS as VirtualFS$1, asyncIterableToArray, readFileText as readFile, readFileTextSync as readFileSync, writeToFile, writeToFileIterable, writeToFileIterableP } from "cspell-io";
+import "vscode-uri";
+import { AdvancedCSpellSettingsWithSourceTrace, CSpellSettings, CSpellSettingsWithSourceTrace, CSpellUserSettings, DictionaryDefinitionAugmented, DictionaryDefinitionCustom, DictionaryDefinitionInline, DictionaryDefinitionPreferred, DictionaryDefinitionSimple, DictionaryId, DictionaryReference, DocumentParser, Glob, ImportFileRef, Issue, LocaleId, MappedText, ParsedText, Parser, PnPSettings, Range, ReportingConfiguration, TextDocumentOffset, TextOffset } from "@cspell/cspell-types";
+import { FileTypeId as LanguageId, findMatchingFileTypes as getLanguagesForBasename, getFileTypesForExt as getLanguagesForExt } from "@cspell/filetypes";
+import { CachingDictionary, SpellingDictionary, SpellingDictionaryCollection, SuggestOptions, SuggestionCollector, SuggestionResult, createCollection, createSpellingDictionary } from "cspell-dictionary";
+import { CompoundWordsMethod, WeightMap } from "cspell-trie-lib";
+import { CSpellConfigFile, CSpellConfigFile as CSpellConfigFile$1, ICSpellConfigFile, ICSpellConfigFile as ICSpellConfigFile$1 } from "cspell-config-lib";
+import "@cspell/cspell-performance-monitor";
+import "@cspell/cspell-types/Parser";
+export * from "@cspell/cspell-types";
+/**
+ * Clear the cached files and other cached data.
+ * Calling this function will cause the next spell check to take longer because it will need to reload configuration files and dictionaries.
+ * Call this function if configuration files have changed.
+ *
+ * It is safe to replace {@link clearCachedFiles} with {@link clearCaches}
+ */
+export declare function clearCachedFiles(): Promise<void>;
+/**
+ * Sends and event to clear the caches.
+ * It resets the configuration files and dictionaries.
+ *
+ * It is safe to replace {@link clearCaches} with {@link clearCachedFiles}
+ */
+export declare function clearCaches(): void;
+interface Uri {
+  readonly scheme: string;
+  readonly path: string;
+  readonly authority?: string;
+  readonly fragment?: string;
+  readonly query?: string;
+}
+type DocumentUri = Uri | URL | string;
+interface Document {
+  uri: UriString;
+  text?: string;
+  languageId?: string;
+  locale?: string;
+}
+type UriString = string;
+interface DocumentWithText extends Document {
+  text: string;
+}
+export declare function isBinaryFile(filename: Uri | URL | string, languageId?: string | string[], text?: string): boolean;
+/**
+ * The text encodings Node.js supports, the same as its global `BufferEncoding`.
+ * Declared here so the published types do not need `@types/node`.
+ */
+type BufferEncoding = "ascii" | "utf8" | "utf-8" | "utf16le" | "utf-16le" | "ucs2" | "ucs-2" | "base64" | "base64url" | "latin1" | "binary" | "hex";
+interface Position {
+  /**
+   * The line number (zero-based).
+   */
+  line: number;
+  /**
+   * The zero based offset from the beginning of the line.
+   * Note: surrogate pairs are counted as two characters.
+   */
+  character: number;
+}
+/**
+ * Range offset tuple.
+ */
+type SimpleRange$1 = [start: number, end: number];
+interface TextDocumentLine {
+  readonly text: string;
+  readonly offset: number;
+  readonly position: Position;
+}
+interface TextDocumentRef {
+  /**
+   * The associated URI for this document. Most documents have the __file__-scheme, indicating that they
+   * represent files on disk. However, some documents may have other schemes indicating that they are not
+   * available on disk.
+   */
+  readonly uri: DocumentUri;
+  /**
+   * The identifier of the language associated with this document.
+   */
+  readonly languageId?: string | string[] | undefined;
+  /**
+   * the raw Document Text
+   */
+  readonly text?: string | undefined;
+  /**
+   * The natural language locale.
+   */
+  readonly locale?: string | undefined;
+}
+/**
+ * A simple text document. Not to be implemented. The document keeps the content
+ * as string.
+ */
+interface TextDocument {
+  /**
+   * The associated URI for this document. Most documents have the __file__-scheme, indicating that they
+   * represent files on disk. However, some documents may have other schemes indicating that they are not
+   * available on disk.
+   */
+  readonly uri: DocumentUri;
+  /**
+   * The identifier of the language associated with this document.
+   */
+  readonly languageId: string | string[];
+  /**
+   * The version number of this document (it will increase after each
+   * change, including undo/redo).
+   */
+  readonly version: number;
+  /**
+   * the raw Document Text
+   */
+  readonly text: string;
+  /**
+   * The natural language locale.
+   */
+  readonly locale?: string | undefined;
+  positionAt(offset: number): Position;
+  offsetAt(position: Position): number;
+  lineAt(offset: number): TextDocumentLine;
+  getLine(lineNum: number): TextDocumentLine;
+  getLines(): Iterable<TextDocumentLine>;
+}
+interface CreateTextDocumentParams {
+  uri: DocumentUri | string;
+  content: string;
+  languageId?: string | string[] | undefined;
+  locale?: string | undefined;
+  version?: number | undefined;
+}
+interface TextDocumentContentChangeEvent {
+  range?: SimpleRange$1;
+  text: string;
+}
+export declare function createTextDocument({ uri, content, languageId, locale, version }: CreateTextDocumentParams): TextDocument;
+export declare function updateTextDocument(doc: TextDocument, edits: TextDocumentContentChangeEvent[], version?: number): TextDocument;
+export declare function fileToDocument(file: string): Document;
+export declare function fileToDocument(file: string, text: string, languageId?: string, locale?: string): DocumentWithText;
+export declare function fileToDocument(file: string, text?: string, languageId?: string, locale?: string): Document | DocumentWithText;
+export declare function fileToTextDocument(file: string): Promise<TextDocument>;
+declare namespace exclusionHelper_d_exports {
+  export { ExcludeFilesGlobMap, ExclusionFunction, FileExclusionFunction, extractGlobsFromExcludeFilesGlobMap, generateExclusionFunctionForFiles, generateExclusionFunctionForUri };
+}
+type ExclusionFunction = (fileUri: string) => boolean;
+type FileExclusionFunction = (file: string) => boolean;
+/** The structure of the VS Code search.exclude settings */
+interface ExcludeFilesGlobMap {
+  [glob: string]: boolean;
+}
+declare function extractGlobsFromExcludeFilesGlobMap(globMap: ExcludeFilesGlobMap): string[];
+/**
+ * @todo Support multi root globs.
+ * @param globs - glob patterns
+ * @param root - root directory
+ * @param allowedSchemes - allowed schemas
+ */
+declare function generateExclusionFunctionForUri(globs: Glob[], root: string, allowedSchemes?: Set<string>): ExclusionFunction;
+/**
+ * @todo Support multi root globs.
+ * @param globs - glob patterns
+ * @param root - root directory
+ */
+declare function generateExclusionFunctionForFiles(globs: Glob[], root: string): FileExclusionFunction;
+interface FeatureFlag {
+  name: string;
+  description: string;
+}
+type FlagTypes = string | boolean;
+/**
+ * Feature Flags are used to turn on/off features.
+ * These are primarily used before a feature has been fully released.
+ */
+export declare class FeatureFlags {
+  private flags;
+  private flagValues;
+  constructor(flags?: FeatureFlag[]);
+  register(flag: FeatureFlag): this;
+  register(name: string, description: string): this;
+  getFlag(flag: string): FlagTypes | undefined;
+  getFlagBool(flag: string): boolean | undefined;
+  setFlag(flag: string, value?: FlagTypes): this;
+  getFlagInfo(flag: string): FeatureFlag | undefined;
+  getFlags(): FeatureFlag[];
+  getFlagValues(): Map<string, FlagTypes>;
+  reset(): this;
+}
+export declare class UnknownFeatureFlagError extends Error {
+  readonly flag: string;
+  constructor(flag: string);
+}
+export declare function getSystemFeatureFlags(): FeatureFlags;
+export declare function getVirtualFS(): VirtualFS$1;
+/**
+ * The keys of an object where the values cannot be undefined.
+ */
+type OptionalKeys<T> = Exclude<{ [P in keyof T]: T[P] extends Exclude<T[P], undefined> ? never : P; }[keyof T], undefined>;
+/**
+ * Allow undefined in optional fields
+ */
+type OptionalOrUndefined<T> = { [P in keyof T]: P extends OptionalKeys<T> ? T[P] | undefined : T[P]; };
+type DictionaryDefinitionCustomUniqueFields = Omit<DictionaryDefinitionCustom, keyof DictionaryDefinitionPreferred>;
+type DictionaryDefinitionInternal = DictionaryFileDefinitionInternal | DictionaryDefinitionInlineInternal | DictionaryDefinitionSimpleInternal;
+type DictionaryDefinitionInlineInternal = DictionaryDefinitionInline & {
+  /** The path to the config file that contains this dictionary definition */
+  readonly __source?: string | undefined;
+};
+type DictionaryDefinitionSimpleInternal = DictionaryDefinitionSimple & {
+  /** The path to the config file that contains this dictionary definition */
+  readonly __source?: string | undefined;
+};
+interface DictionaryFileDefinitionInternal extends Readonly<DictionaryDefinitionPreferred>, Readonly<Partial<DictionaryDefinitionCustomUniqueFields>>, Readonly<DictionaryDefinitionAugmented> {
+  /**
+   * Optional weight map used to improve suggestions.
+   */
+  readonly weightMap?: WeightMap | undefined;
+  /** The path to the config file that contains this dictionary definition */
+  readonly __source?: string | undefined;
+}
+declare const SymbolCSpellSettingsInternal: unique symbol;
+interface CSpellSettingsInternal extends Omit<AdvancedCSpellSettingsWithSourceTrace, "dictionaryDefinitions"> {
+  [SymbolCSpellSettingsInternal]: true;
+  dictionaryDefinitions?: DictionaryDefinitionInternal[];
+}
+interface CSpellSettingsInternalFinalized extends CSpellSettingsInternal {
+  parserFn: Parser | DocumentParser | undefined;
+  finalized: true;
+  ignoreRegExpList: RegExp[];
+  includeRegExpList: RegExp[];
+}
+/**
+ * A collection of dictionary references to determine if a dictionary is enabled or blocked.
+ */
+interface DictionaryReferenceCollection {
+  isEnabled(name: DictionaryId): boolean | undefined;
+  isBlocked(name: DictionaryId): boolean | undefined;
+  enabled(): DictionaryId[];
+  blocked(): DictionaryId[];
+  readonly dictionaryIds: DictionaryId[];
+}
+/**
+ * Create a collection of dictionary references to be able to easily determine if a dictionary is enabled or blocked.
+ * @param dictionaries - list of dictionary references
+ * @returns DictionaryReferenceCollection
+ */
+export declare function createDictionaryReferenceCollection(dictionaries: DictionaryReference[]): DictionaryReferenceCollection;
+type CSpellSettingsWST$1 = AdvancedCSpellSettingsWithSourceTrace;
+type CSpellSettingsWSTO = OptionalOrUndefined<AdvancedCSpellSettingsWithSourceTrace>;
+type CSpellSettingsI$1 = CSpellSettingsInternal;
+export declare function toCSpellSettingsWithOutSourceTrace(settings: CSpellSettingsWSTO | CSpellSettingsI$1): CSpellSettings;
+export declare function mergeSettings(left: CSpellSettingsWSTO | CSpellSettingsI$1, ...settings: (CSpellSettingsWSTO | CSpellSettingsI$1 | undefined)[]): CSpellSettingsI$1;
+export declare function mergeInDocSettings(left: CSpellSettingsWSTO, ...rest: CSpellSettingsWSTO[]): CSpellSettingsWST$1;
+/**
+ *
+ * @param settings - settings to finalize
+ * @returns settings where all globs and file paths have been resolved.
+ */
+export declare function finalizeSettings(settings: CSpellSettingsWSTO | CSpellSettingsI$1): CSpellSettingsInternalFinalized;
+/**
+ * Return a list of Setting Sources used to create this Setting.
+ * @param settings the settings to search
+ */
+export declare function getSources(settings: CSpellSettingsWSTO): CSpellSettingsWSTO[];
+interface ImportFileRefWithError extends ImportFileRef {
+  error: Error;
+}
+interface ConfigurationDependencies {
+  configFiles: string[];
+  dictionaryFiles: string[];
+}
+export declare function extractDependencies(settings: CSpellSettingsWSTO | CSpellSettingsI$1): ConfigurationDependencies;
+export declare function calcOverrideSettings(settings: CSpellSettingsWSTO, filename: string): CSpellSettingsI$1;
+/**
+ * @param filename - filename
+ * @param globs - globs
+ * @returns true if it matches
+ */
+declare function checkFilenameMatchesExcludeGlob(filename: string, globs: Glob | Glob[]): boolean;
+declare const configSettingsFileVersion0_2 = "0.2";
+export declare const currentSettingsFileVersion: typeof configSettingsFileVersion0_2;
+export declare const ENV_CSPELL_GLOB_ROOT = "CSPELL_GLOB_ROOT";
+interface ResolveFileResult {
+  /**
+   * Absolute path or URL to the file.
+   */
+  filename: string;
+  relativeTo: string | undefined;
+  found: boolean;
+  /**
+   * A warning message if the file was found, but there was a problem.
+   */
+  warning?: string;
+  /**
+   * The method used to resolve the file.
+   */
+  method: string;
+}
+export declare function resolveFile(filename: string | URL, relativeTo: string | URL, fs?: VFileSystem): Promise<ResolveFileResult>;
+type LoaderResult = URL | undefined;
+type PnPSettingsOptional = OptionalOrUndefined<PnPSettings>;
+type CSpellSettingsWST = CSpellSettingsWithSourceTrace;
+type CSpellSettingsI = CSpellSettingsInternal;
+type StopSearchAt = URL | string | (URL | string)[] | undefined;
+export declare const sectionCSpell = "cSpell";
+export declare const defaultFileName = "cspell.json";
+interface SearchForConfigFileOptions {
+  stopSearchAt?: StopSearchAt;
+}
+interface SearchForConfigOptions extends SearchForConfigFileOptions, PnPSettingsOptional {}
+interface IConfigLoader {
+  readSettingsAsync(filename: string | URL, relativeTo?: string | URL, pnpSettings?: PnPSettingsOptional): Promise<CSpellSettingsI>;
+  /**
+   * Read a cspell configuration file.
+   * @param filenameOrURL - URL, relative path, absolute path, or package name.
+   * @param relativeTo - optional URL, defaults to `pathToFileURL('./')`
+   */
+  readConfigFile(filenameOrURL: string | URL, relativeTo?: string | URL): Promise<CSpellConfigFile$1 | Error>;
+  searchForConfigFileLocation(searchFrom: URL | string | undefined): Promise<URL | undefined>;
+  searchForConfigFile(searchFrom: URL | string | undefined): Promise<CSpellConfigFile$1 | undefined>;
+  /**
+   * This is an alias for `searchForConfigFile` and `mergeConfigFileWithImports`.
+   * @param searchFrom the directory / file URL to start searching from.
+   * @param options - Optional settings including stop location and Yarn PnP configuration.
+   * @returns the resulting settings
+   */
+  searchForConfig(searchFrom: URL | string | undefined, options?: SearchForConfigOptions): Promise<CSpellSettingsI | undefined>;
+  resolveConfigFileLocation(filenameOrURL: string | URL, relativeTo?: string | URL): Promise<URL | undefined>;
+  getGlobalSettingsAsync(): Promise<CSpellSettingsI>;
+  /**
+   * The loader caches configuration files for performance. This method clears the cache.
+   */
+  clearCachedSettingsFiles(): void;
+  /**
+   * Resolve and merge the settings from the imports.
+   * This will create a virtual configuration file that is used to resolve the settings.
+   * @param settings - settings to resolve imports for
+   * @param filename - the path / URL to the settings file. Used to resolve imports.
+   */
+  resolveSettingsImports(settings: CSpellUserSettings, filename: string | URL): Promise<CSpellSettingsI>;
+  /**
+   * Resolve imports and merge.
+   * @param cfgFile - configuration file.
+   * @param pnpSettings - optional settings related to Using Yarn PNP.
+   */
+  mergeConfigFileWithImports(cfgFile: CSpellConfigFile$1, pnpSettings?: PnPSettingsOptional | undefined): Promise<CSpellSettingsI>;
+  /**
+   * Create an in memory CSpellConfigFile.
+   * @param filename - URL to the file. Used to resolve imports.
+   * @param settings - settings to use.
+   */
+  createCSpellConfigFile(filename: URL | string, settings: CSpellUserSettings): CSpellConfigFile$1;
+  /**
+   * Convert a ICSpellConfigFile into a CSpellConfigFile.
+   * If cfg is a CSpellConfigFile, it is returned as is.
+   * @param cfg - configuration file to convert.
+   */
+  toCSpellConfigFile(cfg: ICSpellConfigFile$1): CSpellConfigFile$1;
+  /**
+   * Unsubscribe from any events and dispose of any resources including caches.
+   */
+  dispose(): void;
+  getStats(): Readonly<Record<string, Readonly<Record<string, number>>>>;
+  readonly isTrusted: boolean;
+  setIsTrusted(isTrusted: boolean): void;
+  isTrustedUrl(url: URL): boolean;
+}
+export declare function loadPnP(pnpSettings: PnPSettingsOptional, searchFrom: URL): Promise<LoaderResult>;
+export declare function createConfigLoader(fs?: VFileSystem$1): IConfigLoader;
+export declare const defaultConfigFilenames: readonly string[];
+/**
+ *
+ * @param searchFrom the directory / file to start searching from.
+ * @param options - Optional settings including stop location and Yarn PnP configuration.
+ * @returns the resulting settings
+ */
+export declare function searchForConfig(searchFrom: URL | string | undefined, options?: SearchForConfigOptions): Promise<CSpellSettingsI | undefined>;
+/**
+ * Load a CSpell configuration files.
+ * @param file - path or package reference to load.
+ * @param pnpSettings - PnP settings
+ * @returns normalized CSpellSettings
+ */
+export declare function loadConfig(file: string, pnpSettings?: PnPSettingsOptional): Promise<CSpellSettingsI>;
+export declare function readConfigFile(filename: string | URL, relativeTo?: string | URL): Promise<CSpellConfigFile$1>;
+export declare function resolveConfigFileImports(configFile: CSpellConfigFile$1 | ICSpellConfigFile$1): Promise<CSpellSettingsI>;
+/**
+ * Might throw if the settings have not yet been loaded.
+ * @deprecated use {@link getGlobalSettingsAsync} instead.
+ */
+export declare function getGlobalSettings(): CSpellSettingsI;
+/**
+ * Loads and caches the global settings.
+ * @returns - global settings
+ */
+export declare function getGlobalSettingsAsync(): Promise<CSpellSettingsI>;
+export declare function getCachedFileSize(): number;
+export declare function getDefaultConfigLoader(): IConfigLoader;
+export declare function readRawSettings(filename: string | URL, relativeTo?: string | URL): Promise<CSpellSettingsWST>;
+export declare function extractImportErrors(settings: CSpellSettingsWST): ImportFileRefWithError$1[];
+interface ImportFileRefWithError$1 extends ImportFileRef {
+  error: Error;
+}
+/**
+ * Read / import a cspell configuration file.
+ * @param filename - the path to the file.
+ *   Supported types: json, yaml, js, and cjs. ES Modules are not supported.
+ *   - absolute path `/absolute/path/to/file`
+ *   - relative path `./path/to/file` (relative to the current working directory)
+ *   - package `@cspell/dict-typescript/cspell-ext.json`
+ */
+export declare function readSettings(filename: string | URL): Promise<CSpellSettingsI>;
+export declare function readSettings(filename: string | URL, pnpSettings: PnPSettingsOptional): Promise<CSpellSettingsI>;
+/**
+ * Read / import a cspell configuration file.
+ * @param filename - the path to the file.
+ *   Supported types: json, yaml, js, and cjs. ES Modules are not supported.
+ *   - absolute path `/absolute/path/to/file`
+ *   - relative path `./path/to/file` (relative to `relativeTo`)
+ *   - package `@cspell/dict-typescript/cspell-ext.json` searches for node_modules relative to `relativeTo`
+ * @param relativeTo - absolute path to start searching for relative files or node_modules.
+ */
+export declare function readSettings(filename: string | URL, relativeTo: string | URL): Promise<CSpellSettingsI>;
+export declare function readSettings(filename: string | URL, relativeTo: string | URL, pnpSettings: PnPSettingsOptional): Promise<CSpellSettingsI>;
+/**
+ *
+ * @param filenames - settings files to read
+ * @returns combined configuration
+ * @deprecated true
+ */
+export declare function readSettingsFiles(filenames: string[]): Promise<CSpellSettingsI>;
+export declare class ImportError extends Error {
+  readonly cause: Error | undefined;
+  constructor(msg: string, cause?: Error | unknown);
+}
+export declare function getDefaultSettings(useDefaultDictionaries?: boolean): Promise<CSpellSettingsInternal>;
+export declare function getDefaultBundledSettingsAsync(): Promise<CSpellSettingsInternal>;
+export declare function refreshDictionaryCache(maxAge?: number): Promise<void>;
+type LoadOptions = DictionaryDefinitionInternal;
+export declare class SpellingDictionaryLoadError extends Error {
+  readonly uri: string;
+  readonly options: LoadOptions;
+  readonly cause: Error;
+  readonly name: string;
+  constructor(uri: string, options: LoadOptions, cause: Error, message: string);
+}
+export declare function isSpellingDictionaryLoadError(e: Error): e is SpellingDictionaryLoadError;
+/**
+ * Load a dictionary collection defined by the settings.
+ * @param settings - that defines the dictionaries and the ones to load.
+ * @returns a dictionary collection that represents all the enabled dictionaries.
+ */
+export declare function getDictionary(settings: CSpellUserSettings): Promise<SpellingDictionaryCollection>;
+interface PerfTimer {
+  readonly name: string;
+  readonly startTime: number;
+  readonly elapsed: number;
+  start(): void;
+  end(): void;
+}
+type TimeNowFn = () => number;
+export declare function createPerfTimer(name: string, onEnd?: (elapsed: number, name: string) => void, timeNowFn?: TimeNowFn): PerfTimer;
+interface ListGlobalImportsResult {
+  filename: string;
+  name: string | undefined;
+  id: string | undefined;
+  error: string | undefined;
+  dictionaryDefinitions: CSpellSettingsWithSourceTrace["dictionaryDefinitions"];
+  languageSettings: CSpellSettingsWithSourceTrace["languageSettings"];
+  package: NodePackage | undefined;
+}
+interface ListGlobalImportsResults {
+  list: ListGlobalImportsResult[];
+  globalSettings: CSpellSettingsWithSourceTrace;
+}
+interface NodePackage {
+  name: string | undefined;
+  filename: string;
+}
+declare function listGlobalImports(): Promise<ListGlobalImportsResults>;
+interface AddPathsToGlobalImportsResults {
+  success: boolean;
+  resolvedSettings: ResolveSettingsResult[];
+  error: string | undefined;
+}
+declare function addPathsToGlobalImports(paths: string[]): Promise<AddPathsToGlobalImportsResults>;
+interface RemovePathsFromGlobalImportsResult {
+  success: boolean;
+  error: string | undefined;
+  removed: string[];
+}
+/**
+ * Remove files from the global setting.
+ * @param paths match against the partial file path, or package name, or id.
+ *   To match against a partial file path, it must match against the subdirectory and filename.
+ * Note: for Idempotent reasons, asking to remove a path that is not in the global settings is considered a success.
+ *   It is possible to check for this by looking at the returned list of removed paths.
+ */
+declare function removePathsFromGlobalImports(paths: string[]): Promise<RemovePathsFromGlobalImportsResult>;
+interface ResolveSettingsResult {
+  filename: string;
+  resolvedToFilename: string | undefined;
+  error?: string;
+  settings: CSpellSettingsWithSourceTrace;
+}
+declare namespace index_link_d_exports {
+  export { AddPathsToGlobalImportsResults, ListGlobalImportsResult, ListGlobalImportsResults, RemovePathsFromGlobalImportsResult, ResolveSettingsResult, addPathsToGlobalImports, listGlobalImports, removePathsFromGlobalImports };
+}
+export declare function combineTextAndLanguageSettings(settings: CSpellUserSettings, text: string | undefined, languageId: string | string[]): CSpellSettingsInternal;
+interface ExtendedSuggestion {
+  /**
+   * The suggestion.
+   */
+  word: string;
+  /**
+   * The word is preferred above others, except other "preferred" words.
+   */
+  isPreferred?: boolean;
+  /**
+   * The suggested word adjusted to match the original case.
+   */
+  wordAdjustedToMatchCase?: string;
+  /**
+   * The cost of using this word.
+   * The lower the cost, the better the suggestion.
+   */
+  cost?: number;
+}
+interface ValidationResult extends Omit<TextOffset, "length">, Pick<Issue, "message" | "issueType" | "hasPreferredSuggestions" | "hasSimpleSuggestions"> {
+  length?: number | undefined;
+  line: TextOffset;
+  isFlagged?: boolean | undefined;
+  isFound?: boolean | undefined;
+}
+/**
+ * The ValidationResultRPC is used for RPC communication. It is a subset of ValidationResult that can be serialized.
+ *
+ * The URI, document, row, and column information are not included in the RPC version of ValidationResult
+ * because they can be calculated from the offset and the document text.
+ */
+interface ValidationResultRPC extends Pick<ValidationResult, "text" | "length" | "offset" | "message" | "issueType" | "hasPreferredSuggestions" | "hasSimpleSuggestions" | "isFlagged" | "isFound"> {
+  /**
+   * The line information is not included in the RPC version of ValidationResult because it can be calculated from the offset and the document text.
+   */
+  line?: undefined;
+  /**
+   * The context information is not included in the RPC version of ValidationResult because it can be calculated from the offset and the document text.
+   */
+  context?: undefined;
+  uri?: undefined;
+  doc?: undefined;
+  row?: undefined;
+  col?: undefined;
+}
+interface ValidationIssue extends ValidationResult {
+  suggestions?: string[] | undefined;
+  suggestionsEx?: ExtendedSuggestion[] | undefined;
+}
+/**
+ * The ValidationIssueRPC is used for RPC communication. It is a subset of ValidationIssue that can be serialized.
+ */
+interface ValidationIssueRPC extends ValidationResultRPC {
+  suggestionsEx?: ExtendedSuggestion[] | undefined;
+}
+interface TextTransformer {
+  transform(text: string | MappedText): MappedText;
+  transformAll(src: Iterable<string | MappedText>): Iterable<MappedText>;
+}
+/**
+ * A range of text in a document.
+ * The range is inclusive of the startPos and exclusive of the endPos.
+ */
+interface MatchRange {
+  startPos: number;
+  endPos: number;
+}
+type SimpleRange = Readonly<Range>;
+interface WordSuggestion extends SuggestionResult {
+  /**
+   * The suggested word adjusted to match the original case.
+   */
+  wordAdjustedToMatchCase?: string;
+}
+interface SuggestedWordBase extends WordSuggestion {
+  /**
+   * dictionary names
+   */
+  dictionaries: string[];
+}
+interface SuggestedWord extends SuggestedWordBase {
+  noSuggest: boolean;
+  forbidden: boolean;
+}
+interface SuggestionsForWordResult {
+  word: string;
+  suggestions: SuggestedWord[];
+}
+type FromSuggestOptions = Pick<SuggestOptions, "numChanges" | "numSuggestions" | "includeTies">;
+interface SuggestionOptions extends FromSuggestOptions {
+  /**
+   * languageId to use when determining file type.
+   */
+  languageId?: LanguageId | LanguageId[];
+  /**
+   * Locale to use.
+   */
+  locale?: LocaleId;
+  /**
+   * Strict case and accent checking
+   * @default true
+   */
+  strict?: boolean;
+  /**
+   * List of dictionaries to use. If specified, only that list of dictionaries will be used.
+   */
+  dictionaries?: string[];
+  /**
+   * The number of suggestions to make.
+   * @default 8
+   */
+  numSuggestions?: number | undefined;
+  /**
+   * Max number of changes / edits to the word to get to a suggestion matching suggestion.
+   * @default 4
+   */
+  numChanges?: number | undefined;
+  /**
+   * If multiple suggestions have the same edit / change "cost", then included them even if
+   * it causes more than `numSuggestions` to be returned.
+   * @default true
+   */
+  includeTies?: boolean | undefined;
+  /**
+   * By default we want to use the default configuration, but there are cases
+   * where someone might not want that.
+   * @default true
+   */
+  includeDefaultConfig?: boolean;
+}
+export declare function suggestionsForWords(words: Iterable<string> | AsyncIterable<string>, options?: SuggestionOptions, settings?: CSpellSettings): AsyncIterable<SuggestionsForWordResult>;
+export declare function suggestionsForWord(word: string, options?: SuggestionOptions, settings?: CSpellSettings | ICSpellConfigFile$1): Promise<SuggestionsForWordResult>;
+export declare class SuggestionError extends Error {
+  readonly code: string;
+  constructor(message: string, code: string);
+}
+type TextOffsetRO = Readonly<TextOffset>;
+interface ValidationOptions extends IncludeExcludeOptions, ReportingConfiguration {
+  maxNumberOfProblems?: number;
+  maxDuplicateProblems?: number;
+  minWordLength?: number;
+  flagWords?: string[];
+  allowCompoundWords?: boolean;
+  /** ignore case when checking words against dictionary or ignore words list */
+  ignoreCase: boolean;
+  ignoreRandomStrings?: boolean | undefined;
+  minRandomLength?: number | undefined;
+}
+interface IncludeExcludeOptions {
+  ignoreRegExpList?: RegExp[];
+  includeRegExpList?: RegExp[];
+}
+type LineValidatorFn = (line: LineSegment) => Iterable<ValidationIssue>;
+interface LineSegment {
+  /** A line from the document, the offset is relative to the beginning of the document. */
+  line: TextOffsetRO;
+  /** A segment of text from the line, the offset is relative to the beginning of the document. */
+  segment: TextOffsetRO;
+}
+interface MappedTextValidationResult extends MappedText, Pick<Issue, "hasSimpleSuggestions" | "hasPreferredSuggestions" | "isFlagged" | "suggestionsEx"> {
+  isFound?: boolean | undefined;
+}
+type TextValidatorFn = (text: MappedText) => Iterable<MappedTextValidationResult>;
+interface LineValidator {
+  fn: LineValidatorFn;
+  dict: CachingDictionary;
+}
+interface TextValidator {
+  validate: TextValidatorFn;
+  lineValidator: LineValidator;
+}
+interface TextValidationFactoryOptions extends ValidationOptions {
+  transformer: TextTransformer | undefined;
+}
+/**
+ * What a `DocumentValidator` needs to spell check its document.
+ */
+interface Preparations {
+  /** loaded config */
+  config: CSpellSettingsInternal;
+  dictionary: SpellingDictionaryCollection;
+  /** configuration after applying in-doc settings */
+  docSettings: CSpellSettingsInternal;
+  finalSettings: CSpellSettingsInternalFinalized;
+  includeRanges: MatchRange[];
+  textValidator: TextValidator;
+  segmenter: (texts: MappedText) => Iterable<MappedText>;
+  shouldCheck: boolean;
+  validateOptions: TextValidationFactoryOptions;
+  localConfig: CSpellUserSettings | undefined;
+  localConfigFilepath: string | undefined;
+  transformer: TextTransformer;
+}
+type Href = string;
+interface DictionaryTraceResult {
+  /** The word being traced. */
+  word: string;
+  found: boolean;
+  /** The word found. */
+  foundWord: string | undefined;
+  /** Indicates that the word is flagged. */
+  forbidden: boolean;
+  /** The would should not show up in suggestions, but is considered correct. */
+  noSuggest: boolean;
+  /** The name of the dictionary. */
+  dictName: string;
+  /** The path/href to dictionary file. */
+  dictSource: string;
+  /** Suggested changes to the word. */
+  preferredSuggestions?: string[] | undefined;
+  /** href to the config file referencing the dictionary. */
+  configSource: Href | undefined;
+  /** Errors */
+  errors?: Error[] | undefined;
+}
+interface WordSplits {
+  word: string;
+  found: boolean;
+}
+interface TraceResult$1 extends Array<DictionaryTraceResult> {
+  splits?: readonly WordSplits[];
+}
+interface ValidateTextOptions {
+  /**
+   * Generate suggestions where there are spelling issues.
+   */
+  generateSuggestions?: boolean;
+  /**
+   * The number of suggestions to generate. The higher the number the longer it takes.
+   */
+  numSuggestions?: number;
+  /**
+   * Verify that the in-document directives are correct.
+   */
+  validateDirectives?: boolean;
+  /**
+   * Skips spell checking the document. Useful for testing and dry runs.
+   * It will read the configuration and parse the document.
+   */
+  skipValidation?: boolean;
+}
+interface DocumentValidatorOptions extends ValidateTextOptions {
+  /**
+   * Optional path to a configuration file.
+   * If given, it will be used instead of searching for a configuration file.
+   */
+  configFile?: string;
+  /**
+   * Prevents searching for local configuration files
+   * By default the spell checker looks for configuration files
+   * starting at the location of given filename.
+   * If `configFile` is defined it will still be loaded instead of searching.
+   * `false` will override the value in `settings.noConfigSearch`.
+   * @defaultValue undefined
+   */
+  noConfigSearch?: boolean;
+  /**
+   * If `settings: CSpellUserSettings` contains imports, they will be resolved using this path.
+   * If not set, the current working directory will be used.
+   */
+  resolveImportsRelativeTo?: string | URL;
+  /**
+   * If true, the document will be checked even if it would normally be excluded.
+   */
+  forceCheck?: boolean;
+  /**
+   * If true, the ranges of text that have been checked will be recorded and available for later using the `getCheckedRanges` method.
+   */
+  recordCheckedRanges?: boolean;
+}
+type PerfTimings = Record<string, number>;
+export declare class DocumentValidator {
+  #private;
+  readonly settings: CSpellUserSettings;
+  private _document;
+  private _ready;
+  readonly errors: Error[];
+  private _prepared;
+  private _preparations;
+  private _preparationTime;
+  private _suggestions;
+  readonly options: DocumentValidatorOptions;
+  readonly perfTiming: PerfTimings;
+  skipValidation: boolean;
+  private rangesChecked;
+  static create(doc: TextDocument, options: DocumentValidatorOptions, settingsOrConfigFile: CSpellUserSettings | ICSpellConfigFile$1): Promise<DocumentValidator>;
+  /**
+   * @param doc - Document to validate
+   * @param options - options controlling how the document is validated.
+   * @param settings - configuration to use (not finalized).
+   */
+  constructor(doc: TextDocument, options: DocumentValidatorOptions, settings: CSpellUserSettings);
+  get ready(): boolean;
+  prepare(): Promise<void>;
+  private _prepareAsync;
+  private _updatePrep;
+  /**
+   * The amount of time in ms to prepare for validation.
+   */
+  get prepTime(): number;
+  get validateDirectives(): boolean;
+  /**
+   * Check a range of text for validation issues.
+   * @param range - the range of text to check.
+   * @param _text - the text to check. If not given, the text will be taken from the document.
+   * @param scope - the scope to use for validation. If not given, the default scope will be used.
+   * @returns the validation issues.
+   */
+  checkText(range: SimpleRange, _text: string | undefined, scope?: string[] | string): ValidationIssue[];
+  check(parsedText: ParsedText): ValidationIssue[];
+  /**
+   * Check a Document for Validation Issues.
+   * @param forceCheck - force a check even if the document would normally be excluded.
+   * @returns the validation issues.
+   */
+  checkDocumentAsync(forceCheck?: boolean): Promise<ValidationIssue[]>;
+  /**
+   * Check a Document for Validation Issues.
+   *
+   * Note: The validator must be prepared before calling this method.
+   * @param forceCheck - force a check even if the document would normally be excluded.
+   * @returns the validation issues.
+   */
+  checkDocument(forceCheck?: boolean): ValidationIssue[];
+  checkDocumentDirectives(forceCheck?: boolean): ValidationIssue[];
+  get document(): TextDocument;
+  updateDocumentText(text: string): Promise<void>;
+  traceWord(word: string): TraceResult$1;
+  private defaultParser;
+  private _checkParsedText;
+  private addPossibleError;
+  private _parse;
+  private getSuggestions;
+  private genSuggestions;
+  private adjustSuggestions;
+  getFinalizedDocSettings(): CSpellSettingsInternal;
+  getConfigErrors(): ImportFileRefWithError[] | undefined;
+  getDictionaryErrors(): Map<string, Error[]> | undefined;
+  /**
+   * Returns true if the final result of the configuration calculation results
+   * in the document being enabled. Note: in some cases, checking the document
+   * might still make sense, for example, the `@cspell/eslint-plugin` relies on
+   * `eslint` configuration to make that determination.
+   * @returns true if the document settings have resolved to be `enabled`
+   */
+  shouldCheckDocument(): boolean;
+  /**
+   * Internal `cspell-lib` use.
+   * @deprecated Will be removed in a future major version. Use {@link _getLocalConfig} and
+   * {@link _getLocalConfigFilepath} instead.
+   */
+  _getPreparations(): Preparations | undefined;
+  /**
+   * Internal `cspell-lib` use.
+   * @returns the config file found for the document, if any.
+   */
+  _getLocalConfig(): CSpellUserSettings | undefined;
+  /**
+   * Internal `cspell-lib` use.
+   * @returns the path of the config file found for the document, if any.
+   */
+  _getLocalConfigFilepath(): string | undefined;
+  /**
+   * Get the calculated ranges of text that should be included in the spell checking.
+   *
+   * Use {@link getRangesChecked} to retrieve the ranges of text that have been checked.
+   *
+   * @returns MatchRanges of text to include.
+   */
+  getCheckedTextRanges(): MatchRange[];
+  getRangesChecked(): Iterable<SimpleRange>;
+  get recordCheckedRanges(): boolean;
+  set recordCheckedRanges(value: boolean);
+}
+interface ShouldCheckDocumentResult {
+  /** possible errors found while loading configuration. */
+  errors: Error[];
+  /**
+   * The calculated result:
+   * - `false` if the document should not be checked. Based upon the settings.
+   * - `true` if the document should be checked.
+   */
+  shouldCheck: boolean;
+  /** final settings used to determine the result. */
+  settings: CSpellUserSettings;
+  /**
+   * The reason the document should not be checked.
+   */
+  reason?: string | undefined;
+}
+/**
+ * Check if a document should be checked based upon the ignorePaths and override settings.
+ *
+ * This function will search and fetch settings based upon the location of the document if `noConfigSearch` is not true.
+ *
+ * @param doc - document to check
+ * @param options - options to override some of the settings.
+ * @param settings - current settings
+ * @returns ShouldCheckDocumentResult
+ */
+export declare function shouldCheckDocument(doc: TextDocumentRef, options: DocumentValidatorOptions, settings: CSpellUserSettings): Promise<ShouldCheckDocumentResult>;
+/**
+ * Annotate text with issues and include / exclude zones.
+ * @param text - the text to annotate.
+ * @param settings - the settings to use.
+ * @returns the Check Text result
+ * @deprecated
+ */
+export declare function checkText(text: string, settings: CSpellUserSettings): Promise<CheckTextInfo>;
+interface CheckTextInfo {
+  text: string;
+  items: TextInfoItem[];
+}
+interface TextInfoItem {
+  text: string;
+  startPos: number;
+  endPos: number;
+  flagIE: IncludeExcludeFlag;
+  isError?: boolean;
+}
+export declare enum IncludeExcludeFlag {
+  INCLUDE = "I",
+  EXCLUDE = "E"
+}
+interface CheckTextOptions extends DocumentValidatorOptions {}
+/**
+ * Calculate document issues and include / exclude zones.
+ * @param doc - document to check
+ * @param options - check options
+ * @param settings - optional settings
+ * @returns
+ */
+export declare function checkTextDocument(doc: TextDocument | Document, options: CheckTextOptions, settings?: CSpellUserSettings): Promise<CheckTextInfo>;
+/**
+ * @deprecated
+ * @deprecationMessage Use spellCheckDocument
+ */
+export declare function validateText(text: string, settings: CSpellUserSettings, options?: ValidateTextOptions): Promise<ValidationIssue[]>;
+interface SpellCheckFileOptions extends ValidateTextOptions, Pick<CSpellUserSettings, "unknownWords"> {
+  /**
+   * Optional path to a configuration file.
+   * If given, it will be used instead of searching for a configuration file.
+   */
+  configFile?: string;
+  /**
+   * File encoding
+   * @defaultValue 'utf-8'
+   */
+  encoding?: BufferEncoding;
+  /**
+   * Prevents searching for local configuration files
+   * By default the spell checker looks for configuration files
+   * starting at the location of given filename.
+   * If `configFile` is defined it will still be loaded instead of searching.
+   * `false` will override the value in `settings.noConfigSearch`.
+   * @defaultValue undefined
+   */
+  noConfigSearch?: boolean;
+  /**
+   * If true, the document will be checked even if it would normally be excluded.
+   */
+  forceCheck?: boolean;
+}
+interface SpellCheckFileOptionsRPC extends SpellCheckFileOptions {
+  measurePerf?: boolean;
+}
+interface SpellCheckFilePerf extends Record<string, number | undefined> {
+  loadTimeMs?: number;
+  prepareTimeMs?: number;
+  checkTimeMs?: number;
+  totalTimeMs?: number;
+}
+interface SpellCheckFileResult {
+  document: Document | DocumentWithText;
+  settingsUsed: CSpellSettingsWithSourceTrace;
+  localConfigFilepath: string | undefined;
+  options: SpellCheckFileOptions;
+  issues: ValidationIssue[];
+  checked: boolean;
+  errors: Error[] | undefined;
+  configErrors?: ImportFileRefWithError[] | undefined;
+  dictionaryErrors?: Map<string, Error[]> | undefined;
+  perf?: SpellCheckFilePerf;
+}
+interface DocumentReferenceRPC extends Pick<Document, "uri"> {
+  text?: undefined;
+  languageId?: undefined;
+  locale?: undefined;
+}
+interface SpellCheckFileResultRPC {
+  /**
+   * The document that was checked.
+   *
+   * **Note:** the text will be missing to avoid sending large amounts of text over the RPC channel.
+   * If the text is needed, the document should be reloaded using the URI.
+   */
+  document: DocumentReferenceRPC;
+  issues?: ValidationIssueRPC[] | undefined;
+  checked: boolean;
+  errors?: Error[] | undefined;
+  configErrors?: ImportFileRefWithError[] | undefined;
+  dictionaryErrors?: Map<string, Error[]> | undefined;
+  perf?: SpellCheckFilePerf | undefined;
+}
+/**
+ * Spell Check a file
+ * @param file - absolute path to file to read and check.
+ * @param options - options to control checking
+ * @param settingsOrConfigFile - default settings to use.
+ */
+export declare function spellCheckFile(file: string | Uri | URL, options: SpellCheckFileOptions, settingsOrConfigFile: CSpellUserSettings | ICSpellConfigFile$1): Promise<SpellCheckFileResult>;
+/**
+ * Spell Check a Document.
+ * @param document - document to be checked. If `document.text` is `undefined` the file will be loaded
+ * @param options - options to control checking
+ * @param settingsOrConfigFile - default settings to use.
+ */
+export declare function spellCheckDocument(document: Document | DocumentWithText, options: SpellCheckFileOptions, settingsOrConfigFile: CSpellUserSettings | ICSpellConfigFile$1): Promise<SpellCheckFileResult>;
+/**
+ * Spell Check a Document.
+ * @param document - document to be checked. If `document.text` is `undefined` the file will be loaded
+ * @param options - options to control checking
+ * @param settingsOrConfigFile - default settings to use.
+ */
+export declare function spellCheckDocumentRPC(document: Document | DocumentWithText, options: SpellCheckFileOptionsRPC, settingsOrConfigFile: CSpellUserSettings | ICSpellConfigFile$1): Promise<SpellCheckFileResultRPC>;
+interface DetermineFinalDocumentSettingsResult {
+  document: DocumentWithText;
+  settings: CSpellSettingsWithSourceTrace;
+}
+/**
+ * Combines all relevant setting values into a final configuration to be used for spell checking.
+ * It applies any overrides and appropriate language settings by taking into account the document type (languageId)
+ * the locale (natural language) and any in document settings.
+ *
+ * Note: this method will not search for configuration files. Configuration files should already be merged into `settings`.
+ * It is NOT necessary to include the cspell defaultSettings or globalSettings. They will be applied within this function.
+ * @param document - The document to be spell checked. Note: if the URI doesn't have a path, overrides cannot be applied.
+ *   `locale` - if defined will be used unless it is overridden by an in-document setting.
+ *   `languageId` - if defined will be used to select appropriate file type dictionaries.
+ * @param settings - The near final settings. Should already be the combination of all configuration files.
+ */
+export declare function determineFinalDocumentSettings(document: DocumentWithText, settings: CSpellUserSettings): Promise<DetermineFinalDocumentSettingsResult>;
+interface TraceResult extends DictionaryTraceResult {
+  /** True if the dictionary is currently active. */
+  dictActive: boolean;
+  /** True if the dictionary is blocked from use. */
+  dictBlocked: boolean;
+}
+interface TraceOptions {
+  languageId?: LanguageId | LanguageId[];
+  locale?: LocaleId;
+  ignoreCase?: boolean;
+  allowCompoundWords?: boolean;
+  compoundSeparator?: string | undefined;
+}
+interface TraceWordResult extends Array<TraceResult> {
+  splits: readonly WordSplits[];
+}
+export declare function traceWords(words: string[], settings: CSpellSettings | ICSpellConfigFile$1, options: TraceOptions | undefined): Promise<TraceResult[]>;
+export declare function traceWordsAsync(words: Iterable<string> | AsyncIterable<string>, settingsOrConfig: CSpellSettings | ICSpellConfigFile$1, options: TraceOptions | undefined): AsyncIterableIterator<TraceWordResult>;
+interface Logger {
+  log: (...args: unknown[]) => void;
+  warn: (...args: unknown[]) => void;
+  error: (...args: unknown[]) => void;
+}
+/**
+ * Set the global cspell-lib logger
+ * @param logger - a logger like `console`
+ * @returns the old logger.
+ */
+export declare function setLogger(logger: Logger): Logger;
+/**
+ * Get the current cspell-lib logger.
+ * @returns the current logger.
+ */
+export declare function getLogger(): Logger;
+declare function stringToRegExpOrUndefined(pattern: string | RegExp, defaultFlags?: string, forceFlags?: string): RegExp | undefined;
+declare function splitCamelCaseWordWithOffset(wo: TextOffset): TextOffset[];
+/**
+ * Split camelCase words into an array of strings.
+ */
+declare function splitCamelCaseWord(word: string): string[];
+/**
+ * This function lets you iterate over regular expression matches.
+ */
+declare function match(reg: RegExp, text: string): Iterable<RegExpExecArray>;
+declare function matchStringToTextOffset(reg: RegExp, text: string): Iterable<TextOffset>;
+declare function matchToTextOffset(reg: RegExp, t: TextOffset): Iterable<TextOffset>;
+declare function extractLinesOfText(text: string): Iterable<TextOffset>;
+/**
+ * Extract out whole words from a string of text.
+ */
+declare function extractWordsFromText(text: string): Iterable<TextOffset>;
+/**
+ * Extract out whole words from a string of text.
+ */
+declare function extractWordsFromTextOffset(text: TextOffset): Iterable<TextOffset>;
+/**
+ * Remove Hiragana, Han, Katakana, Hangul characters from the text.
+ * @param text
+ * @returns the text with the characters removed.
+ */
+declare function cleanText(text: string): string;
+declare function cleanTextOffset(text: TextOffset): TextOffset;
+/**
+ * Extract out whole words and words containing numbers from a string of text.
+ */
+declare function extractPossibleWordsFromTextOffset(text: TextOffset): Iterable<TextOffset>;
+declare function extractWordsFromCode(text: string): Iterable<TextOffset>;
+declare function extractWordsFromCodeTextOffset(textOffset: TextOffset): Iterable<TextOffset>;
+declare function isUpperCase(word: string): boolean;
+declare function isLowerCase(word: string): boolean;
+declare function isFirstCharacterUpper(word: string): boolean;
+declare function isFirstCharacterLower(word: string): boolean;
+declare function ucFirst(word: string): string;
+declare function lcFirst(word: string): string;
+declare function snakeToCamel(word: string): string;
+declare function camelToSnake(word: string): string;
+declare function matchCase(example: string, word: string): string;
+declare function textOffset(text: string, offset?: number): TextOffset;
+declare function extractText(textOffset: TextOffset, startPos: number, endPos: number): string;
+declare function calculateTextDocumentOffsets<T extends TextOffset>(uri: string | Uri | URL, doc: string, wordOffsets: T[]): (TextDocumentOffset & T)[];
+declare function removeAccents(text: string): string;
+declare namespace textApi_d_exports {
+  export { calculateTextDocumentOffsets, camelToSnake, cleanText, cleanTextOffset, extractLinesOfText, extractPossibleWordsFromTextOffset, extractText, extractWordsFromCode, extractWordsFromCodeTextOffset, extractWordsFromText, extractWordsFromTextOffset, isFirstCharacterLower, isFirstCharacterUpper, isLowerCase, isUpperCase, lcFirst, match, matchCase, matchStringToTextOffset, matchToTextOffset, removeAccents, snakeToCamel, splitCamelCaseWord, splitCamelCaseWordWithOffset, stringToRegExpOrUndefined as stringToRegExp, textOffset, ucFirst };
+}
+export { type CSpellConfigFile, type CheckTextInfo, CompoundWordsMethod, type ConfigurationDependencies, type CreateTextDocumentParams, type DetermineFinalDocumentSettingsResult, type DictionaryReferenceCollection, type Document, type DocumentValidatorOptions, type ExcludeFilesGlobMap, type ExclusionFunction, exclusionHelper_d_exports as ExclusionHelper, FSCapabilityFlags, type FeatureFlag, type ICSpellConfigFile, type ImportFileRefWithError, type IncludeExcludeOptions, index_link_d_exports as Link, type Logger, type PerfTimer, type SpellCheckFileOptions, type SpellCheckFilePerf, type SpellCheckFileResult, type SpellingDictionary, type SpellingDictionaryCollection, type SuggestOptions, type SuggestedWord, type SuggestionCollector, type SuggestionOptions, type SuggestionResult, type SuggestionsForWordResult, textApi_d_exports as Text, type TextDocument, type TextDocumentLine, type TextDocumentRef, type TextInfoItem, type TraceOptions, type TraceResult, type TraceWordResult, type VFileSystemProvider, type ValidationIssue, type VirtualFS, asyncIterableToArray, checkFilenameMatchesExcludeGlob as checkFilenameMatchesGlob, combineTextAndLanguageSettings as constructSettingsForText, createSpellingDictionary, createCollection as createSpellingDictionaryCollection, defaultFileName as defaultSettingsFilename, getLanguagesForBasename as getLanguageIdsForBaseFilename, getLanguagesForExt, readFile, readFileSync, writeToFile, writeToFileIterable, writeToFileIterableP };

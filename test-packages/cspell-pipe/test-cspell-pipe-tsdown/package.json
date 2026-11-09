@@ -1,0 +1,31 @@
+{
+  "name": "test-cspell-pipe-tsdown",
+  "version": "9.0.2",
+  "description": "Pure testing package for @cspell/cspell-pipe. Its purpose is to verify @cspell/cspell-pipe dependencies.",
+  "private": true,
+  "bin": {
+    "mjs": "bin.mjs",
+    "csj": "bin.cjs"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "type": "module",
+  "scripts": {
+    "clean": "shx rm -rf dist temp coverage \"*.tsbuildInfo\"",
+    "build": "tsdown",
+    "clean-build": "pnpm run clean && pnpm run build",
+    "compile": "tsc -p .",
+    "test": "pnpm test:unit && pnpm test:smoke",
+    "test:smoke": "node ./bin.mjs && node ./bin.cjs",
+    "test:unit": "vitest run"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@cspell/cspell-pipe": "workspace:*"
+  },
+  "keywords": [],
+  "engines": {
+    "node": ">=22.18.0"
+  }
+}

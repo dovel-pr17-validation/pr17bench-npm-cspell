@@ -1,0 +1,20 @@
+{
+  "name": "@test-packages/validate-schema",
+  "version": "9.0.2",
+  "private": true,
+  "description": "Test Schema",
+  "type": "module",
+  "scripts": {
+    "test": "node ./validate-schema.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "ajv": "^8.20.0",
+    "find-up-simple": "^1.0.1"
+  },
+  "engines": {
+    "node": ">=22.18.0"
+  }
+}

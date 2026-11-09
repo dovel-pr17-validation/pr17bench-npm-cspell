@@ -1,0 +1,35 @@
+{
+    "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+    "version": "0.2",
+    "id": "cspell-project-config",
+    "name": "cspell Project Config",
+    "language": "en",
+    "words": [],
+    "maxNumberOfProblems": 1000,
+    "ignorePaths": [
+        "*.snap",
+        "node_modules",
+        "__snapshots__",
+        "package-lock.json",
+        "coverage/**",
+        "dist/**",
+        "dist.*/**",
+        "temp/**",
+        "CHANGELOG.md",
+        "package.json",
+        ".cspell.json",
+        "cspell.json",
+        ".vscode/**"
+    ],
+    "flagWords": ["blacklist: denylist", "blackList: denyList", "whitelist: allowlist"],
+    "dictionaryDefinitions": [
+        {
+            "name": "workspace",
+            "path": "../../cspell-dict.txt",
+            "description": "Custom Workspace Dictionary"
+        }
+    ],
+    "dictionaries": ["workspace", "!cryptocurrencies-legacy"],
+    "noConfigSearch": true,
+    "ignoreWords": []
+}

@@ -1,0 +1,483 @@
+{
+  "repositories": [
+    {
+      "path": "php/php-src",
+      "url": "https://github.com/php/php-src.git",
+      "commit": "2934c309fe10c5e29ece860613eaf8f4aa8539a8",
+      "uniqueOnly": false,
+      "args": [
+        "--config=${repoConfig}/cspell.json",
+        "**/*.{md,c,h,php}"
+      ]
+    },
+    {
+      "path": "w3c/specberus",
+      "url": "https://github.com/w3c/specberus.git",
+      "commit": "07e164d0e1adb6f8873078ae979c36f5c997bcb2",
+      "args": [
+        "**/*.*"
+      ]
+    },
+    {
+      "path": "bitjson/typescript-starter",
+      "url": "https://github.com/bitjson/typescript-starter.git",
+      "commit": "586cdb3029ab2c52e2f0893adafbbb017059e1c9",
+      "args": [
+        "{README.md,.github/*.md,src/**/*.ts}"
+      ]
+    },
+    {
+      "path": "liriliri/licia",
+      "url": "https://github.com/liriliri/licia.git",
+      "commit": "199a7890ac7fadba1d466ed3203c42d813a7ce34",
+      "args": [
+        "**/*.*"
+      ],
+      "uniqueOnly": false
+    },
+    {
+      "path": "wireapp/wire-webapp",
+      "url": "https://github.com/wireapp/wire-webapp.git",
+      "commit": "8b15c8f58dfdb5b0985fa76586e67e4bf20ca461",
+      "args": [
+        "{apps,docs}/**/*.{js,ts,tsx,md,mjs,mts,cjs,cts}"
+      ],
+      "uniqueOnly": false
+    },
+    {
+      "path": "typescript-cheatsheets/react",
+      "url": "https://github.com/typescript-cheatsheets/react.git",
+      "commit": "c550e41b98f7ec20d993eb3c2acc4cbf6eac2e29",
+      "args": [
+        "**/*.{ts,js,md}"
+      ]
+    },
+    {
+      "path": "graphql/express-graphql",
+      "url": "https://github.com/graphql/express-graphql.git",
+      "commit": "3fab4b1e016cd27655f3b013f65a6b1344520d01",
+      "args": [
+        "**/*.*"
+      ]
+    },
+    {
+      "path": "wireapp/wire-desktop",
+      "url": "https://github.com/wireapp/wire-desktop.git",
+      "commit": "4b3f44d024c706ce20a5ba750796781bebbf2405",
+      "args": [
+        "*.md",
+        "electron/renderer/**/*.jsx",
+        "electron/src/**/*.ts",
+        "electron/html/*.html"
+      ]
+    },
+    {
+      "path": "graphql/graphql-relay-js",
+      "url": "https://github.com/graphql/graphql-relay-js.git",
+      "commit": "8fdcf3765bf72e391bca697fe2d7eb49e688d54d",
+      "args": [
+        "**/*.*"
+      ]
+    },
+    {
+      "path": "aws-amplify/docs",
+      "url": "https://github.com/aws-amplify/docs.git",
+      "commit": "63cb1233eb11904dc2965c4ea0b2283ba08b669f",
+      "uniqueOnly": false,
+      "args": [
+        "**/*.{md,mdx}"
+      ]
+    },
+    {
+      "path": "webdeveric/webpack-assets-manifest",
+      "url": "https://github.com/webdeveric/webpack-assets-manifest.git",
+      "commit": "c271feb6e85ccf0455c18546901f1bc81ece5f51",
+      "args": [
+        "."
+      ]
+    },
+    {
+      "path": "prettier/prettier",
+      "url": "https://github.com/prettier/prettier.git",
+      "commit": "a02e92be26ec8963a07aa9500a6c20e24599e95b",
+      "args": []
+    },
+    {
+      "path": "webpack/webpack",
+      "url": "https://github.com/webpack/webpack.git",
+      "commit": "0cee91f61ced93742ec5a11eaf17cd83f01dc99e",
+      "args": [
+        "{.github,benchmark,bin,examples,hot,lib,schemas,setup,tooling}/**/*.{md,yml,yaml,js,json}",
+        "*.md"
+      ]
+    },
+    {
+      "path": "w3c/aria-practices",
+      "url": "https://github.com/w3c/aria-practices.git",
+      "commit": "0f765e4dc33e966026114ac12a8380db1de3b787",
+      "args": [
+        "**/*.*"
+      ]
+    },
+    {
+      "path": "SoftwareBrothers/admin-bro",
+      "url": "https://github.com/SoftwareBrothers/admin-bro.git",
+      "commit": "9c2ee7f1b58c1471edc02f39d01db64d0764873e",
+      "args": [
+        "src/**/*.{ts,js,tsx,jsx}",
+        "**/*.md"
+      ]
+    },
+    {
+      "path": "typescript-eslint/typescript-eslint",
+      "url": "https://github.com/typescript-eslint/typescript-eslint.git",
+      "commit": "4d16e7fea005ba239caee883ef6ebbcdc2750549",
+      "args": [
+        "--config=.cspell.json",
+        "**/*.{md,ts,js}"
+      ]
+    },
+    {
+      "path": "graphql/graphql-js",
+      "url": "https://github.com/graphql/graphql-js.git",
+      "commit": "9b424a94d3d3296ca335ffb7ff34c7585ea0d047",
+      "args": [
+        "**/*.*"
+      ]
+    },
+    {
+      "path": "microsoft/TypeScript-Website",
+      "url": "https://github.com/microsoft/TypeScript-Website.git",
+      "commit": "205122bb73dcbf6f3b373de5bdb0d9fa5434d015",
+      "listAllFiles": true,
+      "args": [
+        "--config=${repoConfig}/cspell.json",
+        "**/*.*"
+      ]
+    },
+    {
+      "path": "Azure/azure-rest-api-specs",
+      "url": "https://github.com/Azure/azure-rest-api-specs.git",
+      "uniqueOnly": false,
+      "args": [
+        "--config=cspell.json",
+        "**/*.{md,ts,js}"
+      ],
+      "commit": "05ff20f36d7d4de3a774e5c6b37e1e58a66eaadf"
+    },
+    {
+      "path": "pycontribs/jira",
+      "url": "https://github.com/pycontribs/jira.git",
+      "commit": "bf7306b8b3905c91f97401eaae61d04827e1c309",
+      "args": [
+        "**/*.*"
+      ]
+    },
+    {
+      "path": "exonum/exonum",
+      "url": "https://github.com/exonum/exonum.git",
+      "commit": "2d2fa22e5f5bc451d08c155c2398956f11dce06e",
+      "uniqueOnly": false,
+      "listAllFiles": true,
+      "args": [
+        "**/*.{rs,md,py,proto}"
+      ]
+    },
+    {
+      "path": "TheAlgorithms/Python",
+      "url": "https://github.com/TheAlgorithms/Python.git",
+      "commit": "6e03a48579ca212a08b36be00378f887dc41a003",
+      "args": [
+        "**/*.{md,py}"
+      ]
+    },
+    {
+      "path": "django/django",
+      "url": "https://github.com/django/django.git",
+      "commit": "b501b8493f31cf8cba31211d59b3b78642b8cb02",
+      "args": [
+        "--issues-summary-report",
+        "**/*.{md,py}"
+      ],
+      "uniqueOnly": false
+    },
+    {
+      "path": "alexiosc/megistos",
+      "url": "https://github.com/alexiosc/megistos.git",
+      "commit": "17439f76a2ea1608fe6f0addc3c671eefa0424ce",
+      "args": [
+        "--config=${repoConfig}/cspell.json",
+        "**/*.{md,c,h,html}"
+      ]
+    },
+    {
+      "path": "mdx-js/mdx",
+      "url": "https://github.com/mdx-js/mdx",
+      "uniqueOnly": false,
+      "listAllFiles": true,
+      "args": [
+        "--config=${repoConfig}/cspell.json",
+        "**/*.*"
+      ],
+      "commit": "52285a6758fa078ec57f3d4bd8803d9cbfb12065"
+    },
+    {
+      "path": "AdaDoom3/AdaDoom3",
+      "url": "https://github.com/AdaDoom3/AdaDoom3.git",
+      "args": [
+        "**/*.*"
+      ],
+      "uniqueOnly": false,
+      "commit": "6b979248c03cfae9af705257b116179f7d250267"
+    },
+    {
+      "path": "MartinThoma/LaTeX-examples",
+      "url": "https://github.com/MartinThoma/LaTeX-examples.git",
+      "args": [
+        "**/*.{md,tex}"
+      ],
+      "commit": "f9236c5fe5d47f19822fcb11097df27355562314"
+    },
+    {
+      "path": "googleapis/google-cloud-cpp",
+      "url": "https://github.com/googleapis/google-cloud-cpp.git",
+      "args": [
+        "--config=${repoConfig}/cspell.json",
+        "**/*",
+        "-e",
+        "{*.BUILD,BUILD,CHANGELOG.md,*.sh,*.cfg,*.ps1,Dockerfile.*,*.Dockerfile,*.{yaml,xml,json,cmake}}"
+      ],
+      "commit": "eaa2592a04e1fbd3979e833206650e258d378aac"
+    },
+    {
+      "path": "graphql/graphql-spec",
+      "url": "https://github.com/graphql/graphql-spec.git",
+      "args": [
+        "--issues-summary-report",
+        "**/*.md"
+      ],
+      "commit": "3f1ef846019884a8c9c3a32b65ea03168f24ecff"
+    },
+    {
+      "path": "plasticrake/tplink-smarthome-api",
+      "url": "https://github.com/plasticrake/tplink-smarthome-api.git",
+      "args": [
+        "{examples,src,test}/**/*",
+        "**/*.md"
+      ],
+      "commit": "33f55531e6d5935d57a065fb95fa5dc340c4f392"
+    },
+    {
+      "path": "canada-ca/open-source-logiciel-libre",
+      "url": "https://github.com/canada-ca/open-source-logiciel-libre.git",
+      "args": [
+        "en/**/*.md"
+      ],
+      "commit": "291d299d6120b90b651b6d464f2bfb770bacca44"
+    },
+    {
+      "path": "pagekit/pagekit",
+      "url": "https://github.com/pagekit/pagekit.git",
+      "args": [
+        "-e",
+        "/app/assets/codemirror",
+        "-e",
+        "/app/system/languages",
+        "**"
+      ],
+      "commit": "6fc7aa13653a35c29217d031d8ab09b2a1124f2d"
+    },
+    {
+      "path": "twbs/bootstrap",
+      "url": "https://github.com/twbs/bootstrap.git",
+      "args": [
+        "site/**/*.{md,mdx}"
+      ],
+      "commit": "e93ba5e5267ac2f74d5d35f1c11bb476957de94b"
+    },
+    {
+      "path": "apollographql/apollo-server",
+      "url": "https://github.com/apollographql/apollo-server.git",
+      "uniqueOnly": false,
+      "listAllFiles": true,
+      "args": [
+        "**"
+      ],
+      "commit": "0c22029c2af47d3829e730e9820c01cef0557627"
+    },
+    {
+      "path": "shoelace-style/shoelace",
+      "url": "https://github.com/shoelace-style/shoelace.git",
+      "args": [
+        "**",
+        "-e",
+        "docs/assets/**"
+      ],
+      "commit": "25bd8ec776609670a932f21390be59a495df497d"
+    },
+    {
+      "path": "aspnetboilerplate/aspnetboilerplate",
+      "url": "https://github.com/aspnetboilerplate/aspnetboilerplate",
+      "args": [
+        "**/*.{md,cs,cshtml}",
+        "--exclude=wwwroot",
+        "--exclude=**/*SampleApp.Tests/Web*"
+      ],
+      "commit": "21f57d282f542aa4221fc5cd5a4ac76346d8f5c7"
+    },
+    {
+      "path": "caddyserver/caddy",
+      "url": "https://github.com/caddyserver/caddy.git",
+      "args": [
+        "**/*.go"
+      ],
+      "uniqueOnly": false,
+      "commit": "98b0bbd4774611c133463420d4cd047aa4622a51"
+    },
+    {
+      "path": "eslint/eslint",
+      "url": "https://github.com/eslint/eslint",
+      "listAllFiles": true,
+      "args": [
+        ".",
+        "--config=../../../config/eslint/cspell.config.yaml",
+        "--issues-summary-report",
+        "--exclude=bin/**",
+        "--exclude=CHANGELOG.md",
+        "--exclude=_data",
+        "--exclude=tests/bench/large.js",
+        "--exclude=docs/src/_includes",
+        "--exclude=docs/src/assets/{fonts,s?css,images}"
+      ],
+      "commit": "11c66ba08381cb7cff7679d662c9f6654b6fe712"
+    },
+    {
+      "path": "iluwatar/java-design-patterns",
+      "url": "https://github.com/iluwatar/java-design-patterns.git",
+      "args": [
+        "**/*.md",
+        "**/*.java"
+      ],
+      "commit": "4cabb204f240240bea319605a5ffa46ded728001"
+    },
+    {
+      "path": "ktaranov/sqlserver-kit",
+      "url": "https://github.com/ktaranov/sqlserver-kit.git",
+      "args": [
+        "--issues-summary-report",
+        "**",
+        "--exclude=**/Backup/**"
+      ],
+      "uniqueOnly": false,
+      "commit": "82643dabd30d08d5981861a1cd1922ae0f842116"
+    },
+    {
+      "path": "sveltejs/svelte",
+      "url": "https://github.com/sveltejs/svelte.git",
+      "args": [
+        "**"
+      ],
+      "commit": "db5a999b7114cc92c8923fac0a6a733e934cc264"
+    },
+    {
+      "path": "RustPython/RustPython",
+      "url": "https://github.com/RustPython/RustPython.git",
+      "args": [
+        "**"
+      ],
+      "uniqueOnly": false,
+      "listAllFiles": true,
+      "commit": "016cdff9995f01ecc5a3346ded098786020c2e57"
+    },
+    {
+      "path": "chef/chef",
+      "url": "https://github.com/chef/chef.git",
+      "args": [
+        "--config=../../../cspell-chef.config.yaml",
+        "**"
+      ],
+      "uniqueOnly": false,
+      "commit": "c80e4e7104703228cbe728b153151987196e32ec"
+    },
+    {
+      "path": "gitbucket/gitbucket",
+      "url": "https://github.com/gitbucket/gitbucket.git",
+      "args": [
+        "**"
+      ],
+      "commit": "14608a64b9e04e47fbe5eeb39e1091d9bbff5b59"
+    },
+    {
+      "path": "neovim/nvim-lspconfig",
+      "url": "https://github.com/neovim/nvim-lspconfig.git",
+      "args": [
+        "**"
+      ],
+      "commit": "adfbb74472f6c231b651b650a89f414c2680fb31"
+    },
+    {
+      "path": "MicrosoftDocs/PowerShell-Docs",
+      "url": "https://github.com/MicrosoftDocs/PowerShell-Docs.git",
+      "args": [
+        "--config=../../../cspell-power-shell-docs.config.yaml",
+        "**"
+      ],
+      "uniqueOnly": false,
+      "commit": "0061dc7f35abfa6bb5ffabaada1650163761f2e1"
+    },
+    {
+      "path": "vitest-dev/vitest",
+      "url": "https://github.com/vitest-dev/vitest",
+      "args": [
+        "--issues-summary-report",
+        "--locale=en,en-GB",
+        "."
+      ],
+      "commit": "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
+    },
+    {
+      "path": "flutter/samples",
+      "url": "https://github.com/flutter/samples",
+      "args": [
+        "--issues-summary-report",
+        "--locale=en,en-GB,lorem",
+        "--exclude=**/*.{pbxproj,xcworkspace,xcworkspacedata,xcscheme,xcconfig,plist}",
+        "."
+      ],
+      "uniqueOnly": false,
+      "commit": "21c71902bb2c7da3cce328ba5946cba2f35a660a"
+    },
+    {
+      "path": "dart-lang/sdk",
+      "url": "https://github.com/dart-lang/sdk",
+      "args": [
+        "--issues-summary-report",
+        "--locale=en,en-GB",
+        "--exclude=tools/dom/**/*.json",
+        "--exclude=pkg/*/test/**",
+        "--exclude=**/*_data.*",
+        "--exclude=runtime/vm/**",
+        "--exclude=sdk/lib/html/**",
+        "--exclude=benchmarks/**",
+        "--exclude=**/*_test.*",
+        "--exclude=*/**/*.{json,yaml,yml}",
+        "--exclude=tests/corelib/regexp/**",
+        "--exclude=**/{third_party,assets}/**",
+        "**/*.{dart,md}"
+      ],
+      "commit": "0d78054eb395de50943120b2d80776bf4a99f662"
+    },
+    {
+      "path": "slint-ui/slint",
+      "url": "https://github.com/slint-ui/slint",
+      "args": [
+        "--config=${commonRoot}/config/slint/cspell.config.yaml",
+        "--issues-summary-report",
+        "."
+      ],
+      "uniqueOnly": false,
+      "listAllFiles": true,
+      "commit": "fed2fa2a1ce7793de05be90c6e7ad0f38743d076"
+    }
+  ]
+}

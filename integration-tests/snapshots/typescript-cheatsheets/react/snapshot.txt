@@ -1,0 +1,74 @@
+
+Repository: typescript-cheatsheets/react
+Url: "https://github.com/typescript-cheatsheets/react.git"
+Args: ["**/*.{ts,js,md}"]
+Lines:
+ CSpell: Files checked: 24, Issues found: 149 in 16 files.
+ exit code: 1
+CONTRIBUTING.md:23:43     - Unknown word (swyx's)     -- deployed on Netlify, under swyx's personal account.
+CONTRIBUTING.md:25:12     - Unknown word (docsite)    -- To run the docsite locally, follow these
+CONTRIBUTING.md:46:57     - Unknown word (wanshawn)   -- is served from /Users/wanshawn/Work/react-typescript
+CONTRIBUTING.md:7:6       - Unknown word (Cheatsheet) -- 1. **Cheatsheet Style**: Our main goal
+CONTRIBUTING.md:7:80      - Unknown word (cheatsheet) -- concise and easy-to-use cheatsheet. All code examples should
+CONTRIBUTORS.md:11:192    - Unknown word (Silbermann)  -- px;" alt="Sebastian Silbermann"/><br /><sub><b>Sebastian
+CONTRIBUTORS.md:12:212    - Unknown word (Attrash)     -- "100px;" alt="Islam Attrash"/><br /><sub><b>Islam
+CONTRIBUTORS.md:13:263    - Unknown word (stephenkoo)  -- ><a href="#question-stephenkoo" title="Answering Questions
+CONTRIBUTORS.md:14:188    - Unknown word (Andreas)     -- width="100px;" alt="Andreas"/><br /><sub><b>Andreas
+CONTRIBUTORS.md:14:478    - Unknown word (andreasgruenh) -- /a> <a href="#infra-andreasgruenh" title="Infrastructure
+CONTRIBUTORS.md:15:187    - Unknown word (Arvind)        -- width="100px;" alt="Arvind Srinivasan"/><br />
+CONTRIBUTORS.md:15:194    - Unknown word (Srinivasan)    -- 100px;" alt="Arvind Srinivasan"/><br /><sub><b>Arvind
+CONTRIBUTORS.md:15:382    - Unknown word (arvindcheenu)  -- a> <a href="#content-arvindcheenu" title="Content">🖋<
+CONTRIBUTORS.md:18:200    - Unknown word (Ribeiro)       -- alt="William R. J. Ribeiro"/><br /><sub><b>William
+CONTRIBUTORS.md:18:281    - Unknown word (williamrjribeiro) -- br /><a href="#ideas-williamrjribeiro" title="Ideas, Planning
+CONTRIBUTORS.md:19:184    - Unknown word (Alexandru)        -- width="100px;" alt="Alexandru-Dan Pop"/><br /><sub
+CONTRIBUTORS.md:22:188    - Unknown word (Ryota)            -- width="100px;" alt="Ryota Murakami"/><br /><sub
+CONTRIBUTORS.md:22:194    - Unknown word (Murakami)         -- "100px;" alt="Ryota Murakami"/><br /><sub><b>Ryota
+CONTRIBUTORS.md:22:271    - Unknown word (ryota)            -- /><a href="#example-ryota-murakami" title="Examples
+CONTRIBUTORS.md:22:277    - Unknown word (murakami)         -- href="#example-ryota-murakami" title="Examples">💡
+CONTRIBUTORS.md:23:181    - Unknown word (Árpád)            -- width="100px;" alt="Árpád Illyés"/><br /><sub
+CONTRIBUTORS.md:23:187    - Unknown word (Illyés)           -- "100px;" alt="Árpád Illyés"/><br /><sub><b>Árpád
+CONTRIBUTORS.md:24:187    - Unknown word (Strebezhev)       -- width="100px;" alt="Igor Strebezhev"/><br /><sub><b>Igor
+CONTRIBUTORS.md:24:265    - Unknown word (xamgore)          -- br /><a href="#ideas-xamgore" title="Ideas, Planning
+CONTRIBUTORS.md:28:181    - Unknown word (Kristóf)          -- width="100px;" alt="Kristóf Poduszló"/><br /><sub
+CONTRIBUTORS.md:28:189    - Unknown word (Poduszló)         -- 00px;" alt="Kristóf Poduszló"/><br /><sub><b>Kristóf
+CONTRIBUTORS.md:31:190    - Unknown word (Andil)            -- px;" alt="Sebastian Andil"/><br /><sub><b>Sebastian
+CONTRIBUTORS.md:32:188    - Unknown word (Adnan)            -- width="100px;" alt="Adnan Husain"/><br /><sub
+CONTRIBUTORS.md:32:194    - Unknown word (Husain)           -- "100px;" alt="Adnan Husain"/><br /><sub><b>Adnan
+CONTRIBUTORS.md:36:176    - Unknown word (Filip)            -- width="100px;" alt="Filip Tammergård"/><br />
+CONTRIBUTORS.md:36:182    - Unknown word (Tammergård)       -- "100px;" alt="Filip Tammergård"/><br /><sub><b>Filip
+CONTRIBUTORS.md:37:181    - Unknown word (Previte)          -- width="100px;" alt="Joe Previte"/><br /><sub><b>Joe
+CONTRIBUTORS.md:38:182    - Unknown word (Sasiru)           -- width="100px;" alt="Sasiru Ravihansa"/><br /><sub
+CONTRIBUTORS.md:38:189    - Unknown word (Ravihansa)        -- 100px;" alt="Sasiru Ravihansa"/><br /><sub><b>Sasiru
+CONTRIBUTORS.md:9:183     - Unknown word (Ferdy)      -- width="100px;" alt="Ferdy Budhidharma"/><br /
+CONTRIBUTORS.md:9:189     - Unknown word (Budhidharma) -- "100px;" alt="Ferdy Budhidharma"/><br /><sub><b>Ferdy
+CONTRIBUTORS.md:9:411     - Unknown word (ferdaber)    -- a href="#maintenance-ferdaber" title="Maintenance
+README.md:29:39     - Unknown word (pastable)   -- best practices and copy+pastable examples.
+code-of-conduct.md:12:98     - Unknown word (colour)      -- culture, national origin, colour, immigration
+code-of-conduct.md:4:17      - Unknown word (cheatsheets) -- the [typescript-cheatsheets/react](https://github
+code-of-conduct.md:59:25     - Unknown word (swyx)        -- repo is maintained by [@swyx](https://twitter.com
+code-of-conduct.md:60:7      - Unknown word (filiptammergard) -- and [@filiptammergard](https://twitter.com
+docs/basic/getting-started/basic-type-examples.md:118:38    - Unknown word (orta)       -- until You Need Type - [orta](https://twitter.com
+docs/basic/getting-started/basic-type-examples.md:158:17    - Unknown word (Majewski)   -- (source: [Karol Majewski](https://twitter.com
+docs/basic/getting-started/forms-and-events.md:45:173    - Unknown word (Hubelbauer) -- contributed by @TomasHubelbauer_):
+docs/basic/getting-started/forms-and-events.md:58:318    - Unknown word (artisanally) -- inferred method as more... _artisanally hand-rolled_. Either
+docs/basic/getting-started/forms-and-events.md:77:42     - Unknown word (typechecks)  -- target.email.value; // typechecks!
+docs/basic/getting-started/forward-create-ref.md:138:20    - Unknown word (HTMLU)      -- mRef?: React.Ref<HTMLUListElement> | null;
+docs/basic/getting-started/function-components.md:32:28     - Unknown word (Shen's)     -- You might use [Paul Shen's VS Code Extension](https
+docs/basic/getting-started/function-components.md:46:382    - Unknown word (jscodeshift) -- codebase, you can use [this jscodeshift codemod](https://github
+docs/basic/getting-started/function-components.md:46:394    - Unknown word (codemod)     -- use [this jscodeshift codemod](https://github.com
+docs/basic/getting-started/hooks.md:278:22    - Unknown word (rajivpunjabi) -- [Related issue by @rajivpunjabi](https://github.com
+docs/basic/getting-started/hooks.md:279:24    - Unknown word (Baumgartner)  -- Example from Stefan Baumgartner](https://fettblog.eu
+docs/basic/getting-started/hooks.md:375:10    - Unknown word (tuplify)      -- function tuplify<T extends any[]>(..
+docs/basic/getting-started/patterns_by_usecase.md:11:1      - Unknown word (Usecase)    -- Usecase: you want to make a
+docs/basic/getting-started/patterns_by_usecase.md:152:10    - Unknown word (dmisdm)     -- _thanks [dmisdm](https://github.com
+docs/basic/getting-started/patterns_by_usecase.md:19:33     - Unknown word (sldkj)      -- <Button type="foo"> sldkj </Button>
+docs/basic/getting-started/patterns_by_usecase.md:202:88    - Unknown word (majewski)   -- pull/69) and [@karol-majewski](https://github.com
+docs/basic/getting-started/patterns_by_usecase.md:2:17      - Unknown word (usecase)    -- id: patterns_by_usecase
+docs/basic/getting-started/patterns_by_usecase.md:379:114   - Unknown word (blackboxed) -- the resultant type is blackboxed into a generic React
+docs/basic/getting-started/patterns_by_usecase.md:394:32    - Unknown word (doesnt)     -- 😭 Error, `disabled` doesnt exist on anchor element
+docs/basic/getting-started/patterns_by_usecase.md:480:91    - Unknown word (jpavon)     -- solutions. _thanks to [@jpavon](https://github.com
+docs/basic/getting-started/patterns_by_usecase.md:975:21    - Unknown word (mydate)     -- let result = parse("mydate");
+docs/basic/getting-started/portals.md:87:28     - Unknown word (rgba)       -- background: "rgba(0,0,0,0.1)",
+docs/reference/CSSProperties.md:66:85     - Unknown word (unitless)   -- zIndex`, `flexGrow`) are unitless — passing a number leaves
+website/docusaurus.config.ts:114:26    - Unknown word (Cheatsheets) -- alt: "TypeScript Cheatsheets Logo",
+website/docusaurus.config.ts:183:21    - Unknown word (UPXZ)        -- appId: "J65EL4UPXZ",

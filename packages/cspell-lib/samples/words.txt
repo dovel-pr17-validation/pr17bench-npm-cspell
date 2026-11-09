@@ -1,0 +1,14 @@
+# cspell:ignoreRegExp ^!.*([:]|$)
+apple
+pie
+banana
+pear
+strawberry
+cherry
+left-right
+Geschäft
+two words
+aujourd’hui
+class:name
+!colour:color
+!forbid

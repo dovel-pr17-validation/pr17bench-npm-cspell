@@ -1,0 +1,28 @@
+{
+  "name": "test-cspell-service-bus-tsdown",
+  "version": "9.0.2",
+  "description": "Pure testing package for @cspell/cspell-service-bus.",
+  "private": true,
+  "bin": {
+    "mjs": "bin.mjs",
+    "csj": "bin.cjs"
+  },
+  "type": "module",
+  "scripts": {
+    "clean": "shx rm -rf dist temp coverage \"*.tsbuildInfo\"",
+    "build": "tsdown",
+    "clean-build": "pnpm run clean && pnpm run build",
+    "test": "pnpm test:unit && pnpm test:smoke",
+    "test:smoke": "node ./bin.mjs && node ./bin.cjs",
+    "test:unit": "vitest run"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@cspell/cspell-service-bus": "workspace:*"
+  },
+  "keywords": [],
+  "engines": {
+    "node": ">=22.18.0"
+  }
+}

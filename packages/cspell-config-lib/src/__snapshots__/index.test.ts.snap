@@ -1,0 +1,75 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`cspell-config > edit config 'cspell.jsonc' 1`] = `
+"{
+    // file version
+    "version": "0.2",
+    "words": [
+        "angle", // with comment
+        "apple",
+        // Before "before"
+        "before",
+        "cache",
+        "zebra" // zebra comment
+    ]
+}
+"
+`;
+
+exports[`cspell-config > edit config 'cspell.yaml' 1`] = `
+"---
+# file version
+version: '0.2'
+words:
+  # First Group
+  - blue
+  - green
+  - orange
+  - red
+  - yellow
+
+  - angle # angle comment
+  - apple
+  - banana
+  # Before "before"
+  - before
+  - cache # cache comment
+  - claw
+  - dog
+  - elephant
+  - zebra # zebra comment
+
+# Last Comment
+"
+`;
+
+exports[`cspell-config > edit config 'package/with-value/package.json' 1`] = `
+"{
+  "name": "test-package",
+  "cspell": {
+    "words": [
+      "apple",
+      "banana"
+    ]
+  }
+}
+"
+`;
+
+exports[`cspell-config > edit config 'package/without-value/package.json' 1`] = `
+"{
+  "name": "test-package",
+  "cspell": {
+    "words": [
+      "apple"
+    ]
+  }
+}
+"
+`;
+
+exports[`cspell-config > edit config 'toml/cspell.config.toml' 1`] = `
+"version = "0.2"
+words = [ "angle", "apple", "before", "blue", "cache", "claw", "green", "orange", "red", "yellow", "zebra" ]
+"
+`;

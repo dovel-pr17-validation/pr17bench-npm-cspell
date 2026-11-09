@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=./../../cspell-tools.config.schema.json
+
+targets:
+  - name: color-cities-code
+    sources:
+      - ../dicts/colors.txt
+      - filename: ../dicts/cities.txt
+        split: true
+      # - filename: ../dicts/sampleCodeDic.txt
+    format: plaintext

@@ -1,0 +1,516 @@
+import * as path from 'node:path';
+
+import { pipeAsync, toArray } from '@cspell/cspell-pipe';
+import { opAwaitAsync, opMapAsync } from '@cspell/cspell-pipe/operators';
+import { opConcatMap, opMap, pipe } from '@cspell/cspell-pipe/sync';
+
+import type {
+    CompileRequest,
+    CompileTargetOptions as CompileTargetConfig,
+    DictionarySource,
+    FilePath,
+    FileSource,
+    Target,
+} from '../config/index.ts';
+import { isFileListSource, isFilePath, isFileSource } from '../config/index.ts';
+import { compressFile } from '../gzip/index.ts';
+import { checkShasumFile, updateChecksumForFiles } from '../shasum/index.ts';
+import { stringToRegExp } from '../util/textRegex.ts';
+import { generateBTrieFromFile } from './bTrie.ts';
+import { createAllowedSplitWordsFromFiles, createWordsCollectionFromFiles } from './createWordsCollection.ts';
+import { logWithTimestamp } from './logWithTimestamp.ts';
+import { readTextFile } from './readers/readTextFile.ts';
+import type { SourceReaderOptions } from './SourceReader.ts';
+import { streamSourceWordsFromFile } from './streamSourceWordsFromFile.ts';
+import { createTargetFile, createTrieCompiler, createWordListCompiler } from './wordListCompiler.ts';
+import { normalizeTargetWords } from './wordListParser.ts';
+
+interface CompileOptions {
+    /**
+     * Optional filter function to filter targets.
+     */
+    filter?: ((target: Target) => boolean) | undefined;
+
+    /**
+     * The current working directory. Defaults to process.cwd()
+     */
+    cwd?: string | undefined;
+
+    /**
+     * `true` - only build if files do not match checksum.
+     */
+    conditionalBuild: boolean;
+}
+
+export async function compile(request: CompileRequest, options?: CompileOptions): Promise<void> {
+    const { targets } = request;
+
+    // console.warn('Request: %o', request);
+
+    const rootDir = path.resolve(request.rootDir || '.');
+    const cwd = options?.cwd;
+    const targetOptions: CompileTargetConfig = {
+        sort: request.sort,
+        generateNonStrict: request.generateNonStrict,
+        locale: request.locale,
+        removeDuplicates: request.removeDuplicates,
+        replacements: undefined,
+    };
+    const conditional = options?.conditionalBuild || false;
+    const checksumFile = resolveChecksumFile(request.checksumFile || conditional, rootDir);
+    const dictionaryDirectives = request.dictionaryDirectives;
+
+    const dependencies = new Set<string>();
+
+    for (const target of targets) {
+        const keep = options?.filter?.(target) ?? true;
+        if (!keep) continue;
+        const adjustedTarget: Target = { ...targetOptions, ...target };
+        // console.warn('adjustedTarget: %o', adjustedTarget);
+        const deps = await compileTarget(adjustedTarget, {
+            rootDir,
+            cwd,
+            conditional,
+            checksumFile,
+            dictionaryDirectives,
+        });
+        deps.forEach((dep) => dependencies.add(dep));
+    }
+
+    if (checksumFile && dependencies.size) {
+        logWithTimestamp('%s', `Update checksum: ${checksumFile}`);
+        await updateChecksumForFiles(checksumFile, [...dependencies], { root: path.dirname(checksumFile) });
+    }
+
+    logWithTimestamp(`Complete.`);
+
+    return;
+}
+
+function resolveChecksumFile(checksumFile: string | boolean | undefined, root: string): string | undefined {
+    const cFilename =
+        (typeof checksumFile === 'string' && checksumFile) || (checksumFile && './checksum.txt') || undefined;
+    const file = cFilename && path.resolve(root, cFilename);
+    // console.warn('%o', { checksumFile, cFilename, file });
+    return file;
+}
+
+interface CompileTargetOptions {
+    rootDir: string;
+    cwd: string | undefined;
+    conditional: boolean;
+    checksumFile: string | undefined;
+    dictionaryDirectives: string[] | undefined;
+}
+
+export async function compileTarget(target: Target, compileOptions: CompileTargetOptions): Promise<string[]> {
+    logWithTimestamp(`Start compile: ${target.name}`);
+    const buildOptions = genBuildTargetDictionaryOptions(target, compileOptions);
+    const deps: Set<string> = new Set();
+
+    addToSet(
+        deps,
+        await buildTargetDictionary(target, compileOptions, buildOptions),
+        await compressDictionaryFileIfNeeded(buildOptions),
+        await genBTrieForTarget(target, buildOptions),
+    );
+
+    logWithTimestamp(`Done compile: ${target.name}`);
+
+    const checksumRoot = buildOptions.checksumRoot;
+    const relDeps = [...deps].map((d) => path.relative(checksumRoot, d));
+
+    return relDeps;
+}
+
+interface BuildTargetDictionaryOptions {
+    /**
+     * The name of the target dictionary.
+     */
+    name: string;
+    /**
+     * the full path to the output file.
+     */
+    filename: string;
+    /**
+     * Whether to use a trie format.
+     */
+    useTrie: boolean;
+
+    /**
+     * Whether to generate a compressed version of the dictionary.
+     */
+    generateCompressed: boolean;
+
+    /**
+     * Only a compressed version should be generated.
+     */
+    generateOnlyCompressedDictionary: boolean;
+
+    checksumRoot: string;
+}
+
+function genBuildTargetDictionaryOptions(
+    target: Target,
+    compileOptions: CompileTargetOptions,
+): BuildTargetDictionaryOptions {
+    const { rootDir, checksumFile, cwd } = compileOptions;
+    let targetDirectory = target.targetDirectory ?? cwd ?? process.cwd();
+    targetDirectory = targetDirectory.replace('${cwd}', cwd ?? process.cwd());
+    targetDirectory = path.resolve(rootDir, targetDirectory);
+
+    const name = normalizeTargetName(target.name);
+
+    const useTrie = target.format.startsWith('trie');
+    const generateCompressed = target.compress ?? false;
+    const generateUncompressed = target.keepUncompressed ?? false;
+    const generateOnlyCompressedDictionary = generateCompressed && !generateUncompressed;
+    const filename = resolveTarget(name, targetDirectory, useTrie);
+    const checksumRoot = (checksumFile && path.dirname(checksumFile)) || rootDir;
+
+    return { name, filename, useTrie, generateOnlyCompressedDictionary, generateCompressed, checksumRoot };
+}
+
+async function buildTargetDictionary(
+    target: Target,
+    compileOptions: CompileTargetOptions,
+    buildOptions: BuildTargetDictionaryOptions,
+): Promise<string[]> {
+    const { rootDir, checksumFile, conditional } = compileOptions;
+    const {
+        format,
+        sources,
+        trieBase,
+        sort = true,
+        generateNonStrict = false,
+        excludeWordsFrom = [],
+        excludeWordsNotFoundIn = [],
+        excludeWordsMatchingRegex,
+        replacements,
+    } = target;
+    const { filename, useTrie, generateOnlyCompressedDictionary, checksumRoot } = buildOptions;
+    const dictionaryDirectives = target.dictionaryDirectives ?? compileOptions.dictionaryDirectives;
+    const removeDuplicates = target.removeDuplicates ?? false;
+    const locale = canonicalLocale(target);
+
+    const excludeFromFilter = await createExcludeFilter(excludeWordsFrom, locale);
+    const includeFromFilter = await createIncludeFilter(excludeWordsNotFoundIn, locale);
+    const excludeRegexFilter = createExcludeRegexFilter(excludeWordsMatchingRegex);
+
+    const excludeFilter = (word: string) => {
+        return excludeFromFilter(word) && includeFromFilter(word) && excludeRegexFilter(word);
+    };
+
+    const compress = generateOnlyCompressedDictionary;
+
+    const filesToProcessAsync = pipeAsync(
+        readSourceList(sources, rootDir),
+        opMapAsync((src) => readFileSource(src, locale)),
+        opAwaitAsync(),
+    );
+    const filesToProcess: FileToProcess[] = await toArray(filesToProcessAsync);
+    const normalizer = normalizeTargetWords({
+        sort: useTrie || sort,
+        generateNonStrict,
+        locale,
+        filter: excludeFilter,
+        dictionaryDirectives,
+        // removeDuplicates, // Add this in if we use it.
+        replacements,
+    });
+
+    const deps = [
+        ...calculateDependencies(
+            filename + (compress ? '.gz' : ''),
+            filesToProcess,
+            [...excludeWordsFrom, ...excludeWordsNotFoundIn],
+            checksumRoot,
+        ),
+    ];
+
+    if (conditional && checksumFile) {
+        const check = await checkShasumFile(checksumFile, deps, checksumRoot).catch(() => undefined);
+        if (check?.passed) {
+            logWithTimestamp(`Skip ${target.name}, nothing changed.`);
+            return [];
+        }
+    }
+
+    async function action(words: Iterable<string>, dst: string): Promise<void> {
+        const compiler = useTrie
+            ? createTrieCompiler({
+                  base: trieBase,
+                  trie3: format === 'trie3',
+                  trie4: format === 'trie4',
+              })
+            : createWordListCompiler({
+                  sort,
+                  generateNonStrict,
+                  locale,
+                  dictionaryDirectives,
+                  removeDuplicates,
+                  replacements,
+              });
+        const data = iterableToString(pipe(words, normalizer, compiler));
+
+        await createTargetFile(dst, data, compress);
+    }
+
+    await processFiles({ action, filesToProcess, mergeTarget: filename });
+
+    return deps;
+}
+
+async function compressDictionaryFileIfNeeded(buildOptions: BuildTargetDictionaryOptions): Promise<string[]> {
+    const { filename, generateCompressed, generateOnlyCompressedDictionary } = buildOptions;
+    if (generateOnlyCompressedDictionary || !generateCompressed) return [];
+    logWithTimestamp(`Compress: ${filename}`);
+    const targetFile = await compressFile(filename);
+    return [filename, targetFile];
+}
+
+async function genBTrieForTarget(target: Target, buildOptions: BuildTargetDictionaryOptions): Promise<string[]> {
+    if (!target.bTrie) {
+        return [];
+    }
+    const cfg = typeof target.bTrie === 'object' ? target.bTrie : {};
+    const { filename, generateOnlyCompressedDictionary } = buildOptions;
+    const srcFilename = filename + (generateOnlyCompressedDictionary ? '.gz' : '');
+    logWithTimestamp(`Generate BTrie from: ${srcFilename}`);
+    const outputFile = await generateBTrieFromFile(srcFilename, {
+        compress: cfg.compress ?? true,
+        optimize: cfg.optimize ?? true,
+        useStringTable: cfg.useStringTable ?? true,
+        logger: logWithTimestamp,
+    });
+    return [srcFilename, outputFile];
+}
+
+function calculateDependencies(
+    targetFile: string,
+    filesToProcess: FileToProcess[],
+    extraDependencyFiles: string[] | undefined,
+    checksumRoot: string,
+): Set<string> {
+    const dependencies = new Set<string>();
+
+    addDependency(targetFile);
+    extraDependencyFiles?.forEach((f) => addDependency(f));
+    filesToProcess.forEach((f) => addDependency(f.src));
+
+    return dependencies;
+
+    function addDependency(filename: string) {
+        const abs = path.resolve(checksumRoot, filename);
+        dependencies.add(abs);
+        dependencies.add(abs.replace(/\.aff$/, '.dic'));
+        dependencies.add(abs.replace(/\.dic$/, '.aff'));
+    }
+}
+
+function rel(filePath: string): string {
+    return path.relative(process.cwd(), filePath);
+}
+
+interface ProcessFilesOptions {
+    action: ActionFn;
+    filesToProcess: FileToProcess[];
+    mergeTarget: string;
+}
+
+async function processFiles({ action, filesToProcess, mergeTarget }: ProcessFilesOptions) {
+    const toProcess = filesToProcess;
+    const dst = mergeTarget;
+
+    const words = pipe(
+        toProcess,
+        opMap((ftp) => {
+            const { src } = ftp;
+            logWithTimestamp('Process "%s" to "%s"', rel(src), rel(dst));
+            return ftp;
+        }),
+        opConcatMap(function* (ftp) {
+            yield* ftp.words;
+            logWithTimestamp('Done processing %s', rel(ftp.src));
+        }),
+        // opMap((a) => (console.warn(a), a))
+        logProgress(),
+        // opTake(27000000),
+    );
+    await action(words, dst);
+    logWithTimestamp('Done "%s"', rel(dst));
+}
+interface FileToProcess {
+    src: string;
+    words: Iterable<string>;
+}
+
+type ActionFn = (words: Iterable<string>, dst: string) => Promise<void>;
+
+function resolveTarget(name: string, directory: string, useTrie: boolean): string {
+    const ext = (useTrie && '.trie') || '.txt';
+    const filename = name + ext;
+    return path.resolve(directory, filename);
+}
+
+function readSourceList(sources: DictionarySource[], rootDir: string): AsyncIterable<FileSource> {
+    async function* mapSrc(): AsyncIterable<FileSource> {
+        for (const src of sources) {
+            if (isFilePath(src)) {
+                yield { filename: path.resolve(rootDir, src) };
+                continue;
+            }
+            if (isFileSource(src)) {
+                yield { ...src, filename: path.resolve(rootDir, src.filename) };
+                continue;
+            }
+            if (isFileListSource(src)) {
+                const { listFile, ...rest } = src;
+                const absListFile = path.resolve(rootDir, listFile);
+                const listFileDir = path.dirname(absListFile);
+                const files = await readFileList(absListFile);
+                for (const filename of files) {
+                    yield { ...rest, filename: path.resolve(listFileDir, filename) };
+                }
+            }
+        }
+    }
+
+    return mapSrc();
+}
+
+async function readFileList(fileList: FilePath): Promise<string[]> {
+    const content = await readTextFile(fileList);
+    return content
+        .split('\n')
+        .map((a) => a.trim())
+        .filter((a) => !!a);
+}
+
+async function readFileSource(fileSource: FileSource, locale: string | undefined): Promise<FileToProcess> {
+    const { filename, split = false, maxDepth, storeSplitWordsAsCompounds, minCompoundLength } = fileSource;
+
+    const legacy = split === 'legacy';
+    const splitWords = legacy ? false : split;
+
+    // console.warn('fileSource: %o,\n targetOptions %o, \n opt: %o', fileSource, targetOptions, opt);
+
+    const allowedSplitWords = await createAllowedSplitWordsFromFiles(fileSource.allowedSplitWords, locale);
+
+    const readerOptions: SourceReaderOptions = {
+        maxDepth,
+        legacy,
+        splitWords,
+        allowedSplitWords,
+        storeSplitWordsAsCompounds,
+        minCompoundLength,
+        locale,
+    };
+
+    logWithTimestamp(`Reading ${path.basename(filename)}`);
+    const stream = await streamSourceWordsFromFile(filename, readerOptions);
+    logWithTimestamp(`Done reading ${path.basename(filename)}`);
+    const f: FileToProcess = {
+        src: filename,
+        words: stream,
+    };
+    return f;
+}
+
+// Only locales that cspell also keeps when it loads a dictionary's `dictionaryInformation.locale`.
+const regExpLocale = /^([a-z]{2})(?:[-_]([a-z]{2}))?$/i;
+
+/**
+ * @returns the target's locale in its canonical form, such as `tr-TR` for `tr_tr`.
+ * @throws if the locale isn't a language and an optional region.
+ */
+function canonicalLocale(target: Target): string | undefined {
+    const { locale } = target;
+    if (locale === undefined) return undefined;
+    const m = regExpLocale.exec(locale);
+    if (!m) {
+        throw new Error(
+            `Invalid locale "${locale}" in target "${target.name}". Use a language and an optional region, such as "tr" or "tr-TR".`,
+        );
+    }
+    const [, language, region] = m;
+    return region ? `${language.toLowerCase()}-${region.toUpperCase()}` : language.toLowerCase();
+}
+
+function normalizeTargetName(name: string) {
+    return name.replace(/((\.txt|\.dic|\.aff|\.trie)(\.gz)?)?$/, '').replaceAll(/[^\p{L}\p{M}.\w\\/-]/gu, '_');
+}
+
+function logProgress<T>(freq = 100_000): (iter: Iterable<T>) => Iterable<T> {
+    function* logProgress<T>(iter: Iterable<T>): Iterable<T> {
+        const _freq = freq;
+        let count = 0;
+        for (const v of iter) {
+            ++count;
+            if (!(count % _freq)) {
+                logWithTimestamp('Progress: Words Processed - %s', count.toLocaleString());
+            }
+            yield v;
+        }
+    }
+
+    return logProgress;
+}
+
+/**
+ * @param excludeWordsFrom - List of files to read words from.
+ * @param locale - the locale used to lower-case words when matching them.
+ * @returns a function that returns true if the word is not in the exclude list.
+ */
+async function createExcludeFilter(
+    excludeWordsFrom: FilePath[] | undefined,
+    locale: string | undefined,
+): Promise<(word: string) => boolean> {
+    if (!excludeWordsFrom || !excludeWordsFrom.length) return () => true;
+    const excludeWords = await createWordsCollectionFromFiles(excludeWordsFrom, locale);
+
+    return (word: string) => !excludeWords.has(word, word.toUpperCase() !== word);
+}
+
+/**
+ * @param includeWordsFrom - List of files to read words from.
+ * @param locale - the locale used to lower-case words when matching them.
+ * @returns a function that returns true if the word is in the include list.
+ */
+async function createIncludeFilter(
+    includeWordsFrom: FilePath[] | undefined,
+    locale: string | undefined,
+): Promise<(word: string) => boolean> {
+    if (!includeWordsFrom || !includeWordsFrom.length) return () => true;
+    const excludeWords = await createWordsCollectionFromFiles(includeWordsFrom, locale);
+
+    return (word: string) => excludeWords.has(word, word.toUpperCase() !== word);
+}
+
+/**
+ * @param excludeWordsMatchingRegex - List of regex patterns to exclude.
+ * @returns a function that returns true if the word does not match any of the regex patterns.
+ */
+function createExcludeRegexFilter(excludeWordsMatchingRegex: string[] | undefined): (word: string) => boolean {
+    if (!excludeWordsMatchingRegex || !excludeWordsMatchingRegex.length) return () => true;
+    const regexes = excludeWordsMatchingRegex
+        .map((a) => stringToRegExp(a))
+        .filter((a, i): a is RegExp => {
+            if (a) return true;
+            console.warn('Invalid regex: "%s"', excludeWordsMatchingRegex[i]);
+            return false;
+        });
+    return (word: string) => !regexes.some((r) => r.test(word));
+}
+
+function iterableToString(iter: Iterable<string>): string {
+    return Array.isArray(iter) ? iter.join('') : [...iter].join('');
+}
+
+function addToSet<T>(set: Set<T>, ...sources: Iterable<T>[]) {
+    for (const items of sources) {
+        for (const item of items) {
+            set.add(item);
+        }
+    }
+}

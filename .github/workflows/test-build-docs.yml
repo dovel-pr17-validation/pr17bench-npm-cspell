@@ -1,0 +1,52 @@
+name: Test - Build Docs
+on:
+  workflow_dispatch:
+  pull_request:
+    # Everything the package and website builds read.
+    paths:
+      - '.github/actions/setup/**'
+      - '.github/workflows/test-build-docs.yml'
+      - '@internal/**'
+      - '*-lock.yaml'
+      - 'package.json'
+      - 'packages/**'
+      - 'patches/**'
+      - 'pnpm-workspace.yaml'
+      - 'tsconfig*.json'
+      - 'website/**'
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-build-docs:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        node-version:
+          # List of supported node versions (latest is tested in `test-os`)
+          - 22.x
+
+        os:
+          - ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup
+        uses: ./.github/actions/setup
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - run: pnpm run test-build-docs
+
+      # Ensure the repository is clean after build & test
+      - run: git --no-pager diff --compact-summary --exit-code

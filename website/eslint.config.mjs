@@ -1,0 +1,93 @@
+import eslint from '@eslint/js';
+import nodePlugin from 'eslint-plugin-n';
+import tsEslint from 'typescript-eslint';
+import { defineConfig } from 'eslint/config';
+
+// @ts-check
+export default defineConfig(
+    eslint.configs.recommended,
+    nodePlugin.configs['flat/recommended'],
+    ...tsEslint.configs.recommended,
+    {
+        languageOptions: {
+            parserOptions: {
+                tsconfigRootDir: import.meta.dirname,
+            },
+        },
+    },
+    {
+        ignores: [
+            '**/[Ss]amples/**', // cspell:disable-line
+            '**/[Tt]emp/**',
+            '**/*.d.ts',
+            '**/*.map',
+            '**/coverage/**',
+            '**/dist/**',
+            '**/build/**',
+            '**/node_modules/**',
+            '**/.docusaurus/**',
+            '**/*.config.*',
+        ],
+    },
+    {
+        files: ['**/*.ts'],
+        rules: {
+            '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+            'n/no-missing-import': [
+                'warn',
+                {
+                    allowModules: ['@docusaurus/plugin-content-docs'],
+                },
+            ],
+        },
+    },
+    {
+        files: ['**/*.tsx'],
+        settings: {
+            node: {
+                tryExtensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+            },
+        },
+        rules: {
+            '@typescript-eslint/no-var-requires': 'off',
+            '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+            'n/no-missing-import': [
+                'warn',
+                {
+                    allowModules: [
+                        '@docusaurus/Link',
+                        '@docusaurus/plugin-content-docs',
+                        '@docusaurus/useDocusaurusContext',
+                        '@theme/Heading',
+                        '@theme/Layout',
+                        '@theme/CodeBlock',
+                        '@theme/Admonition',
+                        '@theme/Tabs',
+                        '@theme/TabItem',
+                    ],
+                    resolvePaths: ['./', './src'],
+                },
+            ],
+            'n/no-missing-require': 'warn',
+            'n/no-extraneous-require': [
+                'error',
+                {
+                    allowModules: ['@site/static'],
+                },
+            ],
+        },
+    },
+    {
+        files: ['eslint.config.mjs', 'docusaurus.config.ts'],
+        rules: {
+            'n/no-extraneous-import': 'off',
+            'n/no-missing-import': 'off',
+        },
+    },
+    {
+        files: ['_scripts/**'],
+        rules: {
+            'n/no-unsupported-features/node-builtins': 'off',
+        },
+    },
+);

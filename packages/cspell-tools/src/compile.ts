@@ -1,0 +1,66 @@
+import { writeFile } from 'node:fs/promises';
+
+import { opConcatMap, pipe } from '@cspell/cspell-pipe/sync';
+import YAML from 'yaml';
+
+import type { CompileCommonAppOptions } from './AppOptions.ts';
+import { compile } from './compiler/compile.ts';
+import { createCompileRequest } from './compiler/createCompileRequest.ts';
+import type { RunConfig } from './config/config.ts';
+import { configFileSchemaURL } from './config/config.ts';
+import type { FeatureFlags } from './FeatureFlags/index.ts';
+import { getSystemFeatureFlags, parseFlags } from './FeatureFlags/index.ts';
+import { globP } from './util/globP.ts';
+
+getSystemFeatureFlags().register('compound', 'Enable compound dictionary sources.');
+
+const defaultConfigFile = 'cspell-tools.config.yaml';
+
+export const configFileHeader: string = `# yaml-language-server: $schema=${configFileSchemaURL}\n\n`;
+
+export async function processCompileAction(
+    src: string[],
+    options: CompileCommonAppOptions,
+    featureFlags: FeatureFlags | undefined,
+): Promise<void> {
+    const ff = featureFlags || getSystemFeatureFlags();
+    parseFlags(ff, options.experimental || []);
+    return useCompile(src, options);
+}
+
+async function useCompile(src: string[], options: CompileCommonAppOptions): Promise<void> {
+    console.log(
+        'Compile:\n output: %s\n compress: %s\n files:\n  %s',
+        options.output || 'default',
+        options.compress ? 'true' : 'false',
+        src.join('\n  '),
+    );
+    if (options.listFile && options.listFile.length) {
+        console.log(' list files:\n  %s', options.listFile.join('\n  '));
+    }
+    console.log('\n\n');
+
+    const globResults = await Promise.all(src.map((s) => globP(s)));
+    const sources = [
+        ...pipe(
+            globResults,
+            opConcatMap((a) => a),
+        ),
+    ];
+
+    const request = createCompileRequest(sources, options);
+    return options.init ? initConfig(request) : compile(request);
+}
+
+async function initConfig(runConfig: RunConfig): Promise<void> {
+    const { $schema = configFileSchemaURL, ...cfg } = runConfig;
+    const config = { $schema, ...cfg };
+    const content = configFileHeader + YAML.stringify(config, undefined, 2);
+    console.log('Writing config file: %s', defaultConfigFile);
+    await writeFile(defaultConfigFile, content);
+
+    console.log(`Init complete.
+To build, use:
+  cspell-tools-cli build
+`);
+}

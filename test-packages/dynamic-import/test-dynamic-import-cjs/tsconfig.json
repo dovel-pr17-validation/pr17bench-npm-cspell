@@ -1,0 +1,15 @@
+{
+    "extends": "../../../tsconfig.base.json",
+    "compilerOptions": {
+        "types": ["node"],
+        "lib": ["es2020", "DOM"],
+        "module": "CommonJS",
+        "rootDir": "./src",
+        "outDir": "dist",
+        // vitest's type declarations don't resolve under CommonJS with `moduleResolution: bundler`.
+        "skipLibCheck": true,
+        "moduleResolution": "bundler",
+        "resolvePackageJsonExports": false
+    },
+    "include": ["src"]
+}

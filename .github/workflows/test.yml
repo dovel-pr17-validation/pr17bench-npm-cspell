@@ -1,0 +1,113 @@
+name: '  🧪 Test'
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/test.yml'
+      - '*-lock.yaml'
+      - 'examples/**/package.json'
+      - 'package.json'
+      - 'packages/**/*.cjs'
+      - 'packages/**/*.cts'
+      - 'packages/**/*.js'
+      - 'packages/**/*.mjs'
+      - 'packages/**/*.mts'
+      - 'packages/**/*.ts'
+      - 'packages/**/package.json'
+      - 'packages/**/tsconfig.json'
+      - 'test-packages/**/*.cjs'
+      - 'test-packages/**/*.cts'
+      - 'test-packages/**/*.js'
+      - 'test-packages/**/*.mjs'
+      - 'test-packages/**/*.mts'
+      - 'test-packages/**/*.ts'
+      - 'test-packages/**/package.json'
+      - 'test-packages/**/tsconfig.json'
+      - 'test-fixtures/**'
+      - 'scripts/**/*.mjs'
+      - 'scripts/**/*.mts'
+      - 'scripts/package.json'
+      - 'tsconfig*.json'
+      - '!website/**'
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'website/**'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-node-versions:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        node-version:
+          - 22.x # Use 24.x for testing when 22.x is EOL
+          - 24.x
+          - 26.x
+
+        os:
+          - ubuntu-latest
+
+        include:
+          - os: windows-latest
+            node-version: 24.x
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install and Build
+        uses: ./.github/actions/install-build
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Test Yarn projects
+        # Also installs the Yarn projects that the `CSPELL_TEST_YARN` tests need.
+        run: pnpm run test:yarn
+
+      - name: Test
+        run: pnpm test
+        env:
+          CSPELL_TEST_YARN: 'true'
+
+      # Ensure the repository is clean after build & test
+      - run: git --no-pager diff --exit-code
+
+  # Ensure the perf tests run on the latest node version
+  perf-test:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        node-version:
+          - 26.x
+
+        os:
+          - ubuntu-latest
+
+        # include:
+        #   - os: windows-latest
+        #     use_cspell_cache: ""
+        #     node-version: 20.x
+        #   - os: macos-latest
+        #     use_cspell_cache: ""
+        #     node-version: 20.x
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install and Build
+        uses: ./.github/actions/install-build
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Perf Tests
+        run: |
+          pnpm run test:perf
