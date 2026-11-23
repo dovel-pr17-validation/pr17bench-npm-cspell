@@ -66,7 +66,7 @@
   },
   "dependencies": {
     "@cspell/cspell-pipe": "workspace:*",
-    "commander": "^15.0.0",
+    "commander": "^15.1.0",
     "cosmiconfig": "10.0.1",
     "cspell-trie-lib": "workspace:*",
     "hunspell-reader": "workspace:*",
@@ -74,7 +74,7 @@
   },
   "devDependencies": {
     "lorem-ipsum": "^3.0.0",
-    "ts-json-schema-generator": "2.9.0"
+    "ts-json-schema-generator": "2.10.0"
   },
   "engines": {
     "node": ">=22.18.0"
